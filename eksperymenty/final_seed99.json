@@ -1,0 +1,55 @@
+{
+ "baza_logprob": -1.491515855942977,
+ "wyniki": [
+  {
+   "temperatura": 0.5,
+   "nowe_%": 100.0,
+   "prawie_kopie_%": 5.5,
+   "swieze_%": 94.5,
+   "logprob": -1.749,
+   "wiarygodnosc_%": 117.3,
+   "konc_lac_%": 78.0,
+   "sr_dlugosc": 15.6,
+   "przyklady": [
+    "acholia",
+    "cancolorythoma lallae",
+    "pertus malis",
+    "parotus haemorrhyrtica",
+    "parcinoma prodalis",
+    "atrephalitis fuganis"
+   ],
+   "units": 128,
+   "emb": 64,
+   "dropout": 0.3,
+   "epoki": 30,
+   "loss": 1.659,
+   "val_loss": 1.889,
+   "seed": 99
+  },
+  {
+   "temperatura": 0.6,
+   "nowe_%": 98.5,
+   "prawie_kopie_%": 3.5,
+   "swieze_%": 95.0,
+   "logprob": -1.924,
+   "wiarygodnosc_%": 129.0,
+   "konc_lac_%": 81.0,
+   "sr_dlugosc": 14.9,
+   "przyklady": [
+    "carcinoma angominalis andoemialis",
+    "angeomatosis",
+    "insufficies subinaemia",
+    "pertus pontenis",
+    "cancinoma nallae",
+    "atorychoma"
+   ],
+   "units": 128,
+   "emb": 64,
+   "dropout": 0.3,
+   "epoki": 30,
+   "loss": 1.659,
+   "val_loss": 1.889,
+   "seed": 99
+  }
+ ]
+}

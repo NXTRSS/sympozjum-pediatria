@@ -1,0 +1,55 @@
+{
+ "baza_logprob": -1.491515855942977,
+ "wyniki": [
+  {
+   "temperatura": 0.5,
+   "nowe_%": 96.5,
+   "prawie_kopie_%": 6.0,
+   "swieze_%": 90.5,
+   "logprob": -1.655,
+   "wiarygodnosc_%": 110.9,
+   "konc_lac_%": 74.5,
+   "sr_dlugosc": 14.7,
+   "przyklady": [
+    "thronichia prastocytosis",
+    "asteratosis chronica",
+    "syndroma dass",
+    "neuropathia",
+    "carcinoma cardis",
+    "pangloma"
+   ],
+   "units": 128,
+   "emb": 64,
+   "dropout": 0.3,
+   "epoki": 30,
+   "loss": 1.661,
+   "val_loss": 1.893,
+   "seed": 7
+  },
+  {
+   "temperatura": 0.6,
+   "nowe_%": 99.5,
+   "prawie_kopie_%": 6.0,
+   "swieze_%": 93.5,
+   "logprob": -1.883,
+   "wiarygodnosc_%": 126.3,
+   "konc_lac_%": 76.0,
+   "sr_dlugosc": 14.7,
+   "przyklady": [
+    "tarcinoma pulmonis",
+    "polabina",
+    "athrobelitis",
+    "tingulosis",
+    "morbus chronica",
+    "morbus ternis"
+   ],
+   "units": 128,
+   "emb": 64,
+   "dropout": 0.3,
+   "epoki": 30,
+   "loss": 1.661,
+   "val_loss": 1.893,
+   "seed": 7
+  }
+ ]
+}

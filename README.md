@@ -47,3 +47,25 @@ Wymaga [uv](https://docs.astral.sh/uv/). Na Macu z Apple Silicon trening idzie p
 - `dinozaury` — zbiór [junosuarez/dinosaurs](https://github.com/junosuarez/dinosaurs).
 
 Model generuje **nazwy nieistniejące**. Notebook sprawdza każdą wygenerowaną nazwę względem zbioru treningowego i oznacza, czy jest nowa. Nic tu nie jest narzędziem diagnostycznym ani poradą medyczną.
+
+## 🔬 Dobór hiperparametrów
+
+Pierwsza wersja modelu (256 jednostek, 120 epok) **odtwarzała nazwy ze zbioru** zamiast wymyślać nowe. Katalog [`eksperymenty/`](eksperymenty) zawiera pomiar, którym dobrano nastawy — mierzone są dwie przeciwstawne rzeczy:
+
+- **świeżość** — odsetek nazw, których nie ma w zbiorze treningowym ani w odległości edycyjnej ≤ 0,2 od którejś z nich,
+- **wiarygodność** — średnie prawdopodobieństwo nazwy pod modelem 4-gramowym znaków; 100% = tak samo „łacińska" jak prawdziwe nazwy, więcej = bardziej bełkotliwa.
+
+| Nastawy | Świeże | Wiarygodność |
+|---|---|---|
+| 256 jedn., 80 epok, T=0.8 (przeuczony) | 10% | 100% |
+| 256 jedn., 50 epok, T=0.8 | 46% | 116% |
+| **128 jedn., dropout 0.3, 30 epok, T=0.5** ← wybrane | **93%** | **115%** |
+| 128 jedn., 10 epok, T=1.2 (niedouczony) | 99% | 215% |
+
+Wynik potwierdzony na 3 ziarnach losowych: 98,2% nazw nowych, 92,7% świeżych, 75% z poprawną łacińską końcówką.
+
+```bash
+uv run python eksperymenty/strojenie.py             # przegląd: architektura × epoki × temperatura
+uv run python eksperymenty/strojenie2_temperatura.py # doprecyzowanie niskich temperatur
+uv run python eksperymenty/final.py                  # weryfikacja zwycięzcy na 3 ziarnach
+```

@@ -1,0 +1,69 @@
+2026-08-28 16:07:29.650407: I metal_plugin/src/device/metal_device.cc:1154] Metal device set to: Apple M1 Pro
+2026-08-28 16:07:29.650665: I metal_plugin/src/device/metal_device.cc:296] systemMemory: 32.00 GB
+2026-08-28 16:07:29.650686: I metal_plugin/src/device/metal_device.cc:313] maxCacheSize: 10.67 GB
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1787926049.651056 3751889 pluggable_device_factory.cc:305] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
+I0000 00:00:1787926049.651568 3751889 pluggable_device_factory.cc:271] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -> physical PluggableDevice (device: 0, name: METAL, pci bus id: <undefined>)
+2026-08-28 16:07:30.202114: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:117] Plugin optimizer for device_type GPU is enabled.
+u128 d0.0 ep 10 T0.8 | val=2.118 | nowe 100.0% | świeże  99.2% | wiarygodność 182.9% | końc  67.5% | thius tresus, acorythialis thingioma, synduloma vergla
+u128 d0.0 ep 10 T1.0 | val=2.118 | nowe 100.0% | świeże  99.2% | wiarygodność 198.9% | końc  57.5% | syndrophalia, herrerothasis ictuk parrani, achorofenenie
+u128 d0.0 ep 10 T1.2 | val=2.118 | nowe 100.0% | świeże 100.0% | wiarygodność 214.6% | końc  45.8% | syntroma przvpheriqnum, glurmenchasis, sisin dipetiae de rumtencac
+u128 d0.0 ep 20 T0.8 | val=1.923 | nowe 100.0% | świeże  98.3% | wiarygodność 159.8% | końc  70.0% | chrophalia, lexariosis, acteria
+u128 d0.0 ep 20 T1.0 | val=1.923 | nowe 100.0% | świeże 100.0% | wiarygodność 176.1% | końc  62.5% | carcia chrenictis, dypericelosis, anyochaliosis perperui
+u128 d0.0 ep 20 T1.2 | val=1.923 | nowe  99.2% | świeże  97.5% | wiarygodność 193.1% | końc  56.7% | febri gnadpheicnoculit sum thenosunustorales , enveria velmaemica ep ictecidi, emponfiomaenuvata
+u128 d0.0 ep 30 T0.8 | val=1.894 | nowe  96.7% | świeże  90.8% | wiarygodność 139.5% | końc  78.3% | dipsia vangiaris, bolaskia, syndroma pnouromeni
+u128 d0.0 ep 30 T1.0 | val=1.894 | nowe 100.0% | świeże  97.5% | wiarygodność 164.4% | końc  58.3% | oesyphosma onsykidelti, onacrobia, dermatoma panichardi mae
+u128 d0.0 ep 30 T1.2 | val=1.894 | nowe  98.3% | świeże  96.7% | wiarygodność 175.3% | końc  64.2% | andylomaa, carcinoma eltuloe, cordinosis
+u128 d0.0 ep 50 T0.8 | val=2.020 | nowe  96.7% | świeże  89.2% | wiarygodność 125.8% | końc  74.2% | syndroma neosa, anaemia praematorum, carcinoma mystoimmaelifamosum
+u128 d0.0 ep 50 T1.0 | val=2.020 | nowe  97.5% | świeże  94.2% | wiarygodność 149.0% | końc  55.0% | fibrosis hordes, metosynesia intratuli, diabetit pillelis
+u128 d0.0 ep 50 T1.2 | val=2.020 | nowe  99.2% | świeże  95.0% | wiarygodność 166.6% | końc  59.2% | tetos ver, ozarchilis, febris butongra-sechagilae immunaltolysis hyp
+u128 d0.0 ep 80 T0.8 | val=2.350 | nowe  82.5% | świeże  75.0% | wiarygodność 124.6% | końc  65.0% | abortus, syndroma allergicum, hypothylophia velarialis
+u128 d0.0 ep 80 T1.0 | val=2.350 | nowe  91.7% | świeże  85.8% | wiarygodność 140.6% | końc  60.8% | dontus hydrandelaris, tinia arsin, aphasia
+u128 d0.0 ep 80 T1.2 | val=2.350 | nowe  95.0% | świeże  94.2% | wiarygodność 155.7% | końc  68.3% | rachitis, ruterriosis, triphiopposis
+u128 d0.3 ep 10 T0.8 | val=2.160 | nowe 100.0% | świeże  99.2% | wiarygodność 193.6% | końc  60.8% | bersos thunondia, achiosis voema, teragia ioglia
+u128 d0.3 ep 10 T1.0 | val=2.160 | nowe 100.0% | świeże 100.0% | wiarygodność 205.6% | końc  55.8% | pananihis, orondsemohytitih, cansir
+u128 d0.3 ep 10 T1.2 | val=2.160 | nowe 100.0% | świeże  99.2% | wiarygodność 217.2% | końc  46.7% | grymytatii, negroma conbulfiphara, derbitis vebis
+u128 d0.3 ep 20 T0.8 | val=1.964 | nowe 100.0% | świeże  95.0% | wiarygodność 161.8% | końc  79.2% | morbus aculia, cantinus meni, mergitis
+u128 d0.3 ep 20 T1.0 | val=1.964 | nowe  99.2% | świeże  98.3% | wiarygodność 173.9% | końc  65.0% | hrimooma cutranylem, sinduinus veraric tuste, syndroma adause
+u128 d0.3 ep 20 T1.2 | val=1.964 | nowe 100.0% | świeże 100.0% | wiarygodność 200.8% | końc  51.7% | chrhiitosis, chainus ang, bodis
+u128 d0.3 ep 30 T0.8 | val=1.891 | nowe  99.2% | świeże  96.7% | wiarygodność 146.9% | końc  82.5% | ontrenia compronica, aneryakotaxia, myrodegia
+u128 d0.3 ep 30 T1.0 | val=1.891 | nowe  99.2% | świeże  96.7% | wiarygodność 172.0% | końc  60.8% | syndroma dyssphyloe, carcinosa, stemitis
+u128 d0.3 ep 30 T1.2 | val=1.891 | nowe  99.2% | świeże  97.5% | wiarygodność 189.1% | końc  59.2% | stenia profinae, aspemalsis, plsoniochylum
+u128 d0.3 ep 50 T0.8 | val=1.882 | nowe  97.5% | świeże  91.7% | wiarygodność 134.0% | końc  65.8% | cancer hastatae, neurophaema, peretosis delaria
+u128 d0.3 ep 50 T1.0 | val=1.882 | nowe  98.3% | świeże  93.3% | wiarygodność 151.7% | końc  70.0% | syndroma meri, micraxidosis, angrornes acquisie
+u128 d0.3 ep 50 T1.2 | val=1.882 | nowe  98.3% | świeże  98.3% | wiarygodność 174.9% | końc  57.5% | cacvitis, heteriasis, ephychacus sorcans
+u128 d0.3 ep 80 T0.8 | val=1.979 | nowe  94.2% | świeże  88.3% | wiarygodność 128.7% | końc  60.0% | conglymitis, carcinoma larsonyng, syndroma larconi
+u128 d0.3 ep 80 T1.0 | val=1.979 | nowe  96.7% | świeże  95.0% | wiarygodność 151.6% | końc  60.8% | angoralosis nesrum thyroid, hypoxacna ovaurialis, glucmosis medialis
+u128 d0.3 ep 80 T1.2 | val=1.979 | nowe  97.5% | świeże  93.3% | wiarygodność 167.4% | końc  60.0% | triadisodiarpsen, morita crivi pasticum, natopatitis glanculatis
+u256 d0.0 ep 10 T0.8 | val=1.966 | nowe 100.0% | świeże 100.0% | wiarygodność 162.6% | końc  74.2% | laemorrhyngie pranidum, eprohphomia, ebis ropsus infengaemothiosis marziem anthori
+u256 d0.0 ep 10 T1.0 | val=1.966 | nowe  99.2% | świeże  96.7% | wiarygodność 176.9% | końc  65.8% | heliagia klaggai, chylotis, aleptis seulkione
+u256 d0.0 ep 10 T1.2 | val=1.966 | nowe 100.0% | świeże  99.2% | wiarygodność 202.4% | końc  57.5% | epresitis, mokbsa feofode-asticarus cenis, incula huxosthica
+u256 d0.0 ep 20 T0.8 | val=1.879 | nowe  97.5% | świeże  89.2% | wiarygodność 130.6% | końc  78.3% | cancer vanare, herkadia, morbus vahalis
+u256 d0.0 ep 20 T1.0 | val=1.879 | nowe  99.2% | świeże  97.5% | wiarygodność 150.7% | końc  65.8% | morbosis, febris odison dostidus, herratus metiali
+u256 d0.0 ep 20 T1.2 | val=1.879 | nowe  98.3% | świeże  96.7% | wiarygodność 173.5% | końc  57.5% | rhaemo, promasia, caronichilitis
+u256 d0.0 ep 30 T0.8 | val=2.013 | nowe  80.8% | świeże  75.0% | wiarygodność 116.9% | końc  66.7% | exophagia prottusa contania, malinellosis, morbus vernicularis
+u256 d0.0 ep 30 T1.0 | val=2.013 | nowe  92.5% | świeże  90.0% | wiarygodność 146.6% | końc  65.8% | morbus vachulosum, morbus methron, micra viliza
+u256 d0.0 ep 30 T1.2 | val=2.013 | nowe  95.0% | świeże  89.9% | wiarygodność 157.0% | końc  64.7% | fluvus, choltusphne, pathilovycrosis
+u256 d0.0 ep 50 T0.8 | val=2.364 | nowe  51.7% | świeże  45.8% | wiarygodność 115.7% | końc  65.8% | alponzoclesis, genu valdum ranarui, luodens calvae purgentructurna
+u256 d0.0 ep 50 T1.0 | val=2.364 | nowe  67.5% | świeże  57.5% | wiarygodność 122.9% | końc  73.3% | phorea, epistaxis, letholangiaculatis
+u256 d0.0 ep 50 T1.2 | val=2.364 | nowe  88.3% | świeże  79.2% | wiarygodność 145.4% | końc  60.0% | singutum, parotitius duodeni, dermatitis hypsychtunda
+u256 d0.0 ep 80 T0.8 | val=2.629 | nowe  10.0% | świeże  10.0% | wiarygodność  99.7% | końc  65.8% | neuromyelitis optica, pharyngitis acuta, metactonia mentriculi
+u256 d0.0 ep 80 T1.0 | val=2.629 | nowe  25.0% | świeże  20.8% | wiarygodność 108.6% | końc  60.8% | xenophobia, colitis ischaemica, syndroma noonan
+u256 d0.0 ep 80 T1.2 | val=2.629 | nowe  55.8% | świeże  48.3% | wiarygodność 122.3% | końc  76.7% | angor pectoris, oedema, phimosis
+u256 d0.3 ep 10 T0.8 | val=1.993 | nowe  99.2% | świeże  98.3% | wiarygodność 166.0% | końc  65.0% | sisanin, insuffe, peratia
+u256 d0.3 ep 10 T1.0 | val=1.993 | nowe 100.0% | świeże  99.2% | wiarygodność 189.7% | końc  60.8% | cholosis, ancerodosis, thophaliomae haedetes
+u256 d0.3 ep 10 T1.2 | val=1.993 | nowe 100.0% | świeże 100.0% | wiarygodność 206.3% | końc  50.0% | ferici, tanentrominoficcarom, tanvis
+u256 d0.3 ep 20 T0.8 | val=1.867 | nowe  97.5% | świeże  95.0% | wiarygodność 137.3% | końc  60.8% | cholleos, teria gangeli, timor phules
+u256 d0.3 ep 20 T1.0 | val=1.867 | nowe  97.5% | świeże  94.1% | wiarygodność 161.4% | końc  65.5% | myolovicus basiclis haemorrhagine, taimitius tuvarius, prigelinesia ampozialis naparalis
+u256 d0.3 ep 20 T1.2 | val=1.867 | nowe 100.0% | świeże  98.3% | wiarygodność 179.4% | końc  59.2% | codres anihophardy, syndroma dawnanum, lymshoberhilea
+u256 d0.3 ep 30 T0.8 | val=1.959 | nowe  93.3% | świeże  84.2% | wiarygodność 123.0% | końc  67.5% | hyperplasia protterdiosa, morbus marovitur, cholessus
+u256 d0.3 ep 30 T1.0 | val=1.959 | nowe  93.3% | świeże  89.2% | wiarygodność 143.0% | końc  65.0% | anchealginitatius incapita, aurhiritis, gliophobia
+u256 d0.3 ep 30 T1.2 | val=1.959 | nowe  99.2% | świeże  96.7% | wiarygodność 172.9% | końc  57.5% | tramarqonug, askinempriive, fibrosarcoma mure
+u256 d0.3 ep 50 T0.8 | val=2.226 | nowe  60.0% | świeże  53.3% | wiarygodność 115.6% | końc  70.0% | morbus whowpher, mycosis adetica, encephalomyelitis disseminata
+u256 d0.3 ep 50 T1.0 | val=2.226 | nowe  79.2% | świeże  72.5% | wiarygodność 130.0% | końc  62.5% | stithosis lethalis, photopsia, mesticulosis leukaemica chronica
+u256 d0.3 ep 50 T1.2 | val=2.226 | nowe  90.0% | świeże  83.3% | wiarygodność 150.3% | końc  64.2% | fasciozoteria apilamis, hernia diaphaemica, stria pichosae
+u256 d0.3 ep 80 T0.8 | val=2.553 | nowe  24.2% | świeże  20.0% | wiarygodność 106.0% | końc  60.0% | pityriasis capulas inverualis, syndroma lown-ganong-levine, gyolophorus bryenogetica
+u256 d0.3 ep 80 T1.0 | val=2.553 | nowe  50.8% | świeże  42.5% | wiarygodność 108.2% | końc  67.5% | sinusitis, carcinoma endometrium, syndroma duinelete
+u256 d0.3 ep 80 T1.2 | val=2.553 | nowe  51.7% | świeże  45.0% | wiarygodność 127.0% | końc  64.2% | dyskinesia, hypertrophoigia, spinguanum eniephuma
+
+Zapisano 60 pomiarów → /Users/kamiljedryczek/Documents/sympozjum-pediatria/eksperymenty/wyniki.json

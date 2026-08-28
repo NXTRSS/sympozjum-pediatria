@@ -1,0 +1,55 @@
+{
+ "baza_logprob": -1.491515855942977,
+ "wyniki": [
+  {
+   "temperatura": 0.5,
+   "nowe_%": 98.0,
+   "prawie_kopie_%": 5.0,
+   "swieze_%": 93.0,
+   "logprob": -1.726,
+   "wiarygodnosc_%": 115.7,
+   "konc_lac_%": 72.5,
+   "sr_dlugosc": 16.2,
+   "przyklady": [
+    "timor bastricularis",
+    "terpus mellularis",
+    "chorentio lompidum",
+    "etythosis ressis",
+    "infertriemia",
+    "hypertinoma pronicularis"
+   ],
+   "units": 128,
+   "emb": 64,
+   "dropout": 0.3,
+   "epoki": 30,
+   "loss": 1.658,
+   "val_loss": 1.898,
+   "seed": 21
+  },
+  {
+   "temperatura": 0.6,
+   "nowe_%": 96.5,
+   "prawie_kopie_%": 6.0,
+   "swieze_%": 90.5,
+   "logprob": -1.872,
+   "wiarygodnosc_%": 125.5,
+   "konc_lac_%": 71.0,
+   "sr_dlugosc": 16.0,
+   "przyklady": [
+    "hyperteria",
+    "syndroma figroni",
+    "syndroma ossentialis",
+    "cyntroma tuloralis",
+    "anaemia",
+    "myeloma"
+   ],
+   "units": 128,
+   "emb": 64,
+   "dropout": 0.3,
+   "epoki": 30,
+   "loss": 1.658,
+   "val_loss": 1.898,
+   "seed": 21
+  }
+ ]
+}
