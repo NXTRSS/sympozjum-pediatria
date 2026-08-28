@@ -53,8 +53,10 @@ Transformer od zera (GRU wystarcza; 1 slajd „to samo, tylko większe"), własn
 
 ## Otwarte TODO
 
+- [x] Dane: `data/choroby.csv` (1465, Wikimedia CC BY-SA), `data/leki.csv` (9438, URPL)
+- [x] Repo publiczne: https://github.com/NXTRSS/sympozjum-pediatria — dane ładowane w Colabie z raw URL (zweryfikowane)
 - [ ] Nazwa choroby do slajdu demo (Kamil wygeneruje z notebooka)
-- [ ] QR: link Colab (po publikacji repo), link Gradio (generowany w dniu prelekcji), repo
+- [ ] Obrazki QR (repo/Colab + gradio.live w dniu prelekcji) w miejsce placeholderów w `slides/n05_qr.html` i `slides/n15_materialy.html`
 - [ ] Decyzja: czy przywrócić slajdy Transformer/Attention GIF z ALK (dostępne w oryginale)
 - [ ] Wagi pretrenowane 4 zbiorów → GitHub
 - [ ] Screencast awaryjny
