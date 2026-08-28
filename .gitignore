@@ -1,0 +1,56 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+docs/private/
+.DS_Store
+szablon/
+
+# Prezentacja i eksporty (trzymane lokalnie, poza repozytorium)
+eksport/
+slides/
+prezentacja*.html
+public-template/
+assemble.py
+eksport_*.py
+*.pptx
+*.pdf
+*.key
+
+# Notatki robocze
+PRZEBIEG*.md
+URUCHOMIENIE*.md
+HANDOVER*.md
+HANDOFF*.md
+docs/
+eksperymenty/
+tools/
+
+# Wagi, checkpointy, dane pobrane i cache — nigdy do gita
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+*.npz
+usg/zewnetrzne/
+usg/dane/
+usg/pamiec/
+delphi/zewnetrzne/
+delphi/pamiec/*
+!delphi/pamiec/wyniki/
+delphi/pamiec/wyniki/*
+!delphi/pamiec/wyniki/slad_astma_od_dziecka.json
+!delphi/pamiec/wyniki/astma_od_dziecka.json
+delphi/dane/*
+!delphi/dane/icd10_pl.csv
+
+notebook/.model_cache/
+notebook/logi/
+**/.gradio/
+dist/
+
+# Dane USG (nagrania, maski, wyniki)
+*.mha
+*.nii
+*.nii.gz
+usg/wagi/
