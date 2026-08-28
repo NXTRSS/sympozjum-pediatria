@@ -60,7 +60,7 @@ NOTES = [
     "Delphi-2M (Nature 2025): dosłownie nasz mechanizm, ale tokeny to kody ICD-10, pozycja to wiek, a token stop to... śmierć. GPT-2 o 2,2 mln parametrów — rząd wielkości naszego modelu z sali!",
     "Delphi-2M wyniki: 400k UK Biobank, walidacja 1,93M Duńczyków, >1000 chorób, AUC ~0,76. Uczciwie: rekrutacja 40-70 lat — brak dzieci w danych. Pediatria czeka na swój model.",
     "MAI-DxO (Microsoft 2025): panel wirtualnych lekarzy, 85,5% vs ~20% na 304 najtrudniejszych case NEJM. Zaznaczyć nierówność warunków (lekarze bez internetu i konsultacji). SLAJD DO CIĘCIA przy obsuwie.",
-    "Zmiana tonu: sprawa osobista. Ile waży dziecko przed porodem? Tu mogę opowiedzieć historię z własnej rodziny — indukcja zalecona na podstawie szacunku masy.",
+    "Zmiana tonu: sprawa osobista. Ile waży dziecko przed porodem? Tu wątek osobisty — wedle uznania.",
     "Hadlock: 4 ręczne pomiary, wzór z 1985, błąd ~7,5-10%, co trzecie oszacowanie poza ±10%, najgorzej przy makrosomii. A od tej liczby zależy indukcja i cesarka.",
     "BabyNet (Sano Kraków, MICCAI 2022; BabyNet++ 2023): model ogląda całe wideo USG z 3 płaszczyzn <24h przed porodem (wtedy znamy ground truth). MAPE 5,1% vs 6,3% ekspertów, zero zmienności międzyoperatorskiej. Open source, finansowanie FNP + UE. Wersja 2023: cała ciąża 16-38 tż.",
     "Apel: oś czasu komercjalizacji. My publikujemy i otwieramy kod (2022), Samsung kupuje Sonio (2024), GE wbudowuje SonoLyst, Chiny doganiają (2025). Puenta: nie czekajmy, aż nam sprzedadzą nasz własny pomysł. Konkret: pilotaże, Rejestr Lekarzy Innowatorów DIL.",
