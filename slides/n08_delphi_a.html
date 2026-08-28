@@ -1,0 +1,37 @@
+<section data-label="N08 Delphi A" class="bg-ink">
+  <div class="slide-frame">
+    <div class="eyebrow build" data-step="0">Skalowanie idei · Nature, wrzesień 2025</div>
+    <h2 class="section-title build" data-step="0" style="margin-top: 28px;">
+      Delphi-2M: zamieńmy litery <span class="grad-text-warm">na diagnozy</span>
+    </h2>
+
+    <div style="margin-top: 56px; display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; align-items: center;">
+      <div class="card build" data-step="1">
+        <div class="tiny" style="color: var(--accent); letter-spacing: 0.12em; margin-bottom: 20px;">NASZ MODEL Z DEMO</div>
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div class="body-sm"><span class="mono" style="color: var(--accent);">token</span> = litera (63 znaki)</div>
+          <div class="body-sm"><span class="mono" style="color: var(--accent);">sekwencja</span> = nazwa choroby</div>
+          <div class="body-sm"><span class="mono" style="color: var(--accent);">pozycja</span> = numer litery</div>
+          <div class="body-sm"><span class="mono" style="color: var(--accent);">!</span> = koniec słowa</div>
+        </div>
+      </div>
+      <div class="arrow-r build" data-step="2" style="text-align: center;">→</div>
+      <div class="card build" data-step="2" style="border-color: rgba(0,188,222,0.4);">
+        <div class="tiny" style="color: var(--accent-2); letter-spacing: 0.12em; margin-bottom: 20px;">DELPHI-2M</div>
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div class="body-sm"><span class="mono" style="color: var(--accent-2);">token</span> = kod ICD-10 (1258 tokenów)</div>
+          <div class="body-sm"><span class="mono" style="color: var(--accent-2);">sekwencja</span> = historia zdrowia pacjenta</div>
+          <div class="body-sm"><span class="mono" style="color: var(--accent-2);">pozycja</span> = wiek pacjenta (sin/cos)</div>
+          <div class="body-sm"><span class="mono" style="color: var(--accent-2);">!</span> = token śmierci</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card build" data-step="3" style="margin-top: 48px; background: rgba(201,166,255,0.05); border-color: rgba(201,166,255,0.25);">
+      <div class="body-sm" style="color: rgba(255,255,255,0.85);">
+        Architektura: <strong style="color: var(--accent-4);">GPT-2 o 2,2 mln parametrów</strong> („2M" = two million). To ten sam rząd wielkości co model, który trenowaliśmy na sali — nie superkomputer, tylko dobrze zadane pytanie: <em>P(następna choroba | dotychczasowe choroby, wiek, styl życia)</em>.
+      </div>
+    </div>
+  </div>
+  <div class="page-num">16</div>
+</section>
