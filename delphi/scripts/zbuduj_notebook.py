@@ -160,7 +160,7 @@ plt.show()"""),
 
 Ta sama pętla co przy nazwach chorób: model patrzy na dotychczasową historię, podaje kandydatów z prawdopodobieństwami, losujemy jednego, dopisujemy i powtarzamy, aż do zgonu albo 80. roku życia.
 
-W nawiasie: szansa wylosowanego zdarzenia; „kandydaci” to trzy najbardziej prawdopodobne. Obie liczby liczymy jak w rankingu: spośród chorób i zgonu. Wylosowane zdarzenie często nie jest w czołówce: każda z ~1250 chorób ma trochę szansy, a my **losujemy**, a nie wybieramy najbardziej prawdopodobnej."""),
+W nawiasie: szansa wylosowanego zdarzenia; „kandydaci” to trzy najbardziej prawdopodobne. Obie liczby liczymy jak w rankingu: spośród chorób i zgonu. Wylosowane zdarzenie często nie jest w czołówce: każda z ~1250 chorób ma trochę szansy, a my **losujemy**, a nie wybieramy najbardziej prawdopodobnej. Trzech czołowych kandydatów to razem tylko ok. 10% szansy, a pozostałe ~90% rozkłada się na setki chorób po ułamku procenta. Los najczęściej trafia więc w ten „długi ogon” rzadkich chorób. Dlatego jedno wylosowane życie to przykład, a nie prognoza; prognozą są krzywe z 1000 losowań wyżej."""),
     ("code", """# ── ŻYCIE TOKEN PO TOKENIE ────────────────────────────────────
 P = przyklady.PRZYKLADY["astma_od_dziecka"]
 H = parsuj_historie(P["historia"], SL)
