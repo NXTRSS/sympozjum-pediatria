@@ -31,7 +31,7 @@ uv run pytest                  # szybkie (kilka sekund)
 DELPHI_PELNE=1 uv run pytest   # + sieć, krótki trening, wydajność, wykonanie notebooka offline
 ```
 
-Zmierzone: zestaw szybki to 71 testów PASS i 5 SKIP w ok. 3 s. Zestaw pełny to 76 testów PASS w ok. 46 s.
+Zmierzone: zestaw szybki to 91 testów PASS i 5 SKIP w ok. 3 s. Zestaw pełny dokłada te 5 testów (sieć, krótki trening, wydajność, notebook offline); ostatni pomiar całości: ok. 46 s.
 
 ## Zmierzone czasy (MacBook Pro M1 Pro, 32 GB)
 
@@ -72,10 +72,10 @@ Nigdy nie commitujemy wag, checkpointów ani danych. Notebook uruchamiany lokaln
 | Kod Delphi, `github.com/gerstung-lab/Delphi` @ `fb72166` | MIT | klonowany skryptem do `zewnetrzne/` (poza gitem) |
 | Dane syntetyczne autorów (`data/ukb_simulated_data`, w klonie: `zewnetrzne/Delphi/data/`) | brak jawnej licencji danych | tylko lokalnie, nie redystrybuujemy |
 | Wagi Delphi-2M (UK Biobank) | CC BY-NC-ND 4.0, dostęp kontrolowany przez UK Biobank (upload ID 7318) | **nie mamy** |
-| Nasz checkpoint z danych syntetycznych | — | `pamiec/` (poza gitem) |
+| Nasz checkpoint z danych syntetycznych | pochodna danych bez licencji; nie publikujemy bez zgody autorów (decyzja D2) | `pamiec/` (poza gitem) |
 | Polskie nazwy ICD-10 (ICD-10-2008-PL) | CC BY 4.0, Centrum e-Zdrowia, dane.gov.pl zasób 55725 | pobierane w przygotowaniu do `dane/` (poza gitem) |
 
-Polska ICD-10 ma 2050 kategorii 3-znakowych i pokrywa 1248 z 1254 kodów modelu. Bez polskiej nazwy zostają: A97, B98, C42, C86, G14, K64.
+Polska ICD-10 ma 2050 kategorii 3-znakowych i pokrywa 1248 z 1254 kodów modelu. Bez polskiej nazwy (6 kodów bez odpowiednika w ICD-10-2008-PL) zostają: A97, B98, C42, C86, G14, K64.
 
 Artykuł: Shmatko A., Jung A.W., Gaurav K. i in., „Learning the natural history of human disease with generative transformers", *Nature* 2025, doi:10.1038/s41586-025-09529-3.
 

@@ -21,7 +21,7 @@ CONFIG_DEMO = "config/train_delphi_demo.py"
 SCIEZKA_MODELU = zasoby.KATALOG_PAMIECI / "delphi_syntetyczny.pt"
 KATALOG_TRENINGU = zasoby.KATALOG_PAMIECI / "trening"
 KOMUNIKAT_BRAK_MODELU = (
-    "Brak wytrenowanego modelu {sciezka}. Przed prelekcją uruchom (ok. 45 min na M1 Pro): "
+    "Brak wytrenowanego modelu {sciezka}. Przed prelekcją uruchom (z internetem), ok. 20 min (M1 Pro): "
     "cd delphi && uv run python scripts/przygotuj_demo.py"
 )
 

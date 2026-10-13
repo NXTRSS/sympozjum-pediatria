@@ -1,7 +1,8 @@
 """Przed prelekcją (z internetem): kod autorów, trening na danych syntetycznych, wyniki do trybu offline.
 
 uv run python scripts/przygotuj_demo.py                 # pełne: klon + polska ICD-10 + trening 2500 kroków + wyniki
-uv run python scripts/przygotuj_demo.py --kroki 5000    # wariant z wykresem przeuczenia (~36–50 min)
+                                                        # (M1 Pro: trening ~18–20 min, razem ok. 20 min)
+uv run python scripts/przygotuj_demo.py --kroki 5000    # wariant z wykresem przeuczenia (trening ~36 min)
 uv run python scripts/przygotuj_demo.py --tylko-wyniki  # model już jest: tylko przelicz wyniki
 
 Buduje też cache fontów matplotlib (pierwszy import trwa kilka–kilkanaście sekund; lepiej teraz niż na sali).
@@ -32,6 +33,8 @@ if not args.tylko_wyniki:
         trening.odchudz_checkpoint(ckpt)
         czas = json.loads((trening.KATALOG_TRENINGU / "czas.json").read_text())["czas_s"]
         print(f"Trening: {czas / 60:.1f} min → {trening.SCIEZKA_MODELU}")
+    else:
+        print(f"Model już jest ({trening.SCIEZKA_MODELU.relative_to(zasoby.KATALOG_PAMIECI.parent)}) — pomijam trening.")
 
 model = trening.zaladuj_model()
 sl = wczytaj_slownik()
