@@ -1,3 +1,4 @@
+import importlib.util
 import json
 from pathlib import Path
 
@@ -8,6 +9,18 @@ from nbconvert.preprocessors import ExecutePreprocessor
 from delphi_demo import pamiec, trening
 
 NB = Path(__file__).resolve().parents[1] / "notebook" / "delphi_2m.ipynb"
+SKRYPT = Path(__file__).resolve().parents[1] / "scripts" / "zbuduj_notebook.py"
+
+
+def test_notebook_zgodny_ze_skryptem():
+    """Chroni przed ręczną edycją w Jupyterze: notebook = KOMORKI z scripts/zbuduj_notebook.py."""
+    spec = importlib.util.spec_from_file_location("zbuduj_notebook", SKRYPT)
+    modul = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(modul)
+    nb = json.loads(NB.read_text())
+    w_notebooku = [(c["cell_type"], "".join(c["source"])) for c in nb["cells"]]
+    w_skrypcie = [("markdown" if r == "md" else "code", t) for r, t in modul.KOMORKI]
+    assert w_notebooku == w_skrypcie, "notebook różni się od skryptu: uv run python scripts/zbuduj_notebook.py"
 
 
 def test_notebook_zapisany_bez_wyjsc():

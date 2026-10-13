@@ -21,6 +21,11 @@ def test_kroki_tam_i_z_powrotem(tmp_path):
     assert pamiec.jest("slad", tmp_path) and not pamiec.jest("brak", tmp_path)
 
 
+def test_json_tam_i_z_powrotem(tmp_path):
+    pamiec.zapisz_json("krzywe_info", {"n_probek": 1000}, tmp_path)
+    assert pamiec.wczytaj_json("krzywe_info", tmp_path) == {"n_probek": 1000}
+
+
 def test_przyklady_sa_poprawne():
     sl = wczytaj_slownik()
     for p in przyklady.PRZYKLADY.values():

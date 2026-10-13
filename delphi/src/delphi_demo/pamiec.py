@@ -45,3 +45,15 @@ def wczytaj_kroki(nazwa: str, katalog: Path | None = None) -> list[Krok]:
 
 def jest(nazwa: str, katalog: Path | None = None) -> bool:
     return _plik(nazwa, katalog).exists()
+
+
+def zapisz_json(nazwa: str, obiekt, katalog: Path | None = None) -> Path:
+    """Drobne metadane wyników (np. {"n_probek": 1000} dla krzywych), żeby notebook mówił prawdę o N."""
+    plik = _plik(nazwa, katalog)
+    plik.parent.mkdir(parents=True, exist_ok=True)
+    plik.write_text(json.dumps(obiekt))
+    return plik
+
+
+def wczytaj_json(nazwa: str, katalog: Path | None = None):
+    return json.loads(_plik(nazwa, katalog).read_text())

@@ -25,9 +25,10 @@ N_PROBEK_NA_ZYWO = 100    # ile „żyć" losujemy na żywo (100 ≈ 6 s, 200 �
 import json, time, warnings
 warnings.filterwarnings("ignore")
 import matplotlib.pyplot as plt
+import pandas as pd
 from delphi_demo import dane, pamiec, prognoza, przyklady, trening, wykresy, zasoby
 from delphi_demo.slownik import BladHistorii, parsuj_historie, wczytaj_slownik
-from delphi_demo.tokeny import MEZCZYZNA, Zdarzenie
+from delphi_demo.tokeny import KOBIETA, MEZCZYZNA, Zdarzenie
 
 def pl(x, cyfry=1):   # liczba z przecinkiem dziesiętnym (po polsku)
     return f"{x:.{cyfry}f}".replace(".", ",")
@@ -50,9 +51,9 @@ Poniżej jeden z ~7 tys. „pacjentów" z danych syntetycznych autorów. Nikt ta
 VAL = dane.wczytaj_bin(zasoby.katalog_danych() / "val.bin")
 s = dane.statystyki(VAL)
 print(f"Dane syntetyczne: {s['pacjentow']} osób, {s['zdarzen']} wpisów, "
-      f"średnio {s['zdarzen_na_pacjenta']:.0f} na osobę (diagnozy, płeć, styl życia)")
-print(f"{pl(100 * s['odsetek_zdarzen_przed_18'])}% diagnoz przypada na wiek poniżej 18 lat — "
-      "w UK Biobank to choroby z dzieciństwa podane przez dorosłych z wywiadu")
+      f"średnio {s['zdarzen_na_pacjenta']:.0f} na osobę (diagnozy i płeć)")
+print(f"{pl(100 * s['odsetek_zdarzen_przed_18'])}% diagnoz w danych syntetycznych przypada na wiek poniżej 18 lat. "
+      "W UK Biobank choroby z dzieciństwa pochodzą z wywiadu dorosłych.")
 PID = dane.pacjenci_z(VAL, SL.kod_do_tokenu["J45"], przed_wiekiem=18, min_zdarzen=15)[0]
 wykresy.os_zycia(dane.pacjent(VAL, PID), SL.nazwa, kolor=lambda t: SL.kolor[t],
                  tytul=f"Pacjent syntetyczny nr {PID} (wymyślony przez model autorów)")
@@ -88,9 +89,11 @@ else:
     print("Brak logu treningu: uruchom scripts/przygotuj_demo.py")"""),
     ("md", """## Twoja historia → prognoza
 
-Wpisz historię jako **kod ICD-10 (3 znaki) i wiek**, np. `E11 50, I10 55`.
-Można dopisać styl życia: `Smoking_high 40`, `BMI_high 45`.
-Model zna tylko rozdziały A–Q ICD-10: nie ma objawów (R), urazów (S–T) ani kodów Z."""),
+Wpisz historię jako **kod ICD-10 (3 znaki) i wiek**, np. `E11 50, I10 55` albo `E11 od 50 r.ż.`.
+Model zna tylko rozdziały A–Q ICD-10: nie ma objawów (R), urazów (S–T) ani kodów Z.
+Stylu życia (palenie, BMI, alkohol) nie da się wpisać: ma w słowniku swoje tokeny, ale w danych syntetycznych autorów nie występuje ani razu, więc nasz model go nie zna.
+
+W tabeli **„szansa, że to następne”** liczymy tylko spośród chorób i zgonu (bez „nic się nie dzieje”), czyli odpowiada na pytanie „jeśli coś się wydarzy, to co?”; **ryzyko w 5 lat*** zakłada, że tempo z dziś nie zmieni się przez 5 lat."""),
     ("code", """# ── TWOJA HISTORIA → PROGNOZA ─────────────────────────────────
 HISTORIA = "E11 50, I10 55"   # np. „J45 6, E66 30, I10 41"
 PLEC = "K"                    # "K" albo "M"
@@ -109,7 +112,14 @@ def pokaz_prognoze(historia_tekst, plec, wiek_teraz, top=10):
     osoba = "Kobieta" if plec == "K" else "Mężczyzna"
     wykresy.ranking_slupki(df, f"{osoba}, {wiek_teraz} lat: co model przewiduje jako następne?")
     plt.show()
-    return df[["kod", "nazwa", "p_nastepna", "ryzyko_1_rok", "ryzyko_5_lat"]].round(3)
+    tabela = pd.DataFrame({
+        "kod": df["kod"], "choroba": df["nazwa"],
+        "szansa, że to następne [%]": (100 * df["p_nastepna"]).map(pl),
+        "ryzyko w ciągu roku [%]": (100 * df["ryzyko_1_rok"]).map(pl),
+        "ryzyko w 5 lat [%]*": (100 * df["ryzyko_5_lat"]).map(pl),
+    })
+    tabela.index = range(1, len(tabela) + 1)
+    return tabela
 
 pokaz_prognoze(HISTORIA, PLEC, WIEK_TERAZ)"""),
     ("code", """# ── INTERAKTYWNIE ─────────────────────────────────────────────
@@ -129,20 +139,28 @@ Model losuje wiele możliwych dalszych żyć tej samej osoby (100 na żywo, 1000
 A, B = przyklady.PRZYKLADY["cukrzyca"], przyklady.PRZYKLADY["bez_cukrzycy"]
 CELE = [SL.kod_do_tokenu[k] for k in przyklady.CELE]
 
-def krzywe_dla(nazwa, p, cele):
+def krzywe_dla(nazwa, p, cele):   # → (tabela, skąd): z pamięci (policzone przed prelekcją) albo na żywo
     if TRYB == "z_pamieci" and pamiec.jest(f"krzywe_{nazwa}"):
-        return pamiec.wczytaj_tabele(f"krzywe_{nazwa}")
-    return prognoza.krzywe_ryzyka(MODEL, parsuj_historie(p["historia"], SL), p["plec"],
-                                  p["wiek_teraz"], cele, n_probek=N_PROBEK_NA_ZYWO)
+        n = pamiec.wczytaj_json("krzywe_info").get("n_probek") if pamiec.jest("krzywe_info") else None
+        return pamiec.wczytaj_tabele(f"krzywe_{nazwa}"), (f"z pamięci, N={n}" if n else "z pamięci")
+    df = prognoza.krzywe_ryzyka(MODEL, parsuj_historie(p["historia"], SL), p["plec"],
+                                p["wiek_teraz"], cele, n_probek=N_PROBEK_NA_ZYWO)
+    skad = f"na żywo, N={N_PROBEK_NA_ZYWO}"
+    if TRYB == "z_pamieci":
+        skad += "; brak wyników w pamięci, uruchom scripts/przygotuj_demo.py"
+    return df, skad
 
 start = time.time()
-KA, KB = krzywe_dla("cukrzyca", A, CELE), krzywe_dla("bez_cukrzycy", B, CELE)
-print(f"{A['opis']}\\nvs {B['opis']}\\n(tryb {TRYB}, {pl(time.time() - start)} s)")
+(KA, ZA), (KB, ZB) = krzywe_dla("cukrzyca", A, CELE), krzywe_dla("bez_cukrzycy", B, CELE)
+skad = ZA if ZA == ZB else f"{ZA} / {ZB}"
+print(f"{A['opis']}\\nvs {B['opis']}\\n(tryb {TRYB}: {skad}; {pl(time.time() - start)} s)")
 wykresy.krzywe(KA, SL.nazwa, KB, etykiety=("z cukrzycą", "bez cukrzycy"))
 plt.show()"""),
     ("md", """## Klamra: życie generowane token po tokenie
 
-Ta sama pętla co przy nazwach chorób: model patrzy na dotychczasową historię, podaje kandydatów z prawdopodobieństwami, losujemy jednego, dopisujemy i powtarzamy, aż do zgonu albo 80. roku życia."""),
+Ta sama pętla co przy nazwach chorób: model patrzy na dotychczasową historię, podaje kandydatów z prawdopodobieństwami, losujemy jednego, dopisujemy i powtarzamy, aż do zgonu albo 80. roku życia.
+
+W nawiasie: szansa wylosowanego zdarzenia; „kandydaci” to trzy najbardziej prawdopodobne. Obie liczby liczymy jak w rankingu: spośród chorób i zgonu. Wylosowane zdarzenie często nie jest w czołówce: każda z ~1250 chorób ma trochę szansy, a my **losujemy**, a nie wybieramy najbardziej prawdopodobnej."""),
     ("code", """# ── ŻYCIE TOKEN PO TOKENIE ────────────────────────────────────
 P = przyklady.PRZYKLADY["astma_od_dziecka"]
 H = parsuj_historie(P["historia"], SL)
@@ -155,7 +173,8 @@ else:
 print(P["opis"])
 print(wykresy.slad_generowania(KROKI, SL.nazwa, ile=12))
 GEN = [Zdarzenie(k.token, k.wiek_lat) for k in KROKI]
-wykresy.os_zycia([Zdarzenie(MEZCZYZNA, 0.0), *H], SL.nazwa, kolor=lambda t: SL.kolor[t],
+PLEC_P = KOBIETA if P["plec"] == "K" else MEZCZYZNA
+wykresy.os_zycia([Zdarzenie(PLEC_P, 0.0), *H], SL.nazwa, kolor=lambda t: SL.kolor[t],
                  wygenerowane=GEN, tytul="Historia (pełne kółka) i dalszy ciąg wylosowany przez model (puste)")
 plt.show()"""),
     ("md", """## Uczciwie: czego ten pokaz NIE pokazuje
@@ -163,7 +182,7 @@ plt.show()"""),
 - **Wagi:** prawdziwy Delphi-2M (UK Biobank) jest dostępny tylko po wniosku do UK Biobank (licencja wag CC BY-NC-ND 4.0, tylko niekomercyjnie). Nasz model widział wyłącznie dane syntetyczne autorów, ok. 7 tys. wymyślonych osób zamiast 400 tys. prawdziwych. Autorzy sami piszą, że model z danych syntetycznych służy tylko do testów kodu.
 - **Artefakty danych:** osoba z zaledwie dwiema diagnozami w wieku 60 lat wygląda w danych na „zdrowszą niż przeciętna", więc model daje jej bardzo niskie ryzyko zgonu. To cecha danych (kto trafia do szpitala, ten ma wpisy), nie wiedza medyczna.
 - **Dzieci:** UK Biobank zapraszał osoby 40–69-letnie (w chwili rekrutacji 37–73 lata). Choroby z dzieciństwa model zna tylko z wywiadu dorosłych. Pediatria czeka na swój Delphi.
-- **Nazwy chorób:** polska ICD-10 (Centrum e-Zdrowia, Rejestr Systemów Kodowania, dane.gov.pl, CC BY 4.0); kilkadziesiąt skróciliśmy dla czytelności, 6 kodów spoza wydania 2008 zostaje po angielsku.
+- **Nazwy chorób:** polska ICD-10 (Centrum e-Zdrowia, Rejestr Systemów Kodowania, dane.gov.pl, CC BY 4.0); kilkadziesiąt skróciliśmy dla czytelności, 6 kodów bez odpowiednika w ICD-10-2008-PL zostaje po angielsku.
 - **Wyniki z artykułu:** średnie AUC ok. 0,76 (UK Biobank), 0,67 w danych duńskich (1,9 mln osób, bez dostrajania).
 - Źródło: Shmatko i in., „Learning the natural history of human disease with generative transformers", *Nature* 2025, doi:10.1038/s41586-025-09529-3 · kod: github.com/gerstung-lab/Delphi (MIT)."""),
 ]

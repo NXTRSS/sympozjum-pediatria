@@ -44,6 +44,7 @@ for nazwa, p in przyklady.PRZYKLADY.items():
         model, historia, p["plec"], p["wiek_teraz"], cele, n_probek=args.n_probek))
     pamiec.zapisz_kroki(f"slad_{nazwa}", prognoza.generuj(model, historia, p["plec"], p["wiek_teraz"]))
     print(f"{nazwa}: {time.time() - start:.0f} s")
+pamiec.zapisz_json("krzywe_info", {"n_probek": args.n_probek})   # notebook drukuje „(z pamięci, N=…)”
 log = trening.KATALOG_TRENINGU / "trening.log"
 if log.exists():
     shutil.copy(log, pamiec.KATALOG_WYNIKOW / "trening.log")
