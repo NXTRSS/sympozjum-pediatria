@@ -1,0 +1,236 @@
+"""Generuje notebook/delphi_2m.ipynb z komórek poniżej (jedno źródło prawdy, czysty diff w gicie).
+
+uv run python scripts/zbuduj_notebook.py
+Uwaga: ręczne poprawki w Jupyterze nadpisze ponowne uruchomienie; zmiany wprowadzaj tutaj.
+"""
+from pathlib import Path
+
+import nbformat as nbf
+
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "notebook"))
+from colab_pierwsza_komorka import tekst as tekst_colab  # noqa: E402
+
+NB = Path(__file__).resolve().parents[1] / "notebook" / "delphi_2m.ipynb"
+
+KOMORKI = [
+    ("code", tekst_colab("delphi")),
+    ("md", """# Delphi-2M: model językowy, którego „słowami" są diagnozy
+### Sympozjum „Nowoczesne technologie w pediatrii" · Kamil Jędryczek
+
+W pierwszym notebooku model uczył się, jaka **litera** będzie następna w nazwie choroby. Delphi-2M (Shmatko i in., *Nature* 2025) robi to samo, tylko jego tokenami są **diagnozy ICD-10, śmierć, płeć i styl życia** (słownik 1270), a zamiast numeru pozycji dostaje **wiek w chwili zdarzenia**. Przewiduje też, **za ile czasu** pojawi się następne zdarzenie.
+
+> **Materiał edukacyjny. Nie jest wyrobem medycznym i nie służy do decyzji klinicznych.**
+>
+> **Uczciwie:** prawdziwe wagi Delphi-2M (UK Biobank) są dostępne tylko po wniosku do UK Biobank. Tutaj ten sam model (2,24 mln parametrów, kod autorów) trenowaliśmy na **danych syntetycznych**, które opublikowali autorzy. Pokazujemy **mechanizm**. Liczby ryzyka **nie są** prawdziwymi ryzykami dla pacjentów.
+
+> **Google Colab:** pierwsza komórka klonuje kod autorów (MIT) i pobiera checkpoint + wyniki z [GitHub Release](https://github.com/NXTRSS/sympozjum-pediatria/releases/tag/colab-demo-2026-11-27) (~1–2 min). Bez Releaseu: trening ~15–25 min (GPU). Po błędzie: *Odłącz i usuń środowisko wykonawcze*."""),
+    ("code", """# ── KONFIGURACJA ──────────────────────────────────────────────
+TRYB = "z_pamieci"        # "z_pamieci" = krzywe policzone przed prelekcją; "na_zywo" = liczymy teraz
+N_PROBEK_NA_ZYWO = 100    # ile „żyć" losujemy na żywo (100 ≈ 6 s, 200 ≈ 6–11 s na pacjenta; komórka liczy 2 pacjentów)
+
+import json, time, warnings
+warnings.filterwarnings("ignore")
+import matplotlib.pyplot as plt
+import pandas as pd
+from delphi_demo import dane, pamiec, prognoza, przyklady, trening, wykresy, zasoby
+from delphi_demo.slownik import BladHistorii, parsuj_historie, wczytaj_slownik
+from delphi_demo.tokeny import KOBIETA, MEZCZYZNA, Zdarzenie
+
+def pl(x, cyfry=1):   # liczba z przecinkiem dziesiętnym (po polsku)
+    return f"{x:.{cyfry}f}".replace(".", ",")
+
+pamiec.zsynchronizuj_wzorce()              # po git pull: lekkie ślady z delphi/wzorce_wyniki/
+SL = wczytaj_slownik()
+MODEL = trening.zaladuj_model()          # wytrenowany przed prelekcją na danych syntetycznych
+print(f"Delphi: {pl(trening.liczba_parametrow(MODEL) / 1e6, 2)} mln parametrów, "
+      f"słownik: {len(SL.etykiety)} tokenów (choroby ICD-10, płeć, styl życia, zgon)")"""),
+    ("md", """## Od liter do diagnoz
+
+| | nasz model z nazwami chorób | Delphi-2M |
+|---|---|---|
+| token | litera | kod ICD-10 (np. E11), zgon, płeć, BMI, palenie, alkohol; słownik 1270 |
+| „zdanie" | nazwa choroby | historia zdrowia jednej osoby |
+| pozycja | numer litery | **wiek w chwili zdarzenia** (dni od urodzenia) |
+| przewiduje | następną literę | **następną chorobę i czas do niej** |
+| koniec | znak „!" | token **zgonu** (model go przewiduje, jak chorobę) |
+
+Poniżej jeden z ~7 tys. „pacjentów" z danych syntetycznych autorów. Nikt taki nie istnieje: wymyślił go wytrenowany Delphi-2M."""),
+    ("code", """# ── PACJENT SYNTETYCZNY ───────────────────────────────────────
+VAL = dane.wczytaj_bin(zasoby.katalog_danych() / "val.bin")
+s = dane.statystyki(VAL)
+print(f"Dane syntetyczne: {s['pacjentow']} osób, {s['zdarzen']} wpisów, "
+      f"średnio {s['zdarzen_na_pacjenta']:.0f} na osobę (diagnozy i płeć)")
+print(f"{pl(100 * s['odsetek_zdarzen_przed_18'])}% diagnoz w danych syntetycznych przypada na wiek poniżej 18 lat. "
+      "W UK Biobank choroby z dzieciństwa pochodzą z wywiadu dorosłych.")
+PID = dane.pacjenci_z(VAL, SL.kod_do_tokenu["J45"], przed_wiekiem=18, min_zdarzen=15)[0]
+wykresy.os_zycia(dane.pacjent(VAL, PID), SL.nazwa, kolor=lambda t: SL.kolor[t],
+                 tytul=f"Pacjent syntetyczny nr {PID} (wymyślony przez model autorów)")
+plt.show()"""),
+    ("md", """## Jak Delphi liczy „co dalej"?
+
+Dla **każdej** z ~1250 chorób (i zgonu) model podaje **tempo**: jak szybko ta choroba „nadchodzi".
+Wyobraźmy sobie ~1250 zegarów, które tykają naraz. Każdy ma inne tempo. Który zadzwoni pierwszy, ta choroba będzie następna.
+
+- **ranking** = które zegary tykają najszybciej,
+- **ryzyko w ciągu roku** = szansa, że dany zegar zadzwoni w ciągu 12 miesięcy,
+- **losowanie życia** = puszczamy zegary, zapisujemy pierwszy dzwonek, dopisujemy go do historii i powtarzamy. To ta sama pętla co przy nazwach chorób.
+
+Najpierw jednak model musiał się nauczyć. Trening (przed prelekcją) wyglądał tak. Patrzcie na dwie linie: błąd na pacjentach treningowych i na pacjentach odłożonych na bok. Dopóki obie spadają, model uczy się reguł. Gdy treningowa spada, a odłożona przestaje spadać albo rośnie, model zaczyna **zapamiętywać** 7 tys. pacjentów. To samo widzieliśmy przy nazwach chorób. Zapisujemy model z najlepszego kroku."""),
+    ("code", """# ── JAK SIĘ UCZYŁ ─────────────────────────────────────────────
+LOG = pamiec.KATALOG_WYNIKOW / "trening.log"
+if LOG.exists():
+    _, EWAL = trening.parsuj_log(LOG.read_text())
+    czas = json.loads((pamiec.KATALOG_WYNIKOW / "czas_treningu.json").read_text())["czas_s"] / 60
+    najlepszy = int(EWAL.loc[EWAL["walidacja"].idxmin(), "krok"])
+    wzrost = float(EWAL["walidacja"].iloc[-1] - EWAL["walidacja"].min())
+    print(f"{int(EWAL['krok'].iloc[-1])} kroków, {czas:.0f} min; najlepszy model z kroku {najlepszy}.")
+    if wzrost > 0.1:
+        print(f"Po kroku {najlepszy} błąd walidacyjny rośnie (+{pl(wzrost, 2)}), choć treningowy spada: model zaczął zapamiętywać.")
+    elif najlepszy == int(EWAL["krok"].iloc[-1]):
+        print("Błąd walidacyjny spadał do końca: model wciąż uczył się reguł i nie zaczął zapamiętywać. "
+              "(Przy dłuższym treningu, np. 5000 kroków, widać, jak zaczyna.)")
+    else:
+        print("Błąd walidacyjny przestał spadać, ale jeszcze nie rośnie: to moment, w którym warto skończyć trening.")
+    wykresy.krzywa_uczenia(EWAL, czas)
+    plt.show()
+else:
+    print("Brak logu treningu: uruchom scripts/przygotuj_demo.py")"""),
+    ("md", """## Twoja historia → prognoza
+
+**Nie znasz kodów ICD-10?** W panelu pod następną komórką wpisz fragment nazwy po polsku („cukrz”, „zawal”, „astma”, „autyzm”; polskie znaki niepotrzebne), wybierz chorobę z listy, podaj wiek i kliknij „Dodaj do historii”.
+Można też wpisać historię wprost jako **kod ICD-10 (3 znaki) i wiek**, np. `E11 50, I10 55` albo `E11 od 50 r.ż.`.
+Model zna tylko rozdziały A–Q ICD-10: nie ma objawów (R), urazów (S–T) ani kodów Z.
+Stylu życia (palenie, BMI, alkohol) nie da się wpisać: ma w słowniku swoje tokeny, ale w danych syntetycznych autorów nie występuje ani razu, więc nasz model go nie zna.
+
+W tabeli **„szansa, że to następne”** liczymy tylko spośród chorób i zgonu (bez „nic się nie dzieje”), czyli odpowiada na pytanie „jeśli coś się wydarzy, to co?”; **ryzyko w 5 lat*** zakłada, że tempo z dziś nie zmieni się przez 5 lat."""),
+    ("code", """# ── TWOJA HISTORIA → PROGNOZA ─────────────────────────────────
+HISTORIA = "E11 50, I10 55"   # np. „J45 6, E66 30, I10 41"
+PLEC = "K"                    # "K" albo "M"
+WIEK_TERAZ = 60
+
+def pokaz_prognoze(historia_tekst, plec, wiek_teraz, top=10):
+    try:
+        historia = parsuj_historie(historia_tekst, SL)
+        df = SL.opisz(prognoza.ranking(MODEL, historia, plec, wiek_teraz, top=top))
+    except (BladHistorii, ValueError) as blad:
+        print("UWAGA:", blad)
+        return None
+    print("INFO: model trenowany na danych SYNTETYCZNYCH; liczby pokazują mechanizm, nie ryzyko kliniczne.")
+    for uwaga in prognoza.ostrzezenia(historia, wiek_teraz):
+        print("INFO:", uwaga)
+    osoba = "Kobieta" if plec == "K" else "Mężczyzna"
+    wykresy.ranking_slupki(df, f"{osoba}, {wiek_teraz} lat: co model przewiduje jako następne?")
+    plt.show()
+    tabela = pd.DataFrame({
+        "kod": df["kod"], "choroba": df["nazwa"],
+        "szansa, że to następne [%]": (100 * df["p_nastepna"]).map(pl),
+        "ryzyko w ciągu roku [%]": (100 * df["ryzyko_1_rok"]).map(pl),
+        "ryzyko w 5 lat [%]*": (100 * df["ryzyko_5_lat"]).map(pl),
+    })
+    tabela.index = range(1, len(tabela) + 1)
+    return tabela
+
+pokaz_prognoze(HISTORIA, PLEC, WIEK_TERAZ)"""),
+    ("code", """# ── WYSZUKIWARKA CHORÓB I PROGNOZA INTERAKTYWNIE ──────────────
+from delphi_demo.wyszukiwarka import panel
+
+PANEL = panel(SL, pokaz_prognoze, historia=HISTORIA, plec=PLEC, wiek_teraz=WIEK_TERAZ)
+PANEL.widok"""),
+    ("md", """## Co zmienia jedna diagnoza?
+
+Model losuje wiele możliwych dalszych żyć tej samej osoby (100 na żywo, 1000 w wersji przygotowanej przed prelekcją) i liczy, w ilu z nich pojawił się zawał, niewydolność serca, udar, choroba nerek albo zgon. Linia ciągła: z cukrzycą. Przerywana: ta sama osoba bez cukrzycy."""),
+    ("code", """# ── KRZYWE RYZYKA: Z CUKRZYCĄ I BEZ ───────────────────────────
+A, B = przyklady.PRZYKLADY["cukrzyca"], przyklady.PRZYKLADY["bez_cukrzycy"]
+CELE = [SL.kod_do_tokenu[k] for k in przyklady.CELE]
+
+def krzywe_dla(nazwa, p, cele):   # → (tabela, skąd): z pamięci (policzone przed prelekcją) albo na żywo
+    if TRYB == "z_pamieci" and pamiec.jest(f"krzywe_{nazwa}"):
+        n = pamiec.wczytaj_json("krzywe_info").get("n_probek") if pamiec.jest("krzywe_info") else None
+        return pamiec.wczytaj_tabele(f"krzywe_{nazwa}"), (f"z pamięci, N={n}" if n else "z pamięci")
+    df = prognoza.krzywe_ryzyka(MODEL, parsuj_historie(p["historia"], SL), p["plec"],
+                                p["wiek_teraz"], cele, n_probek=N_PROBEK_NA_ZYWO)
+    skad = f"na żywo, N={N_PROBEK_NA_ZYWO}"
+    if TRYB == "z_pamieci":
+        skad += "; brak wyników w pamięci, uruchom scripts/przygotuj_demo.py"
+    return df, skad
+
+start = time.time()
+(KA, ZA), (KB, ZB) = krzywe_dla("cukrzyca", A, CELE), krzywe_dla("bez_cukrzycy", B, CELE)
+skad = ZA if ZA == ZB else f"{ZA} / {ZB}"
+print(f"{A['opis']}\\nvs {B['opis']}\\n(tryb {TRYB}: {skad}; {pl(time.time() - start)} s)")
+wykresy.krzywe(KA, SL.nazwa, KB, etykiety=("z cukrzycą", "bez cukrzycy"))
+plt.show()"""),
+    ("md", """## Klamra: życie generowane token po tokenie
+
+Ta sama pętla co przy nazwach chorób: model patrzy na dotychczasową historię, podaje kandydatów z prawdopodobieństwami, losujemy jednego, dopisujemy i powtarzamy, aż do zgonu albo limitu kroków.
+
+W panelu poniżej ustaw historię, płeć, wiek dziś, ziarno i temperaturę, potem kliknij **Generuj**. Domyślnie: przykład astmy od dzieciństwa (to samo co wcześniej na slajdzie).
+
+W nawiasie: szansa wylosowanego zdarzenia; „kandydaci” to najbardziej prawdopodobne. Wylosowane zdarzenie często nie jest w czołówce — dlatego jedno życie to ilustracja mechanizmu, a prognozą są krzywe z 1000 losowań wyżej."""),
+    ("code", """# ── ŻYCIE TOKEN PO TOKENIE (PANEL) ────────────────────────────
+from IPython.display import display
+from delphi_demo.generowanie_panel import panel_generowania
+
+P = przyklady.PRZYKLADY["astma_od_dziecka"]
+
+
+def pokaz_zycie_tokenami(historia_tekst, plec, wiek_teraz, ziarno, temperatura, maks_krokow,
+                         ile_sladu=12, kroki_z_pamieci=None):
+    try:
+        historia = parsuj_historie(historia_tekst, SL)
+    except BladHistorii as blad:
+        print("UWAGA:", blad)
+        return None
+    if kroki_z_pamieci is not None:
+        kroki = kroki_z_pamieci
+    else:
+        kroki = prognoza.generuj(
+            MODEL, historia, plec, wiek_teraz,
+            ziarno=ziarno, temperatura=temperatura, maks_krokow=maks_krokow,
+        )
+    opis = P["opis"] if historia_tekst.strip() == P["historia"] else (
+        f"({'Kobieta' if plec == 'K' else 'Mężczyzna'}, {wiek_teraz} lat; historia: {historia_tekst})")
+    print(opis)
+    print(wykresy.slad_generowania(kroki, SL.nazwa, ile=ile_sladu))
+    gen = [Zdarzenie(k.token, k.wiek_lat) for k in kroki]
+    plec_p = KOBIETA if plec == "K" else MEZCZYZNA
+    wykresy.os_zycia(
+        [Zdarzenie(plec_p, 0.0), *historia], SL.nazwa, kolor=lambda t: SL.kolor[t],
+        wygenerowane=gen,
+        tytul="Historia (pełne kółka) i dalszy ciąg wylosowany przez model (puste)",
+    )
+    plt.show()
+    return kroki
+
+
+PANEL_GEN = panel_generowania(
+    SL, pokaz_zycie_tokenami, tryb=TRYB, klucz_pamieci="astma_od_dziecka", domyslny=P,
+    historia=P["historia"], plec=P["plec"], wiek_teraz=P["wiek_teraz"],
+    ziarno=0, temperatura=1.0, maks_krokow=80, ile_sladu=12,
+)
+display(PANEL_GEN.widok)
+PANEL_GEN.uruchom_domyslnie()"""),
+    ("md", """## Uczciwie: czego ten pokaz NIE pokazuje
+
+- **Wagi:** prawdziwy Delphi-2M (UK Biobank) jest dostępny tylko po wniosku do UK Biobank (licencja wag CC BY-NC-ND 4.0, tylko niekomercyjnie). Nasz model widział wyłącznie dane syntetyczne autorów, ok. 7 tys. wymyślonych osób zamiast 400 tys. prawdziwych. Autorzy sami piszą, że model z danych syntetycznych służy tylko do testów kodu.
+- **Artefakty danych:** osoba z zaledwie dwiema diagnozami w wieku 60 lat wygląda w danych na „zdrowszą niż przeciętna", więc model daje jej bardzo niskie ryzyko zgonu. To cecha danych (kto trafia do szpitala, ten ma wpisy), nie wiedza medyczna.
+- **Dzieci:** UK Biobank zapraszał osoby 40–69-letnie (w chwili rekrutacji 37–73 lata). Choroby z dzieciństwa model zna tylko z wywiadu dorosłych. Pediatria czeka na swój Delphi.
+- **Nazwy chorób:** polska ICD-10 (Centrum e-Zdrowia, Rejestr Systemów Kodowania, dane.gov.pl, CC BY 4.0); kilkadziesiąt skróciliśmy dla czytelności, 6 kodów bez odpowiednika w ICD-10-2008-PL zostaje po angielsku.
+- **Wyniki z artykułu:** średnie AUC ok. 0,76 (UK Biobank), 0,67 w danych duńskich (1,9 mln osób, bez dostrajania).
+- Źródło: Shmatko i in., „Learning the natural history of human disease with generative transformers", *Nature* 2025, doi:10.1038/s41586-025-09529-3 · kod: github.com/gerstung-lab/Delphi (MIT)."""),
+]
+
+
+def main() -> None:
+    nb = nbf.v4.new_notebook()
+    nb.metadata["kernelspec"] = {"name": "python3", "display_name": "Python 3", "language": "python"}
+    nb.cells = [nbf.v4.new_markdown_cell(t) if r == "md" else nbf.v4.new_code_cell(t) for r, t in KOMORKI]
+    NB.parent.mkdir(parents=True, exist_ok=True)
+    nbf.write(nb, NB)
+    print(f"Zapisano {NB} ({len(nb.cells)} komórek)")
+
+
+if __name__ == "__main__":
+    main()
