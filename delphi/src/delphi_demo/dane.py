@@ -23,8 +23,9 @@ def pacjent(dane: np.ndarray, pid: int) -> list[Zdarzenie]:
 
 def statystyki(dane: np.ndarray) -> dict:
     """Liczby do pokazania na sali. `pacjentow`, `zdarzen` i `zdarzen_na_pacjenta` liczą wszystkie wiersze
-    (także płeć i styl życia). `odsetek_zdarzen_przed_18` liczy TYLKO choroby i zgon (token modelu ≥
-    PIERWSZA_CHOROBA): płeć i styl życia mają wiek 0, więc zawyżałyby ten odsetek. Mianownik to te same zdarzenia."""
+    (także płeć; tokenów stylu życia 4–12 w danych syntetycznych autorów nie ma ani jednego).
+    `odsetek_zdarzen_przed_18` liczy TYLKO choroby i zgon (token modelu ≥ PIERWSZA_CHOROBA): płeć ma wiek 0,
+    więc zawyżałaby ten odsetek. Mianownik to te same zdarzenia."""
     pid = dane[:, 0]
     n_pac = len(np.unique(pid))
     choroby = dane[dane[:, 2] >= tokeny.PIERWSZA_CHOROBA - 1]     # w pliku .bin tokeny są o 1 mniejsze
@@ -41,7 +42,7 @@ def pacjenci_z(dane: np.ndarray, token: int, przed_wiekiem: float | None = None,
                min_zdarzen: int = 1) -> list[int]:
     """Id pacjentów, którzy mają dany token (modelu), opcjonalnie przed danym wiekiem.
 
-    `min_zdarzen` liczy wszystkie wiersze pacjenta w pliku, także płeć i styl życia (nie tylko choroby).
+    `min_zdarzen` liczy wszystkie wiersze pacjenta w pliku, także płeć (nie tylko choroby).
     """
     maska = dane[:, 2] == token - 1
     if przed_wiekiem is not None:

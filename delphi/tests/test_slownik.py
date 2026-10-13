@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from delphi_demo import tokeny
+from delphi_demo import icd10_pl, tokeny
 from delphi_demo.slownik import BladHistorii, parsuj_historie, wczytaj_slownik
 from delphi_demo.tokeny import Zdarzenie
 
@@ -22,6 +22,8 @@ def test_kody_i_nazwy(sl):
 
 def test_nazwy_oficjalne_cez(sl):
     """dane/icd10_pl.csv (Centrum e-Zdrowia, ICD-10-2008-PL, CC BY 4.0): 2050 kategorii, 1248 z 1254 kodów autorów."""
+    if not icd10_pl.SCIEZKA_CSV.exists():
+        pytest.skip("brak dane/icd10_pl.csv; najpierw: uv run python scripts/przygotuj_demo.py")
     assert len(sl.oficjalne) == 2050
     assert sl.nazwa(sl.kod_do_tokenu["E78"]) == "zaburzenia lipidowe"            # NAZWY_PL ma pierwszeństwo
     assert sl.nazwa(sl.kod_do_tokenu["K62"]) == "inne choroby odbytu i odbytnicy"
@@ -54,8 +56,26 @@ def test_parsuj_po_polsku_przecinek_podkod_male_litery(sl):
     assert h == [Zdarzenie(215, 50.0), Zdarzenie(499, 55.5)]   # posortowane wg wieku
 
 
-def test_parsuj_styl_zycia(sl):
-    assert parsuj_historie("Smoking_high 40", sl) == [Zdarzenie(9, 40.0)]
+@pytest.mark.parametrize("tekst", ["Smoking_high 40", "smoking_high 40", "E11 50, BMI_high 45",
+                                   "ALCOHOL_HIGH 30", "BMI 45"])
+def test_styl_zycia_odrzucony_z_wyjasnieniem(sl, tekst):
+    """W train.bin i val.bin jest 0 tokenów 4–12: model nie zna stylu życia, więc go nie przyjmujemy."""
+    with pytest.raises(BladHistorii, match="Stylu życia .* nie da się wpisać: w danych syntetycznych"):
+        parsuj_historie(tekst, sl)
+
+
+@pytest.mark.parametrize("tekst", ["E11 50 r.ż., I10 55 r.ż.", "E11 50 rż, I10 55 rż", "E11 50 r. ż.; I10 55 r. ż.",
+                                   "E11 od 50 roku życia, I10 od 55 roku życia", "E11 od 50 r.ż., I10 od 55 r.ż.",
+                                   "E11 od 50 lat, I10 od 55 lat", "E11 od 50. r.ż., I10 w wieku 55 lat",
+                                   "E11 50r.ż., I10 55 R.Ż."])
+def test_wiek_opisany_slowami(sl, tekst):
+    assert parsuj_historie(tekst, sl) == [Zdarzenie(215, 50.0), Zdarzenie(499, 55.0)]
+
+
+@pytest.mark.parametrize("tekst", ["E11 r.ż.", "E11 od r.ż. I10 55", "E11 od roku życia", "E11 od, I10 55"])
+def test_slowa_bez_liczby_to_nadal_brak_wieku(sl, tekst):
+    with pytest.raises(BladHistorii, match="Brak wieku przy E11"):
+        parsuj_historie(tekst, sl)
 
 
 def test_parsuj_duplikat_zostaje_najwczesniejszy(sl):

@@ -11,7 +11,7 @@ PADDING = 0
 BRAK_ZDARZENIA = 1          # „No event": wstawiany co ~5 lat, mówi modelowi, ile lat ma pacjent „teraz"
 KOBIETA = 2
 MEZCZYZNA = 3
-STYL_ZYCIA = tuple(range(4, 13))   # BMI / palenie / alkohol × niski / średni / wysoki
+STYL_ZYCIA = tuple(range(4, 13))   # BMI / palenie / alkohol × niski / średni / wysoki; w danych syntetycznych: 0 wpisów
 PIERWSZA_CHOROBA = 13
 SMIERC = 1269
 LICZBA_TOKENOW = 1270
@@ -22,6 +22,6 @@ CO_ILE_LAT_BRAK_ZDARZENIA = 5   # = no_event_token_rate w configu autorów
 
 @dataclass(frozen=True)
 class Zdarzenie:
-    """Jeden wpis historii: token (choroba / styl życia) i wiek w latach."""
+    """Jeden wpis historii: token (płeć / choroba / zgon / „brak zdarzenia") i wiek w latach."""
     token: int
     wiek_lat: float

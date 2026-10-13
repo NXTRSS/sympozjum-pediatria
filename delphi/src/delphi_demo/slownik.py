@@ -44,17 +44,24 @@ NAZWY_PL = {
 }
 
 _KOD_ETYKIETY = r"^([A-Z]\d{2}|CXX)\b"          # początek etykiety autorów: „E11 …", „CXX Unknown Cancer"
-_KOD_WPISU = r"(?<![A-Za-z0-9_])(?:[A-Za-z]\d{2}(?!\d)|BMI_\w+|Smoking_\w+|Alcohol_\w+)"
+_KOD_WPISU = r"(?<![A-Za-z0-9_])[A-Za-z]\d{2}(?!\d)"
 # Między kodem (z opcjonalnym podkodem „.9") a wiekiem wolno tylko: białe znaki, „: , ; = –", myślnik ze spacją
-# po nim oraz słowa „w" / „wieku". Wiek to 1–3 cyfry (opcjonalnie z częścią dziesiętną), bez cyfr po bokach.
+# po nim oraz słowa „w" / „wieku" / „od". Wiek to 1–3 cyfry (opcjonalnie z częścią dziesiętną), bez cyfr po bokach.
 _WPIS = re.compile(
-    r"(?P<kod>" + _KOD_WPISU + r")(?:\.\d+)?"                                      # E11, E11.9, Smoking_high
-    r"(?:\s|[:,;=–]|-(?=\s)|\b(?:w|wieku)\b)*"                                   # „ w wieku ", „: ", " – "
+    r"(?P<kod>" + _KOD_WPISU + r")(?:\.\d+)?"                                      # E11, E11.9
+    r"(?:\s|[:,;=–]|-(?=\s)|\b(?:w|wieku|od)\b)*"                                # „ w wieku ", „ od ", „: ", " – "
     r"(?<![\d.])(?P<wiek>\d{1,3}(?:[.,]\d+)?)(?![\d])"                          # 50 lub 50,5
 )
 _KOD_BEZ_WIEKU = re.compile(_KOD_WPISU)
 _ZGON = re.compile(r"\b(death|zgon\w*)\b", re.IGNORECASE)
-_SLOWA_DOZWOLONE = re.compile(r"\b(w|wieku|lat|lata|roku|rż)\b", re.IGNORECASE)
+# Słowa wokół wieku, które pomijamy: „lat", „roku życia", „r.ż.", „rż", „r. ż.", „od", „w wieku".
+# (?<![^\W\d_]) = nie po literze (cyfra wolno: „50r.ż."), (?![^\W\d_]) = nie przed literą.
+_SLOWA_DOZWOLONE = re.compile(r"(?<![^\W\d_])(?:w|wieku|od|lat|lata|roku|życia|r\.?\s?ż\.?)(?![^\W\d_])",
+                              re.IGNORECASE)
+# Styl życia: tokeny są w słowniku autorów (labels.csv), ale w danych syntetycznych nie ma ani jednego wpisu.
+_STYL_ZYCIA = re.compile(r"(?<![A-Za-z0-9])(?:BMI|Smoking|Alcohol)(?![a-z])", re.IGNORECASE)
+KOMUNIKAT_STYL_ZYCIA = ("Stylu życia (palenie, BMI, alkohol) nie da się wpisać: w danych syntetycznych autorów "
+                        "nie ma ani jednego takiego wpisu, więc nasz model go nie zna.")
 
 
 class BladHistorii(ValueError):
@@ -129,11 +136,15 @@ def parsuj_historie(tekst: str, slownik: Slownik) -> list[Zdarzenie]:
     """„E11 50, I10 w wieku 55,5" → [Zdarzenie(215, 50.0), Zdarzenie(499, 55.5)], posortowane wg wieku.
 
     Powtórzony kod: zostaje najwcześniejszy wpis (Delphi liczy pierwsze wystąpienie choroby).
+    Wiek można opisać słowami: „E11 od 50 r.ż.", „E11 w wieku 50 lat", „E11 od 50 roku życia".
+    Styl życia (BMI_*, Smoking_*, Alcohol_*) odrzucamy: w danych syntetycznych go nie ma (0 wpisów).
     """
     if not tekst.strip():
         return []
     if _ZGON.search(tekst):
         raise BladHistorii("Zgonu nie wpisuje się do historii: to model przewiduje, czy i kiedy nastąpi.")
+    if _STYL_ZYCIA.search(tekst):
+        raise BladHistorii(KOMUNIKAT_STYL_ZYCIA)
     reszta = " ".join(_SLOWA_DOZWOLONE.sub(" ", _WPIS.sub(" ", tekst)).split())
     if re.search(r"\w", reszta):
         bez_wieku = _KOD_BEZ_WIEKU.search(reszta)
@@ -145,8 +156,7 @@ def parsuj_historie(tekst: str, slownik: Slownik) -> list[Zdarzenie]:
     zdarzenia: dict[int, Zdarzenie] = {}
     nieznane = []
     for m in _WPIS.finditer(tekst):
-        kod = m.group("kod")
-        kod = kod.upper() if re.fullmatch(r"[A-Za-z]\d{2}", kod) else kod
+        kod = m.group("kod").upper()
         wiek = float(m.group("wiek").replace(",", "."))
         if not 0 <= wiek <= 110:
             raise BladHistorii(f"Wiek {wiek:g} przy {kod} jest poza zakresem 0–110 lat.")
