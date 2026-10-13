@@ -16,6 +16,12 @@ from delphi_demo.tokeny import Zdarzenie
 Nazwa = Callable[[int], str]
 ATRYBUCJA = ("Model: Delphi (Shmatko i in., Nature 2025), kod MIT; trenowany przez nas "
              "na danych SYNTETYCZNYCH autorów, nie na UK Biobank")
+ATRYBUCJA_STYL = dict(fontsize=8, color="#555")   # czytelne z projektora (wcześniej 6 pt szarym)
+
+
+def _pl(x: float, cyfry: int = 1) -> str:
+    """Liczba z przecinkiem dziesiętnym (po polsku)."""
+    return f"{x:.{cyfry}f}".replace(".", ",")
 
 
 def os_zycia(historia: Sequence[Zdarzenie], nazwa: Nazwa, kolor: Callable[[int], str] | None = None,
@@ -47,10 +53,10 @@ def ranking_slupki(df: pd.DataFrame, tytul: str = "Co model przewiduje jako nast
     fig, ax = plt.subplots(figsize=(8, 0.45 * len(df) + 1))
     ax.barh(df["nazwa"][::-1], 100 * df["ryzyko_1_rok"][::-1], color="C1")
     for y, v in enumerate(100 * df["ryzyko_1_rok"][::-1]):
-        ax.text(v, y, f" {v:.1f}%", va="center", fontsize=9)
+        ax.text(v, y, f" {_pl(v)}%", va="center", fontsize=9)
     ax.set_xlabel("ryzyko w ciągu roku [%]"); ax.set_title(tytul)
-    fig.text(0.01, 0.01, ATRYBUCJA, fontsize=6, color="grey")
-    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    fig.text(0.01, 0.01, ATRYBUCJA, **ATRYBUCJA_STYL)
+    fig.tight_layout(rect=(0, 0.04, 1, 1))
     return fig
 
 
@@ -66,9 +72,9 @@ def krzywe(df: pd.DataFrame, nazwa: Nazwa, df_porownanie: pd.DataFrame | None = 
             ax.plot(df_porownanie["lata"], 100 * df_porownanie[kol], color=f"C{i}", lw=2, ls="--",
                     label=f"{nazwa(int(kol))} ({etykiety[1]})")
     ax.set_xlabel("lata od dziś"); ax.set_ylabel("skumulowane ryzyko [%]"); ax.set_title(tytul)
-    ax.legend(fontsize=8, loc="upper left"); ax.grid(alpha=0.3)
-    fig.text(0.01, 0.01, ATRYBUCJA, fontsize=6, color="grey")
-    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    ax.legend(fontsize=8, loc="best"); ax.grid(alpha=0.3)
+    fig.text(0.01, 0.01, ATRYBUCJA, **ATRYBUCJA_STYL)
+    fig.tight_layout(rect=(0, 0.04, 1, 1))
     return fig
 
 
@@ -89,7 +95,9 @@ def krzywa_uczenia(ewal: pd.DataFrame, czas_min: float | None = None):
 
 
 def slad_generowania(kroki, nazwa: Nazwa, ile: int = 8) -> str:
-    """Tekstowy ślad jak w demo z nazwami chorób: krok, wiek, wybrany token, kandydaci z p."""
+    """Tekstowy ślad jak w demo z nazwami chorób: krok, wiek, wybrany token (z jego p), kandydaci z p.
+
+    p liczone spośród chorób i zgonu (bez „brak zdarzenia"), tak jak `p_nastepna` w rankingu."""
     def krotko(t: int) -> str:
         n = nazwa(t)
         return n if len(n) <= 38 else n[:37] + "…"
@@ -97,7 +105,11 @@ def slad_generowania(kroki, nazwa: Nazwa, ile: int = 8) -> str:
     linie = []
     widoczne = [k for k in kroki if k.token != tokeny.BRAK_ZDARZENIA][:ile]
     for n, k in enumerate(widoczne, 1):
-        kandydaci = ", ".join([f"{krotko(t)} {100 * p:.0f}%" for t, p in k.kandydaci
+        kandydaci = ", ".join([f"{krotko(t)} {_pl(100 * p)}%" for t, p in k.kandydaci
                                if t != tokeny.BRAK_ZDARZENIA][:3])
-        linie.append(f"{n:>2}. wiek {k.wiek_lat:5.1f} → {krotko(k.token):<38} (kandydaci: {kandydaci})")
+        p_wyl = getattr(k, "p", None)
+        if p_wyl is not None:
+            p_txt = "<0,1%" if 100 * p_wyl < 0.05 else f"{_pl(100 * p_wyl)}%"
+        wybrany = krotko(k.token) + (f" ({p_txt})" if p_wyl is not None else "")
+        linie.append(f"{n:>2}. wiek {_pl(k.wiek_lat):>5} → {wybrany:<46} (kandydaci: {kandydaci})")
     return "\n".join(linie)

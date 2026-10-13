@@ -15,7 +15,7 @@ def test_tabela_tam_i_z_powrotem(tmp_path):
 
 
 def test_kroki_tam_i_z_powrotem(tmp_path):
-    kroki = [Krok(61.5, 505, [(505, 0.3), (1269, 0.1)])]
+    kroki = [Krok(61.5, 505, [(505, 0.3), (1269, 0.1)], 0.3), Krok(62.0, 1, [(505, 0.3)])]
     pamiec.zapisz_kroki("slad", kroki, tmp_path)
     assert pamiec.wczytaj_kroki("slad", tmp_path) == kroki
     assert pamiec.jest("slad", tmp_path) and not pamiec.jest("brak", tmp_path)

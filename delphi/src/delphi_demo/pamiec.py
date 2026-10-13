@@ -40,7 +40,7 @@ def zapisz_kroki(nazwa: str, kroki: list[Krok], katalog: Path | None = None) -> 
 
 def wczytaj_kroki(nazwa: str, katalog: Path | None = None) -> list[Krok]:
     surowe = json.loads(_plik(nazwa, katalog).read_text())
-    return [Krok(k["wiek_lat"], k["token"], [tuple(x) for x in k["kandydaci"]]) for k in surowe]
+    return [Krok(k["wiek_lat"], k["token"], [tuple(x) for x in k["kandydaci"]], k.get("p")) for k in surowe]
 
 
 def jest(nazwa: str, katalog: Path | None = None) -> bool:

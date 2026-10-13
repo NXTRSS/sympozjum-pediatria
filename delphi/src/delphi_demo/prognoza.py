@@ -23,10 +23,16 @@ MAKS_WIEK_DANYCH = 80.0   # dane syntetyczne kończą się na 80. roku życia
 
 @dataclass
 class Krok:
-    """Jeden krok generowania: wylosowany token, wiek i 5 najbardziej prawdopodobnych kandydatów."""
+    """Jeden krok generowania: wylosowany token, wiek i 5 najbardziej prawdopodobnych kandydatów.
+
+    Kandydaci i `p` liczone są jak `p_nastepna` w `ranking`: spośród chorób i zgonu, bez „brak zdarzenia"
+    (czyli „jeśli coś się wydarzy, to z jaką szansą właśnie to"). `p` = szansa wylosowanego tokenu;
+    None, gdy wylosowano „brak zdarzenia" (takich kroków nie pokazujemy na sali).
+    """
     wiek_lat: float
     token: int
     kandydaci: list[tuple[int, float]]
+    p: float | None = None
 
 
 def ostrzezenia(historia: Sequence[Zdarzenie], wiek_teraz: float) -> list[str]:
@@ -74,7 +80,16 @@ def _dozwolone_logity(logity: torch.Tensor, idx: torch.Tensor) -> torch.Tensor:
 @torch.no_grad()
 def ranking(model, historia: Sequence[Zdarzenie], plec: str, wiek_teraz: float,
             top: int = 10) -> pd.DataFrame:
-    """Najbardziej prawdopodobne NASTĘPNE zdarzenia (choroby i zgon) dla pacjenta „dziś"."""
+    """Najbardziej prawdopodobne NASTĘPNE zdarzenia (choroby i zgon) dla pacjenta „dziś".
+
+    Kolumny:
+    - `p_nastepna` – prawdopodobieństwo WARUNKOWE: „pod warunkiem, że następnym wpisem będzie choroba
+      albo zgon, z jaką szansą będzie to właśnie ta". Softmax liczony bez „brak zdarzenia"
+      (ten token ma zwykle ok. 1/3 całej masy i jest wyłączony), więc kolumna sumuje się do 1 po wszystkich
+      chorobach i zgonie, a nie mówi, czy cokolwiek wydarzy się w ogóle.
+    - `ryzyko_1_rok`, `ryzyko_5_lat` – 1 − exp(−tempo · t) przy tempie zamrożonym na „dziś"
+      (5 lat to ekstrapolacja stałego tempa, nie losowanie Monte Carlo jak w `krzywe_ryzyka`).
+    """
     idx, wiek = przygotuj_wejscie(historia, plec, wiek_teraz)
     urz = next(model.parameters()).device
     logity = model(idx.to(urz), wiek.to(urz))[0][0, -1].cpu()
@@ -113,10 +128,15 @@ def generuj(model, historia: Sequence[Zdarzenie], plec: str, wiek_teraz: float,
         nowy_wiek = wiek[0, -1] + dt[0]
         if nowy_wiek > do_wieku * tokeny.DNI_W_ROKU:
             break
-        p = torch.softmax(l[0], 0)
+        # Kandydaci jak w `ranking`: bez „brak zdarzenia". Nie zużywa losowości (parzystość z generate autorów).
+        l_zd = l[0].clone()
+        l_zd[tokeny.BRAK_ZDARZENIA] = -torch.inf
+        p = torch.softmax(l_zd, 0)
         top = torch.topk(p, top_kandydatow)
-        kroki.append(Krok(float(nowy_wiek) / tokeny.DNI_W_ROKU, int(nastepny[0]),
-                          [(int(t), float(v)) for v, t in zip(top.values, top.indices)]))
+        wylosowany = int(nastepny[0])
+        kroki.append(Krok(float(nowy_wiek) / tokeny.DNI_W_ROKU, wylosowany,
+                          [(int(t), float(v)) for v, t in zip(top.values, top.indices)],
+                          None if wylosowany == tokeny.BRAK_ZDARZENIA else float(p[wylosowany])))
         idx = torch.cat([idx, nastepny[:, None]], 1)
         wiek = torch.cat([wiek, nowy_wiek.reshape(1, 1)], 1)
         if int(nastepny[0]) == tokeny.SMIERC:

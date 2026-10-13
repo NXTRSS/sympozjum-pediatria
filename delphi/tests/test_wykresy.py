@@ -30,7 +30,8 @@ def test_ranking_slupki():
     df = pd.DataFrame({"nazwa": ["zawał", "zgon"], "ryzyko_1_rok": [0.02, 0.01]})
     fig = wykresy.ranking_slupki(df)
     assert isinstance(fig, Figure)
-    assert any(wykresy.ATRYBUCJA in t.get_text() for t in fig.texts)
+    assert any(wykresy.ATRYBUCJA in t.get_text() and t.get_fontsize() >= 8 for t in fig.texts)
+    assert [t.get_text() for t in fig.axes[0].texts] == [" 1,0%", " 2,0%"]   # przecinek dziesiętny
 
 
 def test_krzywe_pomija_nan_i_rysuje_porownanie():
@@ -54,8 +55,18 @@ def test_slad_generowania():
              Krok(70.0, tokeny.SMIERC, [(tokeny.SMIERC, 0.5)])]
     slad = wykresy.slad_generowania(kroki, nazwa)
     linie = slad.splitlines()
-    assert len(linie) == 2 and "zawał" in linie[0] and "30%" in linie[0] and "zgon" in linie[1]
-    assert "t1 " not in slad and "40%" not in slad              # „brak zdarzenia" nie jest kandydatem na sali
+    assert len(linie) == 2 and "zawał" in linie[0] and "30,0%" in linie[0] and "zgon" in linie[1]
+    assert "wiek  61,2" in linie[0]                             # przecinek dziesiętny
+    assert "t1 " not in slad and "40,0%" not in slad            # „brak zdarzenia" nie jest kandydatem na sali
+
+
+def test_slad_pokazuje_p_wylosowanego():
+    KrokP = namedtuple("KrokP", "wiek_lat token kandydaci p")  # jak prognoza.Krok z polem p
+    kroki = [KrokP(61.2, 499, [(505, 0.3), (tokeny.SMIERC, 0.1)], 0.004)]
+    linia = wykresy.slad_generowania(kroki, nazwa)
+    assert "→ nadciśnienie (0,4%)" in linia and "zawał 30,0%" in linia
+    rzadki = wykresy.slad_generowania([KrokP(61.2, 499, [(505, 0.3)], 0.0001)], nazwa)
+    assert "→ nadciśnienie (<0,1%)" in rzadki                  # nie „0,0%": wylosowany nie miał szansy 0
 
 
 def test_slad_skraca_dlugie_nazwy():

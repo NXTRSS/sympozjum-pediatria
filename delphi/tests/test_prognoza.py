@@ -81,6 +81,20 @@ def test_zgodnosc_z_generate_autorow(maly_model):
     assert kroki[0].wiek_lat * tokeny.DNI_W_ROKU == pytest.approx(float(ga[0, -1]), rel=1e-5)
 
 
+def test_kandydaci_w_sladzie_jak_w_rankingu(maly_model):
+    """Kandydaci liczeni bez „brak zdarzenia", więc pierwszy krok = top rankingu dla tego samego stanu."""
+    kroki = prognoza.generuj(maly_model, HIST, "K", 60, maks_krokow=20, ziarno=3)
+    df = prognoza.ranking(maly_model, HIST, "K", 60, top=5)
+    assert [t for t, _ in kroki[0].kandydaci] == df["token"].tolist()
+    assert [p for _, p in kroki[0].kandydaci] == pytest.approx(df["p_nastepna"].tolist(), rel=1e-5)
+    for k in kroki:
+        assert tokeny.BRAK_ZDARZENIA not in [t for t, _ in k.kandydaci]
+        if k.token == tokeny.BRAK_ZDARZENIA:
+            assert k.p is None
+        else:
+            assert 0 < k.p <= 1
+
+
 def test_krzywe_ryzyka(maly_model):
     df = prognoza.krzywe_ryzyka(maly_model, HIST, "K", 60, cele=[I21, tokeny.SMIERC, E11],
                                 horyzont_lat=5, n_probek=16, maks_krokow=8)
