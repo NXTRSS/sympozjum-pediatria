@@ -1,0 +1,6 @@
+zewnetrzne/
+pamiec/
+dane/
+.venv/
+__pycache__/
+.ipynb_checkpoints/
