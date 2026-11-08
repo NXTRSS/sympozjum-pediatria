@@ -1,0 +1,74 @@
+<section data-label="13 Scale" class="bg-ink">
+  <div class="slide-frame">
+    <div class="eyebrow build" data-step="0">Skalowanie</div>
+    <h2 class="section-title build" data-step="0" style="margin-top: 28px;">
+      Ten sam cel — <span class="grad-text-warm">niewyobrażalna różnica skali</span>
+    </h2>
+
+    <div style="margin-top: 52px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; align-items: center;">
+      <!-- Our model -->
+      <div class="card build" data-step="1" style="border-color: rgba(255,175,123,0.3);">
+        <div class="tiny" style="color: var(--accent); margin-bottom: 20px;">NASZ MODEL (GRU)</div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="bullet" style="padding: 8px 0;">
+            <div class="num" style="color: rgba(255,255,255,0.4); font-size: 18px;">📊</div>
+            <div class="content body-sm"><strong style="color: var(--accent);">1292</strong> łacińskie nazwy chorób</div>
+          </div>
+          <div class="bullet" style="padding: 8px 0;">
+            <div class="num" style="color: rgba(255,255,255,0.4); font-size: 18px;">🔤</div>
+            <div class="content body-sm">Tokeny = <strong style="color: var(--accent);">litery</strong> (32 w słowniku)</div>
+          </div>
+          <div class="bullet" style="padding: 8px 0;">
+            <div class="num" style="color: rgba(255,255,255,0.4); font-size: 18px;">🏗️</div>
+            <div class="content body-sm">Architektura: <strong style="color: var(--accent);">jedna warstwa GRU</strong>, ok. 80 tys. parametrów</div>
+          </div>
+          <div class="bullet" style="padding: 8px 0;">
+            <div class="num" style="color: rgba(255,255,255,0.4); font-size: 18px;">⚡</div>
+            <div class="content body-sm">Trening: <strong style="color: var(--accent);">ok. 15 sekund</strong> na CPU</div>
+          </div>
+          <div class="bullet" style="padding: 8px 0;">
+            <div class="num" style="color: rgba(255,255,255,0.4); font-size: 18px;">🎯</div>
+            <div class="content body-sm">Generuje: <strong style="color: var(--accent);">nowe nazwy</strong> chorób</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrow and same objective -->
+      <div class="build" data-step="2" style="text-align: center; flex-shrink: 0;">
+        <div style="font-size: 60px; color: rgba(255,255,255,0.2);">⟷</div>
+        <div style="background: rgba(201,166,255,0.12); border: 1px solid rgba(201,166,255,0.3); border-radius: 16px; padding: 16px 24px; margin-top: 12px; max-width: 240px;">
+          <div class="tiny" style="color: var(--accent-4); margin-bottom: 8px;">TEN SAM CEL</div>
+          <div style="font-size: 20px; font-family: 'JetBrains Mono', monospace; color: rgba(255,255,255,0.8)">P(t<sub style="font-size:0.6em">n</sub> | t<sub style="font-size:0.6em">1</sub>…t<sub style="font-size:0.6em">n−1</sub>)</div>
+        </div>
+      </div>
+
+      <!-- Base Model -->
+      <div class="card build" data-step="1" style="border-color: rgba(0,188,222,0.3);">
+        <div class="tiny" style="color: var(--accent-2); margin-bottom: 20px;">BASE MODEL (GPT-4 klasa)</div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="bullet" style="padding: 8px 0;">
+            <div class="num" style="color: rgba(255,255,255,0.4); font-size: 18px;">📊</div>
+            <div class="content body-sm"><strong style="color: var(--accent-2);">Publiczny internet</strong> — terabajty tekstu</div>
+          </div>
+          <div class="bullet" style="padding: 8px 0;">
+            <div class="num" style="color: rgba(255,255,255,0.4); font-size: 18px;">🔤</div>
+            <div class="content body-sm">Tokeny = <strong style="color: var(--accent-2);">kawałki słów</strong> (~50 tys. w słowniku)</div>
+          </div>
+          <div class="bullet" style="padding: 8px 0;">
+            <div class="num" style="color: rgba(255,255,255,0.4); font-size: 18px;">🏗️</div>
+            <div class="content body-sm">Architektura: <strong style="color: var(--accent-2);">Transformer</strong> — inna architektura, ten sam cel; szacunkowo ~10¹² parametrów</div>
+          </div>
+          <div class="bullet" style="padding: 8px 0;">
+            <div class="num" style="color: rgba(255,255,255,0.4); font-size: 18px;">⚡</div>
+            <div class="content body-sm">Trening: <strong style="color: var(--accent-2);">miesiące</strong> na tysiącach GPU</div>
+          </div>
+          <div class="bullet" style="padding: 8px 0;">
+            <div class="num" style="color: rgba(255,255,255,0.4); font-size: 18px;">🎯</div>
+            <div class="content body-sm">Generuje: <strong style="color: var(--accent-2);">dokumenty internetowe</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">13</div>
+</section>

@@ -66,4 +66,4 @@ u256 d0.3 ep 80 T0.8 | val=2.553 | nowe  24.2% | świeże  20.0% | wiarygodnoś�
 u256 d0.3 ep 80 T1.0 | val=2.553 | nowe  50.8% | świeże  42.5% | wiarygodność 108.2% | końc  67.5% | sinusitis, carcinoma endometrium, syndroma duinelete
 u256 d0.3 ep 80 T1.2 | val=2.553 | nowe  51.7% | świeże  45.0% | wiarygodność 127.0% | końc  64.2% | dyskinesia, hypertrophoigia, spinguanum eniephuma
 
-Zapisano 60 pomiarów → /Users/kamiljedryczek/Documents/sympozjum-pediatria/eksperymenty/wyniki.json
+Zapisano 60 pomiarów → <project>/eksperymenty/wyniki.json

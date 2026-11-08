@@ -1,0 +1,126 @@
+/* Styl aplikacji „Z nagrania USG do masy płodu” — jak slajdy n13b/n13c (ciemny granat, akcenty cyjan/brzoskwinia/róż).
+   Tylko czcionki systemowe: nic nie jest pobierane z internetu. */
+
+:root, body, gradio-app, .gradio-container {
+  --ink: #0A0A14;
+  --ink-3: #1F1F35;
+  --cyan: #00BCDE;
+  --peach: #FFAF7B;
+  --pink: #D76D77;
+  --violet: #C9A6FF;
+  --amber: #FFC857;
+  --tekst: #EDEDF4;
+  --tekst-2: rgba(255, 255, 255, 0.72);
+  --tekst-3: rgba(255, 255, 255, 0.52);
+}
+
+body, .gradio-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Inter, Arial, sans-serif !important;
+  background: linear-gradient(160deg, #0A0A14 0%, #1F1F35 100%) fixed !important;
+  color: var(--tekst);
+}
+.gradio-container { max-width: 100% !important; padding: 10px 28px 20px !important; }
+#glowny { gap: 18px; }
+footer { display: none !important; }
+
+/* ── nagłówek ── */
+.naglowek { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; padding: 0 4px 4px; }
+.naglowek .eyebrow { font-size: 15px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--peach); }
+.naglowek .eyebrow::before { content: ""; display: inline-block; width: 34px; height: 2px; background: var(--peach); vertical-align: middle; margin-right: 12px; }
+.naglowek h1 { font-size: 42px; line-height: 1.05; font-weight: 800; letter-spacing: -.02em; margin: 4px 0 4px; color: #fff; }
+.naglowek .lead { font-size: 18px; color: var(--tekst-2); margin: 0; max-width: 1100px; line-height: 1.4; }
+.grad { background: linear-gradient(95deg, #FFAF7B 0%, #D76D77 100%) !important; -webkit-background-clip: text !important;
+  background-clip: text !important; color: transparent !important; -webkit-text-fill-color: transparent !important; }
+.zastrzezenie { flex: 0 0 auto; max-width: 460px; font-size: 17px; line-height: 1.35; color: #ffd9b8;
+  border: 1px solid rgba(255, 175, 123, .45); background: rgba(255, 175, 123, .08); border-radius: 14px; padding: 10px 16px; }
+
+/* ── sterowanie ── */
+#wybor-nagrania label, #tryb label { font-size: 18px !important; }
+#wybor-nagrania .wrap, #tryb .wrap { flex-wrap: nowrap !important; gap: 8px !important; }
+#wybor-nagrania .wrap label, #tryb .wrap label { padding: 8px 12px !important; white-space: nowrap; border-radius: 12px !important; font-weight: 600; }
+#przycisk { font-size: 26px !important; font-weight: 800 !important; min-height: 96px; align-self: stretch; border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(215, 109, 119, .25); letter-spacing: .01em; }
+#przycisk:disabled { opacity: .6; }
+#graj { font-size: 18px !important; }
+#suwak-rzad { align-items: center; }
+#suwak input[type=number] { font-size: 18px !important; }
+
+/* ── obrazy USG ── */
+#podglad img, #wybrana img, #fuvai-obraz img { background: #000; border-radius: 12px; }
+#wykres img { border-radius: 12px; }
+.podpis { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; font-size: 16px; color: var(--tekst-2); padding: 4px 4px 0; }
+.podpis b { color: #fff; }
+.podpis .atrybucja { flex-basis: 100%; font-size: 15px; color: var(--tekst-3); }
+.leg { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; }
+.kreska { display: inline-block; width: 26px; height: 0; border-top: 3px solid; }
+.kreska.cyan { border-color: var(--cyan); }
+.kreska.bursztyn { border-color: var(--amber); }
+.kreska.fiolet { border-color: var(--violet); }
+.kreska.przerywana { border-top-style: dashed; }
+.cyan { color: var(--cyan); }
+
+.status { font-size: 20px; color: var(--tekst-2); padding: 2px 4px; line-height: 1.4; }
+.status b { color: #fff; }
+
+/* ── karty wyników ──
+   Czytelność z sali przy powiększeniu 80%: zastrzeżenia ≥ 20 px, etykiety ≥ 16 px, atrybucja ≥ 15 px. */
+.karta { border-radius: 20px; background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .10);
+  padding: 16px 22px; box-sizing: border-box; }
+.k-cyan { border-color: rgba(0, 188, 222, .40); background: rgba(0, 188, 222, .05); }
+.k-fiolet { border-color: rgba(201, 166, 255, .40); background: rgba(201, 166, 255, .05); }
+.k-roz { border-color: rgba(215, 109, 119, .50); background: rgba(215, 109, 119, .07); }
+.karta-eyebrow { font-size: 16px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--tekst-3); margin-bottom: 10px; }
+.k-cyan .karta-eyebrow { color: var(--cyan); }
+.k-fiolet .karta-eyebrow { color: var(--violet); }
+.k-roz .karta-eyebrow { color: var(--pink); }
+.siatka2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+.siatka4 { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 12px 18px; }
+.etyk { font-size: 16px; letter-spacing: .04em; color: var(--tekst-3); text-transform: uppercase; margin-bottom: 2px; }
+.liczba { white-space: nowrap; font-size: 38px; font-weight: 800; line-height: 1.1; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.liczba small { font-size: .55em; font-weight: 700; }
+.liczba.duza { font-size: 56px; }
+.liczba.cyan { color: var(--cyan); }
+.liczba.fiolet { color: var(--violet); }
+.liczba.roz { color: var(--pink); }
+.liczba.jasna { color: #fff; }
+.liczba.wyciszona { color: var(--tekst-3); font-size: 26px; padding-top: 8px; }
+.maly { font-size: 20px; line-height: 1.35; color: var(--tekst-2); margin-top: 8px; }
+.ostrz { color: #ffcf9e; }
+.ok { color: #7fe3c4; }
+.pusto { font-size: 19px; color: var(--tekst-3); padding: 18px 0 8px; }
+.pigulki { margin-top: 12px; }
+.pigulka { display: inline-block; font-size: 17px; font-weight: 600; padding: 4px 12px; border-radius: 999px; border: 1px solid; }
+.p-ok { color: #7fe3c4; border-color: rgba(127, 227, 196, .5); }
+.p-ostrz { color: var(--peach); border-color: rgba(255, 175, 123, .5); }
+
+.miernik { margin-top: 12px; }
+.miernik-opis { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; font-size: 18px; color: var(--tekst-2); }
+.miernik-opis b { color: #fff; }
+.miernik-opis b.ostrz { color: #ffcf9e; }
+.miernik-opis b.ok { color: #7fe3c4; }
+.miernik-pasek { position: relative; height: 12px; margin-top: 6px; border-radius: 6px; background: rgba(255, 255, 255, .08); overflow: visible; }
+.miernik-wartosc { height: 100%; border-radius: 6px; background: linear-gradient(90deg, rgba(201, 166, 255, .5), var(--violet)); }
+.miernik-prog { position: absolute; top: -5px; width: 3px; height: 22px; background: #fff; border-radius: 2px; }
+
+.zastrz { margin: 10px 0 0; padding-left: 24px; font-size: 20px; line-height: 1.35; color: var(--tekst-2); }
+.zastrz b { color: #fff; }
+.haslo { margin-top: 10px; font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -.01em; }
+
+/* ── źródła ── */
+.zrodla { font-size: 17px; line-height: 1.5; color: var(--tekst-2); }
+.zrodla b { color: #fff; }
+.zrodla ol { padding-left: 24px; margin: 4px 0; }
+.zrodla li { margin: 4px 0; }
+.zrodla .dzieki { color: var(--peach); font-weight: 600; margin: 10px 0 4px; }
+#zrodla, #wgraj, #fuvai-obraz { font-size: 17px; }
+
+/* pigułki wyboru nagrania i trybu (bez etykiet) */
+#sterowanie { gap: 16px; }
+#wybor-nagrania, #tryb { background: transparent !important; border: none !important; padding: 0 !important; }
+#tryb .wrap label:first-child::before { content: none; }
+
+/* pasek postępu „na żywo” (nad klatką wybraną przez model): duży, czytelny z sali */
+#wybrana .progress-level-inner { font-size: 22px !important; font-family: inherit !important; font-weight: 700; }
+#wybrana .progress-bar-wrap { height: 14px !important; width: 70% !important; border-radius: 7px; }
+#wybrana .progress-bar { background: linear-gradient(90deg, #00BCDE, #FFAF7B) !important; }
+#wybrana .meta-text, #wybrana .meta-text-center { font-size: 18px !important; font-family: inherit !important; }

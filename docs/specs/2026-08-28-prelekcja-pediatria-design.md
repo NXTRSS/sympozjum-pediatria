@@ -28,7 +28,7 @@ Sekcje „Skalowanie" (MAI-DxO) i częściowo „Whisper" są zbudowane jako ci�
 
 ## Prezentacja HTML
 
-- Baza: szata graficzna i infrastruktura z `~/Documents/ALK/prezentacje/Model_Jezyka.html` („cosmic aurora": Inter/JetBrains Mono, palette --grad-*, karty/chipy/buildy, web component `<deck-stage>` 1920×1080 z nawigacją, speaker notes, print-to-PDF).
+- Baza: szata graficzna i infrastruktura z decku źródłowego `Model_Jezyka.html` (szablon spoza repo, wskazywany zmienną `SZABLON_DECK`; „cosmic aurora": Inter/JetBrains Mono, palette --grad-*, karty/chipy/buildy, web component `<deck-stage>` 1920×1080 z nawigacją, speaker notes, print-to-PDF).
 - Kopiowane slajdy (blok mechanizmu): Section LM, LM Definition, Data, X and Y, RNN Cell, **Inference Animation (interaktywne demo krok-po-kroku)**, Sampling, Section Scale, Scale, Base Model, Thanks.
 - Nowe slajdy: tytuł, zagadka (Alex, JAMA), skala zjawiska, QR, rozwiązanie zagadki, Whisper, Delphi-2M ×2, MAI-DxO, sekcja+problem Hadlocka, BabyNet, apel, materiały.
 - Slajd „Inference Animation": tablica `GENERATION_STEPS` do podmiany na nazwę choroby wygenerowaną przez Kamila z notebooka (TODO po pierwszym uruchomieniu notebooka).
@@ -51,12 +51,15 @@ Sekcje „Skalowanie" (MAI-DxO) i częściowo „Whisper" są zbudowane jako ci�
 
 Transformer od zera (GRU wystarcza; 1 slajd „to samo, tylko większe"), własny hosting (gradio.live), trening na telefonach uczestników (Colab QR #2 = opcja dla chętnych).
 
-## Otwarte TODO
+## Otwarte TODO (stan 2026-10-13)
 
-- [x] Dane: `data/choroby.csv` (1465, Wikimedia CC BY-SA), `data/leki.csv` (9438, URPL)
-- [x] Repo publiczne: https://github.com/NXTRSS/sympozjum-pediatria — dane ładowane w Colabie z raw URL (zweryfikowane)
-- [ ] Nazwa choroby do slajdu demo (Kamil wygeneruje z notebooka)
-- [ ] Obrazki QR (repo/Colab + gradio.live w dniu prelekcji) w miejsce placeholderów w `slides/n05_qr.html` i `slides/n15_materialy.html`
-- [ ] Decyzja: czy przywrócić slajdy Transformer/Attention GIF z ALK (dostępne w oryginale)
-- [ ] Wagi pretrenowane 4 zbiorów → GitHub
-- [ ] Screencast awaryjny
+- [x] Dane: `data/choroby.csv` (oczyszczone do 1292 nazw, Wikimedia CC BY-SA), `data/leki.csv` (9438, URPL)
+- [x] Repo publiczne: https://github.com/NXTRSS/sympozjum-pediatria — dane ładowane w Colabie z raw URL
+- [x] Notebook po auto-optymalizacji (128 GRU, dropout 0.2, lr 0.003, 12 epok, T=0.4; ~15 s treningu) — `eksperymenty/AUTOOPTYMALIZACJA.md`
+- [x] Nazwa choroby do slajdu demo: „angioma cenine" (można podmienić po ponownym uruchomieniu notebooka: komórka „ślad generowania" → `slides/inference_steps.js`)
+- [x] Krytyka decku (Fable) + poprawki; cięcia czasu: MAI-DxO i komórka RNN wyłączone (`POMINIETE` w `assemble.py`, odwracalne)
+- [x] ~~Wagi pretrenowane 4 zbiorów~~ — niepotrzebne, trening trwa ~15 s
+- [x] Decyzja o slajdach Transformer/Attention z ALK — nie przywracamy (czas)
+- [x] Notebooki „po sesji": `usg/` (USG → masa płodu; gałąź `usg-masa-plodu`) i `delphi/` (Delphi-2M; gałąź `delphi-2m`)
+- [ ] Obrazki QR (repo + gradio.live w dniu prelekcji) w miejsce placeholderów w `slides/n05_qr.html` i `slides/n15_materialy.html`
+- [ ] Screencast awaryjny demo (Wi-Fi ↓)

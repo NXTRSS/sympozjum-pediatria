@@ -1,6 +1,7 @@
 zewnetrzne/
 pamiec/
-dane/
+dane/*
+!dane/icd10_pl.csv
 .venv/
 __pycache__/
 .ipynb_checkpoints/

@@ -51,4 +51,4 @@ u128 d0.0 ep 40 T0.7 | val=1.929 | nowe  97.0% | świeże  91.5% | wiarygodnoś�
 u128 d0.0 ep 40 T0.8 | val=1.929 | nowe  97.5% | świeże  86.0% | wiarygodność 133.7% | końc  68.5% | commatus burate, haemobrasspoarismus, panarengiasis
 u128 d0.0 ep 40 T0.9 | val=1.929 | nowe  97.0% | świeże  95.0% | wiarygodność 146.7% | końc  67.5% | pleukomecereus, arthrosis butonglicularis, ulcus acutum
 
-Zapisano 45 pomiarów → /Users/kamiljedryczek/Documents/sympozjum-pediatria/eksperymenty/wyniki_faza2.json
+Zapisano 45 pomiarów → <project>/eksperymenty/wyniki_faza2.json

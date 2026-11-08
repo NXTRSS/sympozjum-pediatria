@@ -1,0 +1,8 @@
+[
+ {"cfg": {"units": 128, "emb": 64, "dropout": 0.2, "lr": 0.003, "batch": 32}, "epoki": 12, "temperatura": 0.4},
+ {"cfg": {"units": 128, "emb": 64, "dropout": 0.2, "lr": 0.003, "batch": 32}, "epoki": 12, "temperatura": 0.5},
+ {"cfg": {"units": 96, "emb": 48, "dropout": 0.2, "lr": 0.005, "batch": 32}, "epoki": 8, "temperatura": 0.4},
+ {"cfg": {"units": 128, "emb": 64, "dropout": 0.2, "lr": 0.005, "batch": 64}, "epoki": 10, "temperatura": 0.4},
+ {"cfg": {"units": 96, "emb": 48, "dropout": 0.2, "lr": 0.005, "batch": 32}, "epoki": 6, "temperatura": 0.4},
+ {"cfg": {"units": 128, "emb": 64, "dropout": 0.3, "lr": 0.001, "batch": 32}, "epoki": 30, "temperatura": 0.5}
+]

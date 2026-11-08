@@ -1,0 +1,226 @@
+u128x1 e64 d0.0 lr0.003 b32  ep  8 T0.4 |    9.9s | val 1.839 | nowe  98.5% świeże  90.5% wiar  109.0% końc  80.5% | hypethalia, syndroma faligna, osteosis condis
+u128x1 e64 d0.0 lr0.003 b32  ep  8 T0.5 |    9.9s | val 1.839 | nowe  99.0% świeże  94.0% wiar  124.0% końc  83.5% | librosis, syndroma infertica, pancondulitis insum cheronica
+u128x1 e64 d0.0 lr0.003 b32  ep  8 T0.6 |    9.9s | val 1.839 | nowe  99.0% świeże  95.5% wiar  137.1% końc  72.0% | morbus condicatis, syndroma lengiva, pephiemia
+u128x1 e64 d0.0 lr0.003 b32  ep 10 T0.4 |   12.2s | val 1.780 | nowe  98.5% świeże  92.5% wiar  104.3% końc  77.0% | hypethalia, syndroma maligna, orteria
+u128x1 e64 d0.0 lr0.003 b32  ep 10 T0.5 |   12.2s | val 1.780 | nowe  98.5% świeże  93.0% wiar  117.0% końc  81.5% | loestoma, syndroma malignis, pancriosis
+u128x1 e64 d0.0 lr0.003 b32  ep 10 T0.6 |   12.2s | val 1.780 | nowe  99.0% świeże  94.0% wiar  128.8% końc  72.5% | morbus condiditaris, syndroma malignus condiodis, peritis anuma
+u128x1 e64 d0.0 lr0.003 b32  ep 12 T0.4 |   14.5s | val 1.778 | nowe  93.5% świeże  87.5% wiar   97.7% końc  75.0% | hyperthoria, syndroma maligne, osteosis existis condicalis
+u128x1 e64 d0.0 lr0.003 b32  ep 12 T0.5 |   14.5s | val 1.778 | nowe  96.5% świeże  90.0% wiar  108.0% końc  77.0% | lupus anthoraticus, syndroma malignus condis, paratitis sclerosis
+u128x1 e64 d0.0 lr0.003 b32  ep 12 T0.6 |   14.5s | val 1.778 | nowe  96.5% świeże  92.5% wiar  116.4% końc  77.5% | morbus cordis, syndroma malignus condis, peritismus
+u128x1 e64 d0.0 lr0.003 b32  ep 16 T0.4 |   19.1s | val 1.783 | nowe  91.5% świeże  87.5% wiar  100.4% końc  71.5% | insufficientia cruratis subicus timoris, syndroma laryngis, peritis atrioprastica
+u128x1 e64 d0.0 lr0.003 b32  ep 16 T0.5 |   19.1s | val 1.783 | nowe  93.0% świeże  87.0% wiar  111.8% końc  71.0% | morbus hysperiphericans, syndroma laron-wally-chyllatocellularis prima, pineuratio atrioventricularis
+u128x1 e64 d0.0 lr0.003 b32  ep 16 T0.6 |   19.1s | val 1.783 | nowe  96.0% świeże  89.5% wiar  118.7% końc  74.0% | morbus hysperisis, syndroma laron-whallis, plastoma
+u128x1 e64 d0.2 lr0.003 b32  ep  8 T0.4 |   10.3s | val 1.863 | nowe 100.0% świeże  97.0% wiar  116.2% końc  82.5% | morbus condicatis, syndroma jaligna, parcinoma sinosis
+u128x1 e64 d0.2 lr0.003 b32  ep  8 T0.5 |   10.3s | val 1.863 | nowe  99.0% świeże  95.5% wiar  127.0% końc  79.0% | morbus condicatis, syndroma laligna, parcinoma singricus
+u128x1 e64 d0.2 lr0.003 b32  ep  8 T0.6 |   10.3s | val 1.863 | nowe  99.5% świeże  97.5% wiar  142.9% końc  77.5% | morbus condicatis, syndroma leligrang-schroenica, peritis anulica
+u128x1 e64 d0.2 lr0.003 b32  ep 10 T0.4 |   12.7s | val 1.805 | nowe  99.0% świeże  92.5% wiar  102.3% końc  74.5% | morbus condelita, syndroma dignatis apita, paratitis subronica
+u128x1 e64 d0.2 lr0.003 b32  ep 10 T0.5 |   12.7s | val 1.805 | nowe  99.0% świeże  95.5% wiar  115.0% końc  76.5% | morbus condilatis, syndroma landita, perismus hypertricis
+u128x1 e64 d0.2 lr0.003 b32  ep 10 T0.6 |   12.7s | val 1.805 | nowe  99.5% świeże  96.5% wiar  130.0% końc  85.0% | morbus cordis, syndroma landita, pephis malocretica
+u128x1 e64 d0.2 lr0.003 b32  ep 12 T0.4 |   15.0s | val 1.766 | nowe 100.0% świeże  91.0% wiar   98.6% końc  79.0% | morbus cordis, syndroma malignus condiodis, paratitis sepuscus
+u128x1 e64 d0.2 lr0.003 b32  ep 12 T0.5 |   15.0s | val 1.766 | nowe  99.0% świeże  92.5% wiar  111.1% końc  79.0% | morbus cordis, syndroma malignus condiodis, peristosis
+u128x1 e64 d0.2 lr0.003 b32  ep 12 T0.6 |   15.0s | val 1.766 | nowe  99.0% świeże  91.0% wiar  123.1% końc  78.5% | morbus cordis, syndroma malignus condioconica, pilmonaomia
+u128x1 e64 d0.2 lr0.003 b32  ep 16 T0.4 |   19.6s | val 1.748 | nowe  93.5% świeże  85.5% wiar   97.8% końc  70.0% | polyryglessum polycystica, syndroma laron-valli, paralysis
+u128x1 e64 d0.2 lr0.003 b32  ep 16 T0.5 |   19.6s | val 1.748 | nowe  94.0% świeże  87.0% wiar  107.4% końc  71.0% | neuropathia cordis, syndroma lari, pemphigus
+u128x1 e64 d0.2 lr0.003 b32  ep 16 T0.6 |   19.6s | val 1.748 | nowe  96.5% świeże  89.5% wiar  122.0% końc  78.0% | neuropathia cordis, syndroma malignus condis, pilmona
+u128x1 e64 d0.3 lr0.003 b32  ep  8 T0.4 |   10.2s | val 1.879 | nowe 100.0% świeże  93.0% wiar  118.6% końc  80.5% | morbus cordis, syndroma maligna, parcinoma sicertica
+u128x1 e64 d0.3 lr0.003 b32  ep  8 T0.5 |   10.2s | val 1.879 | nowe 100.0% świeże  97.5% wiar  131.6% końc  85.0% | morbus cordis, syndroma malignis, parcinoma sidinemis
+u128x1 e64 d0.3 lr0.003 b32  ep  8 T0.6 |   10.2s | val 1.879 | nowe  99.5% świeże  97.5% wiar  144.8% końc  79.0% | morbus cordiosis, syndroma malidus, peris
+u128x1 e64 d0.3 lr0.003 b32  ep 10 T0.4 |   12.5s | val 1.822 | nowe 100.0% świeże  96.0% wiar  107.5% końc  76.5% | morbus cordis, syndroma neonatosis, paratitis sclerica
+u128x1 e64 d0.3 lr0.003 b32  ep 10 T0.5 |   12.5s | val 1.822 | nowe  99.5% świeże  93.5% wiar  120.9% końc  78.0% | morbus cordis, syndroma malignis, perinosis varialis
+u128x1 e64 d0.3 lr0.003 b32  ep 10 T0.6 |   12.5s | val 1.822 | nowe 100.0% świeże  97.0% wiar  133.7% końc  77.0% | morbus cordis, syndroma maligris, perinophaloma
+u128x1 e64 d0.3 lr0.003 b32  ep 12 T0.4 |   14.8s | val 1.786 | nowe  99.0% świeże  94.5% wiar  107.2% końc  69.0% | polytysis conetis, syndroma nenosus, syndroma nonosis
+u128x1 e64 d0.3 lr0.003 b32  ep 12 T0.5 |   14.8s | val 1.786 | nowe  98.5% świeże  93.0% wiar  119.7% końc  69.5% | ostesia prostis riffusa tricularis, syndroma nenosus, syndroma osseminatis carinosis
+u128x1 e64 d0.3 lr0.003 b32  ep 12 T0.6 |   14.8s | val 1.786 | nowe  99.5% świeże  95.0% wiar  127.9% końc  74.5% | neurpobiosis ossis, syndroma nenosus, pillosis hypertricus
+u128x1 e64 d0.3 lr0.003 b32  ep 16 T0.4 |   19.4s | val 1.750 | nowe  97.5% świeże  87.5% wiar  100.0% końc  65.5% | morbus condis, syndroma malleur, pancrepinoma
+u128x1 e64 d0.3 lr0.003 b32  ep 16 T0.5 |   19.4s | val 1.750 | nowe  94.5% świeże  87.5% wiar  110.3% końc  69.0% | morbus condis, syndroma mallew, peniconditis conis
+u128x1 e64 d0.3 lr0.003 b32  ep 16 T0.6 |   19.4s | val 1.750 | nowe  96.0% świeże  91.0% wiar  120.8% końc  70.5% | morbus condis, syndroma malleyngis, phepia
+u128x1 e64 d0.3 lr0.003 b64  ep  8 T0.4 |    8.8s | val 2.067 | nowe 100.0% świeże  98.0% wiar  138.2% końc  93.5% | pherysis mandis pronica, syndroma fepertis condica, syndroma ostis
+u128x1 e64 d0.3 lr0.003 b64  ep  8 T0.5 |    8.8s | val 2.067 | nowe 100.0% świeże  99.0% wiar  154.3% końc  84.0% | porytia poricitis, syndroma heleptis condica, syndroma osphima pronianus
+u128x1 e64 d0.3 lr0.003 b64  ep  8 T0.6 |    8.8s | val 2.067 | nowe 100.0% świeże  99.0% wiar  167.2% końc  78.5% | ospitia ponicitis, syndroma indomica, syndroma osis
+u128x1 e64 d0.3 lr0.003 b64  ep 12 T0.4 |   12.9s | val 1.895 | nowe 100.0% świeże  98.0% wiar  120.6% końc  86.0% | phorythoma mallis, syndroma maligne, syndroma pronica
+u128x1 e64 d0.3 lr0.003 b64  ep 12 T0.5 |   12.9s | val 1.895 | nowe  99.0% świeże  97.0% wiar  132.6% końc  80.5% | osthyria, syndroma lelicus cericul reprae, syndroma ossentrica
+u128x1 e64 d0.3 lr0.003 b64  ep 12 T0.6 |   12.9s | val 1.895 | nowe  99.5% świeże  96.5% wiar  144.5% końc  78.5% | ostitis policus rientricularis, syndroma lelicus cericul supradelica, perisomia
+u128x1 e64 d0.3 lr0.003 b64  ep 16 T0.4 |   17.0s | val 1.803 | nowe  98.0% świeże  94.0% wiar  111.8% końc  76.5% | polytomatosis, syndroma maligna, syndroma nonglantuosum prostriculis
+u128x1 e64 d0.3 lr0.003 b64  ep 16 T0.5 |   17.0s | val 1.803 | nowe  98.5% świeże  93.0% wiar  121.9% końc  70.5% | ostestasis, syndroma maligne, syndroma nonigna
+u128x1 e64 d0.3 lr0.003 b64  ep 16 T0.6 |   17.0s | val 1.803 | nowe  99.5% świeże  92.5% wiar  132.2% końc  76.5% | ostetia prasidis, syndroma malignis condilaris, peripharensia protis marigne
+u128x1 e64 d0.3 lr0.003 b64  ep 20 T0.4 |   21.0s | val 1.755 | nowe  95.0% świeże  86.0% wiar  102.1% końc  76.5% | polythrophalia, syndroma nenosus cordis, syndroma nonosse
+u128x1 e64 d0.3 lr0.003 b64  ep 20 T0.5 |   21.0s | val 1.755 | nowe  96.5% świeże  89.0% wiar  116.7% końc  75.0% | osteroma polingeri, syndroma malignus crimaria, peritosis
+u128x1 e64 d0.3 lr0.003 b64  ep 20 T0.6 |   21.0s | val 1.755 | nowe  97.5% świeże  92.5% wiar  127.0% końc  72.5% | ostestastoma, syndroma malgitis cum praumita, peritorismus
+u96x1 e48 d0.2 lr0.005 b32   ep  6 T0.4 |    5.9s | val 1.924 | nowe  99.5% świeże  95.0% wiar  120.8% końc  77.0% | hypetitis acuta, syndroma febratica, osteria
+u96x1 e48 d0.2 lr0.005 b32   ep  6 T0.5 |    5.9s | val 1.924 | nowe  99.5% świeże  98.0% wiar  133.6% końc  77.5% | lerotrasmia, syndroma heniconica, phagitis iodementrica
+u96x1 e48 d0.2 lr0.005 b32   ep  6 T0.6 |    5.9s | val 1.924 | nowe 100.0% świeże  97.0% wiar  152.9% końc  74.0% | morbus cordia, syndroma lenicum, phagionthitis montila
+u96x1 e48 d0.2 lr0.005 b32   ep  8 T0.4 |    7.5s | val 1.847 | nowe  98.0% świeże  94.0% wiar  109.6% końc  78.0% | hypetitis acuta, syndroma nentricularis, parinoma pragina
+u96x1 e48 d0.2 lr0.005 b32   ep  8 T0.5 |    7.5s | val 1.847 | nowe  98.0% świeże  93.0% wiar  126.5% końc  80.5% | morbus condiasis, syndroma mellari, phalosis exitasis
+u96x1 e48 d0.2 lr0.005 b32   ep  8 T0.6 |    7.5s | val 1.847 | nowe  99.0% świeże  97.5% wiar  137.4% końc  77.5% | morbus exseninoma, syndroma meligria, pillopetitis corminosis
+u96x1 e48 d0.2 lr0.005 b32   ep 10 T0.4 |    9.1s | val 1.809 | nowe  97.0% świeże  87.5% wiar  104.2% końc  72.5% | linous pronteriasis, syndroma nentricularis, peritis acuta
+u96x1 e48 d0.2 lr0.005 b32   ep 10 T0.5 |    9.1s | val 1.809 | nowe  99.0% świeże  92.5% wiar  117.3% końc  71.5% | morbus cordis, syndroma licans, peritis aluminatis
+u96x1 e48 d0.2 lr0.005 b32   ep 10 T0.6 |    9.1s | val 1.809 | nowe  99.0% świeże  96.0% wiar  128.5% końc  77.5% | morbus exsentitans, syndroma licantricus condris, pimor hemprica
+u96x1 e48 d0.2 lr0.005 b32   ep 12 T0.4 |   10.7s | val 1.800 | nowe  96.5% świeże  79.5% wiar  104.7% końc  63.5% | morbus exsentis, syndroma nand, peritis anutica
+u96x1 e48 d0.2 lr0.005 b32   ep 12 T0.5 |   10.7s | val 1.800 | nowe  97.5% świeże  86.5% wiar  114.8% końc  70.0% | morbus febricus nonis, syndroma nancaris, phimor shinia
+u96x1 e48 d0.2 lr0.005 b32   ep 12 T0.6 |   10.7s | val 1.800 | nowe  97.0% świeże  90.0% wiar  120.6% końc  67.5% | morbus haligentis, syndroma nancaris, pimor lempicans
+u128x1 e64 d0.2 lr0.005 b64  ep  6 T0.4 |    6.6s | val 1.998 | nowe 100.0% świeże  97.5% wiar  124.1% końc  89.5% | plastia propatia, syndroma febris, syndroma nogrica
+u128x1 e64 d0.2 lr0.005 b64  ep  6 T0.5 |    6.6s | val 1.998 | nowe 100.0% świeże  99.5% wiar  143.0% końc  82.5% | ostitis mentis, syndroma helgitis criconatis, syndroma nodridis
+u128x1 e64 d0.2 lr0.005 b64  ep  6 T0.6 |    6.6s | val 1.998 | nowe 100.0% świeże  98.0% wiar  153.7% końc  83.5% | ostotia primartis, syndroma kengitis criconatis, syndroma nodrinis
+u128x1 e64 d0.2 lr0.005 b64  ep  8 T0.4 |    8.6s | val 1.876 | nowe  99.5% świeże  95.5% wiar  114.3% końc  87.0% | pomposis haemoteria, syndroma pronis, syndroma prophariglis
+u128x1 e64 d0.2 lr0.005 b64  ep  8 T0.5 |    8.6s | val 1.876 | nowe  99.5% świeże  96.0% wiar  122.4% końc  83.5% | pritus exteremia, syndroma nengitis condim, syndroma prophilis
+u128x1 e64 d0.2 lr0.005 b64  ep  8 T0.6 |    8.6s | val 1.876 | nowe  99.0% świeże  97.0% wiar  138.3% końc  77.5% | ostitis primariosus, syndroma nengitis condilatis, syndroma prophoris
+u128x1 e64 d0.2 lr0.005 b64  ep 10 T0.4 |   10.7s | val 1.810 | nowe  99.5% świeże  92.0% wiar  109.6% końc  84.0% | partus exterica, syndroma ossemporalis, syndroma prostessis
+u128x1 e64 d0.2 lr0.005 b64  ep 10 T0.5 |   10.7s | val 1.810 | nowe 100.0% świeże  94.0% wiar  119.0% końc  80.0% | polytrigis farynis, syndroma nenosplerica, paratis acuta
+u128x1 e64 d0.2 lr0.005 b64  ep 10 T0.6 |   10.7s | val 1.810 | nowe  99.0% świeże  96.5% wiar  131.4% końc  82.0% | ostetia, syndroma nenossis, paratis alynthica
+u128x1 e64 d0.2 lr0.005 b64  ep 12 T0.4 |   12.6s | val 1.761 | nowe  97.0% świeże  88.5% wiar  105.8% końc  76.5% | parcinoma conica, syndroma maemica, paratitis varia
+u128x1 e64 d0.2 lr0.005 b64  ep 12 T0.5 |   12.6s | val 1.761 | nowe  98.5% świeże  92.5% wiar  112.1% końc  80.0% | pertus exterians, syndroma maelitaris, pancinoma peritonis
+u128x1 e64 d0.2 lr0.005 b64  ep 12 T0.6 |   12.6s | val 1.761 | nowe  99.0% świeże  92.0% wiar  122.3% końc  77.0% | ostetia, syndroma maeditare, pancor pastica
+u128x1 e64 d0.3 lr0.001 b32  ep 30 T0.4 |   35.7s | val 1.785 | nowe  97.0% świeże  89.0% wiar  112.1% końc  76.5% | perythicie, syndroma nonger, syndroma nontosalis
+u128x1 e64 d0.3 lr0.001 b32  ep 30 T0.5 |   35.7s | val 1.785 | nowe  99.0% świeże  94.5% wiar  120.8% końc  80.0% | ostestitis depuratis, syndroma nonges, paratitis vardis
+u128x1 e64 d0.3 lr0.001 b32  ep 30 T0.6 |   35.7s | val 1.785 | nowe  99.5% świeże  93.5% wiar  135.9% końc  77.0% | neurosis, syndroma malgis, peritis anumialis
+u128x1 e64 d0.0 lr0.003 b32  ep  8 T0.4 |   10.1s | val 1.846 | nowe 100.0% świeże  91.5% wiar  113.4% końc  82.0% | parichosis, morbus hempidonis, pastica prondica
+u128x1 e64 d0.0 lr0.003 b32  ep  8 T0.5 |   10.1s | val 1.846 | nowe  99.5% świeże  95.0% wiar  125.1% końc  84.5% | pariasis, morbus hempoisenthriculia, paturae trophica
+u128x1 e64 d0.0 lr0.003 b32  ep  8 T0.6 |   10.1s | val 1.846 | nowe 100.0% świeże  98.0% wiar  138.3% końc  85.5% | pariastimoma epsinica, morbus hiffibris, patythilosis renianis
+u128x1 e64 d0.0 lr0.003 b32  ep 10 T0.4 |   12.3s | val 1.779 | nowe  99.0% świeże  91.5% wiar  104.0% końc  74.0% | paractosis, morbus haemorrhinitis, partinoma praemica
+u128x1 e64 d0.0 lr0.003 b32  ep 10 T0.5 |   12.3s | val 1.779 | nowe  98.0% świeże  90.5% wiar  117.6% końc  76.0% | parcestiosis, morbus haemorrhinitis, pastinoma prastica
+u128x1 e64 d0.0 lr0.003 b32  ep 10 T0.6 |   12.3s | val 1.779 | nowe 100.0% świeże  94.5% wiar  129.3% końc  75.0% | paremytitis hepertica, morbus hempodicae thyroideae, patutariosis
+u128x1 e64 d0.0 lr0.003 b32  ep 12 T0.4 |   14.6s | val 1.745 | nowe  97.5% świeże  90.0% wiar  103.1% końc  67.0% | syndroma rens, morbus haemorrhohali, partinoma praevica
+u128x1 e64 d0.0 lr0.003 b32  ep 12 T0.5 |   14.6s | val 1.745 | nowe  98.0% świeże  92.5% wiar  109.8% końc  79.0% | syndroma siblentis, morbus haemorrhonica, partinoma prartica
+u128x1 e64 d0.0 lr0.003 b32  ep 12 T0.6 |   14.6s | val 1.745 | nowe  97.5% świeże  94.0% wiar  122.9% końc  75.5% | retidosis, morbus haemorrhophica, partinoma prartica
+u128x1 e64 d0.0 lr0.003 b32  ep 16 T0.4 |   19.2s | val 1.782 | nowe  98.0% świeże  86.5% wiar  110.2% końc  59.5% | paracystitis, morbus haemorrhophyrosa, paraphylitis progaphale
+u128x1 e64 d0.0 lr0.003 b32  ep 16 T0.5 |   19.2s | val 1.782 | nowe  98.0% świeże  86.5% wiar  118.5% końc  68.5% | paracystitis, morbus haemorrhophyrosa, partussis
+u128x1 e64 d0.0 lr0.003 b32  ep 16 T0.6 |   19.2s | val 1.782 | nowe  98.0% świeże  93.5% wiar  123.5% końc  63.0% | paracystitis, morbus haemorrhophyrosa, partussis
+u128x1 e64 d0.2 lr0.003 b32  ep  8 T0.4 |   10.1s | val 1.872 | nowe  99.5% świeże  95.5% wiar  112.7% końc  89.5% | parcinoma ensentarica, morbus heninaris, paryngitis
+u128x1 e64 d0.2 lr0.003 b32  ep  8 T0.5 |   10.1s | val 1.872 | nowe 100.0% świeże  96.0% wiar  128.1% końc  87.0% | parentriculensis, morbus hempiculitasis, patus eputoris
+u128x1 e64 d0.2 lr0.003 b32  ep  8 T0.6 |   10.1s | val 1.872 | nowe  97.5% świeże  93.0% wiar  141.1% końc  83.5% | parginoma emphilatica, morbus infetaticuloris, patythilosis pricarcinoma eprulica
+u128x1 e64 d0.2 lr0.003 b32  ep 10 T0.4 |   12.3s | val 1.803 | nowe  99.0% świeże  93.0% wiar  110.8% końc  80.5% | paralysis, morbus hepeterica, paryngitis
+u128x1 e64 d0.2 lr0.003 b32  ep 10 T0.5 |   12.3s | val 1.803 | nowe  98.5% świeże  92.0% wiar  119.8% końc  78.0% | paractosis, morbus heninaris, pasticellosis
+u128x1 e64 d0.2 lr0.003 b32  ep 10 T0.6 |   12.3s | val 1.803 | nowe  99.5% świeże  96.0% wiar  131.0% końc  83.0% | parcerphimoma nodonica, morbus hempodica, pasticitis
+u128x1 e64 d0.2 lr0.003 b32  ep 12 T0.4 |   14.6s | val 1.755 | nowe  98.0% świeże  92.0% wiar  103.6% końc  71.0% | paractosis, morbus haemorrhie, osteohyphia diaberia
+u128x1 e64 d0.2 lr0.003 b32  ep 12 T0.5 |   14.6s | val 1.755 | nowe  98.5% świeże  94.0% wiar  116.7% końc  73.0% | paracytitis ex pherica, morbus haemorrhoratica, partinoma polmoni
+u128x1 e64 d0.2 lr0.003 b32  ep 12 T0.6 |   14.6s | val 1.755 | nowe  97.5% świeże  92.5% wiar  130.1% końc  78.5% | paracytitis hepertica, morbus hempodenis urturae sinceptus, parythoplitis
+u128x1 e64 d0.2 lr0.003 b32  ep 16 T0.4 |   19.2s | val 1.746 | nowe  95.0% świeże  87.0% wiar  101.5% końc  66.5% | paracysma derni, insufficientia subratum, paralysis
+u128x1 e64 d0.2 lr0.003 b32  ep 16 T0.5 |   19.2s | val 1.746 | nowe  95.0% świeże  90.0% wiar  110.1% końc  65.5% | paracysma, morbus haemorrhimaticus, paralysis
+u128x1 e64 d0.2 lr0.003 b32  ep 16 T0.6 |   19.2s | val 1.746 | nowe  97.5% świeże  90.0% wiar  121.5% końc  65.0% | paracysma, morbus haemorrhophica, parotitis recurrens
+u128x1 e64 d0.3 lr0.003 b32  ep  8 T0.4 |   10.1s | val 1.891 | nowe  99.5% świeże  95.0% wiar  122.1% końc  89.0% | parcinoma ganderatica, morbus heninaris, paryngitis
+u128x1 e64 d0.3 lr0.003 b32  ep  8 T0.5 |   10.1s | val 1.891 | nowe 100.0% świeże  94.5% wiar  131.0% końc  86.0% | parcertis, morbus higledriculoris, pastinoma pompinacularis
+u128x1 e64 d0.3 lr0.003 b32  ep  8 T0.6 |   10.1s | val 1.891 | nowe  99.5% świeże  96.0% wiar  143.3% końc  86.5% | parentriculficitis, morbus inderatis, patythilosis
+u128x1 e64 d0.3 lr0.003 b32  ep 10 T0.4 |   12.4s | val 1.825 | nowe  98.5% świeże  90.5% wiar  111.8% końc  81.5% | parcinoma cardis, morbus hepeterica, paryngitis
+u128x1 e64 d0.3 lr0.003 b32  ep 10 T0.5 |   12.4s | val 1.825 | nowe 100.0% świeże  94.0% wiar  127.8% końc  78.5% | parcinoma cardis, morbus hephrasis, paryngitis
+u128x1 e64 d0.3 lr0.003 b32  ep 10 T0.6 |   12.4s | val 1.825 | nowe  99.0% świeże  94.0% wiar  134.4% końc  80.5% | pardiosis, morbus hempodica, patus ertrophigia inderica
+u128x1 e64 d0.3 lr0.003 b32  ep 12 T0.4 |   14.7s | val 1.777 | nowe  96.5% świeże  87.5% wiar  106.8% końc  68.0% | paralysis, morbus haemorrhohatica, paryngitis
+u128x1 e64 d0.3 lr0.003 b32  ep 12 T0.5 |   14.7s | val 1.777 | nowe  97.0% świeże  93.5% wiar  120.8% końc  76.0% | paralysis, morbus haemorrhophica, paryngitis
+u128x1 e64 d0.3 lr0.003 b32  ep 12 T0.6 |   14.7s | val 1.777 | nowe  98.0% świeże  92.5% wiar  131.0% końc  77.0% | paraesia, morbus henetatiosans, pasticiosis
+u128x1 e64 d0.3 lr0.003 b32  ep 16 T0.4 |   19.2s | val 1.755 | nowe  96.0% świeże  85.0% wiar  106.3% końc  63.0% | paralysis, morbus haemorrhohatica chronica, parcinoma preutrecti
+u128x1 e64 d0.3 lr0.003 b32  ep 16 T0.5 |   19.2s | val 1.755 | nowe  97.0% świeże  90.0% wiar  114.2% końc  67.0% | paracystitis, morbus haemorrhoma, paryngitis
+u128x1 e64 d0.3 lr0.003 b32  ep 16 T0.6 |   19.2s | val 1.755 | nowe  98.0% świeże  90.5% wiar  127.5% końc  69.5% | paracythis deficernica, morbus haemorrhonaticus, paryngitis
+u128x1 e64 d0.3 lr0.003 b64  ep  8 T0.4 |    8.7s | val 2.033 | nowe 100.0% świeże  95.0% wiar  131.7% końc  83.5% | syndroma rembina, neurophia granica, pastinoma subsoni
+u128x1 e64 d0.3 lr0.003 b64  ep  8 T0.5 |    8.7s | val 2.033 | nowe 100.0% świeże  96.5% wiar  147.7% końc  81.0% | syndroma sicantia, morbus nerrobriculoris, patus kestria
+u128x1 e64 d0.3 lr0.003 b64  ep  8 T0.6 |    8.7s | val 2.033 | nowe 100.0% świeże 100.0% wiar  163.7% końc  75.5% | rephatopholeria, morbus opheratis, patythialis
+u128x1 e64 d0.3 lr0.003 b64  ep 12 T0.4 |   12.7s | val 1.885 | nowe  99.5% świeże  93.5% wiar  120.5% końc  77.5% | parchronia corenica, morbus hempientis, paryngia
+u128x1 e64 d0.3 lr0.003 b64  ep 12 T0.5 |   12.7s | val 1.885 | nowe  98.5% świeże  93.0% wiar  128.9% końc  79.5% | parchronica cerolica, morbus lenor, paryngia
+u128x1 e64 d0.3 lr0.003 b64  ep 12 T0.6 |   12.7s | val 1.885 | nowe 100.0% świeże  97.0% wiar  143.8% końc  74.5% | parcerphigia, morbus medor, pastinoma
+u128x1 e64 d0.3 lr0.003 b64  ep 16 T0.4 |   16.6s | val 1.804 | nowe  97.5% świeże  93.0% wiar  108.8% końc  74.5% | parcinoma ensopharialis, morbus haemorrhim, paryngitis
+u128x1 e64 d0.3 lr0.003 b64  ep 16 T0.5 |   16.6s | val 1.804 | nowe  97.0% świeże  91.0% wiar  121.5% końc  76.0% | parchronica chronica, morbus haemorrhinatio, paryngitis
+u128x1 e64 d0.3 lr0.003 b64  ep 16 T0.6 |   16.6s | val 1.804 | nowe  98.5% świeże  95.0% wiar  134.2% końc  75.5% | parcerophia medialis, morbus inferctinomia, paryngitis
+u128x1 e64 d0.3 lr0.003 b64  ep 20 T0.4 |   20.6s | val 1.752 | nowe  93.5% świeże  84.0% wiar  101.5% końc  70.0% | paracytis, morbus haemorrhagica, parcinoma pranus
+u128x1 e64 d0.3 lr0.003 b64  ep 20 T0.5 |   20.6s | val 1.752 | nowe  97.0% świeże  88.5% wiar  113.0% końc  72.0% | paracytis, morbus haemorrhagica, paritis retrini
+u128x1 e64 d0.3 lr0.003 b64  ep 20 T0.6 |   20.6s | val 1.752 | nowe  98.0% świeże  90.5% wiar  122.2% końc  76.0% | paracytis, morbus inferdica, parophiasis
+u96x1 e48 d0.2 lr0.005 b32   ep  6 T0.4 |    5.9s | val 1.922 | nowe  98.5% świeże  92.0% wiar  125.7% końc  85.0% | parcinoma cancur insufficulae condica, morbus hempratica, patosis
+u96x1 e48 d0.2 lr0.005 b32   ep  6 T0.5 |    5.9s | val 1.922 | nowe  98.0% świeże  93.0% wiar  134.8% końc  85.5% | parhinoma cancingica, morbus infescinosis, patus hartricus carcinoma contica
+u96x1 e48 d0.2 lr0.005 b32   ep  6 T0.6 |    5.9s | val 1.922 | nowe  99.0% świeże  95.0% wiar  145.9% końc  90.5% | paricus hypatica insuffibrica, morbus meitiasis, patus hartricus carcinoma contielica
+u96x1 e48 d0.2 lr0.005 b32   ep  8 T0.4 |    7.5s | val 1.835 | nowe  98.0% świeże  89.0% wiar  109.7% końc  85.0% | parninoma maligna, leuropathia, patitis micresica cericenticae interica ceric
+u96x1 e48 d0.2 lr0.005 b32   ep  8 T0.5 |    7.5s | val 1.835 | nowe  98.5% świeże  94.0% wiar  123.7% końc  86.5% | parneusis, morbus hepatatien, patricosis
+u96x1 e48 d0.2 lr0.005 b32   ep  8 T0.6 |    7.5s | val 1.835 | nowe  99.5% świeże  96.5% wiar  137.2% końc  86.5% | parneusis, morbus infer, patus portophica
+u96x1 e48 d0.2 lr0.005 b32   ep 10 T0.4 |    9.2s | val 1.787 | nowe  96.5% świeże  92.5% wiar  105.0% końc  86.5% | paralysis, morbus mecticularis, patitis proratica conteria
+u96x1 e48 d0.2 lr0.005 b32   ep 10 T0.5 |    9.2s | val 1.787 | nowe  98.0% świeże  95.0% wiar  116.5% końc  85.0% | paradythrosis, morbus mectringitaris, patitis proratis
+u96x1 e48 d0.2 lr0.005 b32   ep 10 T0.6 |    9.2s | val 1.787 | nowe  99.0% świeże  94.5% wiar  124.5% końc  85.0% | parhinoma, morbus microcentriculis, patticintis acuta indis
+u96x1 e48 d0.2 lr0.005 b32   ep 12 T0.4 |   10.8s | val 1.757 | nowe  97.5% świeże  93.5% wiar  102.2% końc  76.5% | paralysis, morbus haemophagi, patitis pronica
+u96x1 e48 d0.2 lr0.005 b32   ep 12 T0.5 |   10.8s | val 1.757 | nowe  99.0% świeże  92.0% wiar  111.1% końc  75.5% | paralysis, morbus mectularis, patopicatio atrica
+u96x1 e48 d0.2 lr0.005 b32   ep 12 T0.6 |   10.8s | val 1.757 | nowe  99.0% świeże  94.0% wiar  121.7% końc  78.5% | paradythrophia prorica, morbus mectularis ussis, patrichiosis
+u128x1 e64 d0.2 lr0.005 b64  ep  6 T0.4 |    7.2s | val 1.996 | nowe 100.0% świeże  92.5% wiar  122.1% końc  84.5% | syndroma pharica, morbus heorochalia, pastinoma pontrica
+u128x1 e64 d0.2 lr0.005 b64  ep  6 T0.5 |    7.2s | val 1.996 | nowe 100.0% świeże  95.0% wiar  132.0% końc  86.5% | rephasia, morbus inferatis, patus feurona
+u128x1 e64 d0.2 lr0.005 b64  ep  6 T0.6 |    7.2s | val 1.996 | nowe 100.0% świeże  97.5% wiar  153.1% końc  77.0% | parcastiosis, morbus molin, patysophosis prhiaria
+u128x1 e64 d0.2 lr0.005 b64  ep  8 T0.4 |    9.4s | val 1.889 | nowe  99.0% świeże  93.5% wiar  112.5% końc  84.0% | paronythia conica, morbus mectuleris, pastinoma reminae thirona
+u128x1 e64 d0.2 lr0.005 b64  ep  8 T0.5 |    9.4s | val 1.889 | nowe 100.0% świeże  96.0% wiar  126.4% końc  76.0% | parnestis, morbus mectulicus vertica cerica, patus entrophilica
+u128x1 e64 d0.2 lr0.005 b64  ep  8 T0.6 |    9.4s | val 1.889 | nowe 100.0% świeże  98.0% wiar  142.8% końc  75.5% | parnatosis, morbus negrocticuloris, patus festricus
+u128x1 e64 d0.2 lr0.005 b64  ep 10 T0.4 |   11.5s | val 1.812 | nowe  98.0% świeże  92.0% wiar  107.6% końc  75.5% | parnestitis cordis, hiperterosis infecticum, onyrhitis
+u128x1 e64 d0.2 lr0.005 b64  ep 10 T0.5 |   11.5s | val 1.812 | nowe  98.5% świeże  92.5% wiar  119.0% końc  73.0% | parnetosis, leuropathia, omythema renis
+u128x1 e64 d0.2 lr0.005 b64  ep 10 T0.6 |   11.5s | val 1.812 | nowe  99.5% świeże  95.5% wiar  133.9% końc  74.5% | parnatosis actionis, morbus mectulicus usticum chronica, olythiosis
+u128x1 e64 d0.2 lr0.005 b64  ep 12 T0.4 |   13.7s | val 1.767 | nowe  96.5% świeże  90.0% wiar  106.0% końc  71.0% | parcinoma endermaticum cerebri, hernia pragiae, neurophagia
+u128x1 e64 d0.2 lr0.005 b64  ep 12 T0.5 |   13.7s | val 1.767 | nowe  95.5% świeże  90.5% wiar  115.4% końc  73.5% | parcenticula brandica, kernica, olyusophagia subectica
+u128x1 e64 d0.2 lr0.005 b64  ep 12 T0.6 |   13.7s | val 1.767 | nowe  98.5% świeże  95.0% wiar  130.7% końc  77.0% | parictus rectrondica, leuronastoma posteri, pastrichosis
+u128x1 e64 d0.3 lr0.001 b32  ep 30 T0.4 |   36.0s | val 1.794 | nowe  96.5% świeże  85.0% wiar  110.5% końc  65.0% | paracytis acuta, morbus haemorrhin, paryneurosis neurae
+u128x1 e64 d0.3 lr0.001 b32  ep 30 T0.5 |   36.0s | val 1.794 | nowe  98.0% świeże  90.0% wiar  126.1% końc  65.0% | paracytis, morbus haemorrhin, paryneurosis primari
+u128x1 e64 d0.3 lr0.001 b32  ep 30 T0.6 |   36.0s | val 1.794 | nowe  98.5% świeże  93.0% wiar  134.4% końc  68.5% | parceria, morbus haemomthyris, pastica pustis
+u128x1 e64 d0.0 lr0.003 b32  ep  8 T0.4 |    9.8s | val 1.861 | nowe  98.5% świeże  92.0% wiar  112.4% końc  78.5% | hyperthroma contica, leurosis acturati, hyperthronia maligna
+u128x1 e64 d0.0 lr0.003 b32  ep  8 T0.5 |    9.8s | val 1.861 | nowe  99.0% świeże  91.5% wiar  126.6% końc  81.0% | hyperthroma contica, leurosis acitinum, hyperthronia mangia
+u128x1 e64 d0.0 lr0.003 b32  ep  8 T0.6 |    9.8s | val 1.861 | nowe 100.0% świeże  97.5% wiar  140.5% końc  77.5% | hiastinoma allivia, morbus paralis, hyperthronia mangia
+u128x1 e64 d0.0 lr0.003 b32  ep 10 T0.4 |   12.1s | val 1.789 | nowe  95.0% świeże  89.5% wiar  106.5% końc  75.5% | hyperteria arterialis, lasmatio arterionalis, hyperteria poralis
+u128x1 e64 d0.0 lr0.003 b32  ep 10 T0.5 |   12.1s | val 1.789 | nowe  96.5% świeże  91.5% wiar  118.6% końc  71.5% | hiperterdia cortica, leuropathia praveptica, hyperternia
+u128x1 e64 d0.0 lr0.003 b32  ep 10 T0.6 |   12.1s | val 1.789 | nowe  98.0% świeże  94.5% wiar  135.2% końc  72.0% | himorchoea, morbus paralis, hyperternia
+u128x1 e64 d0.0 lr0.003 b32  ep 12 T0.4 |   14.3s | val 1.758 | nowe  93.5% świeże  86.5% wiar  101.6% końc  68.5% | hypertinitis cortica, lasmatio arteriosa, hypertinosis
+u128x1 e64 d0.0 lr0.003 b32  ep 12 T0.5 |   14.3s | val 1.758 | nowe  95.0% świeże  87.0% wiar  114.4% końc  69.5% | hipertingitis, morbus racrhyosyndroma, hyperthrosis
+u128x1 e64 d0.0 lr0.003 b32  ep 12 T0.6 |   14.3s | val 1.758 | nowe  98.5% świeże  93.0% wiar  125.8% końc  68.5% | hiperter madialis, morbus racheri-zacuta, infentio perginis
+u128x1 e64 d0.0 lr0.003 b32  ep 16 T0.4 |   18.7s | val 1.790 | nowe  90.5% świeże  83.5% wiar  110.2% końc  72.5% | morbus postemicus, morbus maligna, morbus metalis
+u128x1 e64 d0.0 lr0.003 b32  ep 16 T0.5 |   18.7s | val 1.790 | nowe  93.5% świeże  89.0% wiar  119.0% końc  71.5% | leucomaria, morbus polcanocycalis, morbus metalis
+u128x1 e64 d0.0 lr0.003 b32  ep 16 T0.6 |   18.7s | val 1.790 | nowe  97.0% świeże  93.0% wiar  128.0% końc  74.0% | leucomatosis misticum, morbus polacystosis, librosarcoma
+u128x1 e64 d0.2 lr0.003 b32  ep  8 T0.4 |   10.2s | val 1.877 | nowe  98.5% świeże  94.0% wiar  115.4% końc  83.0% | morbus octalis, morbus maematoryma, morbus feraterica
+u128x1 e64 d0.2 lr0.003 b32  ep  8 T0.5 |   10.2s | val 1.877 | nowe  99.5% świeże  92.0% wiar  132.6% końc  79.0% | morbus parcaria, morbus parceriatica, morbus insenica
+u128x1 e64 d0.2 lr0.003 b32  ep  8 T0.6 |   10.2s | val 1.877 | nowe  99.0% świeże  91.5% wiar  138.5% końc  81.5% | morbus paralis, morbus parceriatia, morbus meraterilaris creuracina
+u128x1 e64 d0.2 lr0.003 b32  ep 10 T0.4 |   12.5s | val 1.806 | nowe  96.5% świeże  89.5% wiar  107.2% końc  77.5% | morbus mali, morbus maligna, morbus feren
+u128x1 e64 d0.2 lr0.003 b32  ep 10 T0.5 |   12.5s | val 1.806 | nowe  97.5% świeże  91.5% wiar  118.2% końc  79.5% | morbus paralis, morbus odangromyconica, morbus keraterica
+u128x1 e64 d0.2 lr0.003 b32  ep 10 T0.6 |   12.5s | val 1.806 | nowe  97.5% świeże  90.5% wiar  137.1% końc  79.0% | morbus paralis, morbus paralis, morbus merathica
+u128x1 e64 d0.2 lr0.003 b32  ep 12 T0.4 |   14.8s | val 1.774 | nowe  95.5% świeże  90.0% wiar  102.0% końc  71.5% | morbus haper, morbus haemorrhygica, morbus fenis
+u128x1 e64 d0.2 lr0.003 b32  ep 12 T0.5 |   14.8s | val 1.774 | nowe  97.0% świeże  92.0% wiar  113.9% końc  77.5% | morbus mali, morbus maematosum, morbus hasterialis
+u128x1 e64 d0.2 lr0.003 b32  ep 12 T0.6 |   14.8s | val 1.774 | nowe  97.0% świeże  92.0% wiar  125.8% końc  77.0% | lenoma paralgica, morbus maematosum, morbus hasterialis
+u128x1 e64 d0.2 lr0.003 b32  ep 16 T0.4 |   19.4s | val 1.750 | nowe  92.5% świeże  82.0% wiar   99.1% końc  74.0% | morbus haematosus, morbus haematorum, morbus fascicularis
+u128x1 e64 d0.2 lr0.003 b32  ep 16 T0.5 |   19.4s | val 1.750 | nowe  94.0% świeże  83.0% wiar  111.1% końc  68.5% | lephalopathia progressiva, morbus indemicata, morbus haser
+u128x1 e64 d0.2 lr0.003 b32  ep 16 T0.6 |   19.4s | val 1.750 | nowe  95.5% świeże  89.0% wiar  124.2% końc  72.5% | lephalitis acuta, morbus malburaeri, ligeatoma
+u128x1 e64 d0.3 lr0.003 b32  ep  8 T0.4 |   10.3s | val 1.890 | nowe  99.0% świeże  91.0% wiar  122.5% końc  83.5% | morbus odicaris, morbus maematoryma, morbus fesica
+u128x1 e64 d0.3 lr0.003 b32  ep  8 T0.5 |   10.3s | val 1.890 | nowe 100.0% świeże  91.5% wiar  131.9% końc  84.0% | morbus paralis, morbus paralis, morbus insenica
+u128x1 e64 d0.3 lr0.003 b32  ep  8 T0.6 |   10.3s | val 1.890 | nowe  99.5% świeże  89.5% wiar  144.2% końc  84.5% | morbus paraidiosis, morbus paralis, morbus metaris
+u128x1 e64 d0.3 lr0.003 b32  ep 10 T0.4 |   12.7s | val 1.818 | nowe  98.0% świeże  89.0% wiar  109.9% końc  76.0% | morbus paralis, morbus maematosum, morbus hastica
+u128x1 e64 d0.3 lr0.003 b32  ep 10 T0.5 |   12.7s | val 1.818 | nowe  98.0% świeże  89.0% wiar  119.5% końc  82.5% | lephalia maemialis, morbus peralis, morbus mesica
+u128x1 e64 d0.3 lr0.003 b32  ep 10 T0.6 |   12.7s | val 1.818 | nowe  97.5% świeże  91.0% wiar  135.6% końc  77.5% | leinia paralis, morbus paralis, lerbioceosis
+u128x1 e64 d0.3 lr0.003 b32  ep 12 T0.4 |   15.1s | val 1.774 | nowe  95.5% świeże  90.0% wiar  105.7% końc  73.0% | morbus paralis, morbus maligna, morbus hasmae
+u128x1 e64 d0.3 lr0.003 b32  ep 12 T0.5 |   15.1s | val 1.774 | nowe  95.5% świeże  86.5% wiar  118.2% końc  77.5% | morbus paralis, morbus piralis, morbus mamalis
+u128x1 e64 d0.3 lr0.003 b32  ep 12 T0.6 |   15.1s | val 1.774 | nowe  96.5% świeże  90.5% wiar  130.8% końc  78.5% | morbus paralis, morbus peradis, morbus meukaemica
+u128x1 e64 d0.3 lr0.003 b32  ep 16 T0.4 |   19.8s | val 1.739 | nowe  94.0% świeże  86.0% wiar  103.4% końc  71.0% | morbus malbularis, morbus malgurae, morbus marbulae cordis
+u128x1 e64 d0.3 lr0.003 b32  ep 16 T0.5 |   19.8s | val 1.739 | nowe  94.0% świeże  90.0% wiar  113.4% końc  74.5% | morbus paralysis, morbus ondelle, morbus marbulae congenita
+u128x1 e64 d0.3 lr0.003 b32  ep 16 T0.6 |   19.8s | val 1.739 | nowe  95.5% świeże  90.5% wiar  121.1% końc  72.5% | morbus parallicularis, morbus paralyscum, morbus marbulae maligna
+u128x1 e64 d0.3 lr0.003 b64  ep  8 T0.4 |    8.8s | val 2.041 | nowe 100.0% świeże  94.0% wiar  131.3% końc  79.0% | leronia, morbus pericus, morbus interitis
+u128x1 e64 d0.3 lr0.003 b64  ep  8 T0.5 |    8.8s | val 2.041 | nowe 100.0% świeże  98.5% wiar  145.1% końc  88.5% | leplasis febroprophia, morbus parcertitis, lerbis intereritis
+u128x1 e64 d0.3 lr0.003 b64  ep  8 T0.6 |    8.8s | val 2.041 | nowe 100.0% świeże  99.0% wiar  162.2% końc  77.0% | lemoria, morbus pancertiva, lepentis percontio
+u128x1 e64 d0.3 lr0.003 b64  ep 12 T0.4 |   12.7s | val 1.884 | nowe  98.5% świeże  94.5% wiar  114.8% końc  77.0% | lestitis ceretosis, morbus polaenianis, morbus leuromatosis
+u128x1 e64 d0.3 lr0.003 b64  ep 12 T0.5 |   12.7s | val 1.884 | nowe  99.0% świeże  95.5% wiar  129.5% końc  77.0% | lerodia, morbus peratroptiae, lesia corter
+u128x1 e64 d0.3 lr0.003 b64  ep 12 T0.6 |   12.7s | val 1.884 | nowe  99.5% świeże  96.0% wiar  146.8% końc  75.0% | lemorchogea, morbus peratropularis, lerber leumactionis
+u128x1 e64 d0.3 lr0.003 b64  ep 16 T0.4 |   16.7s | val 1.789 | nowe  96.5% świeże  92.0% wiar  106.2% końc  71.0% | leurosis incertricularis, morbus polians, leurosis
+u128x1 e64 d0.3 lr0.003 b64  ep 16 T0.5 |   16.7s | val 1.789 | nowe  99.0% świeże  94.0% wiar  119.3% końc  72.5% | leronia, morbus polemicaria, leumonosis
+u128x1 e64 d0.3 lr0.003 b64  ep 16 T0.6 |   16.7s | val 1.789 | nowe 100.0% świeże  95.0% wiar  132.9% końc  74.5% | lemmonalis acutis, morbus phageriatica, lerebranuloma
+u128x1 e64 d0.3 lr0.003 b64  ep 20 T0.4 |   20.6s | val 1.738 | nowe  94.0% świeże  86.0% wiar  101.3% końc  66.0% | hyperteriosis, morbus valvae tumatosa, hyperterosis maligna
+u128x1 e64 d0.3 lr0.003 b64  ep 20 T0.5 |   20.6s | val 1.738 | nowe  97.5% świeże  89.0% wiar  111.6% końc  72.5% | infermitis, morbus ulardicae congenita, leucoma
+u128x1 e64 d0.3 lr0.003 b64  ep 20 T0.6 |   20.6s | val 1.738 | nowe  99.0% świeże  92.0% wiar  125.8% końc  74.0% | lephalosis acuta, morbus scanduraticum, letalia
+u96x1 e48 d0.2 lr0.005 b32   ep  6 T0.4 |    5.9s | val 1.915 | nowe  99.5% świeże  95.5% wiar  121.8% końc  83.5% | morbus manderi, morbus maldicullaris, morbus merdialis
+u96x1 e48 d0.2 lr0.005 b32   ep  6 T0.5 |    5.9s | val 1.915 | nowe 100.0% świeże  95.5% wiar  131.7% końc  80.0% | morbus mancalis, morbus maldiffexica, morbus mercinoma
+u96x1 e48 d0.2 lr0.005 b32   ep  6 T0.6 |    5.9s | val 1.915 | nowe 100.0% świeże  96.0% wiar  141.1% końc  80.0% | morbus octaemicus, morbus nechermatica, morbus merconia
+u96x1 e48 d0.2 lr0.005 b32   ep  8 T0.4 |    7.6s | val 1.814 | nowe  99.0% świeże  87.0% wiar  112.0% końc  76.0% | inffercinoma protica, morbus maligne, infebris
+u96x1 e48 d0.2 lr0.005 b32   ep  8 T0.5 |    7.6s | val 1.814 | nowe  99.5% świeże  94.5% wiar  125.0% końc  75.5% | lemoriosis, morbus malgeri, lepentia progicum
+u96x1 e48 d0.2 lr0.005 b32   ep  8 T0.6 |    7.6s | val 1.814 | nowe  99.0% świeże  96.5% wiar  136.8% końc  84.0% | lemoriculi, morbus maemionium, leoibocellas
+u96x1 e48 d0.2 lr0.005 b32   ep 10 T0.4 |    9.2s | val 1.773 | nowe  98.0% świeże  90.5% wiar  113.9% końc  77.0% | morbus mandularus, morbus menicus, morbus mondufficum
+u96x1 e48 d0.2 lr0.005 b32   ep 10 T0.5 |    9.2s | val 1.773 | nowe  98.5% świeże  95.5% wiar  122.0% końc  72.5% | morbus mandransus, morbus maematios, morbus mondufficum
+u96x1 e48 d0.2 lr0.005 b32   ep 10 T0.6 |    9.2s | val 1.773 | nowe  98.5% świeże  94.0% wiar  129.4% końc  74.0% | leoperdia, morbus maematopularis, morbus monduens
+u96x1 e48 d0.2 lr0.005 b32   ep 12 T0.4 |   10.8s | val 1.757 | nowe  96.0% świeże  87.0% wiar  103.7% końc  68.0% | morbus mandulartricularis, morbus meningnitis, morbus mondurae
+u96x1 e48 d0.2 lr0.005 b32   ep 12 T0.5 |   10.8s | val 1.757 | nowe  98.0% świeże  89.5% wiar  110.7% końc  70.5% | morbus mancali, morbus maligne, morbus monduns
+u96x1 e48 d0.2 lr0.005 b32   ep 12 T0.6 |   10.8s | val 1.757 | nowe  97.0% świeże  90.5% wiar  122.8% końc  74.0% | leroides, morbus malignosum, libocicosis
+u128x1 e64 d0.2 lr0.005 b64  ep  6 T0.4 |    6.7s | val 1.988 | nowe 100.0% świeże  98.0% wiar  115.1% końc  84.5% | morbus parcaniosis, morbus parcaria, morbus morbus
+u128x1 e64 d0.2 lr0.005 b64  ep  6 T0.5 |    6.7s | val 1.988 | nowe 100.0% świeże  97.0% wiar  134.8% końc  85.0% | morbus parcanis, morbus parcarianis, morbus morbulia
+u128x1 e64 d0.2 lr0.005 b64  ep  6 T0.6 |    6.7s | val 1.988 | nowe 100.0% świeże  98.5% wiar  150.7% końc  77.0% | morbus parcanis, morbus parcarias, morbus morbulia
+u128x1 e64 d0.2 lr0.005 b64  ep  8 T0.4 |    8.6s | val 1.872 | nowe 100.0% świeże  93.5% wiar  110.5% końc  77.0% | morbus perebricum, morbus pharentitis, morbus meridentia
+u128x1 e64 d0.2 lr0.005 b64  ep  8 T0.5 |    8.6s | val 1.872 | nowe 100.0% świeże  95.0% wiar  124.0% końc  77.5% | morbus paralignus, morbus perebri, morbus meter
+u128x1 e64 d0.2 lr0.005 b64  ep  8 T0.6 |    8.6s | val 1.872 | nowe 100.0% świeże  95.5% wiar  138.0% końc  79.5% | morbus paraemialis, morbus perderopyreria, morbus neuoratis
+u128x1 e64 d0.2 lr0.005 b64  ep 10 T0.4 |   10.6s | val 1.801 | nowe  98.5% świeże  92.0% wiar  106.2% końc  81.0% | morbus phronica, morbus porathicularis, morbus inferica
+u128x1 e64 d0.2 lr0.005 b64  ep 10 T0.5 |   10.6s | val 1.801 | nowe  98.5% świeże  92.0% wiar  118.1% końc  74.5% | lermatosis acuta, morbus phareorita, morbus mingulae
+u128x1 e64 d0.2 lr0.005 b64  ep 10 T0.6 |   10.6s | val 1.801 | nowe 100.0% świeże  96.0% wiar  132.5% końc  69.5% | lemiculoidea, morbus pharertetentia, lercatitis deffurmica
+u128x1 e64 d0.2 lr0.005 b64  ep 12 T0.4 |   12.5s | val 1.755 | nowe  97.0% świeże  89.5% wiar  106.3% końc  64.5% | morbus ranicon, morbus polignae, morbus merteri-neurodematosis
+u128x1 e64 d0.2 lr0.005 b64  ep 12 T0.5 |   12.5s | val 1.755 | nowe  98.5% świeże  94.0% wiar  117.2% końc  71.0% | morbus ranicongsis, morbus polidonina, morbus merinalis
+u128x1 e64 d0.2 lr0.005 b64  ep 12 T0.6 |   12.5s | val 1.755 | nowe  98.5% świeże  95.0% wiar  127.6% końc  67.5% | morbus rangae, morbus rambari, morbus merinalis
+u128x1 e64 d0.3 lr0.001 b32  ep 30 T0.4 |   35.8s | val 1.759 | nowe  98.0% świeże  92.0% wiar  109.1% końc  70.0% | morbus neukogrins, morbus maligna, morbus dengicularis
+u128x1 e64 d0.3 lr0.001 b32  ep 30 T0.5 |   35.8s | val 1.759 | nowe  98.0% świeże  93.0% wiar  116.4% końc  70.5% | lemor essematosum, morbus paralis, morbus herapitatio
+u128x1 e64 d0.3 lr0.001 b32  ep 30 T0.6 |   35.8s | val 1.759 | nowe  98.5% świeże  92.5% wiar  132.5% końc  74.5% | lecoma, morbus pancariaticus, lephalia
+Zapisano 225 pomiarów → <project>/eksperymenty/wyniki_auto_faza2.json

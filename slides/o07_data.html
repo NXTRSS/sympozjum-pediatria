@@ -1,0 +1,79 @@
+<section data-label="07 Data" class="bg-ink">
+  <div class="slide-frame">
+    <div class="eyebrow build" data-step="0">Dane treningowe</div>
+    <h2 class="section-title build" data-step="0" style="margin-top: 28px;">
+      1292 nazwy chorób — <span class="grad-text-warm">model generatywny na literach</span>
+    </h2>
+
+    <div style="margin-top: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+      <div>
+        <div class="card build" data-step="1">
+          <div class="tiny" style="color: var(--accent); margin-bottom: 20px;">PRZYGOTOWANIE TOKENÓW</div>
+          <div style="display: flex; flex-direction: column; gap: 16px; font-size: 28px;">
+            <div class="bullet" style="padding: 8px 0;">
+              <div class="num" style="color: var(--accent-2);">1.</div>
+              <div class="content">Dodajemy tokeny <span style="font-family:monospace; background: rgba(255,175,123,0.2); padding: 2px 10px; border-radius: 6px; color: var(--accent);">%</span> (start) i <span style="font-family:monospace; background: rgba(0,188,222,0.2); padding: 2px 10px; border-radius: 6px; color: var(--accent-2);">!</span> (stop)</div>
+            </div>
+            <div class="bullet" style="padding: 8px 0;">
+              <div class="num" style="color: var(--accent-2);">2.</div>
+              <div class="content">Tokenizacja na <strong style="color: var(--accent);">pojedyncze znaki</strong> — 26 liter, spacja, myślnik i apostrof — razem z %, ! i dopełnieniem: 32 tokeny</div>
+            </div>
+            <div class="bullet" style="padding: 8px 0;">
+              <div class="num" style="color: var(--accent-2);">3.</div>
+              <div class="content"><strong style="color: var(--accent-2);">Padding</strong> — uzupełniamy zerami do jednakowej długości</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card build" data-step="2">
+          <div class="tiny" style="color: var(--accent-2); margin-bottom: 20px;">TRANSFORMACJA NAZWY</div>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: flex; align-items: center; gap: 20px; font-size: 32px;">
+              <span style="color: rgba(255,255,255,0.6);">pneumonia</span>
+              <span style="color: rgba(255,255,255,0.3); font-size: 40px;">→</span>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="background: rgba(255,175,123,0.25); border: 1px solid rgba(255,175,123,0.5); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px; font-weight: 700; color: var(--accent);">%</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">p</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">n</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">e</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">u</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">m</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">o</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">n</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">i</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">a</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.5); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px; font-weight: 700; color: var(--accent-2);">!</span>
+              </div>
+            </div>
+            <div style="height: 1px; background: rgba(255,255,255,0.1);"></div>
+            <div style="display: flex; align-items: center; gap: 20px; font-size: 32px;">
+              <span style="color: rgba(255,255,255,0.6);">morbilli</span>
+              <span style="color: rgba(255,255,255,0.3); font-size: 40px;">→</span>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="background: rgba(255,175,123,0.25); border: 1px solid rgba(255,175,123,0.5); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px; font-weight: 700; color: var(--accent);">%</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">m</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">o</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">r</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">b</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">i</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">l</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">l</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px;">i</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.5); border-radius: 8px; padding: 6px 10px; font-family: monospace; font-size: 28px; font-weight: 700; color: var(--accent-2);">!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card build" data-step="2" style="margin-top: 24px; background: rgba(201,166,255,0.05); border-color: rgba(201,166,255,0.18);">
+          <div class="body-sm" style="color: rgba(255,255,255,0.7);">
+            Model uczy się rozkładu <strong style="color: var(--accent-4);">P(następna litera | dotychczasowy prefiks)</strong> — identyczna idea co w ChatGPT, tylko zamiast słów mamy litery.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">07</div>
+</section>

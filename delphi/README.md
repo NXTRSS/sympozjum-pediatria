@@ -73,7 +73,7 @@ Nigdy nie commitujemy wag, checkpointów ani danych. Notebook uruchamiany lokaln
 | Dane syntetyczne autorów (`data/ukb_simulated_data`, w klonie: `zewnetrzne/Delphi/data/`) | brak jawnej licencji danych | tylko lokalnie, nie redystrybuujemy |
 | Wagi Delphi-2M (UK Biobank) | CC BY-NC-ND 4.0, dostęp kontrolowany przez UK Biobank (upload ID 7318) | **nie mamy** |
 | Nasz checkpoint z danych syntetycznych | pochodna danych bez licencji; nie publikujemy bez zgody autorów (decyzja D2) | `pamiec/` (poza gitem) |
-| Polskie nazwy ICD-10 (ICD-10-2008-PL) | CC BY 4.0, Centrum e-Zdrowia, dane.gov.pl zasób 55725 | pobierane w przygotowaniu do `dane/` (poza gitem) |
+| Polskie nazwy ICD-10 (ICD-10-2008-PL) | CC BY 4.0, Centrum e-Zdrowia, dane.gov.pl zasób 55725 | w repo: `dane/icd10_pl.csv` (atrybucja w nagłówku pliku); źródłowy XML (12 MB) pobierany w przygotowaniu, poza gitem |
 
 Polska ICD-10 ma 2050 kategorii 3-znakowych i pokrywa 1248 z 1254 kodów modelu. Bez polskiej nazwy (6 kodów bez odpowiednika w ICD-10-2008-PL) zostają: A97, B98, C42, C86, G14, K64.
 

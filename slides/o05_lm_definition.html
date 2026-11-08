@@ -1,0 +1,56 @@
+<section data-label="05 LM Definition" class="bg-ink">
+  <div class="slide-frame">
+    <div class="eyebrow build" data-step="0">Model Języka (Language Model)</div>
+    <h2 class="section-title build" data-step="0" style="margin-top: 28px;">
+      Rozkład prawdopodobieństwa <span class="grad-text-warm">pod warunkiem sekwencji</span>
+    </h2>
+
+    <div style="margin-top: 56px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: start;">
+      <div>
+        <div class="card build" data-step="1" style="border-color: rgba(255,175,123,0.3); margin-bottom: 32px;">
+          <div class="tiny" style="color: var(--accent);">FORMUŁA</div>
+          <div style="margin-top: 24px; font-size: 50px; font-weight: 700; font-family: 'JetBrains Mono', monospace; text-align: center; line-height: 1.2;">
+            P(<span style="color:var(--accent);">w<sub style="font-size:0.55em">n</sub></span> | w<sub style="font-size:0.55em">1</sub>, w<sub style="font-size:0.55em">2</sub>, … w<sub style="font-size:0.55em">n−1</sub>)
+          </div>
+          <div class="body-sm" style="margin-top: 16px; color: rgba(255,255,255,0.6); text-align: center;">Prawdopodobieństwo <em>następnego</em> tokenu, dane poprzednie</div>
+        </div>
+
+        <div class="card build" data-step="2" style="background: rgba(0,188,222,0.06); border-color: rgba(0,188,222,0.2);">
+          <div class="tiny" style="color: var(--accent-2); margin-bottom: 16px;">PRZYKŁAD</div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 14px; font-size: 30px;">
+              <span style="color: rgba(255,255,255,0.55);">„Mamy bardzo słoneczną …"</span>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px;">
+              <div style="background: rgba(255,175,123,0.25); border: 1px solid rgba(255,175,123,0.5); border-radius: 12px; padding: 8px 20px; font-size: 28px; font-weight: 600;">pogodę <span style="color:var(--accent);">0.71</span></div>
+              <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 8px 20px; font-size: 28px;">noc <span style="color:rgba(255,255,255,0.45);">0.08</span></div>
+              <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 8px 20px; font-size: 28px;">jesień <span style="color:rgba(255,255,255,0.45);">0.05</span></div>
+              <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 8px 20px; font-size: 28px;">…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 26px;">
+        <div class="bullet build" data-step="3">
+          <div class="num">→</div>
+          <div class="content body-sm">W naszym zadaniu jednostkami nie będą <strong style="color:var(--accent);">słowa</strong>, ale <strong style="color:var(--accent);">litery</strong> (znaki)</div>
+        </div>
+        <div class="bullet build" data-step="3">
+          <div class="num">→</div>
+          <div class="content body-sm">Model przypisuje <strong style="color:var(--accent-2);">rozkład prawdopodobieństwa</strong> każdemu możliwemu kolejnemu tokenowi</div>
+        </div>
+        <div class="bullet build" data-step="3">
+          <div class="num">→</div>
+          <div class="content body-sm">Ta jedna idea jest podstawą <strong style="color:var(--accent-3);">ChatGPT, Claude, Gemini</strong> — różni je tylko skala i architektura</div>
+        </div>
+        <div class="card build" data-step="3" style="margin-top: 8px; background: rgba(201,166,255,0.06); border-color: rgba(201,166,255,0.2);">
+          <div class="body-sm" style="color: rgba(255,255,255,0.7);">
+            Pytanie: jak długo generować? Aż do specjalnego tokenu <strong style="color: var(--accent-4);">STOP</strong> — model sam decyduje kiedy skończyć.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">05</div>
+</section>

@@ -1,0 +1,93 @@
+<section data-label="08 X and Y" class="bg-ink">
+  <div class="slide-frame">
+    <div class="eyebrow build" data-step="0">Dane: X i Y</div>
+    <h2 class="section-title build" data-step="0" style="margin-top: 28px;">
+      Co predykuje nasz model? <span class="grad-text-warm">Następny znak</span>
+    </h2>
+
+    <div style="margin-top: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px;">
+      <div>
+        <div class="build" data-step="1">
+          <div class="tiny" style="color: var(--accent); margin-bottom: 18px; letter-spacing: 0.1em;">DLA NAZWY %OTITIS EXTERNA!</div>
+          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 26px;">
+            <div style="display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: rgba(255,255,255,0.04); border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
+              <span style="font-family: monospace; color: rgba(255,255,255,0.55); min-width: 200px;">X: <span style="color: var(--accent);">%otitis</span></span>
+              <span style="color: rgba(255,255,255,0.35);">→</span>
+              <span style="font-family: monospace;">Y: <span style="color: var(--accent-4);">␣</span> <span style="font-family: Inter, sans-serif; font-size: 20px; color: rgba(255,255,255,0.45);">(spacja też jest tokenem)</span></span>
+              <span style="margin-left: auto; color: rgba(255,255,255,0.35); font-size: 22px;">P(␣ | %otitis)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: rgba(255,255,255,0.04); border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
+              <span style="font-family: monospace; color: rgba(255,255,255,0.55); min-width: 200px;">X: <span style="color: var(--accent);">%otitis extern</span></span>
+              <span style="color: rgba(255,255,255,0.35);">→</span>
+              <span style="font-family: monospace;">Y: <span style="color: var(--accent-2);">a</span></span>
+              <span style="margin-left: auto; color: rgba(255,255,255,0.35); font-size: 22px;">P(a | %otitis extern)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: rgba(255,255,255,0.04); border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
+              <span style="font-family: monospace; color: rgba(255,255,255,0.55); min-width: 200px;">X: <span style="color: var(--accent);">%otitis externa</span></span>
+              <span style="color: rgba(255,255,255,0.35);">→</span>
+              <span style="font-family: monospace;">Y: <span style="color: var(--accent-2);">!</span></span>
+              <span style="margin-left: auto; color: rgba(255,255,255,0.35); font-size: 22px;">P(! | %otitis externa)</span>
+            </div>
+          </div>
+        </div>
+        <div class="card build" data-step="2" style="margin-top: 28px; background: rgba(0,188,222,0.06); border-color: rgba(0,188,222,0.18);">
+          <div class="body-sm" style="color: rgba(255,255,255,0.8);">
+            <strong style="color: var(--accent-2);">Kluczowa obserwacja:</strong> Jedno przejście przez RNN pokrywa <em>wszystkie</em> kombinacje — nie potrzebujemy oddzielnych próbek dla każdej długości prefiksu.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card build" data-step="3">
+          <div class="tiny" style="color: var(--accent-3); margin-bottom: 20px;">WEJŚCIE I WYJŚCIE Z SIECI</div>
+          <div style="display: flex; flex-direction: column; gap: 20px; font-family: monospace; font-size: 22px;">
+            <div>
+              <div style="font-size: 20px; color: rgba(255,255,255,0.5); margin-bottom: 10px;">X (wejście) — sekwencja wejściowa:</div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <span style="background: rgba(255,175,123,0.25); border: 1px solid rgba(255,175,123,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent);">%</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">o</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">t</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">i</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">t</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">i</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">s</span>
+                <span style="background: rgba(201,166,255,0.18); border: 1px dashed rgba(201,166,255,0.6); border-radius: 6px; padding: 6px 12px; color: var(--accent-4);" title="spacja">␣</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">e</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">x</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">t</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">e</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">r</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">n</span>
+                <span style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px;">a</span>
+              </div>
+            </div>
+            <div style="color: rgba(255,255,255,0.3); font-size: 28px; padding-left: 4px;">↓ (każdy token przewiduje następny)</div>
+            <div>
+              <div style="font-size: 20px; color: rgba(255,255,255,0.5); margin-bottom: 10px;">Y (cel) — sekwencja docelowa:</div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">o</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">t</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">i</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">t</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">i</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">s</span>
+                <span style="background: rgba(201,166,255,0.18); border: 1px dashed rgba(201,166,255,0.6); border-radius: 6px; padding: 6px 12px; color: var(--accent-4);" title="spacja">␣</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">e</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">x</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">t</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">e</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">r</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">n</span>
+                <span style="background: rgba(0,188,222,0.2); border: 1px solid rgba(0,188,222,0.4); border-radius: 6px; padding: 6px 12px; color: var(--accent-2);">a</span>
+                <span style="background: rgba(0,188,222,0.25); border: 1px solid rgba(0,188,222,0.6); border-radius: 6px; padding: 6px 12px; color: var(--accent-2); font-weight: 700;">!</span>
+              </div>
+            </div>
+          </div>
+          <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 18px 0;"></div>
+          <div class="body-sm" style="color: rgba(255,255,255,0.65);">Y to X przesunięte o 1 w prawo — każdy znak X ma swój „cel" w Y. Token <span style="color: var(--accent);">%</span> → przewiduje <span style="color: var(--accent-2);">o</span>, token <span style="color: rgba(255,255,255,0.7);">a</span> → przewiduje <span style="color: var(--accent-2);">!</span> (STOP)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">08</div>
+</section>

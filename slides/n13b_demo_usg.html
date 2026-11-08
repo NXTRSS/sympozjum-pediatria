@@ -1,0 +1,85 @@
+<section data-label="N13b Demo USG" class="bg-ink">
+  <div class="slide-frame" style="padding-top: 84px;">
+    <div class="eyebrow build" data-step="0">Demo · zwykły laptop, publiczne dane</div>
+    <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: flex-end; gap: 48px;">
+      <h2 class="section-title build" data-step="0" style="margin: 0;">
+        Z nagrania USG do <span class="grad-text-warm">masy płodu</span>
+      </h2>
+      <div class="build" data-step="0" style="max-width: 640px; padding: 12px 0 10px 24px; border-left: 3px solid var(--accent); font-size: 27px; line-height: 1.35; color: rgba(255,255,255,0.85);"><strong>Nie lepsze od Hadlocka</strong> — ale w&nbsp;pełni automatyczne, na nagraniu nowicjusza</div>
+    </div>
+
+    <!-- schemat: nagranie → brzuch → AC → masa -->
+    <div class="build" data-step="1" style="margin-top: 40px; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 18px; align-items: stretch;">
+      <div class="card" style="padding: 22px 26px;">
+        <div class="tiny" style="color: var(--accent-2); letter-spacing: 0.12em;">1 · NAGRANIE</div>
+        <div class="body-sm" style="font-size: 25px; line-height: 1.35; margin-top: 8px; color: rgba(255,255,255,0.85);"><strong>840 klatek</strong>: 6 przeciągnięć głowicą „na&nbsp;ślepo”</div>
+      </div>
+      <div class="arrow-r" style="align-self: center; font-size: 44px;">→</div>
+      <div class="card" style="padding: 22px 26px;">
+        <div class="tiny" style="color: var(--accent-2); letter-spacing: 0.12em;">2 · SZUKANIE</div>
+        <div class="body-sm" style="font-size: 25px; line-height: 1.35; margin-top: 8px; color: rgba(255,255,255,0.85);">Model <strong>sam znajduje</strong> klatkę z brzuchem</div>
+      </div>
+      <div class="arrow-r" style="align-self: center; font-size: 44px;">→</div>
+      <div class="card" style="padding: 22px 26px;">
+        <div class="tiny" style="color: var(--accent-2); letter-spacing: 0.12em;">3 · POMIAR</div>
+        <div class="body-sm" style="font-size: 25px; line-height: 1.35; margin-top: 8px; color: rgba(255,255,255,0.85);">Obwód brzucha <strong>(AC)</strong> z obrysu</div>
+      </div>
+      <div class="arrow-r" style="align-self: center; font-size: 44px;">→</div>
+      <div class="card" style="padding: 22px 26px; border-color: rgba(255,175,123,0.4);">
+        <div class="tiny" style="color: var(--accent); letter-spacing: 0.12em;">4 · MASA</div>
+        <div class="body-sm" style="font-size: 25px; line-height: 1.35; margin-top: 8px; color: rgba(255,255,255,0.85);">Masa <strong>„teraz”</strong> z AC (wzór Campbella)</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 36px; display: grid; grid-template-columns: 1.08fr 1fr; gap: 44px; align-items: start;">
+      <!-- trzy ścieżki -->
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div class="tiny build" data-step="2" style="color: rgba(255,255,255,0.5); letter-spacing: 0.12em;">TRZY MODELE</div>
+        <div class="card build" data-step="2" style="padding: 20px 28px; border-color: rgba(0,188,222,0.4);">
+          <div class="body-sm" style="font-size: 26px; line-height: 1.4; color: rgba(255,255,255,0.85);"><strong style="color: var(--accent-2);">✓ nnU-Net</strong> 🇳🇱 — konkurs ACOUSLIC-AI (Radboudumc). <strong>Działa</strong> od nagrania do masy, ok. 30 s na nagranie</div>
+        </div>
+        <div class="card build" data-step="2" style="padding: 20px 28px;">
+          <div class="body-sm" style="font-size: 26px; line-height: 1.4; color: rgba(255,255,255,0.85);"><strong style="color: var(--accent);">≈ FUVAI</strong> 🇵🇱 — Sano + WUM, 2022, publiczne wagi. Działa <strong>częściowo</strong>: uczony na innych nagraniach, brzuch pewnie znalazł w 1 z 4</div>
+        </div>
+        <div class="card build" data-step="2" style="padding: 20px 28px; border-color: rgba(215,109,119,0.4);">
+          <div class="body-sm" style="font-size: 26px; line-height: 1.4; color: rgba(255,255,255,0.85);"><strong style="color: var(--accent-3);">? Model Sano</strong> 🇵🇱 — <strong>masa w dniu porodu</strong>, uczony na badaniach &lt;&nbsp;24&nbsp;h przed porodem. A&nbsp;w&nbsp;30.&nbsp;tc.? → następny slajd</div>
+        </div>
+      </div>
+
+      <!-- tabela AC vs eksperci -->
+      <div class="card build" data-step="3" style="padding: 26px 34px;">
+        <div class="tiny" style="color: rgba(255,255,255,0.55); letter-spacing: 0.12em; margin-bottom: 14px;">OBWÓD BRZUCHA (MM) · MODEL vs EKSPERCI</div>
+        <div style="display: grid; grid-template-columns: 1.35fr 1fr 1fr 1.15fr; gap: 0 18px; align-items: baseline;">
+          <div class="tiny" style="color: rgba(255,255,255,0.45);">NAGRANIE</div>
+          <div class="tiny" style="color: var(--accent-2);">nnU-Net</div>
+          <div class="tiny" style="color: var(--accent);">FUVAI</div>
+          <div class="tiny" style="color: rgba(255,255,255,0.45);">EKSPERCI</div>
+
+          <div class="body-sm" style="font-size: 25px; padding-top: 14px; color: rgba(255,255,255,0.8);">Nr 1</div>
+          <div style="padding-top: 14px; font-size: 34px; font-weight: 800; color: var(--accent-2);">304</div>
+          <div class="tiny" style="padding-top: 14px; color: rgba(255,255,255,0.4);">niepewne</div>
+          <div style="padding-top: 14px; font-size: 30px; font-weight: 700; color: rgba(255,255,255,0.7);">312 / 294</div>
+
+          <div class="body-sm" style="font-size: 25px; padding-top: 14px; color: rgba(255,255,255,0.8);">Nr 2</div>
+          <div style="padding-top: 14px; font-size: 34px; font-weight: 800; color: var(--accent-2);">257</div>
+          <div class="tiny" style="padding-top: 14px; color: rgba(255,255,255,0.4);">niepewne</div>
+          <div style="padding-top: 14px; font-size: 30px; font-weight: 700; color: rgba(255,255,255,0.7);">257</div>
+
+          <div class="body-sm" style="font-size: 25px; padding-top: 14px; color: rgba(255,255,255,0.8);">Nr 3</div>
+          <div style="padding-top: 14px; font-size: 34px; font-weight: 800; color: var(--accent-2);">242</div>
+          <div style="padding-top: 14px; font-size: 34px; font-weight: 800; color: var(--accent);">209</div>
+          <div style="padding-top: 14px; font-size: 30px; font-weight: 700; color: rgba(255,255,255,0.7);">217</div>
+
+          <div class="body-sm" style="font-size: 25px; padding-top: 14px; color: rgba(255,255,255,0.8);">Wycinek<span class="tiny" style="color: rgba(255,255,255,0.4);"> · 128 kl.</span></div>
+          <div style="padding-top: 14px; font-size: 34px; font-weight: 800; color: var(--accent-2);">262</div>
+          <div class="tiny" style="padding-top: 14px; color: rgba(255,255,255,0.4);">nie znalazł</div>
+          <div style="padding-top: 14px; font-size: 30px; font-weight: 700; color: rgba(255,255,255,0.7);">272 / 250</div>
+        </div>
+        <div class="body-sm" style="font-size: 22px; line-height: 1.4; color: rgba(255,255,255,0.55); margin-top: 18px;">Cztery nagrania to nie walidacja — pokazują tylko, że ścieżka działa i daje liczby właściwego rzędu.</div>
+      </div>
+    </div>
+
+    <div class="tiny build" data-step="1" style="margin-top: auto; color: rgba(255,255,255,0.38); font-size: 17px; letter-spacing: 0.03em;">Dane: ACOUSLIC-AI (Radboudumc, Zenodo 12697994), CC BY-NC-SA 4.0 · nagrania tanią głowicą ze smartfonem, Sierra Leone · Materiał edukacyjny, nie wyrób medyczny.</div>
+  </div>
+  <div class="page-num">00</div>
+</section>

@@ -1,0 +1,64 @@
+<section data-label="11 Sampling" class="bg-ink">
+  <div class="slide-frame">
+    <div class="eyebrow build" data-step="0">Strategie próbkowania</div>
+    <h2 class="section-title build" data-step="0" style="margin-top: 28px;">
+      Zachłannie czy losowo? — <span class="grad-text-warm">jak wybrać token?</span>
+    </h2>
+
+    <div style="margin-top: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+      <div class="card build" data-step="1" style="border-color: rgba(255,175,123,0.3);">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+          <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(255,175,123,0.2); border: 1px solid rgba(255,175,123,0.4); display: grid; place-items: center; font-size: 28px;">🎯</div>
+          <div>
+            <div class="tiny" style="color: var(--accent); margin-bottom: 4px;">ZACHŁANNY (ZAWSZE NAJBARDZIEJ PRAWDOPODOBNY)</div>
+            <div style="font-size: 28px; font-weight: 700;">Zawsze wybierz #1</div>
+          </div>
+        </div>
+        <div class="body-sm" style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">Zawsze wybieramy token z <strong style="color: var(--accent);">najwyższym prawdopodobieństwem</strong>. Deterministyczny — zawsze ten sam wynik dla tego samego zapytania.</div>
+        <div style="display: flex; gap: 8px; align-items: flex-end; margin-bottom: 12px; height: 70px;">
+          <div style="width: 50px; background: rgba(255,175,123,0.7); border-radius: 6px 6px 0 0; height: 100%; position: relative;">
+            <div style="position: absolute; top: -24px; left: 50%; transform: translateX(-50%); font-size: 18px; color: var(--accent); font-weight: 700;">71%</div>
+            <div style="position: absolute; top: 8px; left: 50%; transform: translateX(-50%); font-size: 20px; font-family: monospace; font-weight: 700;">W</div>
+            <div style="position: absolute; top: 2px; right: 2px; font-size: 18px;">✓</div>
+          </div>
+          <div style="width: 50px; background: rgba(255,255,255,0.15); border-radius: 6px 6px 0 0; height: 35%; position: relative;">
+            <div style="position: absolute; top: -24px; left: 50%; transform: translateX(-50%); font-size: 18px; color: rgba(255,255,255,0.5);">22%</div>
+            <div style="position: absolute; top: 4px; left: 50%; transform: translateX(-50%); font-size: 20px; font-family: monospace; font-weight: 700; color: rgba(255,255,255,0.6);">k</div>
+          </div>
+          <div style="width: 50px; background: rgba(255,255,255,0.1); border-radius: 6px 6px 0 0; height: 15%; position: relative;">
+            <div style="position: absolute; top: -24px; left: 50%; transform: translateX(-50%); font-size: 18px; color: rgba(255,255,255,0.4);">7%</div>
+          </div>
+        </div>
+        <div class="body-sm" style="color: rgba(255,255,255,0.5);">✓ Spójny &nbsp;&nbsp; ✗ Powtarzalny i nudny</div>
+      </div>
+
+      <div class="card build" data-step="2" style="border-color: rgba(0,188,222,0.3);">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+          <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(0,188,222,0.15); border: 1px solid rgba(0,188,222,0.4); display: grid; place-items: center; font-size: 28px;">🎲</div>
+          <div>
+            <div class="tiny" style="color: var(--accent-2); margin-bottom: 4px;">LOSOWY (ZGODNIE Z PRAWDOPODOBIEŃSTWEM)</div>
+            <div style="font-size: 28px; font-weight: 700;">Losuj z rozkładu</div>
+          </div>
+        </div>
+        <div class="body-sm" style="color: rgba(255,255,255,0.7); margin-bottom: 20px;"><strong style="color: var(--accent-2);">Losujemy</strong> token zgodnie z rozkładem prawdopodobieństwa. Różnorodny — każde generowanie daje inny wynik.</div>
+        <div style="display: flex; gap: 8px; align-items: flex-end; margin-bottom: 12px; height: 70px;">
+          <div style="width: 50px; background: rgba(0,188,222,0.5); border-radius: 6px 6px 0 0; height: 100%;">
+            <div style="text-align: center; padding-top: 8px; font-size: 20px; font-family: monospace; font-weight: 700;">W</div>
+          </div>
+          <div style="width: 50px; background: rgba(0,188,222,0.5); border-radius: 6px 6px 0 0; height: 35%;">
+            <div style="text-align: center; padding-top: 4px; font-size: 20px; font-family: monospace; font-weight: 700;">k</div>
+          </div>
+          <div style="width: 50px; background: rgba(0,188,222,0.5); border-radius: 6px 6px 0 0; height: 15%;"></div>
+        </div>
+        <div class="body-sm" style="color: rgba(255,255,255,0.5);">✓ Różnorodny &nbsp;&nbsp; ✗ Może być losowy/dziwny</div>
+      </div>
+    </div>
+
+    <div class="card build" data-step="3" style="margin-top: 28px; background: rgba(201,166,255,0.05); border-color: rgba(201,166,255,0.2);">
+      <div class="body-sm" style="color: rgba(255,255,255,0.8);">
+        <strong style="color: var(--accent-4);">Temperatura (T):</strong> parametr kontrolujący „odwagę" losowania. T→0: prawie zawsze najbardziej prawdopodobny. T=1: pełny rozkład. T&gt;1: bardziej losowy i kreatywny. ChatGPT używa T ≈ 0.7–1.0.
+      </div>
+    </div>
+  </div>
+  <div class="page-num">11</div>
+</section>

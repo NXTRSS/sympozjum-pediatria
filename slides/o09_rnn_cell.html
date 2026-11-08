@@ -1,0 +1,112 @@
+<section data-label="09 RNN Cell" class="bg-ink">
+  <div class="slide-frame">
+    <div class="eyebrow build" data-step="0">Architektura</div>
+    <h2 class="section-title build" data-step="0" style="margin-top: 28px;">
+      Komórka RNN — <span class="grad-text-warm">pamięć sekwencyjna</span>
+    </h2>
+
+    <div style="margin-top: 52px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: start;">
+    <!-- RNN cell diagram - single cell with vectors like reference image -->
+      <div class="build" data-step="1">
+        <svg viewBox="0 0 820 520" style="width: 100%; max-width: 900px;" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr-w" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="rgba(255,255,255,0.7)"></polygon>
+            </marker>
+            <marker id="arr-cyan2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#00BCDE"></polygon>
+            </marker>
+            <marker id="arr-lilac2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#C9A6FF"></polygon>
+            </marker>
+            <marker id="arr-acc2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#FFAF7B"></polygon>
+            </marker>
+          </defs>
+
+          <!-- h(t-1) vector left -->
+          <g transform="translate(10, 230)">
+            <rect x="0" y="0" width="34" height="34" rx="5" fill="rgba(201,166,255,0.35)" stroke="rgba(201,166,255,0.6)" stroke-width="2"></rect>
+            <rect x="40" y="0" width="34" height="34" rx="5" fill="rgba(201,166,255,0.35)" stroke="rgba(201,166,255,0.6)" stroke-width="2"></rect>
+            <rect x="80" y="0" width="34" height="34" rx="5" fill="rgba(201,166,255,0.35)" stroke="rgba(201,166,255,0.6)" stroke-width="2"></rect>
+            <rect x="120" y="0" width="34" height="34" rx="5" fill="rgba(201,166,255,0.35)" stroke="rgba(201,166,255,0.6)" stroke-width="2"></rect>
+            <rect x="160" y="0" width="34" height="34" rx="5" fill="rgba(201,166,255,0.35)" stroke="rgba(201,166,255,0.6)" stroke-width="2"></rect>
+          </g>
+          <text x="112" y="218" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="20" fill="#C9A6FF" font-weight="700">h<tspan dy="5" font-size="14">(t−1)</tspan></text>
+          <text x="112" y="290" text-anchor="middle" font-family="Inter" font-size="12" fill="rgba(201,166,255,0.5)" font-weight="600" letter-spacing="1">STAN UKRYTY IN</text>
+          <line x1="204" y1="247" x2="278" y2="247" stroke="#C9A6FF" stroke-width="3" marker-end="url(#arr-lilac2)"></line>
+
+          <!-- RNN cell -->
+          <rect x="280" y="185" width="200" height="124" rx="24" fill="rgba(86,45,127,0.6)" stroke="#C9A6FF" stroke-width="3"></rect>
+          <text x="380" y="240" text-anchor="middle" font-family="Inter" font-size="24" font-weight="800" fill="rgba(255,255,255,0.95)" letter-spacing="3">RNN</text>
+          <text x="380" y="268" text-anchor="middle" font-family="Inter" font-size="14" fill="rgba(255,255,255,0.45)">(GRU / LSTM)</text>
+
+          <!-- h(t) right -->
+          <line x1="480" y1="247" x2="554" y2="247" stroke="#C9A6FF" stroke-width="3" marker-end="url(#arr-lilac2)"></line>
+          <g transform="translate(556, 230)">
+            <rect x="0" y="0" width="34" height="34" rx="5" fill="rgba(201,166,255,0.35)" stroke="rgba(201,166,255,0.6)" stroke-width="2"></rect>
+            <rect x="40" y="0" width="34" height="34" rx="5" fill="rgba(201,166,255,0.35)" stroke="rgba(201,166,255,0.6)" stroke-width="2"></rect>
+            <rect x="80" y="0" width="34" height="34" rx="5" fill="rgba(201,166,255,0.35)" stroke="rgba(201,166,255,0.6)" stroke-width="2"></rect>
+            <rect x="120" y="0" width="34" height="34" rx="5" fill="rgba(201,166,255,0.35)" stroke="rgba(201,166,255,0.6)" stroke-width="2"></rect>
+            <rect x="160" y="0" width="34" height="34" rx="5" fill="rgba(201,166,255,0.35)" stroke="rgba(201,166,255,0.6)" stroke-width="2"></rect>
+          </g>
+          <text x="668" y="218" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="20" fill="#C9A6FF" font-weight="700">h<tspan dy="5" font-size="14">(t)</tspan></text>
+          <text x="668" y="290" text-anchor="middle" font-family="Inter" font-size="12" fill="rgba(201,166,255,0.5)" font-weight="600" letter-spacing="1">STAN UKRYTY OUT</text>
+          <line x1="750" y1="247" x2="815" y2="247" stroke="rgba(201,166,255,0.4)" stroke-width="2.5" stroke-dasharray="7,5" marker-end="url(#arr-lilac2)"></line>
+
+          <!-- h(t) up → label → LINEAR → ŷ(t) -->
+          <line x1="380" y1="185" x2="380" y2="140" stroke="#C9A6FF" stroke-width="3" marker-end="url(#arr-lilac2)"></line>
+          <text x="398" y="168" font-family="JetBrains Mono, monospace" font-size="16" fill="#C9A6FF" font-weight="700">h(t)</text>
+          <rect x="310" y="88" width="140" height="48" rx="12" fill="rgba(0,188,222,0.15)" stroke="rgba(0,188,222,0.55)" stroke-width="2"></rect>
+          <text x="380" y="118" text-anchor="middle" font-family="Inter" font-size="15" font-weight="700" fill="rgba(0,188,222,0.95)" letter-spacing="1">LINEAR</text>
+          <line x1="380" y1="88" x2="380" y2="46" stroke="#00BCDE" stroke-width="2.5" marker-end="url(#arr-cyan2)"></line>
+          <!-- ŷ(t) vector top -->
+          <g transform="translate(346, 14)">
+            <rect x="0" y="0" width="24" height="24" rx="4" fill="rgba(0,188,222,0.3)" stroke="rgba(0,188,222,0.6)" stroke-width="2"></rect>
+            <rect x="30" y="0" width="24" height="24" rx="4" fill="rgba(0,188,222,0.3)" stroke="rgba(0,188,222,0.6)" stroke-width="2"></rect>
+            <rect x="60" y="0" width="24" height="24" rx="4" fill="rgba(0,188,222,0.3)" stroke="rgba(0,188,222,0.6)" stroke-width="2"></rect>
+          </g>
+          <text x="452" y="28" font-family="JetBrains Mono, monospace" font-size="20" fill="#00BCDE" font-weight="700">ŷ<tspan dy="4" font-size="13">(t)</tspan></text>
+          <text x="452" y="46" font-family="Inter" font-size="12" fill="rgba(0,188,222,0.55)" font-weight="600">PREDYKCJA</text>
+
+          <!-- x(t) bottom -->
+          <line x1="380" y1="430" x2="380" y2="312" stroke="#FFAF7B" stroke-width="3" marker-end="url(#arr-acc2)"></line>
+          <g transform="translate(350, 438)">
+            <rect x="0" y="0" width="26" height="26" rx="4" fill="rgba(255,175,123,0.3)" stroke="rgba(255,175,123,0.6)" stroke-width="2"></rect>
+            <rect x="32" y="0" width="26" height="26" rx="4" fill="rgba(255,175,123,0.3)" stroke="rgba(255,175,123,0.6)" stroke-width="2"></rect>
+            <rect x="64" y="0" width="26" height="26" rx="4" fill="rgba(255,175,123,0.3)" stroke="rgba(255,175,123,0.6)" stroke-width="2"></rect>
+          </g>
+          <text x="380" y="490" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="20" fill="#FFAF7B" font-weight="700">x<tspan dy="5" font-size="14">(t)</tspan></text>
+        </svg>
+
+        <!-- Formula block - spójny styl z innymi prezentacjami -->
+        <div style="margin-top: 12px; background: rgba(86,45,127,0.2); border: 1px solid rgba(201,166,255,0.25); border-radius: 20px; padding: 24px 36px;">
+          <div class="tiny" style="color: var(--accent-4); margin-bottom: 14px;">FORMUŁA</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 38px; font-weight: 700; color: var(--paper); text-align: center; line-height: 1.4;">
+            <span style="color: #C9A6FF;">h<sup style="font-size:0.55em">(t)</sup></span>
+            = tanh(<span style="color: rgba(255,255,255,0.8);">W</span> · <span style="color: #FFAF7B;">x<sup style="font-size:0.55em">(t)</sup></span> + <span style="color: rgba(255,255,255,0.8);">U</span> · <span style="color: #C9A6FF;">h<sup style="font-size:0.55em">(t−1)</sup></span> + <span style="color: rgba(255,255,255,0.8);">b</span>)
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div class="bullet build" data-step="2">
+          <div class="num" style="color: var(--accent-4);">h(t)</div>
+          <div class="content body-sm"><strong style="color: var(--accent-4);">Stan ukryty</strong> — „pamięć" sieci. Koduje wszystko co model widział do tej pory w sekwencji.</div>
+        </div>
+        <div class="bullet build" data-step="2">
+          <div class="num" style="color: var(--accent);">x(t)</div>
+          <div class="content body-sm"><strong style="color: var(--accent);">Wejście</strong> w chwili t — aktualna litera zakodowana jako wektor (one-hot lub embedding).</div>
+        </div>
+        <div class="bullet build" data-step="2">
+          <div class="num" style="color: var(--accent-2);">GRU</div>
+          <div class="content body-sm"><strong style="color: var(--accent-2);">Gated Recurrent Unit</strong> — ulepszona wersja RNN z mechanizmem bramek. Lepiej radzi sobie z długimi sekwencjami.</div>
+        </div>
+        <div class="card build" data-step="2" style="background: rgba(255,175,123,0.06); border-color: rgba(255,175,123,0.2);">
+          <div class="body-sm" style="color: rgba(255,255,255,0.7);">W, U, b — to są <strong style="color: var(--accent);">parametry</strong> których sieć uczy się podczas treningu. W naszym modelu ok. 80 tys. liczb, w ChatGPT — szacunkowo biliony. To one kodują „wiedzę" modelu.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">09</div>
+</section>

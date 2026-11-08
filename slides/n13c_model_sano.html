@@ -1,0 +1,61 @@
+<section data-label="N13c Model Sano" class="bg-ink">
+  <div class="slide-frame" style="padding-top: 84px;">
+    <div class="eyebrow build" data-step="0">Model Sano · Grzeszczyk, Płotka i in. · MICCAI 2023</div>
+    <h2 class="section-title build" data-step="0" style="margin-top: 24px;">
+      Polski model <span class="grad-text-warm">poza swoimi danymi</span>
+    </h2>
+
+    <div style="margin-top: 36px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: stretch;">
+      <!-- wyniki na 4 nagraniach -->
+      <div class="card build" data-step="1" style="padding: 28px 34px;">
+        <div style="display: grid; grid-template-columns: auto auto 1fr 1fr; gap: 0 26px; align-items: baseline; white-space: nowrap;">
+          <div class="tiny" style="color: rgba(255,255,255,0.45);">NAGRANIE</div>
+          <div class="tiny" style="color: rgba(255,255,255,0.45);">AC · WIEK WG AC</div>
+          <div class="tiny" style="color: var(--accent-2);">MASA „TERAZ”<br><span style="text-transform: none; letter-spacing: 0.02em; color: rgba(255,255,255,0.5);">z AC (Campbell)</span></div>
+          <div class="tiny" style="color: var(--accent-3);">MODEL SANO<br><span style="text-transform: none; letter-spacing: 0.02em; color: rgba(255,255,255,0.5);">masa w dniu porodu</span></div>
+
+          <div class="body-sm" style="font-size: 25px; padding-top: 26px; color: rgba(255,255,255,0.8);">Nr 3</div>
+          <div class="body-sm" style="font-size: 23px; padding-top: 26px; color: rgba(255,255,255,0.7);">242&nbsp;mm · ok.&nbsp;28&nbsp;tc.</div>
+          <div style="padding-top: 26px; font-size: 38px; font-weight: 800; color: var(--accent-2);">ok.&nbsp;1&nbsp;400&nbsp;g</div>
+          <div style="padding-top: 26px; font-size: 38px; font-weight: 800; color: var(--accent-3);">3&nbsp;898&nbsp;g</div>
+
+          <div class="body-sm" style="font-size: 25px; padding-top: 26px; color: rgba(255,255,255,0.8);">Nr 2</div>
+          <div class="body-sm" style="font-size: 23px; padding-top: 26px; color: rgba(255,255,255,0.7);">257&nbsp;mm · ok.&nbsp;30&nbsp;tc.</div>
+          <div style="padding-top: 26px; font-size: 38px; font-weight: 800; color: var(--accent-2);">ok.&nbsp;1&nbsp;700&nbsp;g</div>
+          <div style="padding-top: 26px; font-size: 38px; font-weight: 800; color: var(--accent-3);">3&nbsp;855&nbsp;g</div>
+
+          <div class="body-sm" style="font-size: 25px; padding-top: 26px; color: rgba(255,255,255,0.8);">Wycinek</div>
+          <div class="body-sm" style="font-size: 23px; padding-top: 26px; color: rgba(255,255,255,0.7);">262&nbsp;mm · ok.&nbsp;30&nbsp;tc.</div>
+          <div style="padding-top: 26px; font-size: 38px; font-weight: 800; color: var(--accent-2);">ok.&nbsp;1&nbsp;700&nbsp;g</div>
+          <div style="padding-top: 26px; font-size: 38px; font-weight: 800; color: var(--accent-3);">4&nbsp;000*&nbsp;g</div>
+
+          <div class="body-sm" style="font-size: 25px; padding-top: 26px; color: rgba(255,255,255,0.8);">Nr 1</div>
+          <div class="body-sm" style="font-size: 23px; padding-top: 26px; color: rgba(255,255,255,0.7);">304&nbsp;mm · ok.&nbsp;34&nbsp;tc.</div>
+          <div style="padding-top: 26px; font-size: 38px; font-weight: 800; color: var(--accent-2);">ok.&nbsp;2&nbsp;600&nbsp;g</div>
+          <div style="padding-top: 26px; font-size: 38px; font-weight: 800; color: var(--accent-3);">3&nbsp;551&nbsp;g</div>
+        </div>
+        <div class="body-sm" style="font-size: 22px; line-height: 1.4; color: rgba(255,255,255,0.55); margin-top: 30px;">AC i masa „teraz”: nnU-Net + wzór Campbella (z jednej miary). Model Sano szacuje z&nbsp;samego obrazu <strong style="color: rgba(255,255,255,0.8);">masę w dniu porodu</strong> (uczony na badaniach &lt;&nbsp;24&nbsp;h przed porodem). Mas urodzeniowych tych dzieci nie znamy. *Wycinek: za mało klatek brzucha, klip dopełniony — wynik orientacyjny.</div>
+      </div>
+
+      <!-- na czym się uczył + co działało najlepiej -->
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="card build" data-step="2" style="padding: 24px 32px;">
+          <div class="tiny" style="color: rgba(255,255,255,0.55); letter-spacing: 0.12em; margin-bottom: 10px;">NA CZYM SIĘ UCZYŁ</div>
+          <div class="body-sm" style="font-size: 24px; line-height: 1.4; color: rgba(255,255,255,0.85);">92 nagrania brzucha z WUM, <strong>&lt; 24 h przed porodem</strong> · ciąże donoszone: <strong>38,3&nbsp;±&nbsp;1,5&nbsp;tc.</strong></div>
+          <div class="body-sm" style="font-size: 24px; line-height: 1.4; color: rgba(255,255,255,0.85); margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.12);">W pracy autorów, w kolejności błędu: <strong style="color: var(--accent);">obraz + 6&nbsp;pomiarów lekarza</strong> <strong>170&nbsp;g</strong> · klinicyści z Hadlockiem <strong>205&nbsp;g</strong> · <strong style="color: var(--accent-3);">sam obraz</strong> <strong>289&nbsp;g</strong>. Pokazujemy dziś <strong>tylko ten ostatni</strong> — model bazowy obrazowy, bo tylko jego checkpoint jest publiczny; wag modelu pełnego (170&nbsp;g) nie ma.</div>
+          <div class="tiny" style="color: rgba(255,255,255,0.4); margin-top: 8px; text-transform: none; letter-spacing: 0.02em; font-size: 17px;">Grzeszczyk, Płotka i in., MICCAI 2023 (TabAttention)</div>
+        </div>
+        <div class="card build" data-step="3" style="padding: 24px 32px; border-color: rgba(215,109,119,0.45); background: rgba(215,109,119,0.06);">
+          <div class="body-sm" style="font-size: 24px; line-height: 1.4; color: rgba(255,255,255,0.85);">Nasze nagrania: <strong>ok. 28–34 tc.</strong> — poza danymi, na których uczono <strong>ten model bazowy</strong>. A on i tak podaje liczbę typową dla noworodka, <strong style="color: var(--accent-3);">3,6–4,0&nbsp;kg</strong>, bez cienia wątpliwości (wg AC dziś ok. 1,4–2,6&nbsp;kg). To ekstrapolacja poza dane uczące, nie ocena samej metody.</div>
+          <div style="font-size: 36px; font-weight: 800; line-height: 1.2; margin-top: 12px;">Ten model <span class="grad-text-warm">nie wie, kiedy nie wie.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card build" data-step="4" style="margin-top: 28px; padding: 20px 32px; background: rgba(255,175,123,0.06); border-color: rgba(255,175,123,0.35);">
+      <div class="body-sm" style="font-size: 23px; line-height: 1.45; color: rgba(255,255,255,0.8);">Kod i źródła: Grzeszczyk, Płotka i in., MICCAI 2023 (TabAttention), Sano + WUM. Publiczny checkpoint to model bazowy obrazowy; nie redystrybuujemy kodu autorów ani wag. Podziękowania dla zespołów Sano i WUM za publicznie udostępnione prace i kod.</div>
+      <div class="tiny" style="margin-top: 10px; color: rgba(255,255,255,0.38); font-size: 17px; letter-spacing: 0.03em; text-transform: none;">Nagrania: ACOUSLIC-AI (Radboudumc, Zenodo 12697994), CC BY-NC-SA 4.0, tylko niekomercyjnie · Materiał edukacyjny, nie wyrób medyczny — nie służy do decyzji klinicznych.</div>
+    </div>
+  </div>
+  <div class="page-num">00</div>
+</section>

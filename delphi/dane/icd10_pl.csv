@@ -1,0 +1,2052 @@
+# Polskie nazwy kategorii ICD-10 (3 znaki). Źródło: Centrum e-Zdrowia, Rejestr Systemów Kodowania, ICD-10-2008-PL (dane.gov.pl, zasób 55725), licencja CC BY 4.0. Kody z gwiazdką/krzyżykiem bez znacznika.
+kod;nazwa_pl
+A00;Choroba zakaźna wywołana przez Vibrio cholerae [cholera]
+A01;Choroba zakaźna wywołana przez Salmonella typhi i Salmonella paratyphi [dur brzuszny i dury rzekome]
+A02;Inne zakażenia wywołane przez Salmonella
+A03;Choroba zakaźna wywołana przez Shigella [szigelloza]
+A04;Inne bakteryjne zakażenia jelit
+A05;Inne bakterie zawarte w pokarmie powodujące zatrucia niesklasyfikowane gdzie indziej
+A06;Choroba zakaźna wywołana przez Entamoeba histolytica [pełzakowica] [ameboza]
+A07;Inne pierwotniakowe choroby jelit
+A08;Wirusowe i inne określone zakażenia jelit
+A09;Biegunka i zapalenie żołądkowo-jelitowe o przypuszczalnie zakaźnej etiologii
+A15;Gruźlica układu oddechowego, potwierdzona bakteriologicznie i histologicznie
+A16;Gruźlica układu oddechowego, niepotwierdzona bakteriologicznie lub histologicznie
+A17;Gruźlica układu nerwowego
+A18;Gruźlica innych narządów
+A19;Gruźlica prosówkowa
+A20;Choroba zakaźna wywołana przez Yersinia pestis [dżuma]
+A21;Choroba zakaźna wywołana przez Francisella tularensis [tularemia]
+A22;Choroba zakaźna wywołana przez Bacillus anthracis [wąglik]
+A23;Choroba zakaźna wywołana przez Brucella [bruceloza]
+A24;Choroba zakaźna wywołana przez Burkholderia mallei [nosacizna] i Burkholderia pseudomallei [melioidoza]
+A25;Gorączka szczurza
+A26;Choroba zakaźna wywołana przez Erysipelothrix rhusiopathiae [różyca]
+A27;Choroba odzwierzęca wywołana przez Leptospira interrogans [leptospiroza]
+A28;Inne odzwierzęce choroby bakteryjne, niesklasyfikowane gdzie indziej
+A30;Choroba zakaźna wywołana przez Mycobacterium leprae [trąd] [choroba Hansena]
+A31;Zakażenie wywołane przez inne prątki
+A32;Choroba zakaźna wywołana przez Listeria monocytogenes [listerioza]
+A33;Choroba zakaźna wywołana przez Clostridium tetani występująca u noworodków [tężec noworodków]
+A34;Choroba zakaźna wywołana przez Clostridium tetani występująca u ciężarnych [tężec położniczy]
+A35;Inne postacie tężca
+A36;Choroba zakaźna wywołana przez Corynebacterium diphtheriae [błonica]
+A37;Choroba zakaźna wywołana przez Bordetella [krztusiec]
+A38;Choroba zakaźna wywołana przez Streptococcus pyogenes [płonica]
+A39;Zakażenie wywołane przez Neisseria meningitidis
+A40;Posocznica wywołana przez paciorkowce
+A41;Inna posocznica
+A42;Choroba zakaźna wywołana przez Actinomyces israeli [promienica]
+A43;Choroba zakaźna wywołana przez Nocardia [nokardioza]
+A44;Choroba zakaźna wywołana przez Bartonella [bartonelloza]
+A46;Róża
+A48;Inne choroby bakteryjne niesklasyfikowane gdzie indziej
+A49;Zakażenia bakteryjne o nieokreślonym umiejscowieniu
+A50;Kiła wrodzona
+A51;Kiła wczesna
+A52;Kiła późna
+A53;Inne postacie kiły i kiła nieokreślona
+A54;Rzeżączka
+A55;Ziarnica weneryczna wywołana przez Chlamydia
+A56;Inne choroby przenoszone drogą płciową wywołane przez Chlamydia
+A57;Wrzód weneryczny
+A58;Ziarniniak pachwinowy
+A59;Rzęsistkowica
+A60;Opryszczkowe [herpes simplex] zakażenie okolicy anogenitalnej
+A63;Inne choroby przenoszone głównie drogą płciową, niesklasyfikowane gdzie indziej
+A64;Choroby przenoszone drogą płciową, nieokreślone
+A65;Kiła nieweneryczna
+A66;Malinica
+A67;Pinta
+A68;Gorączka powrotna
+A69;Zakażenia wywołane przez inne krętki
+A70;Zakażenie wywołane przez Chlamydia psittaci
+A71;Jaglica
+A74;Inne choroby wywołane przez Chlamydia
+A75;Dur wysypkowy
+A77;Dur plamisty [riketsjoza przenoszona przez kleszcze]
+A78;Gorączka Q
+A79;Inne choroby wywołane przez Rickettsia
+A80;Ostre nagminne porażenie dziecięce
+A81;Atypowe wirusowe zakażenia ośrodkowego układu nerwowego
+A82;Wścieklizna
+A83;Wirusowe zapalenie mózgu wywołane przez wirusy przenoszone przez komary
+A84;Wirusowe zapalenie mózgu wywołane przez wirusy przenoszone przez kleszcze
+A85;Inne wirusowe zapalenie mózgu niesklasyfikowane gdzie indziej
+A86;Wirusowe zapalenie mózgu, nieokreślone
+A87;Wirusowe zapalenie opon mózgowo-rdzeniowych
+A88;Inne wirusowe zakażenia ośrodkowego układu nerwowego niesklasyfikowane gdzie indziej
+A89;Wirusowe zakażenie ośrodkowego układu nerwowego, nieokreślone
+A90;Gorączka denga [denga klasyczna]
+A91;Gorączka krwotoczna denga
+A92;Inne gorączki wirusowe przenoszone przez komary
+A93;Inne gorączki wirusowe przenoszone przez komary, niesklasyfikowane gdzie indziej
+A94;Gorączki wirusowe przenoszone przez stawonogi, nieokreślone
+A95;Żółta gorączka
+A96;Gorączka krwotoczna wywołana przez arenawirusy
+A98;Inne wirusowe gorączki krwotoczne niesklasyfikowane gdzie indziej
+A99;Nieokreślona wirusowa gorączka krwotoczna
+B00;Zakażenia wywołane przez wirus opryszczki [herpes simplex]
+B01;Ospa wietrzna [varicella]
+B02;Choroba zakaźna wywołana przez wirus herpes zoster [półpasiec]
+B03;Ospa prawdziwa
+B04;Ospa małpia
+B05;Odra
+B06;Różyczka
+B07;Brodawki wirusowe
+B08;Inne zakażenia wirusowe charakteryzujące się uszkodzeniem skóry i błon śluzowych, niesklasyfikowane gdzie indziej
+B09;Nieokreślone zakażenie wirusowe charakteryzujące się uszkodzeniem skóry i błon śluzowych
+B15;Ostre wirusowe zapalenie wątroby typu A
+B16;Ostre wirusowe zapalenie wątroby typu B
+B17;Inne ostre wirusowe zapalenie wątroby
+B18;Przewlekłe wirusowe zapalenie wątroby
+B19;Nieokreślone wirusowe zapalenie wątroby
+B20;Choroba wywołana przez ludzki wirus upośledzenia odporności [HIV], której skutkiem są choroby zakaźne i pasożytnicze
+B21;Choroba wywołana przez ludzki wirus upośledzenia odporności [HIV], której skutkiem są nowotwory złośliwe
+B22;Choroba wywołana przez ludzki wirus upośledzenia odporności [HIV], której skutkiem są inne określone choroby
+B23;Choroba wywołana przez ludzki wirus upośledzenia odporności [HIV], której skutkiem są inne stany chorobowe
+B24;Choroba wywołana przez ludzki wirus upośledzenia odporności [HIV], nieokreślona
+B25;Choroba wywołana przez wirus cytomegalii
+B26;Świnka [nagminne zapalenie ślinianek przyusznych]
+B27;Mononukleoza zakaźna
+B30;Wirusowe zapalenie spojówek
+B33;Inne choroby wirusowe niesklasyfikowane gdzie indziej
+B34;Zakażenie wirusowe o nieokreślonym umiejscowieniu
+B35;Grzybica skóry
+B36;Inne grzybice powierzchowne
+B37;Kandydoza
+B38;Kokcydioidomykoza
+B39;Histoplazmoza
+B40;Blastomykoza
+B41;Parakokcydioidomykoza
+B42;Sporotrychoza
+B43;Chromomykoza i ropień feomykotyczny
+B44;Aspergiloza
+B45;Kryptokokoza
+B46;Mukormykoza
+B47;Mycetoma
+B48;Inne grzybice niesklasyfikowane gdzie indziej
+B49;Grzybica, nieokreślona
+B50;Malaria wywołana przez Plasmodium falciparum
+B51;Malaria wywołana przez Plasmodium vivax
+B52;Malaria wywołana przez Plasmodium malariae
+B53;Inna postać malarii potwierdzona parazytologicznie
+B54;Malaria nieokreślona
+B55;Leiszmanioza
+B56;Trypanosomatoza afrykańska
+B57;choroba Chagasa
+B58;Toksoplazmoza
+B59;Pneumocystoza (J17.3*)
+B60;Inne choroby pierwotniakowe niesklasyfikowane gdzie indziej
+B64;Nieokreślona choroba pasożytnicza
+B65;Schistosomatoza [bilharcjoza]
+B66;Inne zakażenia wywołane przez przywry
+B67;Bąblowica
+B68;Tasiemczyca
+B69;Wągrzyca
+B70;Dyfilobotrioza i sparganoza
+B71;Zakażenia innymi tasiemcami
+B72;Drakunkuloza
+B73;Onchocerkoza
+B74;Filarioza
+B75;Włośnica
+B76;Choroby wywołane przez tęgoryjca
+B77;Glistnica
+B78;Węgorczyca
+B79;Trichurioza
+B80;Owsica
+B81;Inne robaczyce jelitowe niesklasyfikowane gdzie indziej
+B82;Zakażenie pasożytami jelitowymi, nieokreślone
+B83;Inne robaczyce
+B85;Wszawica
+B86;Świerzb
+B87;Muszyca
+B88;Inne infestacje
+B89;Choroby pasożytnicze, nieokreślone
+B90;Następstwa gruźlicy
+B91;Następstwa nagminnego porażenia dziecięcego
+B92;Następstwa trądu
+B94;Następstwa innych i nieokreślonych chorób zakaźnych i pasożytniczych
+B95;Paciorkowce i gronkowce jako przyczyna chorób sklasyfikowanych w innych rozdziałach
+B96;Other bacterial agents as the cause of diseases classified to other chapters
+B97;Patogeny wirusowe jako przyczyna chorób sklasyfikowanych w innych rozdziałach
+B99;Inne choroby zakaźne
+C00;Nowotwór złośliwy wargi
+C01;Nowotwór złośliwy nasady języka
+C02;Nowotwór złośliwy innych i nieokreślonych części języka
+C03;Nowotwór złośliwy dziąsła
+C04;Nowotwór złośliwy dna jamy ustnej
+C05;Nowotwór złośliwy podniebienia
+C06;Nowotwór złośliwy innych i nieokreślonych części jamy ustnej
+C07;Nowotwór złośliwy ślinianki przyusznej
+C08;Nowotwór złośliwy innych i nieokreślonych dużych gruczołów ślinowych
+C09;Nowotwór złośliwy migdałka
+C10;Nowotwór złośliwy części ustnej gardła
+C11;Nowotwór złośliwy części nosowej gardła
+C12;Nowotwór złośliwy zachyłka gruszkowatego
+C13;Nowotwór złośliwy części krtaniowej gardła
+C14;Nowotwór złośliwy o innym i nieokreślonym umiejscowieniu w obrębie wargi, jamy ustnej i gardła
+C15;Nowotwór złośliwy przełyku
+C16;Nowotwór złośliwy żołądka
+C17;Nowotwór złośliwy jelita cienkiego
+C18;Nowotwór złośliwy jelita grubego
+C19;Nowotwór złośliwy zgięcia esiczo-odbytniczego
+C20;Nowotwór złośliwy odbytnicy
+C21;Nowotwór złośliwy odbytu i kanału odbytu
+C22;Nowotwór złośliwy wątroby i przewodów żółciowych wewnątrzwątrobowych
+C23;Nowotwór złośliwy pęcherzyka żółciowego
+C24;Nowotwór złośliwy innych i nieokreślonych części dróg żółciowych
+C25;Nowotwór złośliwy trzustki
+C26;Nowotwór złośliwy innych i niedokładnie określonych narządów układu pokarmowego
+C30;Nowotwór złośliwy jamy nosowej i ucha środkowego
+C31;Nowotwór złośliwy zatok przynosowych
+C32;Nowotwór złośliwy krtani
+C33;Nowotwór złośliwy tchawicy
+C34;Nowotwór złośliwy oskrzela i płuca
+C37;Nowotwór złośliwy grasicy
+C38;Nowotwór złośliwy serca, śródpiersia i opłucnej
+C39;Nowotwór złośliwy o innym i bliżej nieokreślonym umiejscowieniu w obrębie układu oddechowego i narządów klatki piersiowej
+C40;Nowotwór złośliwy kości i chrząstki stawowej kończyn
+C41;Nowotwór złośliwy kości i chrząstki stawowej o innym i nieokreślonym umiejscowieniu
+C43;Czerniak złośliwy skóry
+C44;Inne nowotwory złośliwe skóry
+C45;Międzybłoniak
+C46;Mięsak Kaposiego
+C47;Nowotwory złośliwe nerwów obwodowych i układu nerwowego wegetatywnego
+C48;Nowotwór złośliwy przestrzeni zaotrzewnowej i otrzewnej
+C49;Nowotwór złośliwy tkanki łącznej i innych tkanek miękkich
+C50;Nowotwór złośliwy piersi
+C51;Nowotwór złośliwy sromu
+C52;Nowotwór złośliwy pochwy
+C53;Nowotwór złośliwy szyjki macicy
+C54;Nowotwór złośliwy trzonu macicy
+C55;Nowotwór złośliwy nieokreślonej części macicy
+C56;Nowotwór złośliwy jajnika
+C57;Nowotwór złośliwy innych i nieokreślonych żeńskich narządów płciowych
+C58;Nowotwór złośliwy łożyska
+C60;Nowotwór złośliwy prącia
+C61;Nowotwór złośliwy gruczołu krokowego
+C62;Nowotwór złośliwy jądra
+C63;Nowotwór złośliwy innych i nieokreślonych męskich narządów płciowych
+C64;Nowotwór złośliwy nerki z wyjątkiem miedniczki nerkowej
+C65;Nowotwór złośliwy miedniczki nerkowej
+C66;Nowotwór złośliwy moczowodu
+C67;Nowotwór złośliwy pęcherza moczowego
+C68;Nowotwór złośliwy innych i nieokreślonych narządów układu moczowego
+C69;Nowotwór złośliwy oka i przydatków oka
+C70;Nowotwór złośliwy opon mózgowo‑rdzeniowych
+C71;Nowotwór złośliwy mózgu
+C72;Nowotwór złośliwy rdzenia kręgowego, nerwów czaszkowych i innych części ośrodkowego układu nerwowego
+C73;Nowotwór złośliwy tarczycy
+C74;Nowotwór złośliwy nadnerczy
+C75;Nowotwór złośliwy innych gruczołów wydzielania wewnętrznego i struktur pokrewnych
+C76;Nowotwór złośliwy o umiejscowieniu innym i niedokładnie określonym
+C77;Wtórny i nieokreślony nowotwór złośliwy węzłów chłonnych
+C78;Wtórny nowotwór złośliwy układu oddechowego i pokarmowego
+C79;Wtórny nowotwór złośliwy o innym umiejscowieniu
+C80;Nowotwór złośliwy bez określenia umiejscowienia
+C81;Ziarnica złośliwa [choroba Hodgkina]
+C82;Chłoniak nieziarniczy guzkowy [grudkowy]
+C83;Chłoniak nieziarniczy rozlany
+C84;Obwodowy i skórny chłoniak z komórek T
+C85;Inne i nieokreślone postacie chłoniaka nieziarniczego
+C88;Złośliwe choroby immunoproliferacyjne
+C90;Szpiczak mnogi i nowotwory złośliwe z komórek plazmatycznych
+C91;Białaczka limfatyczna
+C92;Białaczka szpikowa
+C93;Białaczka monocytowa
+C94;Inne białaczki określonego rodzaju
+C95;Białaczka z komórek nieokreślonego rodzaju
+C96;Inny i nieokreślony nowotwór złośliwy tkanki limfatycznej, układu krwiotwórczego i tkanek pokrewnych
+C97;Nowotwory złośliwe o niezależnym (pierwotnym) mnogim umiejscowieniu
+D00;Rak in situ jamy ustnej, przełyku i żołądka
+D01;Rak in situ innych i nieokreślonych części narządów układu pokarmowego
+D02;Rak in situ ucha środkowego i układu oddechowego
+D03;Czerniak in situ
+D04;Rak in situ skóry
+D05;Rak in situ piersi
+D06;Rak in situ szyjki macicy
+D07;Rak in situ innych i nieokreślonych narządów płciowych
+D09;Rak in situ o innym i nieokreślonym umiejscowieniu
+D10;Nowotwór niezłośliwy jamy ustnej i gardła
+D11;Nowotwór niezłośliwy dużych gruczołów ślinowych
+D12;Nowotwór niezłośliwy okrężnicy, odbytnicy, odbytu i kanału odbytu
+D13;Nowotwór niezłośliwy innych i niedokładnie określonych części układu pokarmowego
+D14;Nowotwór niezłośliwy ucha środkowego i układu oddechowego
+D15;Nowotwór niezłośliwy innych i nieokreślonych narządów klatki piersiowej
+D16;Nowotwór niezłośliwy kości i chrząstki stawowej
+D17;Nowotwór niezłośliwy z tkanki tłuszczowej
+D18;Naczyniaki krwionośne i chłonne o dowolnym umiejscowieniu
+D19;Nowotwór niezłośliwy mezotelium
+D20;Nowotwór niezłośliwy tkanek miękkich otrzewnej i przestrzeni zaotrzewnowej
+D21;Inne nowotwory niezłośliwe tkanki łącznej i innych tkanek miękkich
+D22;Znamiona barwnikowe
+D23;Inne nowotwory niezłośliwe skóry
+D24;Nowotwór niezłośliwy piersi
+D25;Mięśniak gładkokomórkowy macicy
+D26;Inne nowotwory niezłośliwe macicy
+D27;Nowotwór niezłośliwy jajnika
+D28;Nowotwór niezłośliwy innych i nieokreślonych żeńskich narządów płciowych
+D29;Nowotwór niezłośliwy męskich narządów płciowych
+D30;Nowotwór niezłośliwy układu moczowego
+D31;Nowotwór niezłośliwy oka i przydatków oka
+D32;Nowotwór niezłośliwy opon mózgowo-rdzeniowych
+D33;Nowotwór niezłośliwy mózgu i innych części ośrodkowego układu nerwowego
+D34;Nowotwór niezłośliwy tarczycy
+D35;Nowotwór niezłośliwy innych i nieokreślonych gruczołów wydzielania wewnętrznego
+D36;Niezłośliwy nowotwór o innym i nieokreślonym umiejscowieniu
+D37;Nowotwór o niepewnym lub nieznanym charakterze jamy ustnej i narządów układu pokarmowego
+D38;Nowotwór o niepewnym lub nieznanym charakterze ucha środkowego, narządów układu oddechowego i klatki piersiowej
+D39;Nowotwór o niepewnym lub nieznanym charakterze żeńskich narządów płciowych
+D40;Nowotwór o niepewnym lub nieznanym charakterze męskich narządów płciowych
+D41;Nowotwór o niepewnym lub nieznanym charakterze układu moczowego
+D42;Nowotwór o niepewnym lub nieznanym charakterze opon mózgowo‑rdzeniowych
+D43;Nowotwór o niepewnym lub nieznanym charakterze mózgu i ośrodkowego układu nerwowego
+D44;Nowotwór o niepewnym lub nieznanym charakterze gruczołów wydzielania wewnętrznego
+D45;Czerwienica prawdziwa
+D46;Zespoły mielodysplastyczne
+D47;Inne nowotwory o niepewnym lub nieznanym charakterze tkanki limfatycznej, układu krwiotwórczego i tkanek pokrewnych
+D48;Nowotwory o niepewnym lub nieznanym charakterze o innym i nieokreślonym umiejscowieniu
+D50;Niedokrwistość z niedoboru żelaza
+D51;Niedokrwistość z niedoboru witaminy B12
+D52;Niedokrwistość z niedoboru kwasu foliowego
+D53;Inne niedokrwistości z niedoborów pokarmowych
+D55;Niedokrwistość spowodowana zaburzeniami enzymatycznymi
+D56;Talasemia
+D57;Zaburzenia związane z sierpowatokrwinkowością
+D58;Inne dziedziczne niedokrwistości hemolityczne
+D59;Nabyta niedokrwistość hemolityczna
+D60;Nabyta aplazja czysto czerwonokrwinkowa [erytroblastopenia]
+D61;Inne niedokrwistości aplastyczne
+D62;Ostra niedokrwistość pokrwotoczna
+D63;Niedokrwistość w przebiegu chorób przewlekłych sklasyfikowanych gdzie indziej
+D64;Inne niedokrwistości
+D65;Rozsiane wykrzepianie wewnątrznaczyniowe [zespół odwłóknienia]
+D66;Dziedziczny niedobór czynnika VIII
+D67;Dziedziczny niedobór czynnika IX
+D68;Inne zaburzenia krzepnięcia
+D69;Plamica i inne skazy krwotoczne
+D70;Agranulocytoza
+D71;Zaburzenia czynności granulocytów wielojądrzastych
+D72;Inne zaburzenia dotyczące krwinek białych
+D73;Choroby śledziony
+D74;Methemoglobinemia
+D75;Inne choroby krwi i narządów krwiotwórczych
+D76;Wybrane choroby dotyczące układu siateczkowo-śródbłonkowego i siateczkowo­‑histiocytarnego
+D77;Inne choroby krwi i narządów krwiotwórczych w przebiegu chorób sklasyfikowanych gdzie indziej
+D80;Niedobór odporności z przewagą defektu odporności humoralnej
+D81;Mieszane niedobory odpornościowe
+D82;Niedobór odporności z innymi poważnymi wadami
+D83;Pospolity zmienny niedobór odporności
+D84;Inne niedobory odporności
+D86;Sarkoidoza
+D89;Inne patologie dotyczące układu odpornościowego, niesklasyfikowane gdzie indziej
+E00;Wrodzony zespół niedoboru jodu
+E01;Patologie tarczycy związane z niedoborem jodu i innymi chorobami
+E02;Subkliniczna postać niedoczynności tarczycy z powodu niedoboru jodu
+E03;Niedoczynność tarczycy o innej etiologii
+E04;Inne wole nietoksyczne
+E05;Nadczynność tarczycy [tyreotoksykoza]
+E06;Zapalenie tarczycy
+E07;Inne choroby tarczycy
+E10;Cukrzyca insulinozależna
+E11;Cukrzyca insulinoniezależna
+E12;Cukrzyca związana z niedożywieniem
+E13;Inne określone postacie cukrzycy
+E14;Cukrzyca nieokreślona
+E15;Śpiączka hipoglikemiczna niecukrzycowa
+E16;Inne zaburzenia wydzielania wewnętrznego trzustki
+E20;Niedoczynność przytarczyc
+E21;Nadczynność i inne zaburzenia przytarczyc
+E22;Nadczynność przysadki
+E23;Niedoczynność i inne zaburzenia przysadki
+E24;Zespół Cushinga
+E25;Zaburzenia nadnerczowo-płciowe
+E26;Hiperaldosteronizm
+E27;Inne zaburzenia nadnerczy
+E28;Zaburzenia czynności jajników
+E29;Zaburzenia czynności jąder
+E30;Zaburzenia pokwitania, niesklasyfikowane gdzie indziej
+E31;Zaburzenia wielogruczołowe
+E32;Choroby grasicy
+E34;Inne zaburzenia wydzielania wewnętrznego
+E35;Zaburzenia gruczołów wydzielania wewnętrznego w przebiegu chorób sklasyfikowanych gdzie indziej
+E40;Kwashiorkor
+E41;Wyniszczenie z niedożywienia
+E42;Kwashiorkor z wyniszczeniem
+E43;Ciężkie niedożywienie białkowo-energetyczne, nieokreślone
+E44;Niedożywienie białkowo-energetyczne umiarkowanego lub łagodnego stopnia
+E45;Opóźniony rozwój będący następstwem niedożywienia białkowo-energetycznego
+E46;Niedożywienie białkowo-energetyczne, nieokreślone
+E50;Niedobór witaminy A
+E51;Niedobór tiaminy
+E52;Niedobór niacyny [pelagra]
+E53;Niedobór innych witamin z grupy B
+E54;Niedobór kwasu askorbinowego
+E55;Niedobór witaminy D
+E56;Inne niedobory witaminowe
+E58;Niedobór pokarmowy wapnia
+E59;Niedobór pokarmowy selenu
+E60;Niedobór pokarmowy cynku
+E61;Niedobór innych substancji odżywczych
+E63;Inne niedobory pokarmowe
+E64;Następstwa niedożywienia i innych niedoborów pokarmowych
+E65;Otyłość miejscowa
+E66;Otyłość
+E67;Inne zespoły z hiperalimentacji
+E68;Następstwa hiperalimentacji
+E70;Zaburzenia przemian aminokwasów aromatycznych
+E71;Zaburzenia przemian aminokwasów o rozgałęzionych łańcuchach i kwasów tłuszczowych
+E72;Inne zaburzenia przemian aminokwasów
+E73;Nietolerancja laktozy
+E74;Inne zaburzenia przemian węglowodanów
+E75;Zaburzenia przemian sfingolipidów i inne zaburzenia spichrzania lipidów
+E76;Zaburzenia przemian glikozaminoglikanów
+E77;Zaburzenia przemian glikoprotein
+E78;Zaburzenia metabolizmu lipoprotein i inne lipidemie
+E79;Zaburzenia przemian puryn i pirymidyn
+E80;Zaburzenia przemian porfiryn i bilirubiny
+E83;Zaburzenia gospodarki mineralnej
+E84;Zwłóknienie wielotorbielowate
+E85;Amyloidoza [skrobiawica]
+E86;Nadmierna utrata płynów
+E87;Inne zaburzenia równowagi wodno-elektrolitowej i kwasowo-zasadowej
+E88;Inne zaburzenia metaboliczne
+E89;Pozabiegowe zaburzenia wydzielania wewnętrznego i metaboliczne, niesklasyfikowane gdzie indziej
+E90;Zaburzenia odżywiania i metaboliczne w przebiegu chorób sklasyfikowanych gdzie indziej
+F00;Otępienie w chorobie Alzheimera (G30.–†)
+F01;Otępienie naczyniowe
+F02;Otępienie w przebiegu innych chorób sklasyfikowanych gdzie indziej
+F03;Otępienie nieokreślone
+F04;Organiczny zespół amnestyczny niespowodowany przez alkohol ani inne substancje psychoaktywne
+F05;Majaczenie niespowodowane przez alkohol ani inne substancje psychoaktywne
+F06;Inne zaburzenia psychiczne spowodowane uszkodzeniem lub dysfunkcją mózgu i chorobą somatyczną
+F07;Zaburzenia osobowości i zachowania spowodowane chorobą, uszkodzeniem lub dysfunkcją mózgu
+F09;Nieokreślone zaburzenia psychiczne organiczne lub objawowe
+F10;Zaburzenia psychiczne i zaburzenia zachowania spowodowane używaniem alkoholu
+F11;Zaburzenia psychiczne i zaburzenia zachowania spowodowane używaniem opioidów
+F12;Zaburzenia psychiczne i zaburzenia zachowania spowodowane używaniem kanabinoli
+F13;Zaburzenia psychiczne i zaburzenia zachowania spowodowane używaniem substancji uspokajających i nasennych
+F14;Zaburzenia psychiczne i zaburzenia zachowania spowodowane używaniem kokainy
+F15;Zaburzenia psychiczne i zaburzenia zachowania spowodowane używaniem innych substancji stymulujących, w tym kofeiny
+F16;Zaburzenia psychiczne i zaburzenia zachowania spowodowane używaniem halucynogenów
+F17;Zaburzenia psychiczne i zaburzenia zachowania spowodowane paleniem tytoniu
+F18;Zaburzenia psychiczne i zaburzenia zachowania spowodowane odurzaniem się lotnymi rozpuszczalnikami organicznymi
+F19;Zaburzenia psychiczne i zaburzenia zachowania spowodowane używaniem wielu narkotyków i innych substancji psychoaktywnych
+F20;Schizofrenia
+F21;Zaburzenie schizotypowe
+F22;Uporczywe zaburzenia urojeniowe
+F23;Ostre i przemijające zaburzenia psychotyczne
+F24;Indukowane zaburzenie urojeniowe
+F25;Zaburzenia schizoafektywne
+F28;Inne nieorganiczne zaburzenia psychotyczne
+F29;Nieokreślona psychoza nieorganiczna
+F30;Epizod maniakalny
+F31;Zaburzenia afektywne dwubiegunowe
+F32;Epizod depresyjny
+F33;Zaburzenia depresyjne nawracające
+F34;Uporczywe zaburzenia nastroju [afektywne]
+F38;Inne zaburzenia nastroju [afektywne]
+F39;Zaburzenia nastroju [afektywne], nieokreślone
+F40;Zaburzenia lękowe w postaci fobii
+F41;Inne zaburzenia lękowe
+F42;Zaburzenia obsesyjno-kompulsyjne
+F43;Reakcja na ciężki stres i zaburzenia adaptacyjne
+F44;Zaburzenia dysocjacyjne [konwersyjne]
+F45;Zaburzenia występujące pod maską somatyczną
+F48;Inne zaburzenia nerwicowe
+F50;Zaburzenia odżywiania
+F51;Nieorganiczne zaburzenia snu
+F52;Zaburzenia seksualne niespowodowane zaburzeniem organicznym ani chorobą somatyczną
+F53;Zaburzenia psychiczne i zaburzenia zachowania związane z połogiem, niesklasyfikowane gdzie indziej
+F54;Czynniki psychologiczne lub behawioralne związane z zaburzeniami lub chorobami sklasyfikowanymi gdzie indziej
+F55;Nadużywanie substancji, które nie powodują uzależnienia
+F59;Nieokreślone zespoły behawioralne związane z zaburzeniami fizjologicznymi i czynnikami fizycznymi
+F60;Specyficzne zaburzenia osobowości
+F61;Zaburzenia osobowości mieszane i inne
+F62;Trwałe zmiany osobowości niewynikające z uszkodzenia ani z choroby mózgu
+F63;Zaburzenia nawyków i popędów
+F64;Zaburzenia identyfikacji płciowej
+F65;Zaburzenia preferencji seksualnych
+F66;Zaburzenia psychologiczne i zaburzenia zachowania związane z rozwojem i orientacją seksualną
+F68;Inne zaburzenia osobowości i zachowania u dorosłych
+F69;Nieokreślone zaburzenia osobowości i zachowania u dorosłych
+F70;Upośledzenie umysłowe lekkiego stopnia
+F71;Upośledzenie umysłowe umiarkowanego stopnia
+F72;Upośledzenie umysłowe znacznego stopnia
+F73;Upośledzenie umysłowe głębokiego stopnia
+F78;Inne upośledzenie umysłowe
+F79;Nieokreślone upośledzenie umysłowe
+F80;Specyficzne zaburzenia rozwoju mowy i języka
+F81;Specyficzne zaburzenia rozwoju umiejętności szkolnych
+F82;Specyficzne zaburzenia rozwojowe funkcji motorycznych
+F83;Mieszane specyficzne zaburzenia rozwojowe
+F84;Całościowe zaburzenia rozwojowe
+F88;Inne zaburzenia rozwoju psychologicznego
+F89;Nieokreślone zaburzenia rozwoju psychologicznego
+F90;Zaburzenia hiperkinetyczne
+F91;Zaburzenia zachowania
+F92;Mieszane zaburzenia zachowania i emocji
+F93;Zaburzenia emocjonalne rozpoczynające się zwykle w dzieciństwie
+F94;Zaburzenia funkcjonowania społecznego rozpoczynające się zwykle w dzieciństwie lub w wieku młodzieńczym
+F95;Tiki
+F98;Inne zaburzenia zachowania i emocji rozpoczynające się zwykle w dzieciństwie i w wieku młodzieńczym
+F99;Nieokreślone zaburzenia psychiczne
+G00;Bakteryjne zapalenie opon mózgowo-rdzeniowych, niesklasyfikowane gdzie indziej
+G01;Zapalenie opon mózgowo-rdzeniowych w przebiegu chorób bakteryjnych sklasyfikowanych gdzie indziej
+G02;Zapalenie opon mózgowo-rdzeniowych w przebiegu innych chorób zakaźnych i pasożytniczych sklasyfikowanych gdzie indziej
+G03;Zapalenie opon mózgowo-rdzeniowych wywołane przez inne i nieokreślone czynniki
+G04;Zapalenie mózgu, rdzenia kręgowego oraz mózgu i rdzenia kręgowego
+G05;Zapalenie mózgu, rdzenia kręgowego oraz mózgu i rdzenia kręgowego w przebiegu chorób sklasyfikowanych gdzie indziej
+G06;Ropień i ziarniniak śródczaszkowy, w kanale kręgowym i rdzenia kręgowego
+G07;Ropień i ziarniniak śródczaszkowy, w kanale kręgowym i rdzenia kręgowego w przebiegu chorób sklasyfikowanych gdzie indziej
+G08;Zapalenie żył i zakrzepowe zapalenie żył śródczaszkowych i w kanale kręgowym
+G09;Następstwa zapalnych chorób ośrodkowego układu nerwowego
+G10;Pląsawica [choroba Huntingtona]
+G11;Ataksja dziedziczna
+G12;Rdzeniowy zanik mięśni i zespoły pokrewne
+G13;Zaniki układowe obejmujące pierwotnie ośrodkowy układ nerwowy w przebiegu chorób sklasyfikowanych gdzie indziej
+G20;Choroba Parkinsona
+G21;Parkinsonizm wtórny
+G22;Parkinsonizm w przebiegu chorób sklasyfikowanych gdzie indziej
+G23;Inne choroby zwyrodnieniowe zwojów podstawnych
+G24;Dystonia
+G25;Inne zaburzenia pozapiramidowe i zaburzenia czynności ruchowych
+G26;Zaburzenia pozapiramidowe i zaburzenia czynności ruchowych w przebiegu chorób sklasyfikowanych gdzie indziej
+G30;Choroba Alzheimera
+G31;Inne zwyrodnieniowe choroby układu nerwowego, niesklasyfikowane gdzie indziej
+G32;Inne zwyrodnieniowe zaburzenia układu nerwowego, występujące w przebiegu chorób sklasyfikowanych gdzie indziej
+G35;Stwardnienie rozsiane
+G36;Inne rozsiane procesy demielinizacyjne o ostrym przebiegu
+G37;Inne choroby demielinizacyjne ośrodkowego układu nerwowego
+G40;Padaczka
+G41;Stan padaczkowy
+G43;Migrena
+G44;Inne zespoły bólu głowy
+G45;Przemijające napady niedokrwienia mózgu i zespoły pokrewne
+G46;Zespoły naczyniowe mózgu w przebiegu chorób naczyń mózgowych (I60–I67†)
+G47;Zaburzenia snu
+G50;Zaburzenia nerwu trójdzielnego
+G51;Zaburzenia nerwu twarzowego
+G52;Zaburzenia innych nerwów czaszkowych
+G53;Zaburzenia nerwów czaszkowych w przebiegu chorób sklasyfikowanych gdzie indziej
+G54;Zaburzenia korzeni i splotów nerwowych
+G55;Ucisk korzeni nerwów rdzeniowych i splotów nerwowych w przebiegu chorób sklasyfikowanych gdzie indziej
+G56;Mononeuropatie kończyny górnej
+G57;Mononeuropatie kończyny dolnej
+G58;Inne mononeuropatie
+G59;Mononeuropatia w przebiegu chorób sklasyfikowanych gdzie indziej
+G60;Dziedziczna i idiopatyczna neuropatia
+G61;Polineuropatia zapalna
+G62;Inne polineuropatie
+G63;Polineuropatia w przebiegu chorób sklasyfikowanych gdzie indziej
+G64;Inne zaburzenia obwodowego układu nerwowego
+G70;Miastenia i inne zaburzenia nerwowo-mięśniowe
+G71;Pierwotne zaburzenia mięśniowe
+G72;Inne miopatie
+G73;Zaburzenia złącza mięśniowo-nerwowego i mięśni w przebiegu chorób sklasyfikowanych gdzie indziej
+G80;Mózgowe porażenie dziecięce
+G81;Porażenie połowicze
+G82;Porażenie kończyn dolnych i czterokończynowe
+G83;Inne zespoły porażenne
+G90;Zaburzenia układu nerwowego wegetatywnego
+G91;Wodogłowie
+G92;Encefalopatia toksyczna
+G93;Inne zaburzenia mózgu
+G94;Inne patologie mózgu w przebiegu chorób sklasyfikowanych gdzie indziej
+G95;Inne choroby rdzenia kręgowego
+G96;Inne zaburzenia ośrodkowego układu nerwowego
+G97;Pozabiegowe zaburzenia układu nerwowego, niesklasyfikowane gdzie indziej
+G98;Inne zaburzenia układu nerwowego niesklasyfikowane gdzie indziej
+G99;Inne zaburzenia układu nerwowego, występujące w przebiegu chorób sklasyfikowanych gdzie indziej
+H00;Jęczmień i gradówka
+H01;Inne stany zapalne powiek
+H02;Inne stany patologiczne powiek
+H03;Patologie powiek w przebiegu chorób sklasyfikowanych gdzie indziej
+H04;Patologie układu łzowego
+H05;Patologie oczodołu
+H06;Patologie układu łzowego i oczodołu w przebiegu chorób sklasyfikowanych gdzie indziej
+H10;Zapalenie spojówek
+H11;Inne choroby spojówek
+H13;Zaburzenia spojówek w przebiegu chorób sklasyfikowanych gdzie indziej
+H15;Patologie twardówki
+H16;Zapalenie rogówki
+H17;Blizny rogówki i zmętnienia
+H18;Inne patologie rogówki
+H19;Patologie twardówki i rogówki w przebiegu chorób sklasyfikowanych gdzie indziej
+H20;Zapalenie tęczówki i ciała rzęskowego
+H21;Inne patologie tęczówki i ciała rzęskowego
+H22;Patologie tęczówki i ciała rzęskowego w przebiegu chorób sklasyfikowanych gdzie indziej
+H25;Zaćma starcza
+H26;Inne postacie zaćmy
+H27;Inne patologie soczewki
+H28;Zaćma i inne patologie soczewki w przebiegu chorób sklasyfikowanych gdzie indziej
+H30;Zapalenie naczyniówki i siatkówki
+H31;Inne patologie naczyniówki
+H32;Zaburzenia naczyniówki i siatkówki w przebiegu chorób sklasyfikowanych gdzie indziej
+H33;Odwarstwienia i przedarcia siatkówki
+H34;Zamknięcie naczyń siatkówki
+H35;Inne zaburzenia siatkówki
+H36;Zaburzenia siatkówki w przebiegu chorób sklasyfikowanych gdzie indziej
+H40;Jaskra
+H42;Jaskra w przebiegu chorób sklasyfikowanych gdzie indziej
+H43;Zaburzenia ciała szklistego
+H44;Zaburzenia gałki ocznej
+H45;Zaburzenia ciała szklistego i gałki w przebiegu chorób sklasyfikowanych gdzie indziej
+H46;Zapalenie nerwu wzrokowego
+H47;Inne zaburzenia nerwu wzrokowego [II] i drogi wzrokowej
+H48;Zaburzenia nerwu wzrokowego [II] i drogi wzrokowej w przebiegu chorób sklasyfikowanych gdzie indziej
+H49;Zez porażenny
+H50;Inne postacie zeza
+H51;Inne zaburzenia ruchów obuocznych
+H52;Zaburzenia refrakcji i akomodacji
+H53;Zaburzenia widzenia
+H54;Ślepota i upośledzenie widzenia
+H55;Oczopląs i inne nieregularne ruchy gałki ocznej
+H57;Inne zaburzenia oka i przydatków oka
+H58;Inne zaburzenia oka i przydatków oka w przebiegu chorób sklasyfikowanych gdzie indziej
+H59;Pozabiegowe uszkodzenia oka i przydatków oka, niesklasyfikowane gdzie indziej
+H60;Zapalenie ucha zewnętrznego
+H61;Inne zaburzenia ucha zewnętrznego
+H62;Zaburzenia ucha zewnętrznego w przebiegu chorób sklasyfikowanych gdzie indziej
+H65;Nieropne zapalenie ucha środkowego
+H66;Ropne i nieokreślone zapalenie ucha środkowego
+H67;Zapalenie ucha środkowego w przebiegu chorób sklasyfikowanych gdzie indziej
+H68;Zapalenie i niedrożność trąbki słuchowej Eustachiusza
+H69;Inne zaburzenia trąbki słuchowej Eustachiusza
+H70;Zapalenie wyrostka sutkowatego i stany pokrewne
+H71;Perlak ucha środkowego
+H72;Perforacja błony bębenkowej
+H73;Inne zaburzenia błony bębenkowej
+H74;Inne zaburzenia ucha środkowego i wyrostka sutkowatego
+H75;Inne zaburzenia ucha środkowego i wyrostka sutkowatego w przebiegu chorób sklasyfikowanych gdzie indziej
+H80;Otoskleroza
+H81;Zaburzenia układu przedsionkowego
+H82;Zespoły zawrotów głowy w przebiegu chorób sklasyfikowanych gdzie indziej
+H83;Inne zaburzenia ucha wewnętrznego
+H90;Upośledzenie słuchu przewodzeniowe i czuciowo-nerwowe
+H91;Inne rodzaje upośledzenia słuchu
+H92;Ból ucha i wyciek z ucha
+H93;Inne zaburzenia ucha, niesklasyfikowane gdzie indziej
+H94;Inne zaburzenia ucha w przebiegu chorób sklasyfikowanych gdzie indziej
+H95;Pooperacyjne zaburzenia ucha i wyrostka sutkowatego, niesklasyfikowane gdzie indziej
+I00;Choroba reumatyczna bez informacji o zajęciu serca
+I01;Gorączka reumatyczna z zajęciem serca
+I02;Pląsawica reumatyczna
+I05;Choroby reumatyczne zastawki mitralnej
+I06;Choroby reumatyczne zastawki aortalnej
+I07;Choroby reumatyczne zastawki trójdzielnej
+I08;Choroby wielu zastawek
+I09;Inne reumatyczne choroby serca
+I10;Nadciśnienie samoistne (pierwotne)
+I11;Nadciśnieniowa choroba serca
+I12;Choroba nadciśnieniowa z zajęciem nerek
+I13;Choroba nadciśnieniowa z zajęciem serca i nerek
+I15;Nadciśnienie wtórne
+I20;Choroba niedokrwienna serca
+I21;Ostry zawał mięśnia sercowego
+I22;Ponowny zawał serca
+I23;Niektóre powikłania występujące w czasie ostrego zawału mięśnia sercowego
+I24;Inne ostre postacie choroby niedokrwiennej serca
+I25;Przewlekła choroba niedokrwienna serca
+I26;Zator płucny
+I27;Inne zespoły sercowo-płucne
+I28;Inne choroby naczyń płucnych
+I30;Ostre zapalenie osierdzia
+I31;Inne choroby osierdzia
+I32;Zapalenie osierdzia w przebiegu chorób sklasyfikowanych gdzie indziej
+I33;Ostre i podostre zapalenie wsierdzia
+I34;Niereumatyczne choroby zastawki mitralnej
+I35;Niereumatyczne choroby zastawki aortalnej
+I36;Niereumatyczne choroby zastawki trójdzielnej
+I37;Choroby zastawki pnia płucnego
+I38;Zapalenie wsierdzia, zastawka nieokreślona
+I39;Zapalenie wsierdzia i choroby zastawek serca w przebiegu chorób sklasyfikowanych gdzie indziej
+I40;Ostre zapalenie mięśnia sercowego
+I41;Zapalenie mięśnia sercowego w przebiegu chorób sklasyfikowanych gdzie indziej
+I42;Kardiomiopatia
+I43;Kardiomiopatia w przebiegu chorób sklasyfikowanych gdzie indziej
+I44;Blok przedsionkowo-komorowy i lewej odnogi pęczka Hisa
+I45;Inne zaburzenia przewodzenia
+I46;Zatrzymanie akcji serca
+I47;Częstoskurcz napadowy
+I48;Migotanie i trzepotanie przedsionków
+I49;Inne zaburzenia rytmu serca
+I50;Niewydolność serca
+I51;Choroby serca niedokładnie określone i powikłania chorób serca
+I52;Inne zaburzenia funkcji serca w przebiegu chorób sklasyfikowanych gdzie indziej
+I60;Krwotok podpajęczynówkowy
+I61;Krwotok śródczaszkowy
+I62;Inne krwotoki śródczaszkowe nieurazowe
+I63;Zawał mózgu
+I64;Udar mózgu, nieokreślony jako krwotoczny lub zawałowy
+I65;Niedrożność i zwężenie tętnic przedmózgowych, nieprowadzące do zawału mózgu
+I66;Niedrożność i zwężenie tętnic mózgowych, nieprowadzące do zawału mózgu
+I67;Inne patologie naczyniowe mózgu
+I68;Zaburzenia naczyniowe mózgu w przebiegu chorób sklasyfikowanych gdzie indziej
+I69;Następstwa chorób naczyniowych mózgu
+I70;Miażdżyca
+I71;Tętniak i rozwarstwienie aorty
+I72;Inne postacie tętniaka
+I73;Inne choroby naczyń obwodowych
+I74;Zatorowość i zakrzepica tętnicza
+I77;Inne choroby tętnic i tętniczek
+I78;Choroby naczyń włosowatych
+I79;Zaburzenia tętnic, tętniczek i naczyń włosowatych w przebiegu chorób sklasyfikowanych gdzie indziej
+I80;Zapalenie żył i zakrzepowe zapalenie żył
+I81;Zakrzep żyły wrotnej
+I82;Inne zatory żylne i zakrzepica
+I83;Żylaki kończyn dolnych
+I84;Hemoroidy
+I85;Żylaki przełyku
+I86;Żylaki o innej lokalizacji
+I87;Inne patologie żył
+I88;Nieokreślone zapalenie węzłów chłonnych
+I89;Inne niezakaźne zaburzenia naczyń i węzłów chłonnych
+I95;Niedociśnienie
+I97;Pozabiegowe zaburzenia układu krążenia niesklasyfikowane gdzie indziej
+I98;Inne zaburzenia układu krążenia w przebiegu  chorób sklasyfikowanych gdzie indziej
+I99;Inne i nieokreślone zaburzenia układu krążenia
+J00;Ostre zapalenie nosa i gardła [przeziębienie]
+J01;Ostre zapalenie zatok
+J02;Ostre zapalenie gardła
+J03;Ostre zapalenie migdałków podniebiennych
+J04;Ostre zapalenie krtani i tchawicy
+J05;Ostre krupowe zapalenie krtani i nagłośni
+J06;Ostre zakażenie górnych dróg oddechowych o umiejscowieniu mnogim nieokreślonym
+J09;Grypa wywołana przez zidentyfikowany wirus grypy ptasiej
+J10;Grypa wywołana przez inny zidentyfikowany wirus grypy
+J11;Grypa, wirus niezidentyfikowany
+J12;Wirusowe zapalenie płuc, niesklasyfikowane gdzie indziej
+J13;Zapalenie płuc wywołane przez Streptococcus pneumoniae
+J14;Zapalenie płuc wywołane przez Haemophilus influenzae
+J15;Bakteryjne zapalenie płuc niesklasyfikowane gdzie indziej
+J16;Zapalenie płuc wywołane przez inny czynnik zakaźny, niesklasyfikowane gdzie indziej
+J17;Zapalenie płuc w przebiegu chorób sklasyfikowanych gdzie indziej
+J18;Zapalenie płuc wywołane przez niezidentyfikowany czynnik zakaźny
+J20;Ostre zapalenie oskrzeli
+J21;Ostre zapalenie oskrzelików
+J22;Nieokreślone ostre zakażenie dolnych dróg oddechowych
+J30;Naczynioruchowy i alergiczny nieżyt nosa
+J31;Przewlekłe zapalenie błony śluzowej nosa, nosa i gardła, a także gardła
+J32;Przewlekłe zapalenie zatok
+J33;Polip nosa
+J34;Inne choroby nosa i zatok przynosowych
+J35;Przewlekłe choroby migdałków podniebiennych i migdałka gardłowego
+J36;Ropień okołomigdałkowy
+J37;Przewlekłe zapalenie krtani oraz krtani i tchawicy
+J38;Choroby strun głosowych i krtani, niesklasyfikowane gdzie indziej
+J39;Inne choroby górnych dróg oddechowych
+J40;Zapalenie oskrzeli nieokreślone jako ostre albo przewlekłe
+J41;Proste i śluzowo-ropne przewlekłe zapalenie oskrzeli
+J42;Nieokreślone przewlekłe zapalenie oskrzeli
+J43;Rozedma
+J44;Inne przewlekłe obturacyjne choroby płuc
+J45;Astma oskrzelowa
+J46;Stan astmatyczny
+J47;Rozstrzenie oskrzeli
+J60;Pylica górników kopalń węgla
+J61;Pylica spowodowana azbestem lub innymi włóknami mineralnymi
+J62;Pylica wywołana przez ekspozycję na pył zawierający krzem
+J63;Pylica wywołana przez wdychanie innych pyłów nieorganicznych
+J64;Nieokreślona pylica płuc
+J65;Pylica płuc współistniejąca z gruźlicą
+J66;Choroby dróg oddechowych spowodowane wdychaniem określonych pyłów organicznych
+J67;Zapalenie płuc związane z nadwrażliwością na pył organiczny
+J68;Zaburzenia oddechowe wywołane przez wdychanie środków chemicznych, gazów, spalin i par
+J69;Zapalenie płuc wywołane przez aspirację substancji płynnych i stałych
+J70;Zaburzenia oddechowe wywołane przez czynniki zewnętrzne
+J80;Zespół ciężkiej niewydolności oddechowej dorosłych
+J81;Obrzęk płuc
+J82;Eozynofilia płucna niesklasyfikowana gdzie indziej
+J84;Inne śródmiąższowe choroby płuc
+J85;Ropień płuca i śródpiersia
+J86;Ropniak opłucnej
+J90;Wysięk opłucnowy niesklasyfikowany gdzie indziej
+J91;Wysięk opłucnowy w przebiegu chorób sklasyfikowanych gdzie indziej
+J92;Blaszka opłucnej
+J93;Odma opłucnowa
+J94;Inne choroby opłucnej
+J95;Pozabiegowe zaburzenia oddychania niesklasyfikowane gdzie indziej
+J96;Niewydolność oddechowa niesklasyfikowana gdzie indziej
+J98;Inne zespoły zaburzeń oddychania
+J99;Zaburzenia układu oddechowego w przebiegu chorób sklasyfikowanych gdzie indziej
+K00;Zaburzenia rozwoju i wyrzynania się zębów
+K01;Zęby wtopione lub zaklinowane
+K02;Próchnica zębów
+K03;Inne choroby twardych tkanek zębów
+K04;Choroby miazgi i tkanek okołowierzchołkowych
+K05;Zapalenie dziąsła i choroby przyzębia
+K06;Inne choroby dziąseł i bezzębnego wyrostka zębodołowego
+K07;Zaburzenia w zakresie zębów i twarzy [obejmujące nieprawidłowości zgryzu]
+K08;Inne zaburzenia zębów i struktur podtrzymujących
+K09;Torbiele okolicy jamy ustnej, niesklasyfikowane gdzie indziej
+K10;Inne choroby szczęki i żuchwy
+K11;Choroby gruczołów ślinowych
+K12;Zapalenie jamy ustnej i choroby pokrewne
+K13;Inne choroby śluzówki warg i jamy ustnej
+K14;Choroby języka
+K20;Zapalenie przełyku
+K21;Choroba refluksowa żołądkowo-przełykowa
+K22;Inne choroby przełyku
+K23;Zaburzenia przełyku w przebiegu chorób sklasyfikowanych gdzie indziej
+K25;Wrzód żołądka
+K26;Wrzód dwunastnicy
+K27;Wrzód trawienny o nieokreślonej lokalizacji
+K28;Wrzód żołądka i jelita czczego
+K29;Zapalenie żołądka i dwunastnicy
+K30;Dyspepsja
+K31;Inne choroby żołądka i dwunastnicy
+K35;Ostre zapalenie wyrostka robaczkowego
+K36;Inne postacie zapalenia wyrostka robaczkowego
+K37;Zapalenie wyrostka robaczkowego, nieokreślone
+K38;Inne choroby wyrostka robaczkowego
+K40;Przepuklina pachwinowa
+K41;Przepuklina udowa
+K42;Przepuklina pępkowa
+K43;Przepuklina brzuszna
+K44;Przepuklina przeponowa
+K45;Inne przepukliny brzuszne
+K46;Nieokreślona przepuklina brzuszna
+K50;Choroba Leśniowskiego-Crohna [odcinkowe zapalenie jelita]
+K51;Wrzodziejące zapalenie jelita grubego
+K52;Inne niezakaźne nieżyty żołądkowo-jelitowe i zapalenia okrężnicy
+K55;Naczyniowe choroby jelit
+K56;Niedrożność porażenna i niedrożność jelit bez przepukliny
+K57;Choroba uchyłkowa jelita
+K58;Zespół jelita drażliwego
+K59;Inne czynnościowe zaburzenia jelitowe
+K60;Szczelina i przetoka odbytnicy i okolicy odbytu
+K61;Ropień okolicy odbytu i odbytnicy
+K62;Inne choroby odbytu i odbytnicy
+K63;Inne choroby jelit
+K65;Zapalenie otrzewnej
+K66;Inne choroby otrzewnej
+K67;Zaburzenia otrzewnej w przebiegu chorób zakaźnych sklasyfikowanych gdzie indziej
+K70;Alkoholowa choroba wątroby
+K71;Toksyczne uszkodzenie wątroby
+K72;Niewydolność wątroby, niesklasyfikowana gdzie indziej
+K73;Przewlekłe zapalenie wątroby, niesklasyfikowane gdzie indziej
+K74;Zwłóknienie i marskość wątroby
+K75;Inne choroby zapalne wątroby
+K76;Inne choroby wątroby
+K77;Zaburzenia wątroby w przebiegu chorób sklasyfikowanych gdzie indziej
+K80;Kamica żółciowa
+K81;Zapalenie pęcherzyka żółciowego
+K82;Inne choroby pęcherzyka żółciowego
+K83;Inne choroby dróg żółciowych
+K85;Ostre zapalenie trzustki
+K86;Inne choroby trzustki
+K87;Zaburzenia pęcherzyka żółciowego, dróg żółciowych i trzustki w przebiegu chorób sklasyfikowanych gdzie indziej
+K90;Zaburzenia wchłaniania jelitowego
+K91;Pooperacyjne zaburzenia przewodu pokarmowego, niesklasyfikowane gdzie indziej
+K92;Inne choroby układu pokarmowego
+K93;Zaburzenia innych narządów przewodu pokarmowego w przebiegu chorób sklasyfikowanych gdzie indziej
+L00;Gronkowcowy zespół oparzeniowy skóry
+L01;Liszajec
+L02;Ropień skóry, czyrak, czyrak gromadny
+L03;Zapalenie tkanki łącznej
+L04;Ostre zapalenie węzłów chłonnych
+L05;Torbiel pilonidalna
+L08;Inne miejscowe zakażenia skóry i tkanki podskórnej
+L10;Pęcherzyca
+L11;Inne choroby przebiegające z akantolizą
+L12;Pemfigoid
+L13;Inne choroby pęcherzowe
+L14;Zaburzenia pęcherzowe w przebiegu chorób sklasyfikowanych gdzie indziej
+L20;Atopowe zapalenie skóry
+L21;Łojotokowe zapalenie skóry
+L22;Pieluszkowe [serwetkowe] zapalenie skóry
+L23;Alergiczne kontaktowe zapalenie skóry
+L24;Kontaktowe zapalenie skóry z podrażnienia
+L25;Nieokreślone kontaktowe zapalenie skóry
+L26;Złuszczające zapalenie skóry
+L27;Zapalenie skóry wywołane przez substancje wprowadzone do ustroju
+L28;Przewlekły liszaj pospolity i świerzbiączka
+L29;Świąd
+L30;Inne postacie zapalenia skóry
+L40;Łuszczyca
+L41;Przyłuszczyca
+L42;Łupież różowy Giberta
+L43;Liszaj płaski
+L44;Inne choroby grudkowo-złuszczające
+L45;Zaburzenia grudkowo-złuszczające w przebiegu chorób sklasyfikowanych gdzie indziej
+L50;Pokrzywka
+L51;Rumień wielopostaciowy
+L52;Rumień guzowaty
+L53;Inne choroby rumieniowe
+L54;Rumień w przebiegu chorób sklasyfikowanych gdzie indziej
+L55;Oparzenie słoneczne
+L56;Inne ostre zmiany skórne spowodowane przez promieniowanie ultrafioletowe
+L57;Zmiany skórne spowodowane przez przewlekłą ekspozycję na promieniowanie niejonizujące
+L58;Popromienne zapalenie skóry
+L59;Inne choroby skóry i tkanki podskórnej związane z napromieniowaniem
+L60;Choroby paznokci
+L62;Zaburzenia paznokci w przebiegu chorób sklasyfikowanych gdzie indziej
+L63;Łysienie plackowate
+L64;Łysienie androgenowe
+L65;Inna niebliznowaciejąca utrata włosów
+L66;Łysienie bliznowaciejące
+L67;Nieprawidłowości koloru i budowy włosów
+L68;Nadmierne owłosienie
+L70;Trądzik
+L71;Trądzik różowaty
+L72;Torbiele mieszkowe skóry i tkanki podskórnej
+L73;Inne choroby mieszka włosowego
+L74;Choroby gruczołów potowych
+L75;Choroby gruczołów apokrynowych
+L80;Bielactwo
+L81;Inne zaburzenia pigmentacji
+L82;Brodawka łojotokowa
+L83;Rogowacenie ciemne
+L84;Nagniotki i modzele
+L85;Inne formy zgrubienia naskórka
+L86;Keratodermia w przebiegu chorób sklasyfikowanych gdzie indziej
+L87;Zaburzenia eliminacji przeznaskórkowej
+L88;Ropne zgorzelinowe zapalenie skóry
+L89;Owrzodzenie odleżynowe
+L90;Zanikowe choroby skóry
+L91;Przerostowe choroby skóry
+L92;Ziarniniakowe choroby skóry i tkanki podskórnej
+L93;Toczeń rumieniowaty
+L94;Inne ograniczone choroby tkanki łącznej
+L95;Zapalenie naczyń ograniczone do skóry, niesklasyfikowane gdzie indziej
+L97;Owrzodzenie kończyny dolnej, niesklasyfikowane gdzie indziej
+L98;Inne choroby skóry i tkanki podskórnej, niesklasyfikowane gdzie indziej
+L99;Inne zaburzenia skóry i tkanki podskórnej w przebiegu chorób sklasyfikowanych gdzie indziej
+M00;Ropne zapalenie stawów
+M01;Bezpośrednie zajęcie stawu w przebiegu chorób zakaźnych i pasożytniczych sklasyfikowanych gdzie indziej
+M02;Artropatie odczynowe
+M03;Artropatie pozakaźne i odczynowe w przebiegu chorób sklasyfikowanych gdzie indziej
+M05;Serododatnie reumatoidalne zapalenie stawów
+M06;Inne reumatoidalne zapalenia stawów
+M07;Artropatie łuszczycowe i towarzyszące chorobom jelit
+M08;Młodzieńcze zapalenie stawów
+M09;Młodzieńcze zapalenie stawów w przebiegu chorób sklasyfikowanych gdzie indziej
+M10;Dna moczanowa
+M11;Inne artropatie spowodowane odkładaniem się kryształów
+M12;Inne określone artropatie
+M13;Inne postacie zapalenia stawów
+M14;Artropatie w przebiegu innych chorób sklasyfikowanych gdzie indziej
+M15;Zwyrodnienie wielostawowe
+M16;Koksartroza [choroba zwyrodnieniowa stawu biodrowego]
+M17;Gonartroza [choroba zwyrodnieniowa stawu kolanowego]
+M18;Choroba zwyrodnieniowa pierwszego stawu nadgarstkowo-śródręcznego
+M19;Inne zwyrodnienia stawów
+M20;Nabyte deformacje palców rąk i stóp
+M21;Inne nabyte deformacje kończyn
+M22;Choroby rzepki
+M23;Wewnętrzne uszkodzenie stawu kolanowego
+M24;Inne określone uszkodzenia stawu
+M25;Inne choroby stawów, niesklasyfikowane gdzie indziej
+M30;Guzkowe zapalenie tętnic i choroby pokrewne
+M31;Inne martwicze choroby naczyń
+M32;Toczeń rumieniowaty układowy
+M33;Zapalenie skórno-wielomięśniowe
+M34;Twardzina układowa
+M35;Inne układowe choroby tkanki łącznej
+M36;Układowe zaburzenia tkanki łącznej w przebiegu chorób sklasyfikowanych gdzie indziej
+M40;Kifoza i lordoza
+M41;Skolioza
+M42;Osteochondroza kręgosłupa
+M43;Inne zniekształcające choroby grzbietu
+M45;Zesztywniające zapalenie stawów kręgosłupa
+M46;Inne zapalne choroby kręgosłupa
+M47;Zmiany zwyrodnieniowe kręgosłupa
+M48;Inne choroby kręgosłupa
+M49;Spondylopatie w przebiegu chorób sklasyfikowanych gdzie indziej
+M50;Choroby krążków międzykręgowych szyjnych
+M51;Inne choroby krążka międzykręgowego
+M53;Inne choroby grzbietu, niesklasyfikowane gdzie indziej
+M54;Bóle grzbietu
+M60;Zapalenie mięśni
+M61;Zwapnienie i skostnienie mięśni
+M62;Inne choroby mięśni
+M63;Zaburzenia mięśni w przebiegu chorób sklasyfikowanych gdzie indziej
+M65;Zapalenie błony maziowej i pochewki ścięgnistej
+M66;Samoistne pęknięcie błony maziowej i ścięgna
+M67;Inne choroby błony maziowej i ścięgien
+M68;Zaburzenia błony maziowej i ścięgien w przebiegu chorób sklasyfikowanych gdzie indziej
+M70;Choroby tkanek miękkich związane z ich używaniem, przemęczeniem i przeciążeniem
+M71;Inne patologie kaletek
+M72;Choroby fibroblastyczne
+M73;Zaburzenia tkanek miękkich w przebiegu chorób sklasyfikowanych gdzie indziej
+M75;Uszkodzenia barku
+M76;Entezopatie kończyny dolnej, z wyłączeniem stopy
+M77;Inne entezopatie
+M79;Inne choroby tkanek miękkich, niesklasyfikowane gdzie indziej
+M80;Osteoporoza ze złamaniami patologicznymi
+M81;Osteoporoza bez złamań patologicznych
+M82;Osteoporoza w przebiegu chorób sklasyfikowanych gdzie indziej
+M83;Osteomalacja dorosłych
+M84;Zaburzenia ciągłości kości
+M85;Inne zaburzenia mineralizacji i struktury kości
+M86;Zapalenie kości i szpiku
+M87;Martwica kości
+M88;Choroba Pageta kości [osteitis deformans]
+M89;Inne choroby kości
+M90;Osteopatie w przebiegu chorób sklasyfikowanych gdzie indziej
+M91;Młodzieńcza osteochondroza biodra i miednicy
+M92;Inne osteochondrozy młodzieńcze
+M93;Inne osteochondropatie
+M94;Inne choroby chrząstki
+M95;Inne nabyte zniekształcenia układu mięśniowo-szkieletowego i tkanki łącznej
+M96;Pozabiegowe zaburzenia układu mięśniowo-szkieletowego, niesklasyfikowane gdzie indziej
+M99;Uszkodzenie biomechaniczne niesklasyfikowane gdzie indziej
+N00;Ostry zespół zapalenia nerek
+N01;Gwałtownie postępujący zespół zapalenia nerek
+N02;Nawracający i utrzymujący się krwiomocz
+N03;Przewlekły zespół zapalenia nerek
+N04;Zespół nerczycowy
+N05;Nieokreślony zespół zapalenia nerek
+N06;Białkomocz izolowany z określonymi zmianami morfologicznymi
+N07;Nefropatia dziedziczna, niesklasyfikowana gdzie indziej
+N08;Zaburzenia kłębuszków nerkowych w przebiegu chorób sklasyfikowanych gdzie indziej
+N10;Ostre cewkowo-śródmiąższowe zapalenie nerek
+N11;Przewlekłe cewkowo-śródmiąższowe zapalenie nerek
+N12;Cewkowo-śródmiąższowe zapalenie nerek nieokreślone jako ostre lub przewlekłe
+N13;Uropatia zaporowa i refluksowa
+N14;Zmiany cewkowe i cewkowo-śródmiąższowe wywołane przez leki i metale ciężkie
+N15;Inne cewkowo-śródmiąższowe choroby nerek
+N16;Zaburzenia cewkowo-śródmiąższowe nerek w przebiegu chorób sklasyfikowanych gdzie indziej
+N17;Ostra niewydolność nerek
+N18;Przewlekła niewydolność nerek
+N19;Nieokreślona niewydolność nerek
+N20;Kamica nerki i moczowodu
+N21;Kamień w obrębie dolnych dróg moczowych
+N22;Kamica dróg moczowych w przebiegu chorób sklasyfikowanych gdzie indziej
+N23;Nieokreślona kolka nerkowa
+N25;Zaburzenia wynikające z upośledzonej czynności cewek nerkowych
+N26;Nieokreślony zanik nerki
+N27;Nerka mała z nieznanej przyczyny
+N28;Inne zaburzenia nerki i moczowodu niesklasyfikowane gdzie indziej
+N29;Inne zaburzenia nerki i moczowodu w przebiegu chorób sklasyfikowanych gdzie indziej
+N30;Zapalenie pęcherza moczowego
+N31;Nerwowo-mięśniowa dysfunkcja pęcherza moczowego, niesklasyfikowana gdzie indziej
+N32;Inne schorzenia pęcherza moczowego
+N33;Schorzenia pęcherza moczowego w przebiegu chorób sklasyfikowanych gdzie indziej
+N34;Zapalenie cewki moczowej i zespół cewki moczowej
+N35;Zwężenie cewki moczowej
+N36;Inne schorzenia cewki moczowej
+N37;Zaburzenia cewki moczowej w przebiegu chorób sklasyfikowanych gdzie indziej
+N39;Inne choroby układu moczowego
+N40;Rozrost gruczołu krokowego
+N41;Choroby zapalne gruczołu krokowego
+N42;Inne choroby gruczołu krokowego
+N43;Wodniak jądra i powrózka nasiennego
+N44;Skręt jądra
+N45;Zapalenie jądra i zapalenie najądrza
+N46;Niepłodność męska
+N47;Nadmiar napletka, stulejka i załupek
+N48;Inne patologie prącia
+N49;Zapalne choroby męskich narządów płciowych, niesklasyfikowane gdzie indziej
+N50;Inne choroby męskich narządów płciowych
+N51;Zaburzenia męskich narządów płciowych w przebiegu chorób sklasyfikowanych gdzie indziej
+N60;Łagodna dysplazja piersi
+N61;Stany zapalne piersi
+N62;Przerost piersi
+N63;Nieokreślony guzek w piersi
+N64;Inne choroby piersi
+N70;Zapalenie jajowodów i jajników
+N71;Choroby zapalne macicy, z wyłączeniem szyjki
+N72;Zapalenie szyjki macicy
+N73;Inne choroby zapalne miednicy u kobiet
+N74;Choroba zapalna miednicy u kobiet w przebiegu chorób sklasyfikowanych gdzie indziej
+N75;Choroby gruczołu Bartholina
+N76;Inne zapalenia pochwy i sromu
+N77;Owrzodzenia i zmiany zapalne pochwy i sromu w przebiegu chorób sklasyfikowanych gdzie indziej
+N80;Gruczolistość
+N81;Wypadanie żeńskich narządów rozrodczych
+N82;Przetoki w obrębie żeńskiego układu rozrodczego
+N83;Niezapalne choroby jajnika, jajowodu i więzadła szerokiego macicy
+N84;Polip żeńskiego układu rozrodczego
+N85;Inne niezapalne zaburzenia macicy, z wyjątkiem szyjki
+N86;Nadżerka i wywinięcie błony śluzowej kanału szyjki macicy
+N87;Dysplazja szyjki macicy
+N88;Inne niezapalne choroby szyjki macicy
+N89;Inne niezapalne choroby pochwy
+N90;Inne niezapalne choroby sromu i krocza
+N91;Brak miesiączki, skąpe i rzadkie miesiączki
+N92;Obfite, częste i nieregularne miesiączki
+N93;Inne nieprawidłowe krwawienia maciczne i pochwowe
+N94;Ból i inne stany związane z żeńskimi narządami rozrodczymi i cyklem miesiączkowym
+N95;Menopauza i inne schorzenia okresu okołomenopauzalnego
+N96;Poronienia nawykowe
+N97;Niepłodność kobieca
+N98;Powikłania związane ze sztucznym zapłodnieniem
+N99;Inne choroby układu moczowo-płciowego
+O00;Ciąża pozamaciczna
+O01;Zaśniad groniasty
+O02;Inne patologiczne skutki zapłodnienia
+O03;Poronienie samoistne
+O04;Poronienie sztuczne
+O05;Inne poronienie
+O06;Poronienie, nieokreślone
+O07;Nieskuteczna próba poronienia
+O08;Powikłania poronienia, ciąży pozamacicznej lub zaśniadowej
+O10;Istniejące uprzednio nadciśnienie tętnicze wikłające ciążę, poród i okres połogu
+O11;Istniejące uprzednio nadciśnienie z dołączającym się białkomoczem
+O12;Ciążowe [wywołane ciążą] obrzęki i białkomocz bez nadciśnienia
+O13;Nadciśnienie ciążowe [wywołane ciążą] bez znamiennego białkomoczu
+O14;Nadciśnienie ciążowe [wywołane ciążą] ze znacznym białkomoczem
+O15;Rzucawka
+O16;Nieokreślone nadciśnienie u ciężarnej
+O20;Krwawienie we wczesnej ciąży
+O21;Nadmierne wymioty w ciąży
+O22;Powikłania żylne w czasie ciąży
+O23;Zakażenia układu moczowo-płciowego w ciąży
+O24;Cukrzyca w ciąży
+O25;Niedożywienie w ciąży
+O26;Opieka położnicza z powodu stanów związanych głównie z ciążą
+O28;Nieprawidłowe wyniki przedporodowych rutynowych badań u ciężarnej
+O29;Powikłania znieczulenia w czasie ciąży
+O30;Ciąża mnoga
+O31;Powikłania typowe dla ciąży mnogiej
+O32;Opieka położnicza z powodu znanego lub podejrzewanego nieprawidłowego położenia, ustawienia i ułożenia płodu
+O33;Opieka położnicza z powodu znanej lub przewidywanej niewspółmierności porodowej
+O34;Opieka położnicza z powodu znanej lub podejrzewanej nieprawidłowości narządów miednicy
+O35;Opieka położnicza z powodu znanej lub podejrzewanej nieprawidłowości lub uszkodzenia płodu
+O36;Opieka położnicza z powodu innych znanych lub podejrzewanych zaburzeń płodowych
+O40;Wielowodzie
+O41;Inne zaburzenia wód i błon płodowych
+O42;Przedwczesne pęknięcie błon płodowych
+O43;Zaburzenia łożyska
+O44;Łożysko przodujące
+O45;Przedwczesne oddzielenie łożyska [abruptio placentae]
+O46;Krwawienie przedporodowe, niesklasyfikowane gdzie indziej
+O47;Poród fałszywy
+O48;Ciąża przenoszona
+O60;Poród przedwczesny
+O61;Nieskuteczne indukowanie czynności porodowej
+O62;Nieprawidłowa czynność skurczowa
+O63;Poród przedłużony
+O64;Poród patologiczny z powodu nieprawidłowego ustawienia i ułożenia płodu
+O65;Poród patologiczny z powodu nieprawidłowości miednicy matki
+O66;Inny poród patologiczny
+O67;Czynność porodowa i poród powikłane przez krwawienie śródporodowe, niesklasyfikowane gdzie indziej
+O68;Czynność porodowa i poród powikłane przez stan zagrożenia [ciężki stan] płodu
+O69;Czynność porodowa i poród powikłane przez nieprawidłowości pępowiny
+O70;Pęknięcie krocza w czasie porodu
+O71;Inny uraz położniczy
+O72;Krwawienie poporodowe
+O73;Zatrzymanie łożyska i błon płodowych, bez krwotoku
+O74;Powikłania znieczulenia w trakcie czynności porodowej i porodu
+O75;Inne powikłania czynności porodowej i porodu niesklasyfikowane gdzie indziej
+O80;Poród samoistny pojedynczy siłami natury
+O81;Poród pojedynczy przy pomocy kleszczy lub próżniociągu
+O82;Poród pojedynczy przez cięcie cesarskie
+O83;Inny poród pojedynczy z udzieleniem pomocy położniczej
+O84;Poród mnogi
+O85;Zakażenie połogowe miejscowe i uogólnione
+O86;Inne zakażenia połogowe
+O87;Powikłania ze strony układu żylnego w okresie połogu
+O88;Zator położniczy
+O89;Powikłania znieczulenia w okresie połogu
+O90;Powikłania okresu połogowego, niesklasyfikowane gdzie indziej
+O91;Zakażenia piersi związane z porodem
+O92;Inne choroby piersi i zaburzenia laktacji związane z porodem
+O94;Następstwa powikłań ciąży, porodu i okresu połogu
+O95;Zgon położniczy z nieokreślonej przyczyny
+O96;Zgon z dowolnej przyczyny położniczej następujący po upływie 42 dni, lecz nie więcej niż jeden rok po porodzie
+O97;Zgon w następstwie bezpośredniej przyczyny położniczej
+O98;Choroby zakaźne i pasożytnicze u matki sklasyfikowane gdzie indziej, lecz wikłające ciążę, poród i połóg
+O99;Inne choroby matki sklasyfikowane gdzie indziej, lecz wikłające ciążę, poród i połóg
+P00;Stan płodu i noworodka spowodowany czynnikami matczynymi, które mogą nie być związane z obecną ciążą
+P01;Stan płodu i noworodka spowodowany przez powikłania ciąży u matki
+P02;Stan płodu i noworodka spowodowany powikłaniami ze strony łożyska, pępowiny i błon płodowych
+P03;Stan płodu i noworodka spowodowany innymi powikłaniami czynności porodowej i porodu
+P04;Stan płodu i noworodka spowodowany przez szkodliwe substancje przenoszone za pośrednictwem łożyska lub z pokarmem kobiecym
+P05;Opóźniony wzrost płodu i niedożywienie płodu
+P07;Zaburzenia związane z krótkim czasem trwania ciąży i niską masą urodzeniową, niesklasyfikowane gdzie indziej
+P08;Zaburzenia związane z przedłużonym trwaniem ciąży i dużą urodzeniową masą ciała
+P10;Uszkodzenie struktur śródczaszkowych i krwotok spowodowany urazem porodowym
+P11;Inne porodowe urazy ośrodkowego układu nerwowego
+P12;Porodowy uraz owłosionej skóry głowy
+P13;Uraz porodowy kości
+P14;Uraz porodowy obwodowego układu nerwowego
+P15;Inne urazy porodowe
+P20;Niedotlenienie wewnątrzmaciczne
+P21;Zamartwica urodzeniowa
+P22;Zespół zaburzeń oddychania noworodka
+P23;Wrodzone zapalenie płuc
+P24;Noworodkowe zespoły zachłyśnięcia
+P25;Rozedma śródmiąższowa i stany pokrewne rozpoczynające się w okresie okołoporodowym
+P26;Krwotok płucny rozpoczynający się w okresie okołoporodowym
+P27;Przewlekła choroba oddechowa rozpoczynająca się w okresie okołoporodowym
+P28;Inne zaburzenia oddechowe rozpoczynające się w okresie okołoporodowym
+P29;Zaburzenia sercowo-naczyniowe rozpoczynające się w okresie okołoporodowym
+P35;Wrodzone choroby wirusowe
+P36;Posocznica bakteryjna noworodka
+P37;Inne wrodzone choroby zakaźne i pasożytnicze
+P38;Zapalenie pępka noworodka z łagodnym krwawieniem lub bez krwawienia
+P39;Inne zakażenia swoiste dla okresu okołoporodowego
+P50;Utrata krwi płodu
+P51;Krwotok z pępka u noworodka
+P52;Śródczaszkowy nieurazowy krwotok u płodu i noworodka
+P53;Choroba krwotoczna u płodu i noworodka
+P54;Inne krwotoki u noworodka
+P55;Choroba hemolityczna płodu i noworodka
+P56;Obrzęk uogólniony płodu spowodowany chorobą hemolityczną
+P57;Żółtaczka jąder podkorowych
+P58;Żółtaczka noworodków spowodowana inną nadmierną hemolizą
+P59;Żółtaczka noworodków spowodowana innymi i nieokreślonymi przyczynami
+P60;Rozsiane wykrzepianie śródnaczyniowe u płodu i noworodka
+P61;Inne okołoporodowe zaburzenia hematologiczne
+P70;Przemijające zaburzenia przemiany węglowodanów swoiste dla płodu i noworodka
+P71;Przemijające zaburzenia przemiany wapnia i magnezu noworodkowe
+P72;Inne przemijające zaburzenia gruczołów wydzielania wewnętrznego noworodkowe
+P74;Inne noworodkowe zaburzenia elektrolitowe i metaboliczne
+P75;Niedrożność smółkowa (E84.1†)
+P76;Inna niedrożność jelit noworodka
+P77;Martwicze zapalenie jelit płodu i noworodka
+P78;Inne okołoporodowe zaburzenia przewodu pokarmowego
+P80;Hipotermia u noworodka
+P81;Inne zaburzenia regulacji ciepłoty ciała u noworodka
+P83;Inne stany dotyczące powłok swoiste dla płodu i noworodka
+P90;Drgawki noworodka
+P91;Inne zaburzenia mózgowe noworodka
+P92;Problemy związane z karmieniem noworodka
+P93;Reakcje i zatrucia wywołane przez leki stosowane u płodu i noworodka
+P94;Zaburzenie napięcia mięśniowego u noworodka
+P95;Śmierć płodu z nieokreślonej przyczyny
+P96;Inne stany rozpoczynające się w okresie okołoporodowym
+Q00;Bezmózgowie i podobne wady rozwojowe
+Q01;Przepuklina mózgowa
+Q02;Małogłowie
+Q03;Wodogłowie wrodzone
+Q04;Inne wrodzone wady rozwojowe mózgu
+Q05;Rozszczep kręgosłupa
+Q06;Inne wrodzone wady rozwojowe rdzenia kręgowego
+Q07;Inne wrodzone wady rozwojowe układu nerwowego
+Q10;Wrodzone wady rozwojowe powiek, aparatu łzowego i oczodołu
+Q11;Bezocze, małoocze i wielkoocze
+Q12;Wrodzone wady rozwojowe soczewki
+Q13;Wrodzone wady rozwojowe przedniego odcinka oka
+Q14;Wrodzone wady rozwojowe tylnego odcinka oka
+Q15;Inne wrodzone wady rozwojowe oka
+Q16;Wrodzone wady rozwojowe ucha powodujące upośledzenie słuchu
+Q17;Inne wrodzone wady rozwojowe ucha
+Q18;Inne wrodzone wady rozwojowe twarzy i szyi
+Q20;Wrodzone wady rozwojowe jam i połączeń sercowych
+Q21;Wrodzone wady rozwojowe przegród serca
+Q22;Wrodzone wady rozwojowe zastawki pnia płucnego i zastawki trójdzielnej
+Q23;Wrodzone wady rozwojowe zastawki aortalnej i zastawki mitralnej
+Q24;Inne wrodzone wady rozwojowe serca
+Q25;Wrodzone wady rozwojowe dużych tętnic
+Q26;Wrodzone wady rozwojowe dużych żył układowych
+Q27;Inne wrodzone wady rozwojowe obwodowego układu naczyniowego
+Q28;Inne wrodzone wady rozwojowe układu krążenia
+Q30;Wrodzone wady rozwojowe nosa
+Q31;Wrodzone wady rozwojowe krtani
+Q32;Wrodzone wady rozwojowe tchawicy i oskrzeli
+Q33;Wrodzone wady rozwojowe płuc
+Q34;Inne wrodzone wady rozwojowe układu oddechowego
+Q35;Rozszczep podniebienia
+Q36;Rozszczep wargi
+Q37;Rozszczep podniebienia wraz z rozszczepem wargi
+Q38;Inne wrodzone wady rozwojowe języka, jamy ustnej i gardła
+Q39;Wrodzone wady rozwojowe przełyku
+Q40;Inne wrodzone wady rozwojowe górnego odcinka przewodu pokarmowego
+Q41;Wrodzony brak, zarośnięcie lub zwężenie jelita cienkiego
+Q42;Wrodzony brak, zarośnięcie lub zwężenie jelita grubego
+Q43;Inne wrodzone wady rozwojowe jelit
+Q44;Wrodzone wady rozwojowe pęcherzyka żółciowego, przewodów żółciowych i wątroby
+Q45;Inne wrodzone wady rozwojowe układu pokarmowego
+Q50;Wrodzone wady rozwojowe jajników, jajowodów i więzadła szerokiego macicy
+Q51;Wrodzone wady rozwojowe macicy i szyjki macicy
+Q52;Inne wrodzone wady rozwojowe narządów płciowych żeńskich
+Q53;Niezstąpienie jąder
+Q54;Spodziectwo
+Q55;Inne wrodzone wady rozwojowe męskich narządów płciowych
+Q56;Płeć niezdeterminowana i obojnactwo rzekome
+Q60;Niewytworzenie się nerki i inne zaburzenia związane z niedorozwojem nerki
+Q61;Wielotorbielowatość nerek
+Q62;Wrodzone wady miedniczki nerkowej powodujące zastój moczu i wrodzone wady rozwojowe moczowodu
+Q63;Inne wrodzone wady rozwojowe nerek
+Q64;Inne wrodzone wady rozwojowe układu moczowego
+Q65;Wrodzone zniekształcenie stawu biodrowego
+Q66;Wrodzone zniekształcenia stóp
+Q67;Wrodzone zniekształcenia mięśniowo-kostne w zakresie czaszki, twarzy, kręgosłupa i klatki piersiowej
+Q68;Inne wrodzone zniekształcenia mięśniowo-kostne
+Q69;Palce dodatkowe
+Q70;Palce zrośnięte
+Q71;Wrodzone zniekształcenia zmniejszające kończyny górnej
+Q72;Wrodzone zniekształcenia zmniejszające kończyny dolnej
+Q73;Wrodzone zniekształcenie zmniejszające nieokreślonej kończyny
+Q74;Inne wrodzone wady rozwojowe kończyn
+Q75;Inne wrodzone wady rozwojowe kości czaszki i twarzy
+Q76;Wrodzone wady rozwojowe kręgosłupa i kości klatki piersiowej
+Q77;Dysplazja kostno-chrzęstna z upośledzeniem wzrostu kości długich i kręgosłupa
+Q78;Inne osteochondrodysplazje
+Q79;Wrodzone wady rozwojowe układu mięśniowo-szkieletowego, niesklasyfikowane gdzie indziej
+Q80;Wrodzona rybia łuska
+Q81;Pęcherzowe oddzielanie naskórka
+Q82;Inne wrodzone wady rozwojowe skóry
+Q83;Wrodzone wady rozwojowe piersi
+Q84;Inne wrodzone wady rozwojowe powłok ciała
+Q85;Fakomatozy nie sklasyfikowane gdzie indziej
+Q86;Zespoły wrodzonych wad rozwojowych spowodowane znanymi czynnikami zewnętrznymi, niesklasyfikowane gdzie indziej
+Q87;Inne określone zespoły wrodzonych wad rozwojowych dotyczące wielu układów
+Q89;Inne wrodzone wady rozwojowe niesklasyfikowane gdzie indziej
+Q90;Zespół Downa
+Q91;Zespół Edwardsa i zespół Pataua
+Q92;Inne trisomie i częściowe trisomie autosomów, niesklasyfikowane gdzie indziej
+Q93;Monosomie i delecje autosomów niesklasyfikowane gdzie indziej
+Q95;Zrównoważone przemieszczenie materiału genetycznego i znaczniki strukturalne, niesklasyfikowane gdzie indziej
+Q96;Zespół Turnera
+Q97;Inne aberracje chromosomów płciowych z fenotypem żeńskim, niesklasyfikowane gdzie indziej
+Q98;Inne aberracje chromosomów płciowych z męskim fenotypem, niesklasyfikowane gdzie indziej
+Q99;Inne aberracje chromosomalne niesklasyfikowane gdzie indziej
+R00;Zaburzenia rytmu serca
+R01;Szmery serca i inne zjawiska osłuchowe w okolicy serca
+R02;Zgorzel niesklasyfikowana gdzie indziej
+R03;Nieprawidłowy wynik pomiaru ciśnienia tętniczego krwi, bez rozpoznania
+R04;Krwawienie z dróg oddechowych
+R05;Kaszel
+R06;Zaburzenia oddychania
+R07;Ból gardła i w klatce piersiowej
+R09;Inne objawy i dolegliwości dotyczące układu krążenia i układu oddechowego
+R10;Ból w okolicy brzucha i miednicy
+R11;Nudności i wymioty
+R12;Zgaga
+R13;Dysfagia
+R14;Wzdęcie i pokrewne objawy
+R15;Nietrzymanie kału
+R16;Powiększenie wątroby i śledziony niesklasyfikowane gdzie indziej
+R17;Żółtaczka, nieokreślona
+R18;Wodobrzusze
+R19;Inne objawy i dolegliwości dotyczące przewodu pokarmowego i jamy brzusznej
+R20;Zaburzenia czucia skórnego
+R21;Rumień i inne nieswoiste wysypki skórne
+R22;Umiejscowiony obrzęk, guzek, guz skóry i tkanki podskórnej
+R23;Inne zmiany skórne
+R25;Patologiczne ruchy mimowolne
+R26;Zaburzenia chodu i poruszania się
+R27;Inne zaburzenia koordynacji
+R29;Inne objawy i dolegliwości dotyczące układu nerwowego i mięśniowo­‑szkieletowego
+R30;Ból podczas oddawania moczu
+R31;Krwiomocz, nieokreślony
+R32;Nietrzymanie moczu, nieokreślone
+R33;Zatrzymanie moczu
+R34;Bezmocz i skąpomocz
+R35;Wielomocz
+R36;Wydzielina z cewki moczowej
+R39;Inne objawy i dolegliwości dotyczące układu moczowego
+R40;Senność, osłupienie i śpiączka
+R41;Inne objawy i dolegliwości dotyczące funkcji poznawczych i świadomości
+R42;Zawroty głowy i odurzenie
+R43;Zaburzenia węchu i smaku
+R44;Inne objawy i dolegliwości dotyczące odczuwania i spostrzegania
+R45;Objawy i dolegliwości dotyczące stanu emocjonalnego
+R46;Objawy i dolegliwości dotyczące powierzchowności i zachowania
+R47;Zaburzenia mowy niesklasyfikowane gdzie indziej
+R48;Dysleksja i inne zaburzenia spostrzegania, niesklasyfikowane gdzie indziej
+R49;Zaburzenia głosu
+R50;Gorączka o innej lub nieznanej przyczynie
+R51;Ból głowy
+R52;Ból niesklasyfikowany gdzie indziej
+R53;Złe samopoczucie i zmęczenie
+R54;Starość
+R55;Omdlenie i zapaść
+R56;Drgawki niesklasyfikowane gdzie indziej
+R57;Wstrząs niesklasyfikowany gdzie indziej
+R58;Krwotok niesklasyfikowany gdzie indziej
+R59;Powiększenie węzłów chłonnych
+R60;Obrzęk niesklasyfikowany gdzie indziej
+R61;Nadmierne pocenie
+R62;Brak oczekiwanego prawidłowego rozwoju fizjologicznego
+R63;Objawy i dolegliwości związane z przyjmowaniem pokarmów i płynów
+R64;Wyniszczenie [kacheksja]
+R68;Inne objawy i dolegliwości ogólne
+R69;Nieznane i nieokreślone przyczyny zachorowań
+R70;Przyspieszone opadanie krwinek czerwonych i zaburzenia lepkości osocza
+R71;Nieprawidłowości dotyczące krwinek czerwonych
+R72;Nieprawidłowości dotyczące krwinek białych, niesklasyfikowane gdzie indziej
+R73;Podwyższone stężenie glukozy we krwi
+R74;Nieprawidłowa aktywność enzymów w surowicy krwi
+R75;Wyniki badań laboratoryjnych wskazujące na zakażenie ludzkim wirusem upośledzenia odporności [HIV]
+R76;Inne nieprawidłowe wyniki badań immunologicznych surowicy krwi
+R77;Inne zaburzenia dotyczące białek osocza
+R78;Stwierdzenie obecności leków lub innych substancji normalnie niewystępujących we krwi
+R79;Inne patologiczne wyniki badań biochemicznych
+R80;Izolowany białkomocz
+R81;Glikozuria
+R82;Inne nieprawidłowe wyniki badania moczu
+R83;Nieprawidłowe wyniki badań płynu mózgowo-rdzeniowego
+R84;Nieprawidłowe wyniki materiału pobranego z układu oddechowego oraz klatki piersiowej
+R85;Nieprawidłowe wyniki badań materiału pobranego z przewodu pokarmowego i jamy brzusznej
+R86;Nieprawidłowe wyniki materiału pobranego z męskich narządów płciowych
+R87;Nieprawidłowe wyniki materiału pobranego z żeńskich narządów płciowych
+R89;Nieprawidłowe wyniki badań materiału pobranego z innych narządów, układów i tkanek
+R90;Nieprawidłowe wyniki badań obrazowych ośrodkowego systemu nerwowego
+R91;Nieprawidłowe wyniki diagnostycznych badań obrazowych płuc
+R92;Nieprawidłowe wyniki diagnostycznych badań obrazowych piersi
+R93;Nieprawidłowe wyniki diagnostycznych badań obrazowych innych struktur ciała
+R94;Nieprawidłowe wyniki badań czynnościowych
+R95;Zespół nagłej śmierci niemowląt
+R96;Inny nagły zgon z nieznanej przyczyny
+R98;Zgon nieoczekiwany
+R99;Inne niedokładnie określone lub nieznane przyczyny zgonu
+S00;Powierzchowny uraz głowy
+S01;Otwarta rana głowy
+S02;Złamanie kości czaszki i twarzoczaszki
+S03;Zwichnięcie, skręcenie i naderwanie stawów i więzadeł głowy
+S04;Uraz nerwów czaszkowych
+S05;Uraz oka i oczodołu
+S06;Uraz śródczaszkowy
+S07;Uraz zmiażdżeniowy głowy
+S08;Amputacja urazowa części głowy
+S09;Inne i nieokreślone urazy głowy
+S10;Powierzchowny uraz szyi
+S11;Otwarta rana szyi
+S12;Złamanie szyi
+S13;Zwichnięcie, skręcenie i naderwanie stawów i więzadeł w odcinku szyjnym
+S14;Uraz nerwów i rdzenia kręgowego w odcinku szyjnym kręgosłupa
+S15;Uraz naczyń krwionośnych na poziomie szyi
+S16;Uraz mięśnia i ścięgna na poziomie szyi
+S17;Uraz zmiażdżeniowy szyi
+S18;Amputacja urazowa na poziomie szyi
+S19;Inne i nieokreślone urazy szyi
+S20;Powierzchowny uraz klatki piersiowej
+S21;Otwarta rana klatki piersiowej
+S22;Złamanie żebra (żeber), mostka i odcinka piersiowego kręgosłupa
+S23;Zwichnięcie, skręcenie i naderwanie stawów i więzadeł klatki piersiowej
+S24;Uraz nerwów i rdzenia kręgowego w odcinku piersiowym kręgosłupa
+S25;Uraz naczyń krwionośnych klatki piersiowej
+S26;Uraz serca
+S27;Uraz innych i nieokreślonych narządów klatki piersiowej
+S28;Uraz zmiażdżeniowy klatki piersiowej i amputacja urazowa fragmentu klatki piersiowej
+S29;Inne i nieokreślone urazy klatki piersiowej
+S30;Powierzchowny uraz brzucha, dolnej części grzbietu i miednicy
+S31;Otwarta rana brzucha, dolnej części grzbietu i miednicy
+S32;Złamanie odcinka lędźwiowego kręgosłupa i miednicy
+S33;Zwichnięcie, skręcenie i naderwanie stawów i więzadeł odcinka lędźwiowego kręgosłupa i miednicy
+S34;Uraz nerwów i rdzenia kręgowego odcinka lędźwiowego kręgosłupa na poziomie brzucha, dolnej części grzbietu i miednicy
+S35;Uraz naczyń krwionośnych na poziomie brzucha, dolnej części grzbietu i miednicy
+S36;Uraz narządów jamy brzusznej
+S37;Uraz narządów miednicy i narządów układu moczowego
+S38;Uraz zmiażdżeniowy i amputacja urazowa części brzucha, dolnej części grzbietu i miednicy
+S39;Inne i nieokreślone urazy brzucha, dolnej części grzbietu i miednicy
+S40;Powierzchowny uraz barku i ramienia
+S41;Otwarta rana barku i ramienia
+S42;Złamanie barku i ramienia
+S43;Zwichnięcie, skręcenie i naderwanie stawów i więzadeł obręczy barkowej
+S44;Uraz nerwów barku i ramienia
+S45;Uraz naczyń krwionośnych na poziomie barku i ramienia
+S46;Uraz mięśnia i ścięgna na poziomie barku i ramienia
+S47;Uraz zmiażdżeniowy barku i ramienia
+S48;Amputacja urazowa barku i ramienia
+S49;Inne i nieokreślone urazy barku i ramienia
+S50;Powierzchowny uraz przedramienia
+S51;Otwarta rana przedramienia
+S52;Złamanie przedramienia
+S53;Zwichnięcie, skręcenie i naderwanie stawów i więzadeł stawu łokciowego
+S54;Urazy nerwów na poziomie przedramienia
+S55;Uraz naczyń krwionośnych na poziomie przedramienia
+S56;Uraz mięśnia i ścięgna na poziomie przedramienia
+S57;Uraz zmiażdżeniowy przedramienia
+S58;Amputacja urazowa przedramienia
+S59;Inne i nieokreślone urazy przedramienia
+S60;Powierzchowny uraz nadgarstka i ręki
+S61;Otwarta rana nadgarstka i ręki
+S62;Złamanie na poziomie nadgarstka i ręki
+S63;Zwichnięcie, skręcenie i naderwanie stawów i więzadeł na poziomie nadgarstka i ręki
+S64;Uraz nerwów na poziomie nadgarstka i ręki
+S65;Uraz naczyń krwionośnych na poziomie nadgarstka i ręki
+S66;Uraz mięśnia i ścięgna na poziomie nadgarstka i ręki
+S67;Uraz zmiażdżeniowy nadgarstka i ręki
+S68;Amputacja urazowa nadgarstka i ręki
+S69;Inne i nieokreślone urazy nadgarstka i ręki
+S70;Powierzchowny uraz biodra i uda
+S71;Otwarta rana biodra i uda
+S72;Złamanie kości udowej
+S73;Zwichnięcie, skręcenie i naderwanie stawu i więzadeł biodra
+S74;Uraz nerwów na poziomie biodra i uda
+S75;Uraz naczyń krwionośnych na poziomie biodra i uda
+S76;Uraz mięśnia i ścięgna na poziomie biodra i uda
+S77;Uraz zmiażdżeniowy biodra i uda
+S78;Amputacja urazowa biodra i uda
+S79;Inne i określone urazy biodra i uda
+S80;Powierzchowny uraz podudzia
+S81;Otwarta rana podudzia
+S82;Złamanie podudzia, łącznie ze stawem skokowym
+S83;Zwichnięcie, skręcenie i naderwanie stawów i więzadeł kolana
+S84;Uraz nerwów na poziomie podudzia
+S85;Uraz naczyń krwionośnych na poziomie podudzia
+S86;Uraz mięśnia i ścięgna na poziomie podudzia
+S87;Uraz zmiażdżeniowy podudzia
+S88;Amputacja urazowa podudzia
+S89;Inne i nieokreślone urazy podudzia
+S90;Powierzchowny uraz stawu skokowego i stopy
+S91;Otwarta rana stawu skokowego i stopy
+S92;Złamanie stopy z wyjątkiem stawu skokowego
+S93;Zwichnięcie, skręcenie i naderwanie stawów i więzadeł na poziomie stawu skokowego i stopy
+S94;Urazy nerwów na poziomie stawu skokowego i stopy
+S95;Uraz naczyń krwionośnych na poziomie stawu skokowego i stopy
+S96;Uraz mięśnia i ścięgna na poziomie stawu skokowego i stopy
+S97;Uraz zmiażdżeniowy stawu skokowego i stopy
+S98;Amputacja urazowa stawu skokowego i stopy
+S99;Inne i nieokreślone urazy stawu skokowego i stopy
+T00;Powierzchowne urazy obejmujące liczne okolice ciała
+T01;Otwarte rany obejmujące liczne okolice ciała
+T02;Złamania obejmujące liczne okolice ciała
+T03;Zwichnięcia, skręcenia i naderwania obejmujące liczne okolice ciała
+T04;Urazy zmiażdżeniowe obejmujące liczne okolice ciała
+T05;Amputacje urazowe obejmujące liczne okolice ciała
+T06;Inne urazy obejmujące liczne okolice ciała, niesklasyfikowane gdzie indziej
+T07;Liczne nieokreślone urazy
+T08;Złamanie kręgosłupa, poziom nieokreślony
+T09;Inne urazy kręgosłupa i tułowia, poziom nieokreślony
+T10;Złamanie kończyny górnej, poziom nieokreślony
+T11;Inne urazy kończyny górnej, poziom nieokreślony
+T12;Złamanie kończyny dolnej, poziom nieokreślony
+T13;Inne urazy kończyny dolnej, poziom nieokreślony
+T14;Uraz nieokreślonej okolicy ciała
+T15;Ciało obce w zewnętrznej części oka
+T16;Ciało obce w uchu
+T17;Ciało obce w drogach oddechowych
+T18;Ciało obce w przewodzie pokarmowym
+T19;Ciało obce w układzie moczowo-płciowym
+T20;Oparzenie termiczne i chemiczne głowy i szyi
+T21;Oparzenie termiczne i chemiczne tułowia
+T22;Oparzenie termiczne i chemiczne barku i kończyny górnej z wyjątkiem nadgarstka i ręki
+T23;Oparzenie termiczne i chemiczne nadgarstka i ręki
+T24;Oparzenie termiczne i chemiczne biodra i kończyny dolnej z wyjątkiem okolicy stawu skokowego i stopy
+T25;Oparzenie termiczne i chemiczne okolicy stawu skokowego i stopy
+T26;Oparzenia termiczne i chemiczne ograniczone do oka i przydatków oka
+T27;Oparzenie termiczne i chemiczne dróg oddechowych
+T28;Oparzenie termiczne i chemiczne innych narządów wewnętrznych
+T29;Oparzenia termiczne i chemiczne licznych okolic ciała
+T30;Oparzenie termiczne i chemiczne, okolica ciała nieokreślona
+T31;Oparzenia termiczne sklasyfikowane według rozległości objętej powierzchni ciała
+T32;Oparzenia chemiczne sklasyfikowane według rozległości objętej powierzchni ciała
+T33;Powierzchowne odmrożenie
+T34;Odmrożenie z martwicą tkanki
+T35;Odmrożenie obejmujące liczne okolice ciała i odmrożenie nieokreślone
+T36;Zatrucie antybiotykami stosowanymi ogólnoustrojowo
+T37;Zatrucie innymi lekami stosowanymi ogólnoustrojowo w chorobach zakaźnych i pasożytniczych
+T38;Zatrucie hormonami i ich syntetycznymi substytutami oraz antagonistami, niesklasyfikowanymi gdzie indziej
+T39;Zatrucie nieopioidowymi lekami przeciwbólowymi, przeciwgorączkowymi i przeciwreumatycznymi
+T40;Zatrucie środkami narkotycznymi i psychodysleptycznymi [halucynogennymi]
+T41;Zatrucie środkami znieczulającymi i gazami leczniczymi
+T42;Zatrucie lekami przeciwpadaczkowymi, uspokajająco-nasennymi i stosowanymi w chorobie Parkinsona
+T43;Zatrucie lekami psychotropowymi, niesklasyfikowanymi gdzie indziej
+T44;Zatrucie lekami działającymi głównie na układ nerwowy wegetatywny
+T45;Zatrucie środkami działającymi głównie ogólnoustrojowo i wpływającymi na składniki krwi, niesklasyfikowanymi gdzie indziej
+T46;Zatrucie środkami działającymi głównie na układ krążenia
+T47;Zatrucie środkami działającymi głównie na układ pokarmowy
+T48;Zatrucie środkami działającymi głównie na mięśnie gładkie i szkieletowe oraz na układ oddechowy
+T49;Zatrucie środkami działającymi miejscowo na skórę i błonę śluzową oraz lekami stosowanymi w okulistyce, laryngologii i stomatologii
+T50;Zatrucie lekami moczopędnymi i innymi nieokreślonymi lekami, środkami farmakologicznymi i substancjami biologicznymi
+T51;Toksyczne skutki działania alkoholu
+T52;Toksyczne skutki działania rozpuszczalników organicznych
+T53;Toksyczne skutki działania pochodnych chlorowcowych węglowodorów alifatycznych i aromatycznych
+T54;Toksyczne skutki działania substancji żrących
+T55;Toksyczne skutki działania mydeł i detergentów
+T56;Toksyczne skutki działania metali
+T57;Toksyczne skutki działania innych substancji nieorganicznych
+T58;Toksyczne skutki działania tlenku węgla
+T59;Toksyczne skutki działania innych gazów, dymów i par
+T60;Toksyczne skutki działania pestycydów
+T61;Toksyczne skutki działania szkodliwych substancji spożytych w postaci produktów morza
+T62;Toksyczne skutki działania innych szkodliwych substancji spożytych jako pokarm
+T63;Toksyczny skutek kontaktu z jadowitymi zwierzętami
+T64;Toksyczne skutki działania aflatoksyny i innych mykotoksyn w produktach spożywczych
+T65;Toksyczne skutki działania innych i nieokreślonych substancji
+T66;Nieokreślone skutki promieniowania
+T67;Skutki działania gorąca i światła
+T68;Hipotermia
+T69;Inne skutki działania obniżonej temperatury
+T70;Skutki działania ciśnienia powietrza i wody
+T71;Duszenie
+T73;Skutki innych niedoborów
+T74;Zespoły maltretowania
+T75;Skutki działania innych czynników zewnętrznych
+T78;Niekorzystne skutki niesklasyfikowane gdzie indziej
+T79;Określone wczesne powikłania urazu
+T80;Powikłania po wlewie, transfuzji i wstrzyknięciu
+T81;Powikłania zabiegów, niesklasyfikowane gdzie indziej
+T82;Powikłania protez, implantów i przeszczepów sercowych i naczyniowych
+T83;Powikłania protez, implantów i przeszczepów w układzie moczowo-płciowym
+T84;Powikłania wewnętrznych protez, implantów i przeszczepów ortopedycznych
+T85;Powikłania innych wewnętrznych protez, implantów i przeszczepów ortopedycznych
+T86;Niewydolność i odrzucenie przeszczepionych narządów i tkanek
+T87;Powikłania związane z ponownym przyszyciem i amputacją
+T88;Inne powikłania opieki chirurgicznej i medycznej niesklasyfikowane gdzie indziej
+T90;Następstwa urazów głowy
+T91;Następstwa urazów szyi i tułowia
+T92;Następstwa urazów kończyny górnej
+T93;Następstwa urazów kończyny dolnej
+T94;Następstwa urazów obejmujących liczne okolice ciała i nieokreślone okolice ciała
+T95;Następstwa oparzeń termicznych i chemicznych oraz odmrożeń
+T96;Następstwa zatrucia lekami, środkami farmakologicznymi i substancjami biologicznymi
+T97;Następstwa toksycznych skutków działania substancji zazwyczaj niestosowanych w celach leczniczych
+T98;Następstwa innych i nieokreślonych skutków działania czynników zewnętrznych
+U04;Ciężki ostry zespół oddechowy [SARS]
+U07;Awaryjne użycie U07
+U08;Historia przebiegu COVID-19 u pacjenta
+U09;Zdrowie pacjenta po zakończeniu COVID-19
+U10;Wieloukładowy zespół zapalny powiązany z COVID-19
+U11;Potrzeba szczepienia przeciwko COVID-19
+U12;Szczepionki przeciwko COVID -19 wywołujące działania niepożądane w trakcie leczenia
+U80;Czynnik oporny na penicylinę i podobne antybiotyki
+U81;Czynnik oporny na wankomycynę i podobne antybiotyki
+U88;Czynnik oporny na wiele antybiotyków
+U89;Czynnik oporny na inne i nieokreślone antybiotyki
+V01;Pieszy ranny w kolizji z rowerem
+V02;Pieszy ranny w kolizji z dwukołowym lub trzykołowym pojazdem mechanicznym
+V03;Pieszy ranny w kolizji z samochodem, samochodem dostawczym lub ciężarowym
+V04;Pieszy ranny w kolizji z ciężkim środkiem transportu lub autobusem
+V05;Pieszy ranny w kolizji z pociągiem lub pojazdem szynowym
+V06;Pieszy ranny w kolizji z innym pojazdem niemechanicznym
+V09;Pieszy ranny w innym i nieokreślonym wypadku komunikacyjnym
+V10;Rowerzysta ranny w kolizji z pieszym lub zwierzęciem
+V11;Rowerzysta ranny w kolizji z innym rowerzystą
+V12;Rowerzysta ranny w kolizji z dwukołowym lub trzykołowym pojazdem mechanicznym
+V13;Rowerzysta ranny w kolizji z samochodem, samochodem dostawczym lub ciężarowym
+V14;Rowerzysta ranny w kolizji z ciężkim środkiem transportu lub autobusem
+V15;Rowerzysta ranny w kolizji z pociągiem lub pojazdem szynowym
+V16;Rowerzysta ranny w kolizji z innym pojazdem niemechanicznym
+V17;Rowerzysta ranny w kolizji z ustalonym lub stałym przedmiotem
+V18;Rowerzysta ranny w wypadku komunikacyjnym bez kolizji
+V19;Rowerzysta ranny w innym i nieokreślonym wypadku komunikacyjnym
+V20;Osoba jadąca na motocyklu ranna w kolizji z pieszym lub zwierzęciem
+V21;Osoba jadąca na motocyklu ranna w kolizji z rowerem
+V22;Osoba jadąca na motocyklu ranna w kolizji z dwukołowym lub trzykołowym pojazdem mechanicznym
+V23;Osoba jadąca na motocyklu ranna w kolizji z samochodem, samochodem dostawczym lub ciężarowym
+V24;Osoba jadąca na motocyklu ranna w kolizji z ciężkim środkiem transportu lub autobusem
+V25;Osoba jadąca na motocyklu ranna w kolizji z pociągiem lub pojazdem szynowym
+V26;Osoba jadąca na motocyklu ranna w kolizji z innym pojazdem niemechanicznym
+V27;Osoba jadąca na motocyklu ranna w kolizji z ustalonym lub stałym przedmiotem
+V28;Osoba jadąca na motocyklu ranna w wypadku komunikacyjnym bez kolizji
+V29;Osoba jadąca na motocyklu ranna w innym i nieokreślonym wypadku komunikacyjnym
+V30;Użytkownik trzykołowego pojazdu mechanicznego ranny w kolizji z pieszym lub zwierzęciem
+V31;Użytkownik trzykołowego pojazdu mechanicznego ranny w kolizji z rowerem
+V32;Użytkownik trzykołowego pojazdu mechanicznego ranny w kolizji z dwukołowym lub trzykołowym pojazdem mechanicznym
+V33;Użytkownik trzykołowego pojazdu mechanicznego ranny w kolizji z samochodem, samochodem dostawczym lub ciężarowym
+V34;Użytkownik trzykołowego pojazdu mechanicznego ranny w kolizji z ciężkim środkiem transportu lub autobusem
+V35;Użytkownik trzykołowego pojazdu mechanicznego ranny w kolizji z pociągiem lub pojazdem szynowym
+V36;Użytkownik trzykołowego pojazdu mechanicznego ranny w kolizji z innym pojazdem niemechanicznym
+V37;Użytkownik trzykołowego pojazdu mechanicznego ranny w kolizji z ustalonym lub stałym przedmiotem
+V38;Użytkownik trzykołowego pojazdu mechanicznego ranny w wypadku komunikacyjnym bez kolizji
+V39;Użytkownik trzykołowego pojazdu mechanicznego ranny w innym i nieokreślonym wypadku komunikacyjnym
+V40;Użytkownik samochodu ranny w kolizji z pieszym lub zwierzęciem
+V41;Użytkownik samochodu ranny w kolizji z rowerem
+V42;Użytkownik samochodu ranny w kolizji z dwukołowym lub trzykołowym pojazdem mechanicznym
+V43;Użytkownik samochodu ranny w kolizji z samochodem, samochodem dostawczym lub ciężarowym
+V44;Użytkownik samochodu ranny w kolizji z ciężkim środkiem transportu lub autobusem
+V45;Użytkownik samochodu ranny w kolizji z pociągiem lub pojazdem szynowym
+V46;Użytkownik samochodu ranny w kolizji z innym pojazdem niemechanicznym
+V47;Użytkownik samochodu ranny w kolizji z ustalonym lub stałym przedmiotem
+V48;Użytkownik samochodu ranny w wypadku komunikacyjnym bez kolizji
+V49;Użytkownik samochodu ranny w innym i nieokreślonym wypadku komunikacyjnym
+V50;Użytkownik samochodu dostawczego lub ciężarowego ranny w kolizji z pieszym lub zwierzęciem
+V51;Użytkownik samochodu dostawczego lub ciężarowego ranny w kolizji z rowerem
+V52;Użytkownik samochodu dostawczego lub ciężarowego ranny w kolizji z dwukołowym lub trzykołowym pojazdem mechanicznym
+V53;Użytkownik samochodu dostawczego lub ciężarowego ranny w kolizji z samochodem, samochodem dostawczym lub ciężarowym
+V54;Użytkownik samochodu dostawczego lub ciężarowego ranny w kolizji z ciężkim środkiem transportu lub autobusem
+V55;Użytkownik samochodu dostawczego lub ciężarowego ranny w kolizji z pociągiem lub pojazdem szynowym
+V56;Użytkownik samochodu dostawczego lub ciężarowego ranny w kolizji z innym pojazdem niemechanicznym
+V57;Użytkownik samochodu dostawczego lub ciężarowego ranny w kolizji z ustalonym lub stałym przedmiotem
+V58;Użytkownik samochodu dostawczego lub ciężarowego ranny w wypadku komunikacyjnym bez kolizji
+V59;Użytkownik samochodu dostawczego lub ciężarowego ranny w innym i nieokreślonym wypadku komunikacyjnym
+V60;Użytkownik ciężkiego środka transportu ranny w kolizji z pieszym lub zwierzęciem
+V61;Użytkownik ciężkiego środka transportu ranny w kolizji z rowerem
+V62;Użytkownik ciężkiego środka transportu ranny w kolizji z dwukołowym lub trzykołowym pojazdem mechanicznym
+V63;Użytkownik ciężkiego środka transportu ranny w kolizji z samochodem, samochodem dostawczym lub ciężarowym
+V64;Użytkownik ciężkiego środka transportu ranny w kolizji z ciężkim środkiem transportu lub autobusem
+V65;Użytkownik ciężkiego środka transportu ranny w kolizji z pociągiem lub pojazdem szynowym
+V66;Użytkownik ciężkiego środka transportu ranny w kolizji z innym pojazdem niemechanicznym
+V67;Użytkownik ciężkiego środka transportu ranny w kolizji z ustalonym lub stałym przedmiotem
+V68;Użytkownik ciężkiego środka transportu ranny w wypadku komunikacyjnym bez kolizji
+V69;Użytkownik ciężkiego środka transportu ranny w innym i nieokreślonym wypadku komunikacyjnym
+V70;Użytkownik autobusu ranny w kolizji z pieszym lub zwierzęciem
+V71;Użytkownik autobusu ranny w kolizji z rowerem
+V72;Użytkownik autobusu ranny w kolizji z dwukołowym lub trzykołowym pojazdem mechanicznym
+V73;Użytkownik autobusu ranny w kolizji z samochodem, samochodem dostawczym lub ciężarowym
+V74;Użytkownik autobusu ranny w kolizji z ciężkim środkiem transportu lub autobusem
+V75;Użytkownik autobusu ranny w kolizji z pociągiem lub pojazdem szynowym
+V76;Użytkownik autobusu ranny w kolizji z innym pojazdem niemechanicznym
+V77;Użytkownik autobusu ranny w kolizji z ustalonym lub stałym przedmiotem
+V78;Użytkownik autobusu ranny w wypadku komunikacyjnym bez kolizji
+V79;Użytkownik autobusu ranny w innym i nieokreślonym wypadku komunikacyjnym
+V80;Osoba jadąca na zwierzęciu lub użytkownik pojazdu ciągnionego przez zwierzę ranny w wypadku komunikacyjnym
+V81;Użytkownik pociągu lub pojazdu szynowego ranny w wypadku komunikacyjnym
+V82;Użytkownik tramwaju ranny w wypadku komunikacyjnym
+V83;Użytkownik pojazdu specjalnego używanego głównie w przemyśle ranny w wypadku komunikacyjnym
+V84;Użytkownik pojazdu specjalnego używanego głównie w rolnictwie ranny w wypadku komunikacyjnym
+V85;Użytkownik specjalnego pojazdu konstrukcyjnego ranny w wypadku komunikacyjnym
+V86;Użytkownik specjalnego pojazdu terenowego lub innego pojazdu mechanicznego przeznaczonego do poruszania się poza drogą ranny w wypadku komunikacyjnym
+V87;Wypadek drogowy określonego typu z nieznanym środkiem transportu ofiary
+V88;Wypadek niedrogowy określonego typu z nieznanym środkiem transportu ofiary
+V89;Wypadek pojazdu mechanicznego lub niemechanicznego, typ pojazdu nieokreślony
+V90;Wypadek jednostki pływającej powodujący zanurzenie i tonięcie ofiary
+V91;Wypadek jednostki pływającej powodujący inny uraz ofiary
+V92;Zanurzenie i tonięcie związane z komunikacją wodną bez wypadku jednostki pływającej
+V93;Wypadek na jednostce pływającej bez wypadku samej jednostki, niepowodujący zanurzenia i tonięcia ofiary
+V94;Inne i nieokreślone wypadki w transporcie wodnym
+V95;Wypadek samolotu silnikowego powodujący uraz użytkownika
+V96;Wypadek samolotu bezsilnikowego powodujący uraz użytkownika
+V97;Inne określone wypadki w komunikacji lotniczej
+V98;Inne określone wypadki komunikacyjne
+V99;Nieokreślony wypadek komunikacyjny
+W00;Upadek na tym samym poziomie na lodzie i śniegu
+W01;Upadek na tym samym poziomie wskutek potknięcia, poślizgnięcia
+W02;Upadek na łyżwach, nartach, wrotkach i deskorolkach
+W03;Upadek na tym samym poziomie wskutek kolizji lub popchnięcia przez inną osobę
+W04;Upadek osoby niesionej lub podtrzymywanej przez inne osoby
+W05;Upadek z fotela bujanego
+W06;Upadek z łóżka
+W07;Upadek z krzesła
+W08;Upadek z innego sprzętu
+W09;Upadek z urządzenia na placu zabaw
+W10;Upadek na schodach i stopniach
+W11;Upadek na drabinę i z drabiny
+W12;Upadek na rusztowanie i z rusztowania
+W13;Upadek z budynku lub budowli
+W14;Upadek z drzewa
+W15;Upadek z urwiska
+W16;Nurkowanie lub skok do wody powodujący uraz inny niż zanurzenie i topienie
+W17;Inny upadek z jednego poziomu na drugi
+W18;Inny upadek na tym samym poziomie
+W19;Nieokreślony upadek
+W20;Uderzenie przez rzucony, wystający lub spadający przedmiot
+W21;Uderzenie przez lub o sprzęt sportowy
+W22;Uderzenie przez lub o inny przedmiot
+W23;Pochwycenie, zgniecenie, ściśnięcie lub przyciśnięcie przez przedmioty
+W24;Kontakt z urządzeniami wyciągowymi i transmisyjnymi, niesklasyfikowanymi gdzie indziej
+W25;Kontakt z ostrym szkłem
+W26;Kontakt z nożem, szpadą lub sztyletem
+W27;Kontakt z niezasilanym narzędziem ręcznym
+W28;Kontakt z zasilaną kosiarką do trawy
+W29;Kontakt z innymi zasilanymi narzędziami ręcznymi i sprzętem gospodarstwa domowego
+W30;Kontakt z maszyną rolniczą
+W31;Kontakt z inną i nieokreśloną maszyną
+W32;Wystrzał z broni krótkiej
+W33;Karabin, dubeltówka i długa broń palna
+W34;Wystrzał z innej i nieokreślonej broni
+W35;Wybuch i rozerwanie kotła
+W36;Wybuch i rozerwanie zbiornika gazowego
+W37;Wybuch i rozerwanie znajdującej się pod ciśnieniem opony, rury lub węża
+W38;Wybuch i rozerwanie innego określonego urządzenia pod ciśnieniem
+W39;Wystrzał ogni sztucznych
+W40;Wybuch innych materiałów
+W41;Narażenie na działanie wysokociśnieniowego strumienia
+W42;Narażenie na hałas
+W43;Narażenie na wibracje
+W44;Ciało obce wnikające lub przechodzące przez oko lub naturalny otwór ciała
+W45;Ciało obce lub przedmiot przechodzący przez skórę
+W46;Kontakt z igłą podskórną
+W49;Narażenie na działanie innych i nieokreślonych sił mechanicznych martwej natury
+W50;Ugodzenie, uderzenie, kopnięcie, skręcenie, pobicie lub podrapanie przez inną osobę
+W51;Uderzenie w inną osobę lub zderzenie z inną osobą
+W52;Zmiażdżenie, pchnięcie i zadeptanie przez tłum lub w panice ludzkiej
+W53;Ugryzienie przez szczura
+W54;Ugryzienie lub uderzenie przez psa
+W55;Ugryzienie lub uderzenie przez inne ssaki
+W56;Kontakt ze zwierzęciem morskim
+W57;Ugryzienie lub użądlenie przez niejadowitego owada i innego niejadowitego stawonoga
+W58;Ugryzienie lub uderzenie przez krokodyla lub aligatora
+W59;Ugryzienie lub zmiażdżenie przez inne gady
+W60;Kontakt z cierniami, kolcami i ostrymi liśćmi
+W64;Narażenie na działanie innych i nieokreślonych sił mechanicznych materii ożywionej
+W65;Zanurzenie i tonięcie w wannie
+W66;Zanurzenie i tonięcie wskutek wpadnięcia do wanny
+W67;Zanurzenie i tonięcie w basenie
+W68;Zanurzenie i tonięcie wskutek wpadnięcia do basenu
+W69;Zanurzenie i tonięcie w wodach naturalnych
+W70;Zanurzenie i tonięcie wskutek wpadnięcia do wody naturalnej
+W73;Inne określone zanurzenie i tonięcie
+W74;Nieokreślone zanurzenie i tonięcie
+W75;Przypadkowe zadławienie i zadzierzgnięcie w łóżku
+W76;Inne przypadkowe powieszenie i zadzierzgnięcie
+W77;Utrudnienie oddychania wskutek zawalenia, przysypania ziemią i innymi substancjami
+W78;Aspiracja treści żołądkowej
+W79;Aspiracja i połknięcie pokarmu powodujące zablokowanie dróg oddechowych
+W80;Aspiracja i połknięcie innych przedmiotów powodujące zablokowanie dróg oddechowych
+W81;Ograniczenie przestrzeni lub przebywanie w środowisku o obniżonej zawartości tlenu
+W83;Inne określone utrudnienia oddychania
+W84;Nieokreślone utrudnienia oddychania
+W85;Narażenie na linie transmisyjne prądu elektrycznego
+W86;Narażenie na inny określony prąd elektryczny
+W87;Narażenie na nieokreślony prąd elektryczny
+W88;Narażenie na promieniowanie jonizujące
+W89;Narażenie na działanie światła widzialnego i ultrafioletowego
+W90;Narażenie na inne promieniowanie niejonizujące
+W91;Narażenie na nieokreślony rodzaj promieniowania
+W92;Narażenie na nadmierne ciepło wytworzone sztucznie
+W93;Narażenie na nadmierne zimno wytworzone sztucznie
+W94;Narażenie na wysokie i niskie ciśnienie powietrza i zmiany ciśnienia powietrza
+W99;Narażenie na działanie innych i nieokreślonych czynników środowiska wytworzonych przez człowieka
+X00;Narażenie na niekontrolowany pożar budynku lub budowli
+X01;Narażenie na niekontrolowany ogień poza budynkiem lub budowlą
+X02;Narażenie na kontrolowany ogień w budynku lub budowli
+X03;Narażenie na kontrolowany ogień poza budynkiem lub budowlą
+X04;Narażenie na zapalenie się materiału łatwopalnego
+X05;Narażenie na zapalenie lub stopienie bielizny nocnej
+X06;Narażenie na zapalenie lub stopienie innego ubrania i stroju
+X08;Narażenie na inny określony dym, ogień i płomienie
+X09;Narażenie na nieokreślony dym, ogień i płomienie
+X10;Kontakt z gorącymi napojami, jedzeniem, tłuszczami i olejami
+X11;Kontakt z gorącą wodą z kranu
+X12;Kontakt z innymi gorącymi cieczami
+X13;Kontakt z parą wodną i innymi gorącymi parami
+X14;Kontakt z gorącym powietrzem i gazami
+X15;Kontakt z gorącymi urządzeniami gospodarstwa domowego
+X16;Kontakt z gorącymi urządzeniami grzewczymi, promiennikami ciepła i rurami
+X17;Kontakt z gorącymi silnikami, maszynami i narzędziami
+X18;Kontakt z innymi gorącymi metalami
+X19;Kontakt z innym i nieokreślonym gorącem i wrzącymi substancjami
+X20;Kontakt z jadowitymi wężami i jaszczurkami
+X21;Kontakt z jadowitymi pająkami
+X22;Kontakt ze skorpionami
+X23;Kontakt z szerszeniami, osami i pszczołami
+X24;Kontakt z jadowitymi stonogami i krocionogami (tropikalnymi)
+X25;Kontakt z innymi jadowitymi stawonogami
+X26;Kontakt z jadowitymi zwierzętami i roślinami morskimi
+X27;Kontakt z innymi określonymi zwierzętami jadowitymi
+X28;Kontakt z innymi określonymi roślinami jadowitymi
+X29;Kontakt z nieokreślonym jadowitym zwierzęciem i rośliną
+X30;Narażenie na nadmierne naturalne gorąco
+X31;Narażenie na nadmierne naturalne zimno
+X32;Narażenie na światło słoneczne
+X33;Ofiara porażenia piorunem
+X34;Ofiara trzęsienia ziemi
+X35;Ofiara wybuchu wulkanu
+X36;Ofiara lawiny, osunięcia się ziemi lub innych ruchów ziemi
+X37;Ofiara burzy
+X38;Ofiara powodzi
+X39;Narażenie na inne i nieokreślone siły natury
+X40;Przypadkowe zatrucie przez narażenie na nieopioidowe leki przeciwbólowe, przeciwgorączkowe i przeciwreumatyczne
+X41;Przypadkowe zatrucie przez narażenie na leki przeciwpadaczkowe, uspokajająco­‑nasenne, stosowane w chorobie Parkinsona i psychotropowe, niesklasyfikowane gdzie indziej
+X42;Przypadkowe zatrucie przez narażenie na narkotyki i leki psychodysleptyczne [halucynogenne], niesklasyfikowane gdzie indziej
+X43;Przypadkowe zatrucie przez narażenie na inne leki działające na układ nerwowy wegetatywny
+X44;Przypadkowe zatrucie przez narażenie na inne i nieokreślone leki, środki farmakologiczne i substancje biologiczne
+X45;Przypadkowe zatrucie przez narażenie na alkohol
+X46;Przypadkowe zatrucie przez narażenie na rozpuszczalniki organiczne i chlorowcowe węglowodory i ich pary
+X47;Przypadkowe zatrucie przez narażenie na inne gazy i pary
+X48;Przypadkowe zatrucie przez narażenie na pestycydy
+X49;Przypadkowe zatrucie przez narażenie na inne i nieokreślone środki chemiczne i szkodliwe substancje
+X50;Przemęczenie i przetrenowanie powtarzanymi ruchami
+X51;Podróż i ruch
+X52;Przedłużone przebywanie w stanie nieważkości
+X53;Brak pożywienia
+X54;Brak wody
+X57;Nieokreślony niedobór
+X58;Narażenie na inne określone czynniki
+X59;Narażenie na nieokreślone czynniki
+X60;Zamierzone zatrucie przez narażenie na nieopioidowe leki przeciwbólowe, przeciwgorączkowe i przeciwreumatyczne
+X61;Zamierzone zatrucie przez narażenie na leki przeciwpadaczkowe, uspokajająco­‑nasenne, stosowane w chorobie Parkinsona i psychotropowe, niesklasyfikowane gdzie indziej
+X62;Zamierzone zatrucie przez narażenie na narkotyki i leki psychodysleptyczne [halucynogenne], niesklasyfikowane gdzie indziej
+X63;Zamierzone zatrucie przez narażenie na inne leki działające na układ nerwowy wegetatywny
+X64;Zamierzone zatrucie przez narażenie na inne i nieokreślone leki, środki farmakologiczne i substancje biologiczne
+X65;Zamierzone zatrucie przez narażenie na alkohol
+X66;Zamierzone zatrucie przez narażenie na rozpuszczalniki organiczne i chlorowcowe pochodne węglowodorów i ich pary
+X67;Zamierzone zatrucie przez narażenie na inne gazy i pary
+X68;Zamierzone zatrucie przez narażenie na pestycydy
+X69;Zamierzone zatrucie przez narażenie na inne i nieokreślone środki chemiczne i szkodliwe substancje
+X70;Zamierzone samouszkodzenie przez powieszenie, zadzierzgnięcie i zadławienie
+X71;Zamierzone samouszkodzenie przez zanurzenie i utopienie
+X72;Zamierzone samouszkodzenie przez postrzał z broni krótkiej
+X73;Zamierzone samouszkodzenie przy użyciu broni wojskowej, strzelby i broni palnej długiej
+X74;Zamierzone samouszkodzenie przez postrzał z innej i nieokreślonej broni
+X75;Zamierzone samouszkodzenie przy użyciu materiału wybuchowego
+X76;Zamierzone samouszkodzenie przez dym, ogień i płomienie
+X77;Zamierzone samouszkodzenie przez parę wodną, gorące pary i gorące przedmioty
+X78;Zamierzone samouszkodzenie przy użyciu narzędzia ostrego
+X79;Zamierzone samouszkodzenie przy użyciu narzędzia tępego
+X80;Zamierzone samouszkodzenie przez skok z wysokości
+X81;Zamierzone samouszkodzenie przez wskoczenie lub położenie się przed ruchomy przedmiot
+X82;Zamierzone samouszkodzenie przez rozbicie pojazdu mechanicznego
+X83;Zamierzone samouszkodzenie w inny określony sposób
+X84;Zamierzone samouszkodzenie w sposób nieokreślony
+X85;Napaść z użyciem leków, środków farmakologicznych i substancji biologicznych
+X86;Napaść z użyciem substancji żrącej
+X87;Napaść z użyciem pestycydów
+X88;Napaść z użyciem gazów i par
+X89;Napaść z użyciem innych określonych środków chemicznych i szkodliwych substancji
+X90;Napaść z użyciem nieokreślonych środków chemicznych lub szkodliwych substancji
+X91;Napaść przez powieszenie, zadzierzgnięcie i zadławienie
+X92;Napaść przez zanurzenie i utopienie
+X93;Napaść przez postrzał z broni krótkiej
+X94;Napaść przez postrzał z broni wojskowej, strzelby i broni palnej długiej
+X95;Napaść przez postrzał z innej i nieokreślonej broni
+X96;Napaść z użyciem materiału wybuchowego
+X97;Napaść z użyciem dymu, ognia i płomieni
+X98;Napaść z użyciem pary wodnej, gorących par i gorących przedmiotów
+X99;Napaść z użyciem narzędzia ostrego
+Y00;Napaść z użyciem narzędzia tępego
+Y01;Napaść przez pchnięcie z wysokości
+Y02;Napaść przez pchnięcie lub ułożenie ofiary przed poruszający się przedmiot
+Y03;Napaść przez rozbicie pojazdu mechanicznego
+Y04;Napaść z użyciem przemocy fizycznej
+Y05;Napaść na tle seksualnym z użyciem przemocy fizycznej
+Y06;Zaniedbanie i porzucenie
+Y07;Inne zespoły maltretowania
+Y08;Napaść popełniona w inny określony sposób
+Y09;Napaść popełniona w nieokreślony sposób
+Y10;Zatrucie przez narażenie na nieopioidowe leki przeciwbólowe, przeciwgorączkowe i przeciwreumatyczne, o nieokreślonym zamiarze
+Y11;Zatrucie przez narażenie na leki przeciwpadaczkowe, uspokajająco-nasenne, stosowane w chorobie Parkinsona i psychotropowe, niesklasyfikowane gdzie indziej, o nieokreślonym zamiarze
+Y12;Zatrucie przez narażenie na narkotyki i leki psychodysleptyczne [halucynogenne], niesklasyfikowane gdzie indziej, o nieokreślonym zamiarze
+Y13;Zatrucie przez narażenie na inne leki działające na układ nerwowy wegetatywny, o nieokreślonym zamiarze
+Y14;Zatrucie przez narażenie na inne i nieokreślone leki, środki farmakologiczne i substancjami biologiczne, o nieokreślonym zamiarze
+Y15;Zatrucie przez narażenie na alkohol, o nieokreślonym zamiarze
+Y16;Zatrucie przez narażenie na rozpuszczalniki organiczne i chlorowcowe pochodne węglowodorów i ich pary, o nieokreślonym zamiarze
+Y17;Zatrucie przez narażenie na inne gazy i pary, o nieokreślonym zamiarze
+Y18;Zatrucie przez narażenie na pestycydy, o nieokreślonym zamiarze
+Y19;Zatrucie przez narażenie na inne i nieokreślone środki chemiczne i szkodliwe substancje, o nieokreślonym zamiarze
+Y20;Powierzenie, zadzierzgnięcie i zadławienie, o nieokreślonym zamiarze
+Y21;Zanurzenie i topienie, o nieokreślonym zamiarze
+Y22;Postrzał z broni krótkiej, o nieokreślonym zamiarze
+Y23;Postrzał z broni wojskowej, myśliwskiej i broni długiej, o nieokreślonym zamiarze
+Y24;Postrzał z innej i nieokreślonej broni, o nieokreślonym zamiarze
+Y25;Kontakt z materiałem wybuchowym, o nieokreślonym zamiarze
+Y26;Narażenie na działanie dymu, ognia i płomieni, o nieokreślonym zamiarze
+Y27;Kontakt z parą wodną, gorącymi parami i gorącymi przedmiotami, o nieokreślonym zamiarze
+Y28;Kontakt z ostrym narzędziem, o nieokreślonym zamiarze
+Y29;Kontakt z tępym narzędziem, o nieokreślonym zamiarze
+Y30;Upadek, skok i pchnięcie z wysokości, o nieokreślonym zamiarze
+Y31;Upadek, położenie się lub wbiegnięcie przed poruszający się przedmiot, o nieokreślonym zamiarze
+Y32;Rozbicie pojazdu mechanicznego, o nieokreślonym zamiarze
+Y33;Inne określone zdarzenia, o nieokreślonym zamiarze
+Y34;Nieokreślone zdarzenie, o nieokreślonym zamiarze
+Y35;Interwencja prawna
+Y36;Działania wojenne
+Y40;Antybiotyki stosowane ogólnoustrojowo
+Y41;Inne stosowane ogólnoustrojowo leki używane w chorobach zakaźnych i pasożytniczych
+Y42;Hormony i ich syntetyczne substytuty oraz leki o charakterze antagonistów, niesklasyfikowane gdzie indziej
+Y43;Leki o działaniu głównie ogólnoustrojowym
+Y44;Środki działające głównie na składniki krwi
+Y45;Leki przeciwbólowe, przeciwgorączkowe i przeciwzapalne
+Y46;Leki przeciwpadaczkowe i stosowane w chorobie Parkinsona
+Y47;Leki uspokajające, nasenne i przeciwlękowe
+Y48;Środki znieczulające i gazy lecznicze
+Y49;Leki psychotropowe, niesklasyfikowane gdzie indziej
+Y50;Leki pobudzające ośrodkowy układ nerwowy, niesklasyfikowane gdzie indziej
+Y51;Leki działające głównie na układ nerwowy wegetatywny
+Y52;Leki działające głównie na układ krążenia
+Y53;Środki działające głównie na układ pokarmowy
+Y54;Środki działające głównie na gospodarkę wodno-elektrolitową i przemianę kwasu moczowego
+Y55;Środki działające głównie na mięśnie gładkie i szkieletowe oraz na układ oddechowy
+Y56;Środki działające miejscowo na skórę i błonę śluzową oraz leki stosowane w okulistyce, laryngologii i stomatologii
+Y57;Inne i nieokreślone leki i środki farmakologiczne
+Y58;Szczepionki bakteryjne
+Y59;Inne i nieokreślone szczepionki i substancje biologiczne
+Y60;Niezamierzone przecięcie, przebicie i przekłucie lub krwotok w trakcie zabiegu chirurgicznego i medycznego
+Y61;Ciało obce przypadkowo pozostawione w ciele w trakcie opieki chirurgicznej i medycznej
+Y62;Niepowodzenie zabiegów sterylizacyjnych w opiece chirurgicznej i medycznej
+Y63;Błąd w dawkowaniu w opiece chirurgicznej i medycznej
+Y64;Skażone substancje medyczne i biologiczne
+Y65;Inne niepowodzenia w czasie opieki chirurgicznej i medycznej
+Y66;Niezastosowanie opieki chirurgicznej i medycznej
+Y69;Nieokreślone niepowodzenie w trakcie opieki chirurgicznej i medycznej
+Y70;Niekorzystny incydent związany ze sprzętem anestezjologicznym
+Y71;Niekorzystny incydent związany ze sprzętem kardiologicznym i angiologicznym
+Y72;Niekorzystny incydent związany ze sprzętem laryngologicznym
+Y73;Niekorzystny incydent związany ze sprzętem gastrologicznym i urologicznym
+Y74;Niekorzystny incydent związany ze sprzętem szpitalnym i użytku osobistego
+Y75;Niekorzystny incydent związany ze sprzętem neurologicznym
+Y76;Niekorzystny incydent związany ze sprzętem położniczym i ginekologicznym
+Y77;Niekorzystny incydent związany ze sprzętem okulistycznym
+Y78;Niekorzystny incydent związany ze sprzętem radiologicznym
+Y79;Niekorzystny incydent związany ze sprzętem ortopedycznym
+Y80;Niekorzystny incydent związany z urządzeniami w medycynie
+Y81;Niekorzystny incydent związany z urządzeniami w chirurgii ogólnej i plastycznej
+Y82;Inne i nieokreślone incydenty związane z urządzeniami medycznymi
+Y83;Operacja chirurgiczna i inne zabiegi chirurgiczne jako przyczyna nieprawidłowej reakcji pacjenta lub późniejszych powikłań, bez informacji o niepowodzeniu w trakcie zabiegu
+Y84;Inne zabiegi medyczne jako przyczyna nieprawidłowej reakcji chorego lub późniejszych powikłań, bez informacji o niepowodzeniu w trakcie zabiegu
+Y85;Następstwa wypadków komunikacyjnych
+Y86;Następstwa innych wypadków
+Y87;Następstwa zamierzonego samouszkodzenia, napaści i zdarzeń o nieokreślonym zamiarze
+Y88;Następstwa opieki chirurgicznej i medycznej jako przyczyny zewnętrznej
+Y89;Następstwa działania innych przyczyn zewnętrznych
+Y90;Działanie alkoholu określone na podstawie oznaczenia jego poziomu we krwi
+Y91;Działanie alkoholu określone na podstawie stopnia zatrucia
+Y95;Zaburzenia związane z pobytem w szpitalu
+Y96;Zaburzenia związane z pracą
+Y97;Zaburzenia związane z zanieczyszczeniem środowiska
+Y98;Zaburzenia związane z trybem życia
+Z00;Ogólne badania lekarskie i badania dodatkowe u osób bez dolegliwości i rozpoznania choroby
+Z01;Inne badania specjalne i badania dodatkowe osób bez dolegliwości i rozpoznania choroby
+Z02;Badania i usługi dla celów administracyjnych
+Z03;Obserwacja medyczna i ocena przypadków podejrzanych o chorobę lub stany podobne
+Z04;Badanie i obserwacja z innych przyczyn
+Z08;Badania kontrolne po leczeniu nowotworów złośliwych
+Z09;Badania kontrolne po leczeniu chorób innych niż nowotwory złośliwe
+Z10;Rutynowa ogólna kontrola stanu zdrowia określonych grup ludności
+Z11;Specjalne badanie przesiewowe w kierunku chorób zakaźnych i pasożytniczych
+Z12;Specjalne badanie przesiewowe w kierunku nowotworów
+Z13;Specjalne badanie przesiewowe w kierunku innych chorób i zaburzeń
+Z20;Styczność i narażenie na choroby zakaźne
+Z21;Bezobjawowy stan zakażenia ludzkim wirusem upośledzenia odporności [HIV]
+Z22;Nosicielstwo chorób zakaźnych
+Z23;Potrzeba szczepień profilaktycznych przeciwko pojedynczym chorobom bakteryjnym
+Z24;Potrzeba szczepień profilaktycznych przeciwko określonym pojedynczym chorobom wirusowym
+Z25;Potrzeba szczepień przeciwko innym pojedynczym chorobom wirusowym
+Z26;Potrzeba szczepień profilaktycznych przeciwko innym pojedynczym chorobom zakaźnym
+Z27;Potrzeba szczepień profilaktycznych skojarzonych przeciwko kilku chorobom
+Z28;Szczepienia niewykonane
+Z29;Potrzeba innych środków profilaktycznych
+Z30;Postępowanie antykoncepcyjne
+Z31;Postępowanie prokreacyjne
+Z32;Badanie przedmiotowe lub testy w celu rozpoznania ciąży
+Z33;Ciąża stwierdzona przypadkowo
+Z34;Nadzór nad ciążą o prawidłowym przebiegu
+Z35;Nadzór nad ciążą wysokiego ryzyka
+Z36;Przedporodowe badania przesiewowe
+Z37;Wynik porodu
+Z38;Żywo urodzone niemowlęta według miejsca urodzenia
+Z39;Opieka i badanie poporodowe
+Z40;Profilaktyczne zabiegi chirurgiczne
+Z41;Zabiegi wykonywane w celach innych niż poprawa stanu zdrowia
+Z42;Opieka pooperacyjna w chirurgii plastycznej
+Z43;Opieka nad pacjentami ze sztucznymi otworami
+Z44;Założenie i dopasowanie zewnętrznych aparatów protetycznych
+Z45;Dopasowanie i założenie urządzeń wszczepianych
+Z46;Założenie i dopasowanie innych aparatów
+Z47;Inna ortopedyczna pomoc pochorobowa
+Z48;Inna chirurgiczna opieka pochorobowa
+Z49;Opieka obejmująca dializy
+Z50;Opieka obejmująca stosowanie zabiegów rehabilitacyjnych
+Z51;Inna opieka medyczna
+Z52;Dawcy narządów i tkanek
+Z53;Osoby stykające się ze służbą zdrowia dla specjalnych zabiegów, bez ich wykonania
+Z54;Rekonwalescencja
+Z55;Problemy związane z wykształceniem i analfabetyzmem
+Z56;Problemy związane z zatrudnieniem i bezrobociem
+Z57;Narażenie zawodowe na czynniki ryzyka
+Z58;Problemy związane ze środowiskiem fizycznym
+Z59;Problemy związane z zamieszkaniem i warunkami ekonomicznymi
+Z60;Problemy związane ze środowiskiem społecznym
+Z61;Problemy związane z negatywnymi przeżyciami w dzieciństwie
+Z62;Inne problemy związane z wychowaniem
+Z63;Inne problemy związane z najbliższą rodziną, łącznie z okolicznościami rodzinnymi
+Z64;Problemy związane z określonymi okolicznościami psychospołecznymi
+Z65;Problemy związane z innymi okolicznościami psychospołecznymi
+Z70;Poradnictwo związane z postawą, zachowaniem i orientacją seksualną
+Z71;Osoby stykające się ze służbą zdrowia w celu uzyskania konsultacji i porad niesklasyfikowanych gdzie indziej
+Z72;Problemy związane ze stylem życia
+Z73;Problemy związane z trudnościami życiowymi
+Z74;Problemy związane z zależnością od opiekuna
+Z75;Niedostępność placówek medycznych i innych form opieki zdrowotnej
+Z76;Osoby stykające się ze służbą zdrowia w innych okolicznościach
+Z80;Obciążenie rodzinne nowotworami złośliwymi
+Z81;Obciążenie rodzinne zaburzeniami umysłowymi i zaburzeniami zachowania
+Z82;Obciążenie rodzinne określoną niepełnosprawnością i chorobami przewlekłymi prowadzącymi do kalectwa
+Z83;Obciążenie rodzinne innymi określonymi zaburzeniami
+Z84;Obciążenie rodzinne innymi stanami
+Z85;Nowotwór złośliwy w wywiadzie dotyczącym danej osoby
+Z86;Inne określone choroby w wywiadzie
+Z87;Inne choroby i stany w wywiadzie
+Z88;Uczulenia na leki, środki farmakologiczne i substancje biologiczne w wywiadzie
+Z89;Nabyty brak kończyny
+Z90;Nabyty brak narządów niesklasyfikowany gdzie indziej
+Z91;Narażenie na czynniki ryzyka niesklasyfikowane gdzie indziej w wywiadzie
+Z92;Leczenie w wywiadzie
+Z93;Stany związane z obecnością sztucznego otworu
+Z94;Stan po przeszczepieniu narządu lub tkanki
+Z95;Obecność implantów i przeszczepów serca i naczyń krwionośnych
+Z96;Obecność innych implantów czynnościowych
+Z97;Obecność innych urządzeń
+Z98;Inne stany po zabiegach chirurgicznych
+Z99;Zależność od maszyn i urządzeń niesklasyfikowana gdzie indziej
