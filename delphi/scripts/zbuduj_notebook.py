@@ -89,7 +89,8 @@ else:
     print("Brak logu treningu: uruchom scripts/przygotuj_demo.py")"""),
     ("md", """## Twoja historia → prognoza
 
-Wpisz historię jako **kod ICD-10 (3 znaki) i wiek**, np. `E11 50, I10 55` albo `E11 od 50 r.ż.`.
+**Nie znasz kodów ICD-10?** W panelu pod następną komórką wpisz fragment nazwy po polsku („cukrz”, „zawal”, „astma”, „autyzm”; polskie znaki niepotrzebne), wybierz chorobę z listy, podaj wiek i kliknij „Dodaj do historii”.
+Można też wpisać historię wprost jako **kod ICD-10 (3 znaki) i wiek**, np. `E11 50, I10 55` albo `E11 od 50 r.ż.`.
 Model zna tylko rozdziały A–Q ICD-10: nie ma objawów (R), urazów (S–T) ani kodów Z.
 Stylu życia (palenie, BMI, alkohol) nie da się wpisać: ma w słowniku swoje tokeny, ale w danych syntetycznych autorów nie występuje ani razu, więc nasz model go nie zna.
 
@@ -122,16 +123,11 @@ def pokaz_prognoze(historia_tekst, plec, wiek_teraz, top=10):
     return tabela
 
 pokaz_prognoze(HISTORIA, PLEC, WIEK_TERAZ)"""),
-    ("code", """# ── INTERAKTYWNIE ─────────────────────────────────────────────
-import ipywidgets as W
+    ("code", """# ── WYSZUKIWARKA CHORÓB I PROGNOZA INTERAKTYWNIE ──────────────
+from delphi_demo.wyszukiwarka import panel
 
-W.interact_manual(
-    pokaz_prognoze,
-    historia_tekst=W.Text(value=HISTORIA, description="Historia:", layout=W.Layout(width="60%")),
-    plec=W.ToggleButtons(options=[("kobieta", "K"), ("mężczyzna", "M")], value=PLEC),
-    wiek_teraz=W.IntSlider(value=WIEK_TERAZ, min=1, max=90, description="Wiek dziś:"),
-    top=W.fixed(10),
-);"""),
+PANEL = panel(SL, pokaz_prognoze, historia=HISTORIA, plec=PLEC, wiek_teraz=WIEK_TERAZ)
+PANEL.widok"""),
     ("md", """## Co zmienia jedna diagnoza?
 
 Model losuje wiele możliwych dalszych żyć tej samej osoby (100 na żywo, 1000 w wersji przygotowanej przed prelekcją) i liczy, w ilu z nich pojawił się zawał, niewydolność serca, udar, choroba nerek albo zgon. Linia ciągła: z cukrzycą. Przerywana: ta sama osoba bez cukrzycy."""),

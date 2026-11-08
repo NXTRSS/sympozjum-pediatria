@@ -31,7 +31,11 @@ uv run pytest                  # szybkie (kilka sekund)
 DELPHI_PELNE=1 uv run pytest   # + sieć, krótki trening, wydajność, wykonanie notebooka offline
 ```
 
-Zmierzone: zestaw szybki to 91 testów PASS i 5 SKIP w ok. 3 s. Zestaw pełny dokłada te 5 testów (sieć, krótki trening, wydajność, notebook offline); ostatni pomiar całości: ok. 46 s.
+Zmierzone (8.11.2026, M4 Pro): zestaw szybki to 103 testy PASS i 5 SKIP w ok. 3 s. Zestaw pełny dokłada te 5 testów (sieć, krótki trening, wydajność, notebook offline), razem 108 PASS w ok. 35 s. Bez klonu autorów (przed `przygotuj_demo.py`) większość testów kończy się błędem `Brak kodu Delphi w delphi/zewnetrzne/Delphi`.
+
+## Wyszukiwarka chorób
+
+W notebooku nie trzeba znać kodów ICD-10. Panel pod komórką „TWOJA HISTORIA” pozwala wpisać fragment polskiej nazwy (bez polskich znaków też działa, np. „zawal”, „niewydol serc”, „otylosci”), wybrać chorobę z listy, podać wiek i dopisać ją do historii. Przeszukiwane są krótkie nazwy dla sali, oficjalna polska ICD-10 (CeZ) i kilkadziesiąt potocznych synonimów (np. „celiakia” → K90, „autyzm” → F84, „ADHD” → F90). Historia zostaje tekstem w formacie „E11 50, I10 55”, więc kody można nadal wpisywać ręcznie. Kod: `src/delphi_demo/wyszukiwarka.py`, testy: `tests/test_wyszukiwarka.py`.
 
 ## Zmierzone czasy (MacBook Pro M1 Pro, 32 GB)
 

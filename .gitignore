@@ -4,3 +4,6 @@ __pycache__/
 docs/private/
 .DS_Store
 szablon/
+
+# eksport rastrowy (eksport_raster.py) — pliki wynikowe na pendrive, nie do gita
+eksport/
