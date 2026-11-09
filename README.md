@@ -1,7 +1,8 @@
-# Trafny po 17 lekarzach, omylny w 83% przypadków
+# Następne słowo, następna choroba
+### Jak działa sztuczna inteligencja, z którą pacjenci rozmawiają przed wizytą
 
 Materiały do prelekcji na sympozjum **„Nowoczesne technologie w pediatrii — od teorii do praktyki"** (Dolnośląska Izba Lekarska, Wrocław).
-Kamil Jędryczek, ML Engineer.
+Kamil Jędryczek, Staff ML Engineer, airSlate.
 
 Prelekcja pokazuje **od środka, jak działa model autoregresyjny** — budujemy na żywo mały model językowy, który wymyśla nowe łacińskie nazwy chorób, a potem tym samym mechanizmem tłumaczymy halucynacje AI, model Delphi-2M (Nature 2025) i predykcję masy urodzeniowej z wideo USG.
 

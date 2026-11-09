@@ -1,6 +1,6 @@
-# HANDOVER — stan projektu na Mac24 (8.11.2026)
+# HANDOVER — stan projektu na Mac24 (8–9.11.2026)
 
-Prelekcja „Trafny po 17 lekarzach, omylny w 83% przypadków”, sympozjum DIL, Wrocław, **28.11.2026**.
+Prelekcja „Następne słowo, następna choroba. Jak działa sztuczna inteligencja, z którą pacjenci rozmawiają przed wizytą” (tytuł wysłany organizatorce 12.10.2026), sympozjum DIL, Wrocław, **28.11.2026**. Zagadka „trafny po 17 lekarzach / 83% błędów” zostaje jako treść slajdów 2, 3 i 15, ale nie jest już tytułem.
 Plik opisuje stan gałęzi integracyjnej przeniesionej na drugi komputer. Nie jest dokumentacją użytkową: ta jest w `README.md`, `delphi/README.md` i `usg/README.md`.
 
 ## 1. Repozytorium i gałąź
@@ -9,8 +9,8 @@ Plik opisuje stan gałęzi integracyjnej przeniesionej na drugi komputer. Nie je
 |---|---|
 | Checkout | `~/Documents/sympozjum-pediatria` (świeży klon 8.11.2026, wcześniej na tym Macu nie było kopii) |
 | Gałąź robocza | `reconcile/public-final-20261108-1618`, śledzi `origin/…` |
-| HEAD | `43ef88f0aae93527f2a2e2271c25df2b151d1c41`, zgodny z oczekiwanym |
-| `origin/main` | `48072ba`, czyli merge-base. Gałąź jest o 1 commit przed `main` (80 plików, +28,6 tys. / −1,4 tys. linii) |
+| HEAD | `6b983b4` (8.11.2026, wypchnięty na `origin`); wcześniej `43ef88f` (integracja, stan wyjściowy z przekazania) |
+| `origin/main` | `48072ba`, czyli merge-base. Gałąź jest o 2 commity przed `main` |
 | Scalenie do `main` | **nie wykonano**. Nie scalać i nie pushować bez decyzji Kamila |
 
 Zawartość gałęzi: prezentacja (`slides/`, `assemble.py`, `public-template/`, `prezentacja.html`), notebook GRU (`notebook/`), Delphi (`delphi/`, w tym polska ICD-10 z atrybucją CeZ w `delphi/dane/icd10_pl.csv`), USG z aplikacją Gradio (`usg/`).
@@ -102,7 +102,7 @@ USG_PELNE=1 uv run pytest           # pełne
 
 Uwagi z README: nie uruchamiać dwóch procesów na MPS naraz. Inferencja Delphi i modelu Sano działa na CPU (ograniczenia MPS w torch 2.2/2.3). Na sali używać trybu `z_pamieci`.
 
-## 5. NOWE ograniczenie miejsca (e-mail DIL, otrzymany 8.11.2026)
+## 5. NOWE ograniczenie miejsca (informacyjny e-mail DIL z 6.11.2026)
 
 - Prezentacje odtwarza **wyłącznie laptop DIL z Windows**. Obsługiwane formaty: **ppt/pptx i PDF**. Filmy **mp4** tylko osobno, poza prezentacją.
 - **Nie można podłączyć własnego laptopa**, a sprzętu Apple i Keynote nie obsługują.
@@ -112,7 +112,7 @@ Konsekwencje dla obecnego stanu:
 - `prezentacja.html` nie jest formatem wymienionym jako obsługiwany. Wymagany jest PDF lub PPTX (+ ewentualnie mp4).
 - Dema na żywo z Maca (trening GRU, Delphi, aplikacja USG na MPS) **nie zadziałają** na sali bez zgody na własny sprzęt. Najprostsza ścieżka to nagrania mp4. Ewentualnie Colab w przeglądarce laptopa DIL, ale to wymaga internetu i potwierdzenia.
 - Slajd z kodem QR do Colaba (`n05_qr`) zależy od Wi-Fi dla uczestników. Do potwierdzenia.
-- Decyzja o kierunku czeka na odpowiedź organizatora (pytania w wiadomości do organizatora).
+- Decyzja o kierunku czeka na odpowiedź organizatora. Na 9.11 nie ma odpowiedzi na pytania o własny laptop, HTML w przeglądarce, internet, Wi-Fi dla uczestników (QR) i próbę techniczną.
 
 ### Eksport dla laptopa DIL (8.11.2026, Mac24)
 
@@ -126,13 +126,20 @@ Konsekwencje dla obecnego stanu:
   - **Niesprawdzone**: otwarcie PPTX w PowerPoincie i PDF w Edge/Adobe na Windows.
 - Kody QR na slajdach 11 i 28 (`#qr-gradio`, `#qr-colab`, `#qr-materialy`) to **zaślepki** w źródle. Trzeba je zastąpić prawdziwymi kodami, gdy zapadnie decyzja, dokąd mają prowadzić.
 
-### Zmiany treści i narzędzia (8.11.2026, niecommitowane)
+### Zmiany treści i narzędzia (8.11.2026, w commicie `6b983b4`)
 
 - Slajd 14 (`slides/o17_base_model.html`, notatka w `assemble.py`): zamiast „Base Model” jeden slajd o trzech etapach: pretrening (model bazowy) → SFT → RL/RLHF, z kartą-pomostem do rozwiązania zagadki. Puenta „nie wie, kiedy nie wie” zostaje na slajdzie 15.
 - Wersja do edycji słów: Artifact https://claude.ai/artifact/7L4eVEovbndo7KQoTL5Qgx (prywatny), budowany przez `eksport_edycja.py`. Poprawki są w bazie Artifactu (kolekcja `poprawki`) do czasu naniesienia na `slides/`. 8.11: naniesione 2 poprawki (`n06_rozwiazanie.html`: „…specjalnego tokenu… token tekstu”; `n07_whisper.html`: „lekarzy klinicznych”) i usunięte z bazy.
 - Usunięty slajd „Czy Polska powinna budować własne medyczne AI?” (`n10b_kornowska.html`, na prośbę Kamila; plik do odzyskania z gita). Notatka następnego slajdu („Zależy, o co pytamy”) poprawiona. Deck ma teraz **28 slajdów** (eksport: 42 strony).
 - Delphi: wyszukiwarka chorób po polskiej nazwie w notebooku (`delphi/src/delphi_demo/wyszukiwarka.py`, panel ipywidgets zamiast pola z kodami; 12 nowych testów). Sprawdzone w żywym Jupyterze: „zawal” → I21, „astma” + wiek 6 → „Dodaj” → „Pokaż prognozę” daje wykres i tabelę. Delphi: 103 passed / 5 skipped (szybkie), 108 passed (pełne).
 - Notatki z Obsidiana (przegląd tylko do odczytu): do ewentualnego dodania twierdzenie z Delphi (model trenowany wyłącznie na 400 tys. syntetycznych trajektorii: AUC 0,74, 3 pkt proc. mniej niż oryginał; Results „synthetic data”, Fig. 3f, sprawdzone w pełnym tekście PMC12589094). Nasz pokaz używa małej publicznej próbki autorów, a nie tego zbioru.
+
+### Zmiany 9.11.2026 (niecommitowane, czekają na zatwierdzenie)
+
+- Nowy tytuł na slajdzie tytułowym, w `<title>` decku (`assemble.py`), w README i w tym pliku.
+- Afiliacja: „Staff ML Engineer · airSlate” (slajd tytułowy, README, notatka slajdu tytułowego).
+- Model Sano (slajd `n13c`): w karcie z podziękowaniem „pokazywany za zgodą autorów”, w notatce zdanie, że autorzy potwierdzili brak wag pełnego TabAttention i BabyNet++ i zgodzili się na pokazanie modelu bazowego (październik 2026). Liczby bez zmian. Korespondencja z autorami nie trafia do repo.
+- Wątek osobisty (slajd „Ile waży dziecko…”): liczby czekają na zgodę Kamila, nie są wpisane.
 
 ## 6. Pozostałe kontrole i drobne niespójności
 

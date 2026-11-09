@@ -21,7 +21,7 @@ ROOT = Path(__file__).parent
 SRC = ROOT / "prezentacja.html"
 OUT = ROOT / "eksport" / "prezentacja_edycja.html"
 
-TYTUL = "Trafny po 17 lekarzach"
+TYTUL = "Następne słowo, następna choroba"
 
 DODATEK = r"""
 <style id="edycja-styl">
