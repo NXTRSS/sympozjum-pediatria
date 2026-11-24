@@ -9,9 +9,9 @@ Plik opisuje stan gałęzi integracyjnej przeniesionej na drugi komputer. Nie je
 |---|---|
 | Checkout | `~/Documents/sympozjum-pediatria` (świeży klon 8.11.2026, wcześniej na tym Macu nie było kopii) |
 | Gałąź robocza | `reconcile/public-final-20261108-1618`, śledzi `origin/…` |
-| HEAD | `6b983b4` (8.11.2026, wypchnięty na `origin`); wcześniej `43ef88f` (integracja, stan wyjściowy z przekazania) |
-| `origin/main` | `48072ba`, czyli merge-base. Gałąź jest o 2 commity przed `main` |
-| Scalenie do `main` | **nie wykonano**. Nie scalać i nie pushować bez decyzji Kamila |
+| HEAD | commit z 24.11.2026 (Hospital-bench; ten plik). Poprzedni: `4461c69` (9.11.2026, tytuł, afiliacja, zgoda autorów na model bazowy Sano). Wcześniej `6b983b4` (8.11.2026) i `43ef88f` (integracja) |
+| `origin/main` | `48072ba`, czyli merge-base. Gałąź jest o 4 commity przed `main` (ten commit włącznie) |
+| Scalenie do `main` | **nie wykonano**. Nie scalać do `main` |
 
 Zawartość gałęzi: prezentacja (`slides/`, `assemble.py`, `public-template/`, `prezentacja.html`), notebook GRU (`notebook/`), Delphi (`delphi/`, w tym polska ICD-10 z atrybucją CeZ w `delphi/dane/icd10_pl.csv`), USG z aplikacją Gradio (`usg/`).
 Celowo **nie ma** w repo: prywatnej korespondencji, danych pacjentów, wag, danych ACOUSLIC-AI/UKB, kodu autorów (klonowany skryptami do `*/zewnetrzne/`, poza gitem). Nie odtwarzać tego i nie importować starych gałęzi USG.
@@ -134,12 +134,18 @@ Konsekwencje dla obecnego stanu:
 - Delphi: wyszukiwarka chorób po polskiej nazwie w notebooku (`delphi/src/delphi_demo/wyszukiwarka.py`, panel ipywidgets zamiast pola z kodami; 12 nowych testów). Sprawdzone w żywym Jupyterze: „zawal” → I21, „astma” + wiek 6 → „Dodaj” → „Pokaż prognozę” daje wykres i tabelę. Delphi: 103 passed / 5 skipped (szybkie), 108 passed (pełne).
 - Notatki z Obsidiana (przegląd tylko do odczytu): do ewentualnego dodania twierdzenie z Delphi (model trenowany wyłącznie na 400 tys. syntetycznych trajektorii: AUC 0,74, 3 pkt proc. mniej niż oryginał; Results „synthetic data”, Fig. 3f, sprawdzone w pełnym tekście PMC12589094). Nasz pokaz używa małej publicznej próbki autorów, a nie tego zbioru.
 
-### Zmiany 9.11.2026 (niecommitowane, czekają na zatwierdzenie)
+### Zmiany 9.11.2026 (w commicie `4461c69`)
 
 - Nowy tytuł na slajdzie tytułowym, w `<title>` decku (`assemble.py`), w README i w tym pliku.
 - Afiliacja: „Staff ML Engineer · airSlate” (slajd tytułowy, README, notatka slajdu tytułowego).
 - Model Sano (slajd `n13c`): w karcie z podziękowaniem „pokazywany za zgodą autorów”, w notatce zdanie, że autorzy potwierdzili brak wag pełnego TabAttention i BabyNet++ i zgodzili się na pokazanie modelu bazowego (październik 2026). Liczby bez zmian. Korespondencja z autorami nie trafia do repo.
 - Wątek osobisty (slajd „Ile waży dziecko…”): liczby czekają na zgodę Kamila, nie są wpisane.
+
+### Zmiany 24.11.2026 (ten commit)
+
+- Slajd `n07c` (karta „BEZPIECZEŃSTWO ZALECEŃ”, drobny druk pod NOHARM) i notatka prelegenta w `assemble.py`: Hospital-bench (Zavo, Can Zehebi, 12.11.2026, https://zavo.ai/research/hospital-bench). Raport firmy, bez recenzji. Fikcyjny szpital w USA, dane syntetyczne, zadania administracyjne. Najwyższy średni wynik: GPT-6.2 Astra 62,4% (95% CI 53,0–71,3%), w całości 14/48. Najwięcej zadań zaliczonych w całości: Claude Opus 5.5, 17/48. Ujawnianie dokumentacji, której polityka każe nie wydawać, to jeden z sześciu powtarzających się typów błędów. Jako „harm” (zadanie zerowane) źródło opisuje destrukcyjne operacje finansowe.
+- To samo źródło dopisane w `README.md` (lista „Źródła omawiane w prelekcji”) i skrótem na slajdzie materiałów (`n15`).
+- `n10_maidxo.html` bez zmian: slajd jest w `POMINIETE` w `assemble.py`.
 
 ## 6. Pozostałe kontrole i drobne niespójności
 

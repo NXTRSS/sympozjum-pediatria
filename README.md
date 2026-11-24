@@ -54,6 +54,7 @@ Szablon decku jest w repozytorium (`public-template/published-deck.html`) — to
 - **ChatGPT w pediatrii** — [JAMA Pediatrics 2024](https://pmc.ncbi.nlm.nih.gov/articles/PMC10762631/) (83% błędnych diagnoz) vs [case tethered cord](https://www.today.com/health/mom-chatgpt-diagnosis-pain-rcna101843)
 - **Halucynacje w transkrypcji wizyt** — [AP/Whisper 2024](https://www.healthcare-brew.com/stories/2024/11/18/openai-transcription-tool-whisper-hallucinations)
 - **MAI-DxO** — [Microsoft 2025](https://microsoft.ai/news/the-path-to-medical-superintelligence/) · [arXiv](https://arxiv.org/pdf/2506.22405)
+- **Hospital-bench** — Can Zehebi (Zavo), *measuring how well AI agents run hospital operations*, 12.11.2026, [zavo.ai/research/hospital-bench](https://zavo.ai/research/hospital-bench). Raport firmy, bez recenzji: agenci AI przy pracy administracyjnej w fikcyjnym szpitalu w USA (dane syntetyczne). Najwyższy średni wynik: GPT-6.2 Astra 62,4% (95% CI 53,0–71,3%), w całości 14/48; najwięcej zadań w całości: Claude Opus 5.5, 17/48. Ujawnianie dokumentacji, której polityka każe nie wydawać, to jeden z powtarzających się typów błędów
 
 ## ⚖️ Dane i licencje
 
