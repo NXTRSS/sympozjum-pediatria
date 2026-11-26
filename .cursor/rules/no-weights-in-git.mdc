@@ -1,0 +1,10 @@
+---
+description: Hard rule — never commit model weights, datasets, or caches
+alwaysApply: true
+---
+
+Before every `git commit` / push:
+
+1. Run `git diff --cached --stat` and ensure **no** files under `usg/zewnetrzne/`, `usg/dane/`, `usg/pamiec/`, `delphi/pamiec/`, or extensions `*.pt`, `*.pth`, `*.ckpt`, `*.onnx`, `*.safetensors`, `*.npz`.
+2. If any staged binary **> 2 MB**, unstage it (`git reset HEAD -- <path>`).
+3. Only **code** and **screenshots (PNG of outputs/UI)** may be added to the repo — not weights, recordings, or computed caches.

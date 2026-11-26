@@ -7,3 +7,18 @@ szablon/
 
 # eksport rastrowy (eksport_raster.py) — pliki wynikowe na pendrive, nie do gita
 eksport/
+
+# Wagi, checkpointy, dane pobrane i cache (Kamil: tylko kod + PNG mogą do gita)
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+*.npz
+usg/zewnetrzne/
+usg/dane/
+usg/pamiec/
+delphi/zewnetrzne/
+delphi/pamiec/
+delphi/dane/*
+!delphi/dane/icd10_pl.csv
