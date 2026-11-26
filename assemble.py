@@ -57,10 +57,10 @@ ORDER = [
 ]
 
 NOTES = [
-    "Slajd tytułowy. Przedstawiam się: Staff ML Engineer w airSlate, wykładam ML w Akademii Leona Koźmińskiego, nie lekarz. Obietnica: za 45 minut zobaczą Państwo od środka, jak działa AI — i dlaczego jest jednocześnie genialna i omylna. UWAGA: przed wejściem na scenę odpalić trening w Colabie!",
+    "Slajd tytułowy. Przedstawiam się: Staff ML Engineer, wykładam ML w Akademii Leona Koźmińskiego, nie lekarz. Obietnica: za 45 minut zobaczą Państwo od środka, jak działa AI — i dlaczego jest jednocześnie genialna i omylna. UWAGA: przed wejściem na scenę odpalić trening w Colabie!",
     "Zagadka, część 1: Alex, 3 lata bólu (od 4. r.ż.), 17 lekarzy (nie tylko specjaliści — był też np. dentysta i ortodonta). Mama wpisuje objawy i opis MRI do ChatGPT — pada 'tethered cord syndrome'. Neurochirurg potwierdza. Historia prawdziwa (Today.com, 12.09.2023; mama i neurochirurg dziecięca opowiadały ją w podcaście NEJM AI Grand Rounds, 11.2024). Nie puenta, tylko połowa zagadki.",
     "Zagadka, część 2: JAMA Pediatrics 2024 — ten sam ChatGPT na 100 pediatrycznych case challenges: 83% błędów. Uczciwie: GPT-3.5. Pytanie do sali: jak obie historie mogą być prawdziwe? Odpowiedź znajdziemy metodą Państwa: diagnozą różnicową.",
-    "Skala: to nie ciekawostka, to codzienność gabinetu. 25% dorosłych Amerykanów kiedykolwiek pytało AI o zdrowie (West Health–Gallup, badanie X–XII 2025, n=5660, publ. IV 2026); ponad 40 mln osób DZIENNIE pyta ChatGPT o zdrowie i co 4. z 800 mln tygodniowych użytkowników pyta o zdrowie co tydzień (raport OpenAI, I 2026 — dane własne firmy, globalnie). I meta-trick: mówię, że od 1. slajdu w tle trenuje się nasz model — wrócimy do niego.",
+    "Skala: to nie ciekawostka, to codzienność gabinetu. 25% dorosłych Amerykanów kiedykolwiek pytało AI o zdrowie (West Health–Gallup, badanie X–XII 2025, n=5660, publ. IV 2026); ponad 40 mln osób DZIENNIE pyta ChatGPT o zdrowie i co 4. z 800 mln tygodniowych użytkowników pyta o zdrowie co tydzień (raport OpenAI, I 2026 — dane własne firmy, globalnie).",
     "Przejście: żeby rozwiązać zagadkę, musimy zajrzeć pod maskę. Co to jest model języka?",
     "Definicja: rozkład prawdopodobieństwa nad sekwencją tokenów. Model pyta: co powinno być następne? Ta jedna idea to podstawa wszystkiego — od naszego mini-modelu po ChatGPT.",
     "Dane: 1292 łacińskie nazwy chorób + tokeny specjalne % (start) i ! (stop). Token = pojedynczy znak: 26 liter, spacja, myślnik, apostrof — razem ze specjalnymi 32 tokeny.",
