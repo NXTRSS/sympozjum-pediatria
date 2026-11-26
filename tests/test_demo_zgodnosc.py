@@ -18,10 +18,9 @@ from demo_model import przebieg  # noqa: E402
 
 
 def _z_notebooka(tmp: Path) -> dict:
-    os.environ["DEMO_BEZ_GRADIO"] = "1"
+    os.environ.setdefault("MPLBACKEND", "Agg")
     os.environ["DEMO_WYNIK"] = str(tmp / "wynik.json")
     nb = nbformat.read(NB, as_version=4)
-    nb.cells = [c for c in nb.cells if "demo.launch" not in "".join(c.source)]
     nb.cells.append(nbformat.v4.new_code_cell(
         "import json, os\n"
         "from pathlib import Path\n"

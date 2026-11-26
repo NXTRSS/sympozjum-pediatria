@@ -55,7 +55,7 @@ uv run python notebook/uruchom_demo.py
 
 Skrypt trenuje ten sam model (CPU, ziarno 42) i wypisuje publiczny link `gradio.live`. Wklej go w README, w linii „Link do demo…”. Sprawdzenie, że skrypt i notebook dają te same liczby: `uv run python notebook/uruchom_demo.py --sprawdz`.
 
-Bez instalacji, dla publiczności: przycisk *Open in Colab* w `README.md`. Lokalnie w Jupyterze:
+Bez instalacji, dla publiczności: przycisk *Open in Colab* w `README.md` (trening i generowanie nazw — **bez** Gradio; aplikacja sali tylko ze skryptu powyżej). Lokalnie w Jupyterze:
 
 ```bash
 uv sync

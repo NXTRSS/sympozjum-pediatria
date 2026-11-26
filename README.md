@@ -37,7 +37,7 @@ uv run python notebook/uruchom_demo.py
 
 Skrypt robi to samo co notebook (CPU, ziarno 42) i wypisuje link `gradio.live`. Wklej go wyżej, w linii „Link do demo…”.
 
-Dla publiczności, bez instalacji: kliknij przycisk *Open in Colab* (potrzebne konto Google), potem `Środowisko wykonawcze` → `Uruchom wszystko`. Dane pobiorą się same. Sam trening na CPU to kilkanaście sekund; pierwsze uruchomienie w Colabie, z instalacją pakietów, może potrwać kilka minut. Na końcu notatnik uruchamia tę samą aplikację Gradio.
+Dla publiczności, bez instalacji: kliknij przycisk *Open in Colab* (konto Google), potem `Środowisko wykonawcze` → `Uruchom wszystko`. Dane pobiorą się same. Trening na CPU to kilkanaście sekund; pierwsze uruchomienie w Colabie może potrwać kilka minut (instalacja pakietów). Notatnik kończy się na **wygenerowanych nazwach** — aplikację dla sali uruchamia prelegent skryptem powyżej, nie z Colaba.
 
 W notatniku można zmienić `ZBIOR` na `"leki"` albo `"dinozaury"` i wytrenować model na innym zbiorze nazw.
 
@@ -45,7 +45,7 @@ W notatniku można zmienić `ZBIOR` na `"leki"` albo `"dinozaury"` i wytrenować
 
 | Ścieżka | Zawartość |
 |---|---|
-| [`notebook/model_jezyka_choroby.ipynb`](notebook/model_jezyka_choroby.ipynb) | Mini model językowy (GRU, poziom liter): dane → trening → generowanie z histogramami rozkładów → aplikacja Gradio |
+| [`notebook/model_jezyka_choroby.ipynb`](notebook/model_jezyka_choroby.ipynb) | Mini model (GRU, poziom liter) dla publiczności w Colabie: dane → trening → generowanie (+ test „czy nazwa jest nowa”) |
 | [`notebook/uruchom_demo.py`](notebook/uruchom_demo.py) | To samo co notebook, jedną komendą (`uv run python notebook/uruchom_demo.py`) |
 | [`data/choroby.csv`](data/choroby.csv) | 1292 łacińskie nazwy chorób |
 | [`data/leki.csv`](data/leki.csv) | 9438 nazw handlowych leków dopuszczonych w Polsce |
