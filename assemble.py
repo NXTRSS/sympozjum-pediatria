@@ -158,9 +158,11 @@ if ZAPAS:
         ("zu05_sano.html",
          "Plan B · USG. Model Sano (checkpoint bazowy): masa w dniu porodu z nagrania <24 h przed porodem — tu ekstrapolacja poza dane uczące."),
         ("zu06_aplikacja.html",
-         "Plan B · USG. Zrzut aplikacji demo_usg.py: nagranie Nr 1, tryb „z pamięci”, po „Znajdź brzuch i zmierz”."),
+         "Plan B · USG. Zrzut aplikacji demo_usg.py: nagranie Nr 1, tryb „z pamięci”, po „Znajdź brzuch i zmierz” (zakładka masa)."),
+        ("zu08_fuvai_klatki.html",
+         "Plan B · USG. Druga zakładka aplikacji: FUVAI klatka po klatce — paski klas, obrys struktury, oś czasu kolorów argmax."),
         ("zu07_nnunet.html",
-         "Plan B · USG · koniec bloku. Ta sama sesja — sama karta nnU-Net z obrysem na klatce. Wróć do slajdu o modelu Sano lub materiałach."),
+         "Plan B · USG · koniec bloku. Ta sama sesja — dwa panele nnU-Net i FUVAI. Wróć do slajdu o modelu Sano lub materiałach."),
     ])
 if not ORIG.exists():
     sys.exit(

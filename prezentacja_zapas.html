@@ -1649,8 +1649,9 @@ deck-stage.builds-armed .build.show {
  "Plan B · USG. Obwód brzucha, tydzień ciąży z Campbell, masa „teraz” — porównanie z ekspertami z CSV.",
  "Plan B · USG. Polski FUVAI na tym samym nagraniu — kiedy jest pewny, kiedy nie.",
  "Plan B · USG. Model Sano (checkpoint bazowy): masa w dniu porodu z nagrania <24 h przed porodem — tu ekstrapolacja poza dane uczące.",
- "Plan B · USG. Zrzut aplikacji demo_usg.py: nagranie Nr 1, tryb „z pamięci”, po „Znajdź brzuch i zmierz”.",
- "Plan B · USG · koniec bloku. Ta sama sesja — sama karta nnU-Net z obrysem na klatce. Wróć do slajdu o modelu Sano lub materiałach.",
+ "Plan B · USG. Zrzut aplikacji demo_usg.py: nagranie Nr 1, tryb „z pamięci”, po „Znajdź brzuch i zmierz” (zakładka masa).",
+ "Plan B · USG. Druga zakładka aplikacji: FUVAI klatka po klatce — paski klas, obrys struktury, oś czasu kolorów argmax.",
+ "Plan B · USG · koniec bloku. Ta sama sesja — dwa panele nnU-Net i FUVAI. Wróć do slajdu o modelu Sano lub materiałach.",
  "Ok. 1,5 min. Polski model bazowy (obrazowy 3D ResNet-18) z pracy TabAttention (Grzeszczyk, Płotka i in., MICCAI 2023), Sano + WUM — publiczny checkpoint. NIE prognozuje masy na tygodnie do przodu: szacuje masę w dniu porodu z badania < 24 h przed porodem (92 nagrania WUM, ciąże donoszone 38,3 ± 1,5 tc., masa ur. 3 495 ± 507 g). Tabela: AC rośnie 242→304 mm, masa „teraz” wg Campbella ok. 1,4–2,6 kg przy 28–34 tc., a model Sano zwraca wartości typowe dla urodzenia (3,6–4,0 kg) — bo tego się uczył. To nie ocena metody jako złej; w swoich danych działa. Wycinek (4 000 g*): segment dopełniony, orientacyjnie. Karta prawa górna: tylko model obrazowy (289 g w pracy) — jedyny publiczny; pełny TabAttention obraz + 6 pomiarów: 170 g, lepiej niż klinicyści 205 g, wag nie ma publicznie. AI wzmacnia pomiary lekarza. Karta prawa dolna: na naszych nagraniach 28–34 tc. czytamy wynik jako szacunek masy urodzeniowej, nie „teraz”; mas urodzeniowych nie znamy. Dla dociekliwych: skalowanie 0,2 mm/px to nasza interpretacja (±350–800 g). Dane ACOUSLIC-AI CC BY-NC-SA, materiał edukacyjny. Pytanie: „na jakich danych to uczono?”. Podziękowania Sano + WUM za publiczne prace. Opcjonalnie jedno zdanie przed QR: archiwizujmy wagi polskich modeli (Zenodo), pilotaże DIL.",
  "Materiały: jeden QR do repo — notebook, slajdy, źródła, zbiory danych. Wspomnieć dwa notebooki: USG → masa płodu (pokazany dziś) i Delphi-2M (po sesji mogę pokazać na laptopie) — oba chodzą lokalnie, nie w Colabie. Zachęcić do puszczenia notebooka w domu.",
  "Dziękuję. Pytania."
@@ -3107,6 +3108,19 @@ deck-stage.builds-armed .build.show {
   <div class="page-num">44</div>
 </section>
 
+<section data-label="ZU08 FUVAI klatki" class="bg-ink">
+  <div class="slide-frame" style="padding: 52px 72px 36px;">
+    <div class="eyebrow">Plan B · USG · FUVAI</div>
+    <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
+      Zakładka <span class="grad-text-warm">klatka po klatce</span>
+    </h2>
+    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
+      <img src="slides/zrzuty/usg-08-fuvai-klatki.png" alt="" style="max-width: 100%; max-height: 720px; height: auto; border-radius: 16px; background: #111; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+    </div>
+  </div>
+  <div class="page-num">45</div>
+</section>
+
 <section data-label="ZU07 nnU-Net" class="bg-ink">
   <div class="slide-frame" style="padding: 52px 72px 36px;">
     <div class="eyebrow">Plan B · USG · koniec bloku</div>
@@ -3117,7 +3131,7 @@ deck-stage.builds-armed .build.show {
       <img src="slides/zrzuty/usg-07-nnunet.png" alt="" style="max-width: 100%; max-height: 720px; height: auto; border-radius: 16px; background: #111; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
-  <div class="page-num">45</div>
+  <div class="page-num">46</div>
 </section>
 
 <section data-label="N13c Model Sano" class="bg-ink">
@@ -3179,7 +3193,7 @@ deck-stage.builds-armed .build.show {
       <div class="tiny" style="margin-top: 10px; color: rgba(255,255,255,0.38); font-size: 17px; letter-spacing: 0.03em; text-transform: none;">Nagrania: ACOUSLIC-AI (Radboudumc, Zenodo 12697994), CC BY-NC-SA 4.0, tylko niekomercyjnie · Materiał edukacyjny, nie wyrób medyczny — nie służy do decyzji klinicznych.</div>
     </div>
   </div>
-  <div class="page-num">46</div>
+  <div class="page-num">47</div>
 </section>
 
 
@@ -3221,7 +3235,7 @@ deck-stage.builds-armed .build.show {
       </div>
     </div>
   </div>
-  <div class="page-num">47</div>
+  <div class="page-num">48</div>
 </section>
 
 

@@ -503,3 +503,114 @@ def wykres(analiza: Analiza, biezaca: int | None = None) -> np.ndarray:
     fig.subplots_adjust(left=0.08, right=0.99, top=0.91, bottom=0.16)
     fig.canvas.draw()
     return np.asarray(fig.canvas.buffer_rgba())[..., :3].copy()
+
+
+# ── podgląd FUVAI klatka po klatce ────────────────────────────────────────────
+
+def wczytaj_fuvai_klatki(zrodlo: str | Path, tryb: str,
+                         postep: Callable[[float, str], None] | None = None) -> fuvai.WynikKlatekFUVAI:
+    """Gęste p(klasy) do zakładki FUVAI: z pamiec/_fuvai_klatki.npz, z kurtego _fuvai.npz albo na żywo."""
+    postep = postep or (lambda *_: None)
+    sweep = wczytaj_sweep(zrodlo)
+    sciezka = fuvai.sciezka_klatek_pamiec(sweep.nazwa)
+    if tryb == Z_PAMIECI:
+        if sciezka.exists():
+            return fuvai.wczytaj_klatki(sciezka)
+        if ma_wyniki_w_pamieci(sweep.nazwa):
+            F = fuvai.wczytaj_wynik(seg.KATALOG_PAMIECI / f"{sweep.nazwa}_fuvai.npz")
+            return fuvai.rozszerz_na_nagranie(F, len(sweep.klatki))
+        raise BrakWynikowWPamieci(sweep.nazwa)
+    if sciezka.exists() and wbudowane(zrodlo):
+        return fuvai.wczytaj_klatki(sciezka)
+    with _BLOKADA_MPS:
+        postep(0.05, "Wczytuję model FUVAI…")
+        model = _model("fuvai")
+        postep(0.1, "FUVAI: klasyfikacja klatek…")
+        w = fuvai.analizuj_wszystkie_klatki(model, sweep, co_ktora=1, mapy_prob=True)
+        postep(1.0, "Gotowe")
+        return w
+
+
+def _maska_fuvai_klatki(sweep: dane.Sweep, klatki: fuvai.WynikKlatekFUVAI, i: int,
+                        model: object | None = None) -> np.ndarray | None:
+    j = fuvai.pozycja_klatki(klatki, i)
+    if klatki.mapy_prob is not None and int(klatki.indeksy[j]) == i:
+        return fuvai.maska_z_prawdopodobienstwa(klatki.mapy_prob[j].astype(np.float32), sweep.klatki.shape[1:])
+    if model is not None:
+        _, prob = fuvai.przewidz_klatke(model, sweep, i)
+        if prob is not None:
+            return fuvai.maska_z_prawdopodobienstwa(prob, sweep.klatki.shape[1:])
+    return None
+
+
+def obraz_fuvai_podglad(sweep: dane.Sweep, klatki: fuvai.WynikKlatekFUVAI, i: int,
+                        model: object | None = None, atrybucja_nagrania: bool = True) -> tuple[np.ndarray, str]:
+    """Klatka z obrysem struktury wg FUVAI i opisem przewidzianej klasy."""
+    i = int(np.clip(i, 0, len(sweep.klatki) - 1))
+    _, nazwa, p = fuvai.klasa_i_p(klatki, i)
+    rgb = cv2.cvtColor(sweep.klatki[i], cv2.COLOR_GRAY2RGB)
+    maska = _maska_fuvai_klatki(sweep, klatki, i, model)
+    if maska is not None and maska.any():
+        cv2.drawContours(rgb, _kontury(maska), -1, FIOLET, 2, cv2.LINE_AA)
+    rozklad = " · ".join(f"{fuvai.KLASY[k]} {po_polsku(p[k], 2)}" for k in np.argsort(-p)[:4])
+    opis = f"przewidziana klasa: {nazwa} ({rozklad})"
+    return _z_atrybucja(rgb, atrybucja_nagrania), opis
+
+
+def wykres_prawdopodobienstw_fuvai(klatki: fuvai.WynikKlatekFUVAI, i: int) -> np.ndarray:
+    """Słupki p(głowa/brzuch/kość/tło) dla bieżącej klatki."""
+    _, _, p = fuvai.klasa_i_p(klatki, i)
+    tlo, tekst = "#13131f", "#e8e8f0"
+    kolory = ["#FFC857", "#C9A6FF", "#00BCDE", "#5a5a78"]
+    fig = Figure(figsize=(7.2, 2.4), dpi=110, facecolor=tlo)
+    FigureCanvasAgg(fig)
+    os_ = fig.add_subplot(111)
+    y = np.arange(len(fuvai.KLASY))
+    os_.barh(y, p, color=kolory, height=0.55)
+    os_.set_yticks(y, fuvai.KLASY, fontsize=12)
+    os_.set_xlim(0, 1.05)
+    os_.set_xlabel("prawdopodobieństwo", color=tekst, fontsize=11)
+    os_.tick_params(colors=tekst, labelsize=11)
+    os_.set_facecolor(tlo)
+    for s in os_.spines.values():
+        s.set_color("#3a3a52")
+    os_.spines[["top", "right"]].set_visible(False)
+    wygrana = int(p.argmax())
+    os_.text(p[wygrana] + 0.02, wygrana, po_polsku(p[wygrana], 2), va="center", color="#fff", fontsize=11)
+    fig.subplots_adjust(left=0.22, right=0.98, top=0.92, bottom=0.18)
+    fig.canvas.draw()
+    return np.asarray(fig.canvas.buffer_rgba())[..., :3].copy()
+
+
+def pasek_timeline_fuvai(klatki: fuvai.WynikKlatekFUVAI, n_klatek: int, biezaca: int | None = None) -> np.ndarray:
+    """Pasek kolorów argmax(klasa) wzdłuż nagrania."""
+    argmax = np.array([int(klatki.p_klas[fuvai.pozycja_klatki(klatki, t)].argmax()) for t in range(n_klatek)],
+                      np.int32)
+    w = min(n_klatek, 1200)
+    skala = max(n_klatek // w, 1)
+    pasek = np.zeros((28, w, 3), np.uint8)
+    for x in range(w):
+        frag = argmax[x * skala: (x + 1) * skala]
+        k = int(np.bincount(frag, minlength=4).argmax()) if frag.size else fuvai.TLO
+        pasek[:, x] = fuvai.KOLORY_KLAS_RGB[k]
+    if biezaca is not None:
+        x = int(biezaca / skala)
+        if 0 <= x < w:
+            pasek[:, max(0, x - 1): x + 2] = (255, 255, 255)
+    fig = Figure(figsize=(12, 0.55), dpi=110, facecolor="#13131f")
+    FigureCanvasAgg(fig)
+    os_ = fig.add_subplot(111)
+    os_.imshow(pasek, aspect="auto", interpolation="nearest")
+    os_.set_yticks([])
+    os_.set_xlabel("klatka nagrania →", color="#c8c8d8", fontsize=11)
+    os_.tick_params(colors="#c8c8d8", labelsize=10)
+    legenda = " · ".join(f"{n} {chr(0x25A0)}" for n in fuvai.KLASY)
+    os_.set_title(legenda, loc="left", color="#9a9ab4", fontsize=10, pad=4)
+    if biezaca is not None:
+        os_.axvline(biezaca / skala, color="#D76D77", lw=2)
+    os_.set_facecolor("#13131f")
+    for s in os_.spines.values():
+        s.set_visible(False)
+    fig.subplots_adjust(left=0.02, right=0.99, top=0.78, bottom=0.35)
+    fig.canvas.draw()
+    return np.asarray(fig.canvas.buffer_rgba())[..., :3].copy()

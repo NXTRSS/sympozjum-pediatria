@@ -257,6 +257,26 @@ def test_zapis_bez_maski(tmp_path):
     assert w2.maska is None and w2.ac_mm is None and w2.najlepsza_klatka == -1
 
 
+def test_rozszerz_na_nagranie():
+    w = fuvai.WynikFUVAI(np.array([0, 4]), np.array([[0, 0.9, 0, 0.1], [0, 0, 0, 1.0]]),
+                         0, None, None, 0.9, 0.1)
+    k = fuvai.rozszerz_na_nagranie(w, 6)
+    assert k.indeksy.shape == (6,) and k.p_klas.shape == (6, 4)
+    assert k.p_klas[2, fuvai.BRZUCH] == pytest.approx(0.9)
+    assert k.p_klas[5, fuvai.TLO] == pytest.approx(1.0)
+
+
+def test_zapis_wczytaj_klatki(tmp_path):
+    w = fuvai.WynikKlatekFUVAI(np.array([0, 1]), np.array([[0, 0.8, 0, 0.2], [0, 0, 1, 0]]),
+                               np.zeros((2, 224, 224), np.float16), czas_s=0.5)
+    sciezka = tmp_path / "k.npz"
+    fuvai.zapisz_klatki(w, sciezka)
+    w2 = fuvai.wczytaj_klatki(sciezka)
+    np.testing.assert_array_equal(w2.indeksy, w.indeksy)
+    np.testing.assert_allclose(w2.p_klas, w.p_klas)
+    assert w2.mapy_prob.shape == w.mapy_prob.shape
+
+
 # ── poprawka init_hidden ─────────────────────────────────────────────────────
 
 def _falszywy_modul_autorow():

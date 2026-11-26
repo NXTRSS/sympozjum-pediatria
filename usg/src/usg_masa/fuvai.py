@@ -60,6 +60,20 @@ _KRZYZ = cv2.getStructuringElement(cv2.MORPH_CROSS, (5, 5))
 _NAZWA_MODULU = "fuvai_kod_autorow"
 
 
+KOLORY_KLAS_RGB = ((255, 200, 87), (201, 166, 255), (0, 188, 222), (72, 72, 96))  # głowa, brzuch, kość, tło
+
+KATALOG_PAMIECI = segmentacja.KATALOG_PAMIECI
+
+
+@dataclass
+class WynikKlatekFUVAI:
+    """P(klasy) (i opcjonalnie mapy prob.) dla wielu klatek — podgląd klatka po klatce."""
+    indeksy: np.ndarray          # numery klatek w nagraniu
+    p_klas: np.ndarray           # (n, 4)
+    mapy_prob: np.ndarray | None  # (n, 224, 224) float16 — mapa struktury w rozdzielczości sieci
+    czas_s: float = 0.0
+
+
 @dataclass
 class WynikFUVAI:
     indeksy: np.ndarray          # numery przeanalizowanych klatek
@@ -187,28 +201,112 @@ def wybierz_klatke(indeksy: np.ndarray, p_klas: np.ndarray, ocenione: np.ndarray
     return int(indeksy[poz]), maska, float(ac), float(p_brzuch[poz])
 
 
+def _inferencja_indeksow(model: torch.nn.Module, sweep: Sweep, indeksy: np.ndarray, paczka: int = 16
+                         ) -> tuple[np.ndarray, np.ndarray, list[np.ndarray | None]]:
+    """Wspólna pętla: p_klas (n,4), ocenione, mapy prob 224×224 (tylko oglądane klatki)."""
+    urz = next(model.parameters()).device
+    p_klas = np.zeros((len(indeksy), len(KLASY)))
+    p_klas[:, TLO] = 1.0
+    mapy: list[np.ndarray | None] = [None] * len(indeksy)
+    ocenione = np.array([sweep.klatki[i].max() > 0 for i in indeksy], bool)
+    pozycje = np.flatnonzero(ocenione)
+    with torch.no_grad():
+        for p in range(0, len(pozycje), paczka):
+            poz = pozycje[p:p + paczka]
+            x = torch.cat([przygotuj_klatke(sweep.klatki[indeksy[k]]) for k in poz])[:, None]
+            fc, wyjscie = model(x.to(urz))
+            p_klas[poz] = torch.softmax(fc, 1).cpu().numpy()
+            probs = wyjscie[:, 0].float().cpu().numpy()
+            for j, k in enumerate(poz):
+                mapy[k] = probs[j]
+    return p_klas, ocenione, mapy
+
+
+def analizuj_wszystkie_klatki(model: torch.nn.Module, sweep: Sweep, co_ktora: int = 1, paczka: int = 16,
+                              mapy_prob: bool = False) -> WynikKlatekFUVAI:
+    """Każda co_ktora-ta klatka → p(klasy); opcjonalnie mapy 224×224 do podglądu masek."""
+    start = time.perf_counter()
+    indeksy = np.arange(0, len(sweep.klatki), co_ktora)
+    p_klas, _, mapy = _inferencja_indeksow(model, sweep, indeksy, paczka)
+    tab = None
+    if mapy_prob:
+        tab = np.zeros((len(indeksy), ROZMIAR, ROZMIAR), np.float16)
+        for k, m in enumerate(mapy):
+            if m is not None:
+                tab[k] = m.astype(np.float16)
+    return WynikKlatekFUVAI(indeksy, p_klas, tab, time.perf_counter() - start)
+
+
+def przewidz_klatke(model: torch.nn.Module, sweep: Sweep, klatka: int) -> tuple[np.ndarray, np.ndarray | None]:
+    """Jedna klatka → wektor p(klasy) i mapa prob. 224×224 (None = klatka czarna)."""
+    urz = next(model.parameters()).device
+    if sweep.klatki[klatka].max() == 0:
+        p = np.zeros(len(KLASY))
+        p[TLO] = 1.0
+        return p, None
+    with torch.no_grad():
+        x = przygotuj_klatke(sweep.klatki[klatka])[None, None].to(urz)
+        fc, wyjscie = model(x)
+        p = torch.softmax(fc, 1).cpu().numpy()[0]
+        return p, wyjscie[0, 0].float().cpu().numpy()
+
+
+def rozszerz_na_nagranie(wynik: WynikFUVAI, n_klatek: int) -> WynikKlatekFUVAI:
+    """Gdy brak gęstego pliku w pamiec/: skopiuj p(klasy) z najbliższej przeanalizowanej klatki."""
+    indeksy = np.arange(n_klatek)
+    if len(wynik.indeksy) == 0:
+        p_klas = np.zeros((n_klatek, len(KLASY)))
+        p_klas[:, TLO] = 1.0
+        return WynikKlatekFUVAI(indeksy, p_klas, None, wynik.czas_s)
+    odleg = np.abs(indeksy[:, None] - wynik.indeksy[None, :])
+    p_klas = wynik.p_klas[odleg.argmin(axis=1)].copy()
+    return WynikKlatekFUVAI(indeksy, p_klas, None, wynik.czas_s)
+
+
+def pozycja_klatki(klatki: WynikKlatekFUVAI, i: int) -> int:
+    """Indeks w tablicach wyniku dla numeru klatki i (najbliższa, gdy brak dokładnej)."""
+    i = int(i)
+    dokladne = np.flatnonzero(klatki.indeksy == i)
+    if dokladne.size:
+        return int(dokladne[0])
+    j = int(np.argmin(np.abs(klatki.indeksy - i)))
+    return j
+
+
+def klasa_i_p(klatki: WynikKlatekFUVAI, i: int) -> tuple[int, str, np.ndarray]:
+    j = pozycja_klatki(klatki, i)
+    p = klatki.p_klas[j]
+    k = int(p.argmax())
+    return k, KLASY[k], p
+
+
+def sciezka_klatek_pamiec(nazwa: str) -> Path:
+    return KATALOG_PAMIECI / f"{nazwa}_fuvai_klatki.npz"
+
+
+def zapisz_klatki(wynik: WynikKlatekFUVAI, sciezka: Path) -> None:
+    Path(sciezka).parent.mkdir(parents=True, exist_ok=True)
+    if wynik.mapy_prob is not None:
+        np.savez_compressed(sciezka, indeksy=wynik.indeksy, p_klas=wynik.p_klas,
+                            mapy_prob=wynik.mapy_prob, czas_s=wynik.czas_s)
+    else:
+        np.savez_compressed(sciezka, indeksy=wynik.indeksy, p_klas=wynik.p_klas, czas_s=wynik.czas_s)
+
+
+def wczytaj_klatki(sciezka: Path) -> WynikKlatekFUVAI:
+    d = np.load(sciezka)
+    mapy = d["mapy_prob"] if "mapy_prob" in d.files else None
+    return WynikKlatekFUVAI(d["indeksy"], d["p_klas"], mapy, float(d["czas_s"]))
+
+
 def analizuj_sweep(model: torch.nn.Module, sweep: Sweep, co_ktora: int = 4, paczka: int = 16) -> WynikFUVAI:
     """Co co_ktora-ta klatka → p(klasy) i mapa struktury; potem wybór klatki i AC.
 
     Zmierzone na M1 Pro (MPS, co 4. klatka, 840 klatek): ≈ 6–11 s na nagranie.
     """
     start = time.perf_counter()
-    urz = next(model.parameters()).device
     indeksy = np.arange(0, len(sweep.klatki), co_ktora)
-    p_klas = np.zeros((len(indeksy), len(KLASY)))
-    p_klas[:, TLO] = 1.0                                                   # czarne klatki zostają tłem
-    mapy: list[np.ndarray | None] = [None] * len(indeksy)
-    ocenione = np.array([sweep.klatki[i].max() > 0 for i in indeksy], bool)   # czarne klatki = tło
-    pozycje = np.flatnonzero(ocenione)
-    with torch.no_grad():
-        for p in range(0, len(pozycje), paczka):
-            poz = pozycje[p:p + paczka]
-            x = torch.cat([przygotuj_klatke(sweep.klatki[indeksy[k]]) for k in poz])[:, None]   # (B, T=1, 1, 224, 224)
-            fc, wyjscie = model(x.to(urz))
-            p_klas[poz] = torch.softmax(fc, 1).cpu().numpy()
-            probs = wyjscie[:, 0].float().cpu().numpy()
-            for j, k in enumerate(poz):
-                mapy[k] = probs[j]
+    p_klas, ocenione, mapy = _inferencja_indeksow(model, sweep, indeksy, paczka)
     ksztalt = sweep.klatki.shape[1:]
     klatka, maska, ac, p_najlepszej = wybierz_klatke(
         indeksy, p_klas, ocenione,

@@ -52,9 +52,15 @@ def main() -> None:
                 pary.first.screenshot(path=str(OUT / "usg-07-nnunet.png"))
             else:
                 page.locator("#prawa").first.screenshot(path=str(OUT / "usg-07-nnunet.png"))
+            page.get_by_role("tab", name="FUVAI — klatka po klatce").click()
+            page.get_by_role("button", name="Załaduj klasyfikację klatek").click()
+            page.locator("#fuvai-obraz img").first.wait_for(state="visible", timeout=120000)
+            time.sleep(1.0)
+            page.screenshot(path=str(OUT / "usg-08-fuvai-klatki.png"), full_page=True)
             browser.close()
         print(OUT / "usg-06-aplikacja.png")
         print(OUT / "usg-07-nnunet.png")
+        print(OUT / "usg-08-fuvai-klatki.png")
     finally:
         proc.terminate()
         try:

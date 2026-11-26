@@ -127,6 +127,12 @@ footer { display: none !important; }
 #zrodla, #wgraj { font-size: 17px; }
 
 /* pigułki wyboru nagrania i trybu (bez etykiet) */
+#sterowanie-wspolne { gap: 16px; padding: 0 4px 8px; align-items: center; }
+#sterowanie-wspolne .wrap { gap: 8px !important; }
+.uwaga-fuvai { font-size: 17px; line-height: 1.4; color: var(--tekst-2); border: 1px solid rgba(201, 166, 255, .35);
+  background: rgba(201, 166, 255, .06); border-radius: 14px; padding: 10px 16px; margin: 0 4px 10px; }
+#tab-fuvai #przycisk-fuvai { font-size: 20px !important; font-weight: 700 !important; }
+#fuvai-tresc { gap: 14px; }
 #sterowanie { gap: 16px; }
 #wybor-nagrania, #tryb { background: transparent !important; border: none !important; padding: 0 !important; }
 #tryb .wrap label:first-child::before { content: none; }

@@ -107,6 +107,18 @@ def test_fuvai_nie_znalazl():
     assert "nie znalazł" in o.komunikat
 
 
+@_pomin_bez("Nr 1")
+def test_wczytaj_fuvai_klatki_z_pamieci(app):
+    k = A.wczytaj_fuvai_klatki("Nr 1", A.Z_PAMIECI)
+    assert k.p_klas.shape[0] >= len(A.wczytaj_sweep("Nr 1").klatki) // 2
+    assert k.p_klas.shape[1] == 4
+    i = 100
+    obraz, _ = A.obraz_fuvai_podglad(A.wczytaj_sweep("Nr 1"), k, i)
+    assert obraz.shape[2] == 3
+    assert A.wykres_prawdopodobienstw_fuvai(k, i).ndim == 3
+    assert A.pasek_timeline_fuvai(k, len(A.wczytaj_sweep("Nr 1").klatki), i).ndim == 3
+
+
 def test_z_pamieci_bez_wynikow(tmp_path):
     obraz = sitk.GetImageFromArray(np.zeros((3, 20, 20), np.uint8))
     obraz.SetSpacing((0.28, 0.28, 1.0))

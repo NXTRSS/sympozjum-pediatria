@@ -368,6 +368,75 @@ def odswiez_wykres(analiza: A.Analiza | None, i: int):
     return A.wykres(analiza, int(i)) if analiza is not None else gr.skip()
 
 
+CAVEAT_FUVAI = (
+    '<div class="uwaga-fuvai">FUVAI był uczone na nagraniach szpitalnych w płaszczyznach standardowych (WUM, aparaty GE). '
+    'Nagrania ACOUSLIC-AI powstają „na ślepo” tanią głowicą — to <b>inna domena</b>. '
+    'Poniższy podgląd pokazuje, co model widzi w każdej klatce; to materiał edukacyjny, nie pomiar kliniczny.</div>'
+)
+
+
+def html_status_fuvai(klatki: fuvai.WynikKlatekFUVAI | None, tryb: str, tekst: str | None = None) -> str:
+    if tekst:
+        return f'<div class="status">{tekst}</div>'
+    if klatki is None:
+        return ('<div class="status">Zakładka FUVAI: wybierz nagranie u góry i kliknij '
+                '<b>„Załaduj klasyfikację klatek”</b>.</div>')
+    n = len(klatki.indeksy)
+    if tryb == A.Z_PAMIECI:
+        zrodlo = "z pamięci (plik _fuvai_klatki.npz albo wynik rozszerzony z _fuvai.npz)"
+    else:
+        zrodlo = f"na żywo ({A.po_polsku(klatki.czas_s, 1)} s)"
+    return (f'<div class="status"><b>FUVAI klatka po klatce</b> · {zrodlo} · '
+            f'{n} {A.odmiana(n, "klasę", "klatki", "klatek")} z p(klasy).</div>')
+
+
+def _puste_fuvai_wyjscia(srodek: int = 420, max_i: int = 839):
+    return (None, html_status_fuvai(None, A.Z_PAMIECI), None,
+            html_podpis("Załaduj klasyfikację FUVAI."),
+            None, None, gr.Slider(minimum=0, maximum=max_i, value=srodek, step=1))
+
+
+def zaladuj_fuvai_klatki(zrodlo: str | None, tryb: str, progress=gr.Progress()):
+    if not zrodlo:
+        raise gr.Error("Najpierw wybierz nagranie.", title="Uwaga", print_exception=False)
+    try:
+        klatki = A.wczytaj_fuvai_klatki(zrodlo, tryb, postep=lambda u, opis: progress(u, desc=opis))
+    except A.BrakWynikowWPamieci:
+        raise gr.Error("Brak wyników w pamięci. Uruchom scripts/przygotuj_demo.py albo przełącz na „na żywo”.",
+                        title="Uwaga", print_exception=False) from None
+    except Exception:   # noqa: BLE001
+        log.exception("FUVAI klatki %s tryb %s", zrodlo, tryb)
+        raise gr.Error(BLAD_NA_ZYWO if tryb == A.NA_ZYWO else "Nie udało się wczytać danych FUVAI.",
+                        title="Błąd", print_exception=False) from None
+    sweep = A.wczytaj_sweep(zrodlo)
+    i = len(sweep.klatki) // 2
+    obraz, opis = A.obraz_fuvai_podglad(sweep, klatki, i, atrybucja_nagrania=A.wbudowane(zrodlo))
+    return (klatki, html_status_fuvai(klatki, tryb),
+            obraz, html_podpis(f"Klatka {i}: {opis}", atrybucja=A.atrybucja(zrodlo)),
+            A.wykres_prawdopodobienstw_fuvai(klatki, i),
+            A.pasek_timeline_fuvai(klatki, len(sweep.klatki), i),
+            gr.Slider(minimum=0, maximum=len(sweep.klatki) - 1, value=i, step=1))
+
+
+def pokaz_fuvai_klatke(zrodlo: str | None, i: int, klatki: fuvai.WynikKlatekFUVAI | None, tryb: str):
+    if not zrodlo or klatki is None:
+        return gr.skip(), gr.skip(), gr.skip(), gr.skip()
+    sweep = A.wczytaj_sweep(zrodlo)
+    i = int(i)
+    obraz, opis = A.obraz_fuvai_podglad(sweep, klatki, i, atrybucja_nagrania=A.wbudowane(zrodlo))
+    podpis = f"<b>Klatka {i}</b> z {len(sweep.klatki)} · {opis}"
+    return (obraz, html_podpis(podpis, atrybucja=A.atrybucja(zrodlo)),
+            A.wykres_prawdopodobienstw_fuvai(klatki, i),
+            A.pasek_timeline_fuvai(klatki, len(sweep.klatki), i))
+
+
+def nastepna_klatka_fuvai(zrodlo: str | None, i: int):
+    if not zrodlo:
+        return gr.skip()
+    n = len(A.wczytaj_sweep(zrodlo).klatki)
+    return (int(i) + KROK_ODTWARZANIA) % n
+
+
 # Wczytywanie modeli w tle (po przełączeniu na „na żywo”); zegar w interfejsie sprawdza, czy się skończyło.
 _ROZGRZEWANIE: dict[str, object] = {"watek": None, "blad": None, "czas": None}
 _BLOKADA_ROZGRZEWANIA = threading.Lock()
@@ -476,42 +545,63 @@ def zbuduj_interfejs() -> gr.Blocks:
         zegar_modeli = gr.Timer(1.0, active=False)
 
         gr.HTML(html_naglowek())
-        with gr.Row(equal_height=False, elem_id="glowny"):
-            # ── lewa: sterowanie, podgląd nagrania, wykres
-            with gr.Column(scale=5, min_width=640, elem_id="lewa"):
-                with gr.Row(elem_id="sterowanie", equal_height=True):
-                    with gr.Column(scale=3, min_width=380):
-                        wybor = gr.Radio(nagrania, value=None, label="Nagranie", show_label=False, container=False,
-                                         elem_id="wybor-nagrania")
-                        tryb = gr.Radio(TRYBY, value=A.Z_PAMIECI, label="Tryb", show_label=False, container=False,
-                                        elem_id="tryb")
-                    przycisk = gr.Button("Znajdź brzuch i zmierz", variant="primary", size="lg", scale=2,
-                                         min_width=280, elem_id="przycisk")
-                podglad = gr.Image(label="Nagranie USG", interactive=False, format="jpeg", height=340,
-                                   buttons=["fullscreen"], elem_id="podglad", show_label=False)
-                podglad_podpis = gr.HTML(html_podpis("Wybierz nagranie."))
-                with gr.Row(elem_id="suwak-rzad", equal_height=True):
-                    suwak = gr.Slider(0, 839, value=420, step=1, label="Klatka nagrania", scale=5, elem_id="suwak")
-                    graj = gr.Button("▶ odtwórz", size="md", scale=1, min_width=130, elem_id="graj")
-                wykres = gr.Image(label="Pole brzucha w kolejnych klatkach", interactive=False, format="png",
-                                  height=220, buttons=[], show_label=False, elem_id="wykres")
-                status = gr.HTML(html_status(None))
-            # ── prawa: nnU-Net i FUVAI obok siebie, Sano pod spodem
-            with gr.Column(scale=7, min_width=920, elem_id="prawa"):
-                with gr.Row(equal_height=False, elem_id="wyniki-pary"):
-                    with gr.Column(scale=1, min_width=400, elem_id="panel-nnunet"):
-                        gr.HTML('<div class="panel-tytul panel-cyan">nnU-Net · masa „teraz”</div>')
-                        wybrana = gr.Image(label="Klatka nnU-Net", interactive=False, format="jpeg", height=220,
-                                           buttons=["fullscreen"], show_label=False, elem_id="wybrana")
-                        wybrana_podpis = gr.HTML(html_podpis("Klatka nnU-Net z obrysem i elipsą (AC)."))
-                        k_nnunet = gr.HTML(karta_nnunet(None))
-                    with gr.Column(scale=1, min_width=400, elem_id="panel-fuvai"):
-                        gr.HTML('<div class="panel-tytul panel-fiolet">FUVAI · polski, publiczne wagi</div>')
-                        obraz_f = gr.Image(label="Klatka FUVAI", interactive=False, format="jpeg", height=220,
-                                           buttons=["fullscreen"], show_label=False, elem_id="obraz-fuvai")
-                        podpis_f = gr.HTML(html_podpis("Klatka FUVAI z fioletowym obrysem."))
-                        k_fuvai = gr.HTML(karta_fuvai(None))
-                k_sano = gr.HTML(karta_sano(None))
+        with gr.Row(elem_id="sterowanie-wspolne", equal_height=True):
+            wybor = gr.Radio(nagrania, value=None, label="Nagranie", show_label=False, container=False,
+                             elem_id="wybor-nagrania")
+            tryb = gr.Radio(TRYBY, value=A.Z_PAMIECI, label="Tryb", show_label=False, container=False, elem_id="tryb")
+        fuvai_klatki = gr.State(None)
+        gra_f = gr.State(False)
+        zegar_f = gr.Timer(TAKT_ODTWARZANIA_S, active=False)
+        with gr.Tabs(elem_id="zakladki"):
+            with gr.TabItem("Masa płodu — nnU-Net + FUVAI", elem_id="tab-masa"):
+                with gr.Row(equal_height=False, elem_id="glowny"):
+                    with gr.Column(scale=5, min_width=640, elem_id="lewa"):
+                        przycisk = gr.Button("Znajdź brzuch i zmierz", variant="primary", size="lg",
+                                             min_width=280, elem_id="przycisk")
+                        podglad = gr.Image(label="Nagranie USG", interactive=False, format="jpeg", height=320,
+                                           buttons=["fullscreen"], elem_id="podglad", show_label=False)
+                        podglad_podpis = gr.HTML(html_podpis("Wybierz nagranie."))
+                        with gr.Row(elem_id="suwak-rzad", equal_height=True):
+                            suwak = gr.Slider(0, 839, value=420, step=1, label="Klatka nagrania", scale=5,
+                                              elem_id="suwak")
+                            graj = gr.Button("▶ odtwórz", size="md", scale=1, min_width=130, elem_id="graj")
+                        wykres = gr.Image(label="Pole brzucha w kolejnych klatkach", interactive=False, format="png",
+                                          height=200, buttons=[], show_label=False, elem_id="wykres")
+                        status = gr.HTML(html_status(None))
+                    with gr.Column(scale=7, min_width=920, elem_id="prawa"):
+                        with gr.Row(equal_height=False, elem_id="wyniki-pary"):
+                            with gr.Column(scale=1, min_width=400, elem_id="panel-nnunet"):
+                                gr.HTML('<div class="panel-tytul panel-cyan">nnU-Net · masa „teraz”</div>')
+                                wybrana = gr.Image(label="Klatka nnU-Net", interactive=False, format="jpeg", height=200,
+                                                   buttons=["fullscreen"], show_label=False, elem_id="wybrana")
+                                wybrana_podpis = gr.HTML(html_podpis("Klatka nnU-Net z obrysem i elipsą (AC)."))
+                                k_nnunet = gr.HTML(karta_nnunet(None))
+                            with gr.Column(scale=1, min_width=400, elem_id="panel-fuvai"):
+                                gr.HTML('<div class="panel-tytul panel-fiolet">FUVAI · polski, publiczne wagi</div>')
+                                obraz_f = gr.Image(label="Klatka FUVAI", interactive=False, format="jpeg", height=200,
+                                                   buttons=["fullscreen"], show_label=False, elem_id="obraz-fuvai")
+                                podpis_f = gr.HTML(html_podpis("Klatka FUVAI z fioletowym obrysem."))
+                                k_fuvai = gr.HTML(karta_fuvai(None))
+                        k_sano = gr.HTML(karta_sano(None))
+            with gr.TabItem("FUVAI — klatka po klatce", elem_id="tab-fuvai"):
+                gr.HTML(CAVEAT_FUVAI)
+                with gr.Row(elem_id="fuvai-gora"):
+                    przycisk_f = gr.Button("Załaduj klasyfikację klatek", variant="secondary", size="lg",
+                                           elem_id="przycisk-fuvai")
+                    status_f = gr.HTML(html_status_fuvai(None, A.Z_PAMIECI))
+                with gr.Row(equal_height=False, elem_id="fuvai-tresc"):
+                    with gr.Column(scale=5, min_width=520):
+                        fuvai_obraz = gr.Image(interactive=False, format="jpeg", height=300, buttons=["fullscreen"],
+                                               elem_id="fuvai-obraz")
+                        fuvai_podpis = gr.HTML(html_podpis("Załaduj klasyfikację FUVAI."))
+                        with gr.Row(elem_id="suwak-fuvai-rzad"):
+                            suwak_f = gr.Slider(0, 839, value=420, step=1, scale=5, elem_id="suwak-fuvai")
+                            graj_f = gr.Button("▶ odtwórz", size="md", min_width=130, elem_id="graj-fuvai")
+                        timeline_f = gr.Image(interactive=False, format="png", height=70, buttons=[],
+                                              show_label=False, elem_id="timeline-fuvai")
+                    with gr.Column(scale=4, min_width=380):
+                        fuvai_wykres = gr.Image(interactive=False, format="png", height=220, buttons=[],
+                                                show_label=False, elem_id="fuvai-wykres-p")
         with gr.Row():
             with gr.Accordion("Własny plik .mha (format ACOUSLIC-AI)", open=False, elem_id="wgraj"):
                 plik = gr.File(file_types=[".mha"], type="filepath", show_label=False, height=90)
@@ -521,8 +611,12 @@ def zbuduj_interfejs() -> gr.Blocks:
         wyniki = [wybrana, wybrana_podpis, wykres, k_nnunet, k_fuvai, k_sano, obraz_f, podpis_f]
         poczatek = [zrodlo, analiza, suwak, podglad, podglad_podpis]
 
-        wybor.change(wybierz_nagranie, [wybor], poczatek + wyniki, queue=False)
-        plik.upload(wgraj_plik, [plik], poczatek + [wybor] + wyniki, show_progress="hidden")   # błąd: tylko komunikat, bez plakietek
+        wyjscia_fuvai = [fuvai_klatki, status_f, fuvai_obraz, fuvai_podpis, fuvai_wykres, timeline_f, suwak_f]
+
+        wybor.change(wybierz_nagranie, [wybor], poczatek + wyniki, queue=False).then(
+            lambda: None, None, [fuvai_klatki], queue=False)
+        plik.upload(wgraj_plik, [plik], poczatek + [wybor] + wyniki, show_progress="hidden").then(
+            lambda: None, None, [fuvai_klatki], queue=False)
         suwak.change(pokaz_klatke, [zrodlo, suwak, analiza], [podglad, podglad_podpis],
                      trigger_mode="always_last", show_progress="hidden")
         suwak.release(odswiez_wykres, [analiza, suwak], [wykres], show_progress="hidden")
@@ -530,6 +624,15 @@ def zbuduj_interfejs() -> gr.Blocks:
         zegar_modeli.tick(sprawdz_modele, [tryb, zrodlo], [status, zegar_modeli], queue=False)
         graj.click(przelacz_odtwarzanie, [gra], [gra, zegar, graj], queue=False)
         zegar.tick(nastepna_klatka, [zrodlo, suwak], [suwak], show_progress="hidden")
+        (przycisk_f.click(lambda: gr.Button(interactive=False, value="Ładuję…"), None, [przycisk_f], queue=False)
+         .then(zaladuj_fuvai_klatki, [zrodlo, tryb], wyjscia_fuvai, show_progress="full")
+         .then(lambda: gr.Button(interactive=True, value="Załaduj klasyfikację klatek"), None, [przycisk_f],
+               queue=False))
+        suwak_f.change(pokaz_fuvai_klatke, [zrodlo, suwak_f, fuvai_klatki, tryb],
+                       [fuvai_obraz, fuvai_podpis, fuvai_wykres, timeline_f],
+                       trigger_mode="always_last", show_progress="hidden")
+        graj_f.click(przelacz_odtwarzanie, [gra_f], [gra_f, zegar_f, graj_f], queue=False)
+        zegar_f.tick(nastepna_klatka_fuvai, [zrodlo, suwak_f], [suwak_f], show_progress="hidden")
         (przycisk.click(lambda: gr.Button(interactive=False, value="Liczę…"), None, [przycisk], queue=False)
          # Bez wspólnego limitu kolejki: „z pamięci” nie czeka za liczeniem „na żywo”;
          # dwa liczenia na żywo i tak idą po kolei (blokada MPS w usg_masa.aplikacja).
