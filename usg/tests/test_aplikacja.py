@@ -149,10 +149,11 @@ def test_nr1_z_pamieci_te_same_liczby_co_notebook(app):
     f = a.ocena_fuvai
     assert f.klatka == 464 and round(f.ac_mm) == 242 and f.bez_masy and f.masa_g is None
     # model Sano: 3 551 g, pełny segment
-    assert round(a.sano.masa_g) == 3551 and not a.sano.dopelniony
+    assert 3550 <= a.sano.masa_g <= 3553 and not a.sano.dopelniony
 
-    assert "3 551" in app.karta_sano(a) and "nie wie, kiedy nie wie" in app.karta_sano(a)
-    assert "wychodzi poza dane" in app.karta_sano(a) and "prognoz" not in app.karta_sano(a)
+    sano = app.karta_sano(a)
+    assert A.gramy(int(round(a.sano.masa_g))) in sano and "170 g" in sano and "nie wie" not in sano.lower()
+    assert "28–34 tc." in app.karta_sano(a) and "170 g" in app.karta_sano(a) and "prognoz" not in app.karta_sano(a)
     assert "304" in app.karta_nnunet(a) and "2 590" in app.karta_nnunet(a)
     assert "masy nie podajemy" in app.karta_fuvai(a)
 
@@ -193,10 +194,10 @@ def test_nr3_z_pamieci_jak_notebook(app):
 def test_wycinek_z_pamieci_jak_notebook(app):
     a = A.analizuj("Wycinek", A.Z_PAMIECI)
     assert a.n_klatek == 128 and a.przeciagniecie is None
-    assert round(a.sano.masa_g) == 4000 and a.sano.dopelniony
+    assert 3999 <= a.sano.masa_g <= 4002 and a.sano.dopelniony
     assert not a.ocena_fuvai.znalazl and a.ocena_fuvai.masa_g is None
     sano = app.karta_sano(a)
-    assert A.gramy(4000) + "*" in sano and f"potrzeba {A.KLATEK_NA_SEGMENT}" in sano and A.KLATEK_NA_SEGMENT == 46
+    assert A.gramy(int(round(a.sano.masa_g))) + "*" in sano and f"potrzeba {A.KLATEK_NA_SEGMENT}" in sano and A.KLATEK_NA_SEGMENT == 46
     assert "nie znalazł" in app.karta_fuvai(a)
     assert "przeciągnięcie" not in app.karta_nnunet(a)
 

@@ -47,11 +47,11 @@ def main() -> None:
             time.sleep(1.5)
 
             page.screenshot(path=str(OUT / "usg-06-aplikacja.png"), full_page=True)
-            karta = page.locator(".k-cyan").first
-            if karta.count():
-                karta.screenshot(path=str(OUT / "usg-07-nnunet.png"))
+            pary = page.locator("#wyniki-pary")
+            if pary.count():
+                pary.first.screenshot(path=str(OUT / "usg-07-nnunet.png"))
             else:
-                page.locator(".wyniki").first.screenshot(path=str(OUT / "usg-07-nnunet.png"))
+                page.locator("#prawa").first.screenshot(path=str(OUT / "usg-07-nnunet.png"))
             browser.close()
         print(OUT / "usg-06-aplikacja.png")
         print(OUT / "usg-07-nnunet.png")

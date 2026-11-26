@@ -19,16 +19,28 @@ body, .gradio-container {
   background: linear-gradient(160deg, #0A0A14 0%, #1F1F35 100%) fixed !important;
   color: var(--tekst);
 }
-.gradio-container { max-width: 100% !important; padding: 10px 28px 20px !important; }
-#glowny { gap: 18px; }
+.gradio-container { max-width: 100% !important; padding: 8px 24px 16px !important; }
+#glowny { gap: 14px; align-items: flex-start; }
+#wyniki-pary { gap: 12px !important; align-items: stretch; }
+#panel-nnunet, #panel-fuvai { gap: 6px; }
+.panel-tytul { font-size: 15px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: 0 2px 6px; }
+.panel-cyan { color: var(--cyan); }
+.panel-fiolet { color: var(--violet); }
+#prawa .karta { padding: 12px 16px; }
+#prawa .liczba { font-size: 32px; }
+#prawa .liczba.duza { font-size: 44px; }
+#prawa .siatka4 { grid-template-columns: 1fr 1fr; gap: 8px 14px; }
+#prawa .zastrz { font-size: 17px; padding-left: 20px; }
+#prawa .maly { font-size: 17px; }
+#wyniki-pary .karta-eyebrow { display: none; }
 footer { display: none !important; }
 
 /* ── nagłówek ── */
 .naglowek { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; padding: 0 4px 4px; }
 .naglowek .eyebrow { font-size: 15px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--peach); }
 .naglowek .eyebrow::before { content: ""; display: inline-block; width: 34px; height: 2px; background: var(--peach); vertical-align: middle; margin-right: 12px; }
-.naglowek h1 { font-size: 42px; line-height: 1.05; font-weight: 800; letter-spacing: -.02em; margin: 4px 0 4px; color: #fff; }
-.naglowek .lead { font-size: 18px; color: var(--tekst-2); margin: 0; max-width: 1100px; line-height: 1.4; }
+.naglowek h1 { font-size: 38px; line-height: 1.05; font-weight: 800; letter-spacing: -.02em; margin: 4px 0 4px; color: #fff; }
+.naglowek .lead { font-size: 17px; color: var(--tekst-2); margin: 0; max-width: 1100px; line-height: 1.35; }
 .grad { background: linear-gradient(95deg, #FFAF7B 0%, #D76D77 100%) !important; -webkit-background-clip: text !important;
   background-clip: text !important; color: transparent !important; -webkit-text-fill-color: transparent !important; }
 .zastrzezenie { flex: 0 0 auto; max-width: 460px; font-size: 17px; line-height: 1.35; color: #ffd9b8;
@@ -46,7 +58,7 @@ footer { display: none !important; }
 #suwak input[type=number] { font-size: 18px !important; }
 
 /* ── obrazy USG ── */
-#podglad img, #wybrana img, #fuvai-obraz img { background: #000; border-radius: 12px; }
+#podglad img, #wybrana img, #obraz-fuvai img { background: #000; border-radius: 12px; }
 #wykres img { border-radius: 12px; }
 .podpis { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; font-size: 16px; color: var(--tekst-2); padding: 4px 4px 0; }
 .podpis b { color: #fff; }
@@ -112,7 +124,7 @@ footer { display: none !important; }
 .zrodla ol { padding-left: 24px; margin: 4px 0; }
 .zrodla li { margin: 4px 0; }
 .zrodla .dzieki { color: var(--peach); font-weight: 600; margin: 10px 0 4px; }
-#zrodla, #wgraj, #fuvai-obraz { font-size: 17px; }
+#zrodla, #wgraj { font-size: 17px; }
 
 /* pigułki wyboru nagrania i trybu (bez etykiet) */
 #sterowanie { gap: 16px; }

@@ -66,7 +66,7 @@ def html_naglowek() -> str:
     <h1>Z nagrania USG <span class="grad">do masy płodu</span></h1>
     <p class="lead">Model sam przegląda całe nagranie „na ślepo”, znajduje brzuch płodu, mierzy jego obwód (AC)
     i szacuje masę „teraz”. <b>Nie lepsze od Hadlocka</b> — ale w pełni automatyczne, na nagraniu nowicjusza.
-    Polski model Sano szacuje masę <em>w dniu porodu</em> i pokazuje, co się dzieje, gdy model wychodzi poza swoje dane.</p>
+    Polski model Sano (TabAttention, MICCAI 2023) szacuje z wideo masę <em>w dniu porodu</em> — uczony na badaniach tuż przed porodem; na naszych nagraniach (28–34 tc.) podaje szacunek masy urodzeniowej, nie aktualnej.</p>
   </div>
   <div class="zastrzezenie">{e(ZASTRZEZENIE)}</div>
 </header>"""
@@ -198,27 +198,21 @@ def karta_sano(a: A.Analiza | None) -> str:
         przypis = (f'<div class="maly ostrz">* Za mało klatek brzucha na pełny segment (jest {S.n_klatek_brzucha}, '
                    f'potrzeba {A.KLATEK_NA_SEGMENT}): segment dopełniony zerami, wynik orientacyjny.</div>'
                    if S.dopelniony else "")
-        niezalezny = ("każdemu z naszych nagrań daje ok. 3,6–4,0 kg" if a.wbudowane
-                      else "na nagraniach z pokazu dawał ok. 3,6–4,0 kg")
-        poza = ("Nasze nagrania to ok. 28–34 tc.: model <b>wychodzi poza dane, na których się uczył</b> — "
-                "i podaje liczbę typową dla noworodka bez cienia wątpliwości." if a.wbudowane
-                else "Przed terminem porodu model <b>wychodzi poza dane, na których się uczył</b> — "
-                     "i mimo to podaje liczbę bez cienia wątpliwości.")
         zywo = ('<div class="maly">Na żywo nnU-Net ogląda co 4. klatkę, więc model Sano dostaje inne klatki brzucha '
                 'i wynik różni się od slajdu (tam: tryb „z pamięci”).</div>' if a.tryb == A.NA_ZYWO else "")
         tresc = f"""
   <div class="siatka2">
     <div><div class="etyk">masa w dniu porodu (wg modelu)</div><div class="liczba roz duza">{A.gramy(S.masa_g)}{gw}<small> g</small></div></div>
-    <div><div class="etyk">dla porównania: masa teraz (AC)</div><div class="liczba cyan">{teraz}</div></div>
+    <div><div class="etyk">dla porównania: masa teraz (nnU-Net + AC)</div><div class="liczba cyan">{teraz}</div></div>
   </div>
   <ul class="zastrz">
-    <li>Szacuje masę <b>w dniu porodu</b>: uczony tylko na badaniach <b>&lt; 24 h przed porodem</b>
+    <li>Polski model (Sano Kraków + WUM): <b>3D ResNet-18</b> z pracy TabAttention (MICCAI 2023), <b>publiczny checkpoint</b>.</li>
+    <li>Szacuje masę <b>w dniu porodu</b> z samego wideo — uczył się na badaniach <b>&lt; 24 h przed porodem</b>
     (ciąże donoszone, 38,3 ± 1,5 tc., masa ur. {A.gramy(A.MASA_UR_UCZACA).replace(" ", "&nbsp;")} ± {A.SD_UCZACA} g).</li>
-    <li>{poza}</li>
-    <li>Wynik <b>prawie nie zależy od obrazu</b>: {niezalezny}.</li>
-    <li>Wynik <b>kruchy</b>: samo skalowanie obrazu przesuwa go o 350–800 g.</li>
-    <li>{"<b>Brak walidacji</b>: mas urodzeniowych tych dzieci nie znamy." if a.wbudowane
-         else "<b>Brak walidacji</b> na nagraniach „na ślepo” (z pokazu: mas urodzeniowych nie znamy)."}</li>
+    <li>Na nagraniach ok. <b>28–34 tc.</b> model podaje szacunek typowy dla urodzenia (ok. 3,6–4,0 kg), nie bieżącej masy płodu (wg AC ok. 1,4–2,6 kg).</li>
+    <li>W pracy: wariant <b>obraz + 6 pomiarów lekarza</b> — błąd <b>170 g</b> (lepiej niż klinicyści <b>205 g</b>);
+    pokazany tu model obrazowy: <b>289 g</b> — kierunek jest jasny: AI <b>wzmacnia</b> pomiary lekarza.</li>
+    <li><b>Uwaga:</b> mas urodzeniowych tych dzieci nie znamy — nie ma tu walidacji na naszym materiale.</li>
   </ul>
   {przypis}{zywo}
   <div class="maly">Ogląda {model_sano.KLATKI} klatek brzucha naraz (wg nnU-Netu: {S.n_klatek_brzucha} → {n_s} {A.odmiana(n_s, 'segment', 'segmenty', 'segmentów')}).</div>"""
@@ -226,7 +220,6 @@ def karta_sano(a: A.Analiza | None) -> str:
 <div class="karta k-roz">
   <div class="karta-eyebrow">3 · {tytul}</div>
   {tresc}
-  <div class="haslo">Ten model <span class="grad">nie wie, kiedy nie wie.</span></div>
 </div>"""
 
 
@@ -484,40 +477,40 @@ def zbuduj_interfejs() -> gr.Blocks:
 
         gr.HTML(html_naglowek())
         with gr.Row(equal_height=False, elem_id="glowny"):
-            # ── lewa część: sterowanie, nagranie (suwak), wybrana klatka, wykres
-            with gr.Column(scale=6, min_width=760, elem_id="lewa"):
+            # ── lewa: sterowanie, podgląd nagrania, wykres
+            with gr.Column(scale=5, min_width=640, elem_id="lewa"):
                 with gr.Row(elem_id="sterowanie", equal_height=True):
-                    with gr.Column(scale=3, min_width=420):
+                    with gr.Column(scale=3, min_width=380):
                         wybor = gr.Radio(nagrania, value=None, label="Nagranie", show_label=False, container=False,
                                          elem_id="wybor-nagrania")
                         tryb = gr.Radio(TRYBY, value=A.Z_PAMIECI, label="Tryb", show_label=False, container=False,
                                         elem_id="tryb")
                     przycisk = gr.Button("Znajdź brzuch i zmierz", variant="primary", size="lg", scale=2,
-                                         min_width=300, elem_id="przycisk")
-                with gr.Row(equal_height=False):
-                    with gr.Column(scale=1, min_width=360):
-                        podglad = gr.Image(label="Nagranie USG", interactive=False, format="jpeg", height=330,
-                                           buttons=["fullscreen"], elem_id="podglad", show_label=False)
-                        podglad_podpis = gr.HTML(html_podpis("Wybierz nagranie."))
-                        with gr.Row(elem_id="suwak-rzad", equal_height=True):
-                            suwak = gr.Slider(0, 839, value=420, step=1, label="Klatka nagrania", scale=5,
-                                              elem_id="suwak")
-                            graj = gr.Button("▶ odtwórz", size="md", scale=1, min_width=140, elem_id="graj")
-                    with gr.Column(scale=1, min_width=360):
-                        wybrana = gr.Image(label="Klatka wybrana przez model", interactive=False, format="jpeg",
-                                           height=330, buttons=["fullscreen"], show_label=False, elem_id="wybrana")
-                        wybrana_podpis = gr.HTML(html_podpis("Tu pojawi się klatka wybrana przez model."))
-                        status = gr.HTML(html_status(None))
+                                         min_width=280, elem_id="przycisk")
+                podglad = gr.Image(label="Nagranie USG", interactive=False, format="jpeg", height=340,
+                                   buttons=["fullscreen"], elem_id="podglad", show_label=False)
+                podglad_podpis = gr.HTML(html_podpis("Wybierz nagranie."))
+                with gr.Row(elem_id="suwak-rzad", equal_height=True):
+                    suwak = gr.Slider(0, 839, value=420, step=1, label="Klatka nagrania", scale=5, elem_id="suwak")
+                    graj = gr.Button("▶ odtwórz", size="md", scale=1, min_width=130, elem_id="graj")
                 wykres = gr.Image(label="Pole brzucha w kolejnych klatkach", interactive=False, format="png",
-                                  height=290, buttons=[], show_label=False, elem_id="wykres")
-            # ── prawa część: karty z wynikami
-            with gr.Column(scale=6, min_width=520, elem_id="prawa"):
-                k_nnunet = gr.HTML(karta_nnunet(None))
-                k_fuvai = gr.HTML(karta_fuvai(None))
-                with gr.Accordion("Klatka wybrana przez FUVAI", open=False, elem_id="fuvai-obraz"):
-                    obraz_f = gr.Image(interactive=False, format="jpeg", height=320, show_label=False,
-                                       buttons=["fullscreen"])
-                    podpis_f = gr.HTML(html_podpis("Klatka FUVAI."))
+                                  height=220, buttons=[], show_label=False, elem_id="wykres")
+                status = gr.HTML(html_status(None))
+            # ── prawa: nnU-Net i FUVAI obok siebie, Sano pod spodem
+            with gr.Column(scale=7, min_width=920, elem_id="prawa"):
+                with gr.Row(equal_height=False, elem_id="wyniki-pary"):
+                    with gr.Column(scale=1, min_width=400, elem_id="panel-nnunet"):
+                        gr.HTML('<div class="panel-tytul panel-cyan">nnU-Net · masa „teraz”</div>')
+                        wybrana = gr.Image(label="Klatka nnU-Net", interactive=False, format="jpeg", height=220,
+                                           buttons=["fullscreen"], show_label=False, elem_id="wybrana")
+                        wybrana_podpis = gr.HTML(html_podpis("Klatka nnU-Net z obrysem i elipsą (AC)."))
+                        k_nnunet = gr.HTML(karta_nnunet(None))
+                    with gr.Column(scale=1, min_width=400, elem_id="panel-fuvai"):
+                        gr.HTML('<div class="panel-tytul panel-fiolet">FUVAI · polski, publiczne wagi</div>')
+                        obraz_f = gr.Image(label="Klatka FUVAI", interactive=False, format="jpeg", height=220,
+                                           buttons=["fullscreen"], show_label=False, elem_id="obraz-fuvai")
+                        podpis_f = gr.HTML(html_podpis("Klatka FUVAI z fioletowym obrysem."))
+                        k_fuvai = gr.HTML(karta_fuvai(None))
                 k_sano = gr.HTML(karta_sano(None))
         with gr.Row():
             with gr.Accordion("Własny plik .mha (format ACOUSLIC-AI)", open=False, elem_id="wgraj"):

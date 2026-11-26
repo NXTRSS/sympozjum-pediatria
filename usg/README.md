@@ -20,7 +20,7 @@ Nie udajemy narzędzia lepszego od Hadlocka (takiego dziś publicznie nie ma) i 
 
 1. **Automatyzacja na trudnych danych.** Model sam znajduje brzuch w 840 klatkach nagrania „na ślepo” (tania głowica, smartfon, nowicjusz w Sierra Leone); AC wychodzi kilka–kilkanaście mm od pomiaru ekspertów. Hadlock wymaga doświadczonego sonografisty.
 2. **Najlepszy był model obraz + pomiary lekarza.** W pracy TabAttention sam obraz (3D ResNet-18 — to ten model, jedyny dostępny publicznie) mylił się bardziej niż klinicyści z Hadlockiem (289 g vs 205 g), a obraz + 6 pomiarów biometrycznych mniej (170 g; tych wag nie ma publicznie). AI nie zastępuje pomiarów lekarza, tylko je wzmacnia.
-3. **Ten model nie wie, kiedy nie wie.** Uczony na dniu porodu, płodowi z 28. tc. podaje 3,6–4 kg bez wahania; ten sam mechanizm co halucynacje ChatGPT. To ekstrapolacja poza dane uczące tego konkretnego checkpointu, a nie ocena metody. Pytanie do każdego produktu AI: „na jakich danych to uczono?”.
+3. **Polski model Sano z publicznym checkpointem.** Ogląda wideo i szacuje masę w dniu porodu (uczony na badaniach < 24 h przed porodem). Na naszych nagraniach (28–34 tc.) zwraca wartości typowe dla urodzenia (ok. 3,6–4,0 kg), nie bieżącej masy — w pracy najlepszy był wariant obraz + 6 pomiarów lekarza (170 g, lepiej niż klinicyści 205 g). Krótka uwaga: mas urodzeniowych tych dzieci nie znamy.
 
 Puenta do apelu: polskie modele lepsze od klinicystów (BabyNet++, pełny TabAttention) opisano w publikacjach, ale ich wytrenowanych wag nie ma publicznie. Archiwizujmy i walidujmy to, co sami sfinansowaliśmy.
 
@@ -66,7 +66,8 @@ uv run python app/demo_usg.py --bez-przegladarki   # sam serwer (Ctrl+C kończy)
 - **Tryb „z pamięci”** (domyślny): wyniki z `pamiec/`, od razu, bez modeli. Liczby jak na slajdzie (AC 304 mm, Sano 3 551 g dla Nr 1 itd.).
 - **Tryb „na żywo”**: po przełączeniu modele wczytują się w tle (ok. 2–5 s; pasek stanu mówi, kiedy są gotowe albo że wczytanie się nie udało), potem przycisk liczy nnU-Net (skrócona ścieżka, co 4. klatka) z paskiem postępu, FUVAI i model Sano. Zmierzone na M1 Pro: ok. 25 s na nagranie 840-klatkowe razem z wczytaniem modeli (nnU-Net 16–21 s, FUVAI 5–7 s, Sano 0,5 s), wycinek 128 klatek ok. 5–10 s; pierwsze liczenie po starcie bywa wolniejsze. Wyniki różnią się od slajdu (inne klatki, patrz tabela w sekcji o modelu Sano). Dwa liczenia na żywo idą po kolei (blokada MPS); „z pamięci” nie czeka w tej kolejce.
 - **Błędy**: na ekranie tylko krótki komunikat po polsku (zły plik: „Nie udało się wczytać pliku… (oczekiwany format ACOUSLIC-AI: .mha, 3D)”; awaria na żywo: „Przełącz na „z pamięci””), szczegóły w terminalu, w którym działa aplikacja. Wgrany plik jest podpisany „Dane: plik wgrany przez użytkownika”, nie jako ACOUSLIC-AI.
-- **Suwak i „▶ odtwórz”** przewijają nagranie. Po analizie klatka wybrana przez nnU-Net ma obrys (cyjan) i elipsę (bursztyn), klatka FUVAI obrys fioletowy; po analizie na żywo obrys widać we wszystkich klatkach, w których nnU-Net znalazł brzuch.
+- **Układ**: po lewej nagranie (suwak + wykres pola brzucha); po prawej **dwa panele obok siebie** — nnU-Net (klatka z obrysem i elipsą, AC, masa „teraz”, wiek wg AC) oraz FUVAI (klatka z fioletowym obrysem, prawdopodobieństwa klas, AC, masa albo „nie znalazł”); pod nimi karta modelu Sano.
+- **Suwak i „▶ odtwórz”** przewijają nagranie. Po analizie na żywo obrys nnU-Net widać we wszystkich klatkach, w których model znalazł brzuch.
 - **Bez internetu**: wyłączone statystyki Gradio (`GRADIO_ANALYTICS_ENABLED=False`), czcionki systemowe, nic z CDN (sprawdzone w logu sieci przeglądarki: zero zapytań poza `127.0.0.1`). Wyniki „z pamięci” wymagają wcześniejszego `przygotuj_demo.py`.
 - Logika: `src/usg_masa/aplikacja.py` (`analizuj(nagranie, tryb)`), wygląd: `app/demo_usg.py` + `app/styl.css`, testy: `tests/test_aplikacja.py`.
 
@@ -74,7 +75,7 @@ Na scenie:
 
 1. Uruchom aplikację **przed prelekcją** i zostaw kartę otwartą (pierwsze wczytanie nagrania trwa ok. 1 s).
 2. Pokazuj w trybie **„z pamięci”**: od razu i z liczbami ze slajdu. „Na żywo” tylko jako bonus (ok. 25 s); przełącz tryb kilka sekund przed kliknięciem, żeby modele zdążyły się wczytać.
-3. **F11** (albo Ctrl+Cmd+F na Macu) = pełny ekran. Przy 1920×1080 cały ekran (sterowanie, obrazy, wykres i trzy karty) mieści się w powiększeniu **80%** (Cmd −); pod spodem zostają tylko zwinięte „Własny plik” i „Źródła”. Przy 80% zastrzeżenia mają ok. 16 px na ekranie (w CSS 20 px), etykiety ok. 13 px, atrybucja 12 px. Na projektorze o niższej rozdzielczości zmniejsz dalej albo przewijaj.
+3. **F11** (albo Ctrl+Cmd+F na Macu) = pełny ekran. Przy 1920×1080 cały ekran (nagranie po lewej, dwa panele wyników po prawej, Sano pod spodem) mieści się w powiększeniu **80%** (Cmd −); pod spodem zostają zwinięte „Własny plik” i „Źródła”. Na projektorze o niższej rozdzielczości zmniejsz dalej albo przewijaj.
 4. Nie uruchamiaj w tym czasie notebooka w trybie „na żywo” ani `przygotuj_demo.py` (dwa procesy na MPS).
 5. Okienko błędu ma nagłówek „Error” (stały napis Gradio, nie da się go podmienić); sama treść jest po polsku.
 
@@ -172,7 +173,7 @@ To są **cztery nagrania, nie walidacja.** Pokazują, że pipeline działa i daj
 - Na nagraniach z 28.–34. tc. model wychodzi poza dane, na których się uczył (ekstrapolacja), i każdemu dziecku podaje liczbę typową dla noworodka (3,6–4,0 kg) bez cienia wątpliwości, choć wg AC te płody mają dziś ok. 1,4–2,6 kg. Wynik prawie nie zależy od tego, co model widzi: na wszystkich niepustych klatkach wychodzi 3,6–3,9 kg.
 - Mas urodzeniowych dzieci z ACOUSLIC-AI nie znamy, więc **nie ma tu żadnej walidacji**. To też nie jest „prognoza na termin”: model uczono tylko na badaniach < 24 h przed porodem, więc nie ma skąd wiedzieć, ile urośnie płód z 30. tygodnia.
 - **Wynik jest kruchy:** sama skala piksela przesuwa go o 350–800 g (bez przeskalowania: 3,0–3,6 kg), a próbkowanie nnU-Netu na żywo o 30–320 g. Nasz „segment” to klatki z kilku przeciągnięć „na ślepo” (np. klatki 50…615 na `0199616b`), a nie ciągły klip w płaszczyźnie standardowej jak u autorów.
-- Model nie sygnalizuje, że jest poza swoimi danymi: zawsze zwraca liczbę w gramach. Na prelekcji to pomost do części o modelach językowych („model nie wie, kiedy nie wie”).
+- Na nagraniach 28–34 tc. wynik czytamy jako szacunek masy **w dniu porodu** (tego, na czym model był uczone), nie bieżącej masy płodu. Mas urodzeniowych tych dzieci nie znamy.
 
 ## Licencje i źródła
 
