@@ -27,7 +27,7 @@ Wynik: `prezentacja_zapas.html` oraz `eksport/prezentacja_zapas.pdf` i `.pptx`. 
 
 [![Otwórz w Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/notebook/model_jezyka_choroby.ipynb)
 
-Nie trzeba nic instalować: kliknij przycisk *Open in Colab* (potrzebne konto Google), potem `Środowisko wykonawcze` → `Uruchom wszystko`. Dane pobiorą się same, trening trwa kilka minut. Na końcu notatnik uruchamia aplikację Gradio (liczba nazw + „kreatywność"/temperatura) z publicznym linkiem.
+Nie trzeba nic instalować: kliknij przycisk *Open in Colab* (potrzebne konto Google), potem `Środowisko wykonawcze` → `Uruchom wszystko`. Dane pobiorą się same. Sam trening na CPU to kilkanaście sekund; pierwsze uruchomienie w Colabie, z instalacją pakietów, może potrwać kilka minut. Na końcu notatnik uruchamia aplikację Gradio (liczba nazw + „kreatywność"/temperatura) z publicznym linkiem.
 
 W notatniku można zmienić `ZBIOR` na `"leki"` albo `"dinozaury"` i wytrenować model na innym zbiorze nazw.
 
