@@ -6,7 +6,7 @@ from typing import Callable
 
 from delphi_demo import pamiec
 from delphi_demo.slownik import Slownik
-from delphi_demo.wyszukiwarka import dopisz, opis_historii, utworz_wybor_choroby
+from delphi_demo.wyszukiwarka import dopisz, opis_historii, szukaj
 
 
 @dataclass
@@ -66,12 +66,13 @@ def panel_generowania(
     szerokosc = W.Layout(width="100%")
     zajete = {"tak": False}
 
-    wybor = utworz_wybor_choroby(
-        sl, rows=6,
+    pole_szukaj = W.Text(
         placeholder="np. astma, cukrzyca, atopowe zapalenie skóry…",
-        szerokosc=szerokosc,
+        description="Szukaj:",
+        layout=szerokosc,
+        continuous_update=True,
     )
-    pole_szukaj, lista = wybor.szukaj, wybor.lista
+    lista = W.Select(options=[], rows=6, description="Choroba:", layout=szerokosc)
     pole_wiek_ch = W.BoundedFloatText(
         value=10, min=0, max=110, step=1, description="W wieku:",
         layout=W.Layout(width="200px"),
@@ -107,13 +108,17 @@ def panel_generowania(
 
     wyjscie = W.Output()
 
+    def odswiez_liste(_=None):
+        wyniki = szukaj(pole_szukaj.value, sl)
+        lista.options = [(f"{kod} · {nazwa}", kod) for kod, nazwa in wyniki]
+        lista.value = wyniki[0][0] if wyniki else None
+
     def po_zmianie_historii(_=None):
         opis.value = opis_historii(pole_historia.value, sl)
 
     def po_dodaj(_):
-        kod = wybor.wybrany_kod()
-        if kod:
-            pole_historia.value = dopisz(pole_historia.value, kod, pole_wiek_ch.value)
+        if lista.value:
+            pole_historia.value = dopisz(pole_historia.value, lista.value, pole_wiek_ch.value)
 
     def po_wyczysc(_):
         pole_historia.value = ""
@@ -171,6 +176,7 @@ def panel_generowania(
         """Run All w Jupyterze / nbconvert — jak dawna statyczna komórka."""
         po_generuj(None)
 
+    pole_szukaj.observe(odswiez_liste, names="value")
     pole_historia.observe(po_zmianie_historii, names="value")
     przycisk_dodaj.on_click(po_dodaj)
     przycisk_wyczysc.on_click(po_wyczysc)
