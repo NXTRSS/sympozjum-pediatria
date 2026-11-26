@@ -30,8 +30,7 @@ Checklist na druk. **Strona PPTX** ≈ numer slajdu w decku + 14 (wyjątek: slaj
 | 35–43 | 21–29 | Skala, zagadka, Whisper, LM w medycynie | 14 |
 | 44–45 | 30–31 | Delphi | 4 |
 | **46–51** | 32–37 | **ZAPAS Delphi** zd01–zd06 | 0 |
-| 52–55 | 35–38 | BabyNet / Hadlock / USG | 7 |
-| **52** | 38 | Slajd „Demo USG” | 2 |
+| 52–55 | 35–38 | BabyNet, Hadlock, slajd demo USG | 9 |
 | **53–59** | 39–45 | **ZAPAS USG** zu01–zu07 | 0 |
 | 60 | 46 | Model Sano (slajd) | 4 |
 | 61 | 47 | Materiały | 2 |
