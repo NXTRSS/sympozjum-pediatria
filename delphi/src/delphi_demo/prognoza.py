@@ -109,10 +109,11 @@ def ranking(model, historia: Sequence[Zdarzenie], plec: str, wiek_teraz: float,
 @torch.no_grad()
 def generuj(model, historia: Sequence[Zdarzenie], plec: str, wiek_teraz: float,
             do_wieku: float = MAKS_WIEK_DANYCH, maks_krokow: int = 80, ziarno: int | None = 0,
-            top_kandydatow: int = 5) -> list[Krok]:
+            temperatura: float = 1.0, top_kandydatow: int = 5) -> list[Krok]:
     """Losuje dalszy ciąg życia token po tokenie (ta sama reguła co Delphi.generate autorów).
 
     ziarno=None używa globalnego generatora torch (tak robi Delphi.generate; test zgodności).
+    temperatura=1.0 = domyślne; >1 „odważniej", <1 ostrożniej (skala logitów przed losowaniem).
     Kroki „brak zdarzenia" też są zwracane (pokazują upływ czasu); do wyświetlania można je pominąć.
     """
     gen = None if ziarno is None else torch.Generator().manual_seed(ziarno)
@@ -122,6 +123,8 @@ def generuj(model, historia: Sequence[Zdarzenie], plec: str, wiek_teraz: float,
     for _ in range(maks_krokow):
         logity = model(idx.to(urz), wiek.to(urz))[0][:, -1, :].cpu()
         l = _dozwolone_logity(logity, idx)
+        if temperatura != 1.0:
+            l = l / max(float(temperatura), 1e-6)
         u = torch.rand(l.shape, generator=gen)
         czasy = torch.clamp(-torch.exp(-l) * u.log(), min=0, max=365 * 80)
         dt, nastepny = czasy.min(1)

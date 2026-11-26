@@ -155,25 +155,54 @@ wykresy.krzywe(KA, SL.nazwa, KB, etykiety=("z cukrzycą", "bez cukrzycy"))
 plt.show()"""),
     ("md", """## Klamra: życie generowane token po tokenie
 
-Ta sama pętla co przy nazwach chorób: model patrzy na dotychczasową historię, podaje kandydatów z prawdopodobieństwami, losujemy jednego, dopisujemy i powtarzamy, aż do zgonu albo 80. roku życia.
+Ta sama pętla co przy nazwach chorób: model patrzy na dotychczasową historię, podaje kandydatów z prawdopodobieństwami, losujemy jednego, dopisujemy i powtarzamy, aż do zgonu albo limitu kroków.
 
-W nawiasie: szansa wylosowanego zdarzenia; „kandydaci” to trzy najbardziej prawdopodobne. Obie liczby liczymy jak w rankingu: spośród chorób i zgonu. Wylosowane zdarzenie często nie jest w czołówce: każda z ~1250 chorób ma trochę szansy, a my **losujemy**, a nie wybieramy najbardziej prawdopodobnej. Trzech czołowych kandydatów to razem tylko ok. 10% szansy, a pozostałe ~90% rozkłada się na setki chorób po ułamku procenta. Los najczęściej trafia więc w ten „długi ogon” rzadkich chorób. Dlatego jedno wylosowane życie to przykład, a nie prognoza; prognozą są krzywe z 1000 losowań wyżej."""),
-    ("code", """# ── ŻYCIE TOKEN PO TOKENIE ────────────────────────────────────
+W panelu poniżej ustaw historię, płeć, wiek dziś, ziarno i temperaturę, potem kliknij **Generuj**. Domyślnie: przykład astmy od dzieciństwa (to samo co wcześniej na slajdzie).
+
+W nawiasie: szansa wylosowanego zdarzenia; „kandydaci” to najbardziej prawdopodobne. Wylosowane zdarzenie często nie jest w czołówce — dlatego jedno życie to ilustracja mechanizmu, a prognozą są krzywe z 1000 losowań wyżej."""),
+    ("code", """# ── ŻYCIE TOKEN PO TOKENIE (PANEL) ────────────────────────────
+from IPython.display import display
+from delphi_demo.generowanie_panel import panel_generowania
+
 P = przyklady.PRZYKLADY["astma_od_dziecka"]
-H = parsuj_historie(P["historia"], SL)
-ZIARNO = 0   # zmień, żeby wylosować inne życie tej samej osoby
 
-if TRYB == "z_pamieci" and ZIARNO == 0 and pamiec.jest("slad_astma_od_dziecka"):
-    KROKI = pamiec.wczytaj_kroki("slad_astma_od_dziecka")
-else:
-    KROKI = prognoza.generuj(MODEL, H, P["plec"], P["wiek_teraz"], ziarno=ZIARNO)
-print(P["opis"])
-print(wykresy.slad_generowania(KROKI, SL.nazwa, ile=12))
-GEN = [Zdarzenie(k.token, k.wiek_lat) for k in KROKI]
-PLEC_P = KOBIETA if P["plec"] == "K" else MEZCZYZNA
-wykresy.os_zycia([Zdarzenie(PLEC_P, 0.0), *H], SL.nazwa, kolor=lambda t: SL.kolor[t],
-                 wygenerowane=GEN, tytul="Historia (pełne kółka) i dalszy ciąg wylosowany przez model (puste)")
-plt.show()"""),
+
+def pokaz_zycie_tokenami(historia_tekst, plec, wiek_teraz, ziarno, temperatura, maks_krokow,
+                         ile_sladu=12, kroki_z_pamieci=None):
+    try:
+        historia = parsuj_historie(historia_tekst, SL)
+    except BladHistorii as blad:
+        print("UWAGA:", blad)
+        return None
+    if kroki_z_pamieci is not None:
+        kroki = kroki_z_pamieci
+    else:
+        kroki = prognoza.generuj(
+            MODEL, historia, plec, wiek_teraz,
+            ziarno=ziarno, temperatura=temperatura, maks_krokow=maks_krokow,
+        )
+    opis = P["opis"] if historia_tekst.strip() == P["historia"] else (
+        f"({'Kobieta' if plec == 'K' else 'Mężczyzna'}, {wiek_teraz} lat; historia: {historia_tekst})")
+    print(opis)
+    print(wykresy.slad_generowania(kroki, SL.nazwa, ile=ile_sladu))
+    gen = [Zdarzenie(k.token, k.wiek_lat) for k in kroki]
+    plec_p = KOBIETA if plec == "K" else MEZCZYZNA
+    wykresy.os_zycia(
+        [Zdarzenie(plec_p, 0.0), *historia], SL.nazwa, kolor=lambda t: SL.kolor[t],
+        wygenerowane=gen,
+        tytul="Historia (pełne kółka) i dalszy ciąg wylosowany przez model (puste)",
+    )
+    plt.show()
+    return kroki
+
+
+PANEL_GEN = panel_generowania(
+    SL, pokaz_zycie_tokenami, tryb=TRYB, klucz_pamieci="astma_od_dziecka", domyslny=P,
+    historia=P["historia"], plec=P["plec"], wiek_teraz=P["wiek_teraz"],
+    ziarno=0, temperatura=1.0, maks_krokow=80, ile_sladu=12,
+)
+display(PANEL_GEN.widok)
+PANEL_GEN.uruchom_domyslnie()"""),
     ("md", """## Uczciwie: czego ten pokaz NIE pokazuje
 
 - **Wagi:** prawdziwy Delphi-2M (UK Biobank) jest dostępny tylko po wniosku do UK Biobank (licencja wag CC BY-NC-ND 4.0, tylko niekomercyjnie). Nasz model widział wyłącznie dane syntetyczne autorów, ok. 7 tys. wymyślonych osób zamiast 400 tys. prawdziwych. Autorzy sami piszą, że model z danych syntetycznych służy tylko do testów kodu.

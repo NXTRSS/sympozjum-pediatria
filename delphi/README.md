@@ -35,7 +35,7 @@ Zmierzone (8.11.2026, M4 Pro): zestaw szybki to 103 testy PASS i 5 SKIP w ok. 3 
 
 ## Wyszukiwarka chorób
 
-W notebooku nie trzeba znać kodów ICD-10. Panel pod komórką „TWOJA HISTORIA” pozwala wpisać fragment polskiej nazwy (bez polskich znaków też działa, np. „zawal”, „niewydol serc”, „otylosci”), wybrać chorobę z listy, podać wiek i dopisać ją do historii. Przeszukiwane są krótkie nazwy dla sali, oficjalna polska ICD-10 (CeZ) i kilkadziesiąt potocznych synonimów (np. „celiakia” → K90, „autyzm” → F84, „ADHD” → F90). Historia zostaje tekstem w formacie „E11 50, I10 55”, więc kody można nadal wpisywać ręcznie. Kod: `src/delphi_demo/wyszukiwarka.py`, testy: `tests/test_wyszukiwarka.py`.
+W notebooku nie trzeba znać kodów ICD-10. Panel pod komórką „TWOJA HISTORIA” oraz interaktywny panel **„życie token po tokenie”** (płeć, wiek dziś, historia z wyszukiwarki, ziarno, temperatura, limit kroków → **Generuj**) pozwalają wpisać fragment polskiej nazwy (bez polskich znaków też działa, np. „zawal”, „niewydol serc”, „otylosci”), wybrać chorobę z listy, podać wiek i dopisać ją do historii. Przeszukiwane są krótkie nazwy dla sali, oficjalna polska ICD-10 (CeZ) i kilkadziesiąt potocznych synonimów (np. „celiakia” → K90, „autyzm” → F84, „ADHD” → F90). Historia zostaje tekstem w formacie „E11 50, I10 55”, więc kody można nadal wpisywać ręcznie. Kod: `src/delphi_demo/wyszukiwarka.py`, testy: `tests/test_wyszukiwarka.py`.
 
 ## Zmierzone czasy (MacBook Pro M1 Pro, 32 GB)
 
