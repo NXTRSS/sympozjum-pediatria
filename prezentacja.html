@@ -1616,7 +1616,7 @@ deck-stage.builds-armed .build.show {
  "X i Y: model uczy się przewidywać następny znak po każdym prefiksie. Jedno przejście przez sieć pokrywa całą nazwę. Spacja (␣) też jest tokenem — model sam uczy się, kiedy zacząć drugi człon nazwy.",
  "SERCE PRELEKCJI. (Slajd o komórce RNN wycięty — wystarczy zdanie: sieć czyta nazwę litera po literze i niesie w sobie „pamięć” o tym, co już przeczytała.) Interaktywne demo krok po kroku: kontekst → rozkład prawdopodobieństwa → wybór tokenu → powtórz. Klikać powoli. Ślad prawdziwy — nazwa 'angioma cenine' wygenerowana przez nasz model w notebooku. Pokazać dwa momenty: '%angioma ce' — model dawał 'r' aż 85%, a losowanie wybrało 'n' (12%); '%angioma ceni' — wypadło 'n' z 2%. Podkreślić: model NIGDY nie mówi 'nie wiem' — zawsze jest rozkład i zawsze coś wybierzemy.",
  "Wybór zachłanny (zawsze najbardziej prawdopodobny) vs losowy (zgodnie z prawdopodobieństwem) + temperatura. To wyjaśnia, czemu ChatGPT za każdym razem odpowiada inaczej — i czemu czasem 'odważniej' zmyśla.",
- "QR: cała sala skanuje kod do sekcji „Demo na żywo” w README (adres aplikacji wpisuje się rano 28.11, linia „Link do demo…”); chętni dostają pełny notebook w Colabie. Dać sali 2-3 minuty zabawy, poprosić o odczytanie najlepszych nazw na głos.",
+ "QR: cała sala skanuje kod do sekcji „Demo na żywo” w README (adres aplikacji wpisuje się rano 28.11, linia „Link do demo…”); chętni dostają pełny notebook w Colabie. Trening liczy się na Colabie, w chmurze Google — telefon tylko otwiera stronę. Dać sali 2-3 minuty zabawy, poprosić o odczytanie najlepszych nazw na głos.",
  "Przejście: od naszego modelu do prawdziwych LLM. Co się zmienia? Tylko skala.",
  "Ten sam cel — P(następny token | kontekst) — ok. 7 rzędów wielkości różnicy w liczbie parametrów. Nasz model: ok. 80 tys. parametrów (80 672), 32 tokeny, 1292 nazwy chorób. GPT-4: szacunkowo ~10^12 parametrów (dane nieoficjalne) — ok. 10 milionów razy więcej; uczony na bilionach tokenów z internetu.",
  "Ok. 1 min. Uczciwość wobec sali: to, co pokazałem (nasz model i 'skala'), to dopiero etap 1, czyli model bazowy. On tylko 'śni internet': na pytanie z quizu dopisuje kolejne pytania z quizu, bo tak wyglądają takie strony. Żeby powstał asystent typu ChatGPT, dochodzą jeszcze dwa etapy. SFT: dostrajanie na rozmowach pisanych przez ludzi (pytanie → wzorowa odpowiedź); model uczy się roli i formy, czyli naśladuje. RL / RLHF: model generuje wiele odpowiedzi, ludzie (RLHF) albo automatyczny sprawdzian (np. w matematyce i kodzie) je oceniają, a model wzmacnia lepiej ocenione. Analogie dla sali (biblioteka → staż → superwizja) są tylko ilustracją. Najważniejsza jest dolna karta, bo to pomost do rozwiązania zagadki na następnym slajdzie (puentę „nie wie, kiedy nie wie” zostawić tam): SFT i RL zmieniają, JAKI tekst jest najbardziej prawdopodobny, ale nie zmieniają mechanizmu. Odpowiedź to nadal losowanie następnego tokenu. RL może nagradzać 'nie wiem' i zmniejszać halucynacje, ale ich nie usuwa. Gdy ktoś zapyta: w raporcie technicznym GPT-4 (OpenAI 2023) kalibracja pewności modelu po dostrajaniu była gorsza niż modelu bazowego. Asystent bywa więc PEWNIEJSZY w tonie, a nie lepiej świadomy swojej niewiedzy. Nazwy modeli z dopiskiem -Instruct/-Chat to właśnie wersje po etapach 2–3.",
@@ -2195,13 +2195,13 @@ deck-stage.builds-armed .build.show {
         <div>
           <div class="tiny" style="color: var(--accent-2); letter-spacing: 0.12em;">DLA ODWAŻNYCH · 10 MINUT</div>
           <div style="font-size: 34px; font-weight: 700; margin-top: 12px;">Cały kod — wytrenuj własny</div>
-          <div class="body-sm" style="color: rgba(255,255,255,0.7); margin-top: 14px;">Kompletny notebook. Działa w przeglądarce, także na telefonie. Do zabrania do domu.</div>
+          <div class="body-sm" style="color: rgba(255,255,255,0.7); margin-top: 14px;">Kompletny notebook. Otwiera się w przeglądarce, także na telefonie; liczy na Colabie, w chmurze Google.</div>
         </div>
       </div>
     </div>
 
     <div class="body-sm build" data-step="3" style="margin-top: 48px; text-align: center; color: rgba(255,255,255,0.5);">
-      To jest cały „sekret" ChatGPT — mechanizm zmieści się w telefonie i w kwadransie prelekcji.
+      To jest cały „sekret” ChatGPT: mechanizm, który da się zbudować i wytrenować w kwadrans prelekcji.
     </div>
   </div>
   <div class="page-num">11</div>

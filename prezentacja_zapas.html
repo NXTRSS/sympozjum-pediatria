@@ -1616,7 +1616,7 @@ deck-stage.builds-armed .build.show {
  "X i Y: model uczy się przewidywać następny znak po każdym prefiksie. Jedno przejście przez sieć pokrywa całą nazwę. Spacja (␣) też jest tokenem — model sam uczy się, kiedy zacząć drugi człon nazwy.",
  "SERCE PRELEKCJI. (Slajd o komórce RNN wycięty — wystarczy zdanie: sieć czyta nazwę litera po literze i niesie w sobie „pamięć” o tym, co już przeczytała.) Interaktywne demo krok po kroku: kontekst → rozkład prawdopodobieństwa → wybór tokenu → powtórz. Klikać powoli. Ślad prawdziwy — nazwa 'angioma cenine' wygenerowana przez nasz model w notebooku. Pokazać dwa momenty: '%angioma ce' — model dawał 'r' aż 85%, a losowanie wybrało 'n' (12%); '%angioma ceni' — wypadło 'n' z 2%. Podkreślić: model NIGDY nie mówi 'nie wiem' — zawsze jest rozkład i zawsze coś wybierzemy.",
  "Wybór zachłanny (zawsze najbardziej prawdopodobny) vs losowy (zgodnie z prawdopodobieństwem) + temperatura. To wyjaśnia, czemu ChatGPT za każdym razem odpowiada inaczej — i czemu czasem 'odważniej' zmyśla.",
- "QR: cała sala skanuje kod do sekcji „Demo na żywo” w README (adres aplikacji wpisuje się rano 28.11, linia „Link do demo…”); chętni dostają pełny notebook w Colabie. Dać sali 2-3 minuty zabawy, poprosić o odczytanie najlepszych nazw na głos.",
+ "QR: cała sala skanuje kod do sekcji „Demo na żywo” w README (adres aplikacji wpisuje się rano 28.11, linia „Link do demo…”); chętni dostają pełny notebook w Colabie. Trening liczy się na Colabie, w chmurze Google — telefon tylko otwiera stronę. Dać sali 2-3 minuty zabawy, poprosić o odczytanie najlepszych nazw na głos.",
  "Plan B, zaraz po slajdzie z kodami QR — gdy notebooka nie da się odpalić na laptopie sali. Zapis komórki z danymi: 1292 łacińskie nazwy z pliku w repo, ziarno 42, więc kolejność jest stała. Ostatnie 10% po tasowaniu to sprawdzian, nie koniec alfabetu. Odczytać dwa, trzy przykłady z listy.",
  "Plan B. Tokenizacja: każda nazwa dostaje % na początku i ! na końcu. Słownik ma 32 tokeny — litery, spacja, myślnik, apostrof i te dwa znaki. Macierz treningowa: 1292 wiersze na 60 pozycji. To jest ten sam mechanizm, co na slajdach o X i Y, tylko z prawdziwego uruchomienia.",
  "Plan B. Definicja modelu z notebooka: embedding, GRU ze 128 jednostkami i dropout 0,2, na końcu softmax. Kompilacja: entropia krzyżowa i Adam. Nie wchodzić w warstwy głębiej — pokazać, że cały model to kilkanaście linii.",
@@ -2203,13 +2203,13 @@ deck-stage.builds-armed .build.show {
         <div>
           <div class="tiny" style="color: var(--accent-2); letter-spacing: 0.12em;">DLA ODWAŻNYCH · 10 MINUT</div>
           <div style="font-size: 34px; font-weight: 700; margin-top: 12px;">Cały kod — wytrenuj własny</div>
-          <div class="body-sm" style="color: rgba(255,255,255,0.7); margin-top: 14px;">Kompletny notebook. Działa w przeglądarce, także na telefonie. Do zabrania do domu.</div>
+          <div class="body-sm" style="color: rgba(255,255,255,0.7); margin-top: 14px;">Kompletny notebook. Otwiera się w przeglądarce, także na telefonie; liczy na Colabie, w chmurze Google.</div>
         </div>
       </div>
     </div>
 
     <div class="body-sm build" data-step="3" style="margin-top: 48px; text-align: center; color: rgba(255,255,255,0.5);">
-      To jest cały „sekret" ChatGPT — mechanizm zmieści się w telefonie i w kwadransie prelekcji.
+      To jest cały „sekret” ChatGPT: mechanizm, który da się zbudować i wytrenować w kwadrans prelekcji.
     </div>
   </div>
   <div class="page-num">11</div>
