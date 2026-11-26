@@ -95,6 +95,39 @@ POMINIETE = {"o09_rnn_cell.html", "n10_maidxo.html"}
 assert len(NOTES) == len(ORDER), f"notes {len(NOTES)} != slides {len(ORDER)}"
 ORDER, NOTES = map(list, zip(*[(o, n) for o, n in zip(ORDER, NOTES) if o[1] not in POMINIETE]))
 
+# Wariant zapasowy (laptop sali bez notebooka na żywo): slajdy ze zrzutów
+# wstawione zaraz po slajdzie z kodami QR, gdzie normalnie jest demo.
+ZAPAS = "--zapas" in sys.argv
+if ZAPAS:
+    OUT = ROOT / "prezentacja_zapas.html"
+    po_qr = [
+        ("z01_dane.html",
+         "Plan B, zaraz po slajdzie z kodami QR — gdy notebooka nie da się odpalić na laptopie sali. Zapis komórki z danymi: 1292 łacińskie nazwy z pliku w repo, ziarno 42, więc kolejność jest stała. Ostatnie 10% po tasowaniu to sprawdzian, nie koniec alfabetu. Odczytać dwa, trzy przykłady z listy."),
+        ("z02_tokeny.html",
+         "Plan B. Tokenizacja: każda nazwa dostaje % na początku i ! na końcu. Słownik ma 32 tokeny — litery, spacja, myślnik, apostrof i te dwa znaki. Macierz treningowa: 1292 wiersze na 60 pozycji. To jest ten sam mechanizm, co na slajdach o X i Y, tylko z prawdziwego uruchomienia."),
+        ("z03_model.html",
+         "Plan B. Definicja modelu z notebooka: embedding, GRU ze 128 jednostkami i dropout 0,2, na końcu softmax. Kompilacja: entropia krzyżowa i Adam. Nie wchodzić w warstwy głębiej — pokazać, że cały model to kilkanaście linii."),
+        ("z04_epoki.html",
+         "Plan B. Dwanaście epok na CPU, około sekundy na epokę. Błąd treningu spada z około 2,88 do 1,56, walidacja z 2,54 do 1,80. Obie liczby spadają: model uczy się reguł, nie tylko wierszy, które widział. 10% nazw było odłożonych na bok."),
+        ("z05_krzywa.html",
+         "Plan B. Wykres z tej samej sesji. Niebieska linia: nazwy widziane w treningu. Pomarańczowa: nazwy odłożone. Obie schodzą. Gdyby pomarańczowa zaczęła rosnąć, model zapamiętywałby zbiór zamiast składać nowe nazwy."),
+        ("z06_generowanie.html",
+         "Plan B. Jedna nazwa, krok po kroku, z tego samego uruchomienia. Na starcie model waha się między c, p, s i a, a wypada d (2%). Im dłuższy kontekst, tym rozkład ostrzejszy — pod koniec dysplasia cordis znak stop ma 99%. Tej nazwy nie ma w zbiorze. Zaznaczyć moment, w którym jedna litera ma prawie 100%."),
+        ("z07_nazwy.html",
+         "Plan B. Dziesięć losowań z temperatury 0,4. Wszystkie dziesięć nazw jest nowych: morbus dufandei, tystiopathia pertus, syndroma poli i kolejne. Gdyby któraś była w zbiorze, przy niej byłby znacznik „istnieje”. Odczytać dwie na głos."),
+        ("z08_gradio.html",
+         "Plan B. Tak wygląda aplikacja dla sali: suwak „ile nazw” (tu 3) i „kreatywność” (tu 0,4). Po Submit: angioma — ta jest w zbiorze — oraz pertinia i coplasia, których w zbiorze nie ma. Na laptopie DIL aplikacji nie odpalamy; to zrzut z notebooka uruchomionego wcześniej."),
+    ]
+    nowe_o, nowe_n = [], []
+    for pozycja, notatka in zip(ORDER, NOTES):
+        nowe_o.append(pozycja)
+        nowe_n.append(notatka)
+        if pozycja[1] == "n05_qr.html":
+            for plik, tekst in po_qr:
+                nowe_o.append(("new", plik))
+                nowe_n.append(tekst)
+    ORDER, NOTES = nowe_o, nowe_n
+
 if not ORIG.exists():
     sys.exit(
         f"Brak szablonu decku: {ORIG}\n"

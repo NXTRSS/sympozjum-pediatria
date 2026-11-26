@@ -146,7 +146,7 @@ Konsekwencje dla obecnego stanu:
 - To samo źródło dopisane w `README.md` (lista „Źródła omawiane w prelekcji”) i skrótem na slajdzie materiałów (`n15`).
 - `n10_maidxo.html` bez zmian: slajd jest w `POMINIETE` w `assemble.py`.
 
-### Scalenie i kody QR (26.11.2026, ten commit)
+### Scalenie i kody QR (26.11.2026, w commicie `fff5e3c`)
 
 Decyzja Kamila z 26.11: `reconcile/public-final-20261108-1618` (`d303aa7`) scalony do `main` fast-forwardem z `48072ba`. Konfliktów nie było. Gałąź reconcile zostaje bez zmian. Od tej chwili źródłem prawdy jest `main`.
 
@@ -156,6 +156,15 @@ Decyzja Kamila z 26.11: `reconcile/public-final-20261108-1618` (`d303aa7`) scalo
 - `#qr-gradio` → https://github.com/NXTRSS/sympozjum-pediatria#demo-na-zywo (sekcja README „Demo na żywo”). To nie jest adres gradio.live.
 - **Rano 28.11** Kamil wstawia w README, w linii `Link do demo (aktywny 28.11 od ok. 10:45): …`, adres aplikacji z tego dnia. Kodu QR nie generujemy ponownie: prowadzi do sekcji, nie do adresu aplikacji.
 - Eksport na pendrive jest nieaktualny. Na Macu, z zainstalowanym Chrome i internetem (fonty): `python3 assemble.py && uv run eksport_raster.py`. Wynik zostaje w `eksport/` (gitignore).
+
+### Plan B: zrzuty notebooka (26.11.2026, ten commit)
+
+Laptop DIL odtwarza tylko PPTX/PDF, więc demo na Macu może nie wejść. Deck zapasowy dokłada osiem slajdów **tylko** przy `python3 assemble.py --zapas` (plik `prezentacja_zapas.html`). Zwykłe `python3 assemble.py` dalej składa 28 slajdów, bez tych zrzutów. Slajdy wchodzą zaraz po `n05_qr` (tam, gdzie normalnie jest demo na żywo). Tytuł każdego: „Demo (zapis z notebooka)”.
+
+- Notebook `notebook/model_jezyka_choroby.ipynb` puszczony od początku do końca na CPU (ziarno 42, 12 epok). Wyjścia są zapisane w pliku. Ostatnia komórka (Gradio, `share=True`) w zapisie nie zostawia działającego serwera; zrzut aplikacji jest w `slides/zrzuty/07-gradio.png`.
+- Pominięte: `usg/notebook/usg_masa_plodu.ipynb` — tryb `z_pamieci` potrzebuje nagrań i wag w `usg/dane/` i `usg/pamiec/` (poza gitem, pobranie z Zenodo ok. 680 MB). `delphi/notebook/delphi_2m.ipynb` — potrzebuje klonu kodu autorów w `delphi/zewnetrzne/` i pamięci w `delphi/pamiec/` (poza gitem).
+- Eksport wariantu: `uv run eksport_raster.py --zapas` → `eksport/prezentacja_zapas.pdf` i `.pptx` (katalog `eksport/` jest w `.gitignore`). Na Macu: Chrome i internet, żeby ściągnęły się fonty. Najpierw `python3 assemble.py --zapas`.
+- Liczba slajdów w eksporcie musi się zgadzać z liczbą notatek prelegenta; skrypt przerywa, gdy się nie zgadza.
 
 ## 6. Pozostałe kontrole i drobne niespójności
 

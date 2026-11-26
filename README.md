@@ -14,6 +14,15 @@ Link do demo (aktywny 28.11 od ok. 10:45): …
 
 Aplikacja z prelekcji: generowanie łacińskich nazw chorób, bez logowania. Rano 28.11 w miejsce wielokropka wpisujemy adres z tego dnia. Kod QR na slajdzie „Telefony w dłoń” prowadzi do tej sekcji.
 
+Gdy laptop sali nie uruchomi notebooka, jest deck zapasowy ze zrzutami tego notatnika (dane, tokeny, model, trening, krzywa, generowanie, dziesięć nazw, aplikacja):
+
+```bash
+python3 assemble.py --zapas
+uv run eksport_raster.py --zapas
+```
+
+Wynik: `prezentacja_zapas.html` oraz `eksport/prezentacja_zapas.pdf` i `.pptx`. Zwykła prezentacja zostaje bez tych slajdów.
+
 ## 🚀 Uruchom model w przeglądarce (także na telefonie)
 
 [![Otwórz w Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/notebook/model_jezyka_choroby.ipynb)

@@ -20,6 +20,11 @@ slajdy, po jednym na krok generowania. Elementy .build są w stanie końcowym.
 Uruchomienie (najpierw złóż prezentację, jeśli zmieniały się slides/):
     python3 assemble.py
     uv run eksport_raster.py
+
+Wariant zapasowy (zrzuty notebooka, gdy na sali nie da się odpalić demo):
+    python3 assemble.py --zapas
+    uv run eksport_raster.py --zapas
+Wynik: eksport/prezentacja_zapas.pdf i eksport/prezentacja_zapas.pptx.
 """
 import json
 import re
@@ -33,9 +38,11 @@ from pptx import Presentation
 from pptx.util import Emu
 
 ROOT = Path(__file__).parent
-DECK = ROOT / "prezentacja.html"
+ZAPAS = "--zapas" in sys.argv
+NAZWA = "prezentacja_zapas" if ZAPAS else "prezentacja"
+DECK = ROOT / f"{NAZWA}.html"
 OUT = ROOT / "eksport"
-PNG = OUT / "slajdy"
+PNG = OUT / ("slajdy_zapas" if ZAPAS else "slajdy")
 W, H = 1920, 1080
 
 # Na zrzutach chowamy elementy interfejsu, które na obrazie nie działają:
@@ -56,7 +63,7 @@ def notatki(html: str) -> list[str]:
             continue
         if isinstance(d, list):
             return [str(x) for x in d]
-    sys.exit("Nie znalazłem notatek prelegenta (speaker-notes) w prezentacja.html")
+    sys.exit(f"Nie znalazłem notatek prelegenta (speaker-notes) w {DECK.name}")
 
 
 def zrob_zrzuty() -> list[tuple[Path, int, str | None]]:
@@ -115,7 +122,7 @@ def zrob_zrzuty() -> list[tuple[Path, int, str | None]]:
 def zbuduj_pdf(zrzuty):
     # 1920×1080 px przy 96 dpi = 1440×810 pt, tyle samo co druk z Chrome
     uklad = img2pdf.get_fixed_dpi_layout_fun((96, 96))
-    (OUT / "prezentacja.pdf").write_bytes(img2pdf.convert([str(z[0]) for z in zrzuty], layout_fun=uklad))
+    (OUT / f"{NAZWA}.pdf").write_bytes(img2pdf.convert([str(z[0]) for z in zrzuty], layout_fun=uklad))
 
 
 def zbuduj_pptx(zrzuty, notes):
@@ -131,12 +138,12 @@ def zbuduj_pptx(zrzuty, notes):
         elif krok:
             tekst = f"{krok}. {tekst}"
         s.notes_slide.notes_text_frame.text = tekst
-    prez.save(OUT / "prezentacja.pptx")
+    prez.save(OUT / f"{NAZWA}.pptx")
 
 
 def main():
     if not DECK.exists():
-        sys.exit("Brak prezentacja.html — najpierw: python3 assemble.py")
+        sys.exit(f"Brak {DECK.name} — najpierw: python3 assemble.py" + (" --zapas" if ZAPAS else ""))
     notes = notatki(DECK.read_text(encoding="utf-8"))
     zrzuty = zrob_zrzuty()
     slajdow = len({z[1] for z in zrzuty})
@@ -145,7 +152,7 @@ def main():
     zbuduj_pdf(zrzuty)
     zbuduj_pptx(zrzuty, notes)
     print(f"OK: {slajdow} slajdów decku → {len(zrzuty)} stron/slajdów w {OUT.relative_to(ROOT)}/ "
-          f"(prezentacja.pdf, prezentacja.pptx, slajdy/*.png)")
+          f"({NAZWA}.pdf, {NAZWA}.pptx, {PNG.name}/*.png)")
 
 
 if __name__ == "__main__":

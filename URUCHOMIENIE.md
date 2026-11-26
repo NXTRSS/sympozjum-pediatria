@@ -20,6 +20,17 @@ open prezentacja.html
 
 Po każdej zmianie w `slides/` uruchom obie komendy ponownie. Katalogu `eksport/` nie ma w gicie: pliki kopiuje się na pendrive.
 
+### Plan B (laptop DIL, bez notebooka na żywo)
+
+Gdy na sali nie da się odpalić treningu ani Gradio, deck zapasowy dokłada osiem slajdów ze zrzutów `notebook/model_jezyka_choroby.ipynb` zaraz po slajdzie z kodami QR. Zwykły `prezentacja.html` się nie zmienia.
+
+```bash
+python3 assemble.py --zapas
+uv run eksport_raster.py --zapas    # eksport/prezentacja_zapas.pdf i .pptx
+```
+
+Zrzuty leżą w `slides/zrzuty/`. Na Macu eksport potrzebuje Chrome i internetu (fonty).
+
 ### Poprawianie słów w przeglądarce (Artifact na claude.ai)
 
 Wersja do edycji: https://claude.ai/artifact/7L4eVEovbndo7KQoTL5Qgx (prywatna, widzi ją tylko właściciel).
