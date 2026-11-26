@@ -66,7 +66,7 @@ NOTES = [
     "Dane: 1292 łacińskie nazwy chorób + tokeny specjalne % (start) i ! (stop). Token = pojedynczy znak: 26 liter, spacja, myślnik, apostrof — razem ze specjalnymi 32 tokeny.",
     "X i Y: model uczy się przewidywać następny znak po każdym prefiksie. Jedno przejście przez sieć pokrywa całą nazwę. Spacja (␣) też jest tokenem — model sam uczy się, kiedy zacząć drugi człon nazwy.",
     "Komórka rekurencyjna: wchodzi aktualny znak + stan z poprzedniego kroku. Dlatego model 'pamięta' kontekst. Nie wchodzić głębiej w matematykę — sala nie musi.",
-    "SERCE PRELEKCJI. (Slajd o komórce RNN wycięty — wystarczy zdanie: sieć czyta nazwę litera po literze i niesie w sobie „pamięć” o tym, co już przeczytała.) Interaktywne demo krok po kroku: kontekst → rozkład prawdopodobieństwa → wybór tokenu → powtórz. Klikać powoli. Ślad prawdziwy — nazwa 'angioma cenine' wygenerowana przez nasz model w notebooku. Pokazać dwa momenty: '%angioma ce' — model dawał 'r' aż 85%, a losowanie wybrało 'n' (12%); '%angioma ceni' — wypadło 'n' z 2%. Podkreślić: model NIGDY nie mówi 'nie wiem' — zawsze jest rozkład i zawsze coś wybierzemy.",
+    "SERCE PRELEKCJI. (Slajd o komórce RNN wycięty — wystarczy zdanie: sieć czyta nazwę litera po literze i niesie w sobie „pamięć” o tym, co już przeczytała.) Interaktywne demo krok po kroku: kontekst → rozkład prawdopodobieństwa → wybór tokenu → powtórz. Klikać powoli. Ślad prawdziwy — nazwa 'pertus panalismus' z modelu w notebooku (próba n=553, seed losowania 10553). Pokazać dwa momenty: '%' — faworyt 'c' (24%), wylosowano 'p' (20%); '%pertus' — faworyt drugie 's' (50%), a wypada spacja (48%) i zaczyna się drugi człon. Pert- brzmi jak pertussis — przypadek dla sali pediatrycznej, a nazwy w zbiorze nie ma. Podkreślić: model NIGDY nie mówi 'nie wiem' — zawsze jest rozkład i zawsze coś wybierzemy.",
     "Wybór zachłanny (zawsze najbardziej prawdopodobny) vs losowy (zgodnie z prawdopodobieństwem) + temperatura. To wyjaśnia, czemu ChatGPT za każdym razem odpowiada inaczej — i czemu czasem 'odważniej' zmyśla.",
     "QR: cała sala skanuje kod do sekcji „Demo na żywo” w README (adres aplikacji wpisuje się rano 28.11, linia „Link do demo…”); chętni dostają pełny notebook w Colabie. Trening liczy się na Colabie, w chmurze Google — telefon tylko otwiera stronę. Dać sali 2-3 minuty zabawy, poprosić o odczytanie najlepszych nazw na głos.",
     "Przejście: od naszego modelu do prawdziwych LLM. Co się zmienia? Tylko skala.",
@@ -357,14 +357,12 @@ steps_js = (ROOT / "slides" / "inference_steps.js").read_text(encoding="utf-8").
 tablica = re.search(r"^\[.*", steps_js, re.S | re.M)       # sama tablica, bez nagłówkowych komentarzy pliku
 assert tablica, "slides/inference_steps.js: nie znalazłem tablicy kroków"
 tail = wstaw_kroki(tail, tablica.group(0).rstrip().rstrip(";"))
-for old, new in [
-    ("'Kliknij \"Następny krok\" aby zobaczyć jak model generuje nazwę miejscowości znak po znaku.'",
-     "'Kliknij „Następny krok\", aby zobaczyć, jak model generuje nazwę choroby znak po znaku.'"),
-    ("'Generowanie zakończone. Token STOP (!) sygnalizuje koniec nazwy. Wynik: \"Kędzierzyn\"'",
-     "'Generowanie zakończone. Token STOP (!) sygnalizuje koniec nazwy. Wynik: „angioma cenine\"'"),
-    ("isRandom ? '🎲 losowanie!' : '🎲 stochastic'", "isRandom ? '🎲 nie faworyt!' : '🎲 losowanie'"),
-]:
-    tail = podmien(tail, old, new, f"tekst animacji: {old[:40]}…")
+tail = podmien(
+    tail,
+    "'Generowanie zakończone. Token STOP (!) sygnalizuje koniec nazwy. Wynik: „angioma cenine\"'",
+    "'Generowanie zakończone. Token STOP (!) sygnalizuje koniec nazwy. Wynik: „pertus panalismus\"'",
+    "tekst animacji: wynik po STOP",
+)
 
 # stopka slajdu końcowego
 body = body.replace("Kamil Jędryczek · Model Języka", "Kamil Jędryczek · Sympozjum Nowoczesne Technologie w Pediatrii")

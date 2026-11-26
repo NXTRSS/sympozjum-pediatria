@@ -1614,7 +1614,7 @@ deck-stage.builds-armed .build.show {
  "Definicja: rozkład prawdopodobieństwa nad sekwencją tokenów. Model pyta: co powinno być następne? Ta jedna idea to podstawa wszystkiego — od naszego mini-modelu po ChatGPT.",
  "Dane: 1292 łacińskie nazwy chorób + tokeny specjalne % (start) i ! (stop). Token = pojedynczy znak: 26 liter, spacja, myślnik, apostrof — razem ze specjalnymi 32 tokeny.",
  "X i Y: model uczy się przewidywać następny znak po każdym prefiksie. Jedno przejście przez sieć pokrywa całą nazwę. Spacja (␣) też jest tokenem — model sam uczy się, kiedy zacząć drugi człon nazwy.",
- "SERCE PRELEKCJI. (Slajd o komórce RNN wycięty — wystarczy zdanie: sieć czyta nazwę litera po literze i niesie w sobie „pamięć” o tym, co już przeczytała.) Interaktywne demo krok po kroku: kontekst → rozkład prawdopodobieństwa → wybór tokenu → powtórz. Klikać powoli. Ślad prawdziwy — nazwa 'angioma cenine' wygenerowana przez nasz model w notebooku. Pokazać dwa momenty: '%angioma ce' — model dawał 'r' aż 85%, a losowanie wybrało 'n' (12%); '%angioma ceni' — wypadło 'n' z 2%. Podkreślić: model NIGDY nie mówi 'nie wiem' — zawsze jest rozkład i zawsze coś wybierzemy.",
+ "SERCE PRELEKCJI. (Slajd o komórce RNN wycięty — wystarczy zdanie: sieć czyta nazwę litera po literze i niesie w sobie „pamięć” o tym, co już przeczytała.) Interaktywne demo krok po kroku: kontekst → rozkład prawdopodobieństwa → wybór tokenu → powtórz. Klikać powoli. Ślad prawdziwy — nazwa 'pertus panalismus' z modelu w notebooku (próba n=553, seed losowania 10553). Pokazać dwa momenty: '%' — faworyt 'c' (24%), wylosowano 'p' (20%); '%pertus' — faworyt drugie 's' (50%), a wypada spacja (48%) i zaczyna się drugi człon. Pert- brzmi jak pertussis — przypadek dla sali pediatrycznej, a nazwy w zbiorze nie ma. Podkreślić: model NIGDY nie mówi 'nie wiem' — zawsze jest rozkład i zawsze coś wybierzemy.",
  "Wybór zachłanny (zawsze najbardziej prawdopodobny) vs losowy (zgodnie z prawdopodobieństwem) + temperatura. To wyjaśnia, czemu ChatGPT za każdym razem odpowiada inaczej — i czemu czasem 'odważniej' zmyśla.",
  "QR: cała sala skanuje kod do sekcji „Demo na żywo” w README (adres aplikacji wpisuje się rano 28.11, linia „Link do demo…”); chętni dostają pełny notebook w Colabie. Trening liczy się na Colabie, w chmurze Google — telefon tylko otwiera stronę. Dać sali 2-3 minuty zabawy, poprosić o odczytanie najlepszych nazw na głos.",
  "Plan B, zaraz po slajdzie z kodami QR — gdy notebooka nie da się odpalić na laptopie sali. Zapis komórki z danymi: 1292 łacińskie nazwy z pliku w repo, ziarno 42, więc kolejność jest stała. Ostatnie 10% po tasowaniu to sprawdzian, nie koniec alfabetu. Odczytać dwa, trzy przykłady z listy. Jeśli demo nazw działa na żywo, pomiń z01–z08.",
@@ -3251,94 +3251,220 @@ deck-stage.builds-armed .build.show {
   // stochastic sampling — top != chosen means losowanie z rozkladu
   const GENERATION_STEPS = [
   {
-    context: '%',
-    probs: [['c', 0.19], ['a', 0.16], ['s', 0.16], ['m', 0.13], ['p', 0.12], ['…', 0.24]],
-    chosen: 'a', chosen_p: 0.16, top: 'c',
-    desc: '🎲 Start: faworytem było „c" (19%), ale wylosowaliśmy „a" (16%). Na początku pasuje wiele liter — rozkład jest prawie płaski.'
+    context: "%",
+    probs: [["c", 0.24],
+      ["p", 0.2],
+      ["s", 0.17],
+      ["a", 0.11],
+      ["m", 0.09],
+      ["…", 0.19]],
+    chosen: "p",
+    chosen_p: 0.2, top: "c",
+    desc: "🎲 Start: faworyt \"c\" (24%), wylosowano \"p\" (20%)."
   },
   {
-    context: '%a',
-    probs: [['n', 0.38], ['c', 0.23], ['s', 0.10], ['p', 0.08], ['l', 0.05], ['…', 0.16]],
-    chosen: 'n', chosen_p: 0.38, top: 'n',
-    desc: 'Losujemy — pada „n" (38%), najbardziej prawdopodobna litera.'
+    context: "%p",
+    probs: [["a", 0.71],
+      ["e", 0.11],
+      ["o", 0.1],
+      ["r", 0.03],
+      ["l", 0.02],
+      ["…", 0.03]],
+    chosen: "e",
+    chosen_p: 0.11, top: "a",
+    desc: "🎲 Zamiast \"a\" wypada \"e\" (11%)."
   },
   {
-    context: '%an',
-    probs: [['g', 0.38], ['a', 0.33], ['u', 0.07], ['t', 0.06], ['e', 0.05], ['…', 0.11]],
-    chosen: 'g', chosen_p: 0.38, top: 'g',
-    desc: '„g" (38%) minimalnie wygrywa z „a" (33%). „ang-" to częsty początek: angina, angioma, angiopathia…'
+    context: "%pe",
+    probs: [["r", 0.75],
+      ["m", 0.12],
+      ["n", 0.07],
+      ["s", 0.05],
+      ["l", 0.01],
+      ["…", 0.0]],
+    chosen: "r",
+    chosen_p: 0.75, top: "r",
+    desc: "\"r\" (75%) — zgodnie z faworytem."
   },
   {
-    context: '%ang',
-    probs: [['i', 0.74], ['r', 0.15], ['e', 0.08], ['l', 0.02], ['u', 0.00], ['…', 0.01]],
-    chosen: 'i', chosen_p: 0.74, top: 'i',
-    desc: 'Rozkład się wyostrza: „i" ma 74%. Im dłuższy kontekst, tym mniej wątpliwości.'
+    context: "%per",
+    probs: [["t", 0.44],
+      ["i", 0.19],
+      ["y", 0.1],
+      ["m", 0.1],
+      ["a", 0.08],
+      ["…", 0.09]],
+    chosen: "t",
+    chosen_p: 0.44, top: "t",
+    desc: "\"t\" (44%) — zgodnie z faworytem."
   },
   {
-    context: '%angi',
-    probs: [['n', 0.52], ['o', 0.31], ['t', 0.09], ['c', 0.03], ['a', 0.02], ['…', 0.03]],
-    chosen: 'o', chosen_p: 0.31, top: 'n',
-    desc: '🎲 Faworytem było „n" (52% — w stronę „angina"), wylosowaliśmy „o" (31%). Jedno losowanie zmienia kierunek całej nazwy.'
+    context: "%pert",
+    probs: [["u", 0.57],
+      ["i", 0.39],
+      ["a", 0.02],
+      ["h", 0.01],
+      ["o", 0.0],
+      ["…", 0.01]],
+    chosen: "u",
+    chosen_p: 0.57, top: "u",
+    desc: "\"u\" (56%) — zgodnie z faworytem."
   },
   {
-    context: '%angio',
-    probs: [['m', 0.83], ['s', 0.11], ['n', 0.04], ['c', 0.01], ['p', 0.01], ['…', 0.00]],
-    chosen: 'm', chosen_p: 0.83, top: 'm',
-    desc: '„m" (83%) — model rozpoznaje znany rdzeń „angiom-".'
+    context: "%pertu",
+    probs: [["s", 0.98],
+      ["l", 0.01],
+      ["n", 0.0],
+      ["r", 0.0],
+      ["t", 0.0],
+      ["…", 0.01]],
+    chosen: "s",
+    chosen_p: 0.98, top: "s",
+    desc: "\"s\" (98%) — zgodnie z faworytem."
   },
   {
-    context: '%angiom',
-    probs: [['a', 1.00], ['y', 0.00], ['e', 0.00], ['i', 0.00], ['u', 0.00], ['…', 0.00]],
-    chosen: 'a', chosen_p: 1.00, top: 'a',
-    desc: 'Praktycznie pewność: „a" ma 100%. „angioma" to prawdziwa nazwa ze zbioru treningowego.'
+    context: "%pertus",
+    probs: [["s", 0.5],
+      ["␣", 0.48],
+      ["t", 0.01],
+      ["!", 0.0],
+      ["i", 0.0],
+      ["…", 0.01]],
+    chosen: "\u2423",
+    chosen_p: 0.48, top: "s",
+    desc: "🎲 Zamiast \"s\" wypada \"␣\" (48%)."
   },
   {
-    context: '%angioma',
-    probs: [['␣', 0.55], ['!', 0.44], ['t', 0.01], ['e', 0.00], ['r', 0.00], ['…', 0.00]],
-    chosen: '␣', chosen_p: 0.55, top: '␣',
-    desc: 'Rozstaje: koniec nazwy („!" 44%) czy ciąg dalszy (spacja ␣ 55%)? Wypadła spacja — nazwa będzie dwuczłonowa.'
+    context: "%pertus\u2423",
+    probs: [["p", 0.79],
+      ["c", 0.04],
+      ["e", 0.03],
+      ["a", 0.03],
+      ["d", 0.03],
+      ["…", 0.08]],
+    chosen: "p",
+    chosen_p: 0.79, top: "p",
+    desc: "\"p\" (79%) — zgodnie z faworytem."
   },
   {
-    context: '%angioma␣',
-    probs: [['p', 0.16], ['c', 0.11], ['a', 0.10], ['s', 0.09], ['l', 0.08], ['…', 0.46]],
-    chosen: 'c', chosen_p: 0.11, top: 'p',
-    desc: '🎲 Drugi człon może zacząć się prawie od wszystkiego — faworyt „p" ma tylko 16%. Wylosowaliśmy „c" (11%).'
+    context: "%pertus\u2423p",
+    probs: [["o", 0.43],
+      ["a", 0.23],
+      ["e", 0.19],
+      ["r", 0.1],
+      ["u", 0.04],
+      ["…", 0.01]],
+    chosen: "a",
+    chosen_p: 0.23, top: "o",
+    desc: "🎲 Zamiast \"o\" wypada \"a\" (23%)."
   },
   {
-    context: '%angioma␣c',
-    probs: [['o', 0.77], ['a', 0.07], ['h', 0.07], ['e', 0.05], ['r', 0.03], ['…', 0.01]],
-    chosen: 'e', chosen_p: 0.05, top: 'o',
-    desc: '🎲 Model stawiał na „o" (77%), a wylosowaliśmy „e" — tylko 5%. Od tego miejsca nazwa schodzi z utartych ścieżek.'
+    context: "%pertus\u2423pa",
+    probs: [["r", 0.44],
+      ["n", 0.4],
+      ["m", 0.07],
+      ["l", 0.05],
+      ["t", 0.03],
+      ["…", 0.01]],
+    chosen: "n",
+    chosen_p: 0.4, top: "r",
+    desc: "🎲 Zamiast \"r\" wypada \"n\" (40%)."
   },
   {
-    context: '%angioma␣ce',
-    probs: [['r', 0.85], ['n', 0.12], ['s', 0.01], ['l', 0.01], ['m', 0.00], ['…', 0.01]],
-    chosen: 'n', chosen_p: 0.12, top: 'r',
-    desc: '🎲 Model dawał „r" aż 85% (jak w „cerebri"), ale losowanie wybrało mniej prawdopodobne „n" (12%). Słabszy kandydat też czasem wygrywa.'
+    context: "%pertus\u2423pan",
+    probs: [["t", 0.48],
+      ["a", 0.13],
+      ["d", 0.12],
+      ["g", 0.09],
+      ["i", 0.07],
+      ["…", 0.11]],
+    chosen: "a",
+    chosen_p: 0.13, top: "t",
+    desc: "🎲 Zamiast \"t\" wypada \"a\" (13%)."
   },
   {
-    context: '%angioma␣cen',
-    probs: [['i', 0.44], ['t', 0.15], ['s', 0.15], ['e', 0.06], ['␣', 0.06], ['…', 0.14]],
-    chosen: 'i', chosen_p: 0.44, top: 'i',
-    desc: 'Losujemy — pada „i" (44%), najbardziej prawdopodobna litera.'
+    context: "%pertus\u2423pana",
+    probs: [["l", 0.51],
+      ["r", 0.31],
+      ["e", 0.09],
+      ["n", 0.04],
+      ["c", 0.03],
+      ["…", 0.02]],
+    chosen: "l",
+    chosen_p: 0.51, top: "l",
+    desc: "\"l\" (51%) — zgodnie z faworytem."
   },
   {
-    context: '%angioma␣ceni',
-    probs: [['s', 0.30], ['c', 0.22], ['!', 0.21], ['␣', 0.07], ['t', 0.06], ['n', 0.02], ['…', 0.12]],
-    chosen: 'n', chosen_p: 0.02, top: 's',
-    desc: '🎲 „n" miało tylko 2% — spoza pierwszej piątki — a jednak wypadło. Model nigdy nie mówi „nie wiem": zawsze coś wylosuje.'
+    context: "%pertus\u2423panal",
+    probs: [["i", 0.97],
+      ["e", 0.02],
+      ["o", 0.01],
+      ["g", 0.0],
+      ["c", 0.0],
+      ["…", 0.0]],
+    chosen: "i",
+    chosen_p: 0.97, top: "i",
+    desc: "\"i\" (97%) — zgodnie z faworytem."
   },
   {
-    context: '%angioma␣cenin',
-    probs: [['e', 0.78], ['a', 0.12], ['!', 0.03], ['g', 0.02], ['i', 0.02], ['…', 0.03]],
-    chosen: 'e', chosen_p: 0.78, top: 'e',
-    desc: 'Wracamy na utarty szlak: „e" (78%).'
+    context: "%pertus\u2423panali",
+    probs: [["s", 0.92],
+      ["g", 0.04],
+      ["t", 0.02],
+      ["a", 0.01],
+      ["o", 0.01],
+      ["…", 0.0]],
+    chosen: "s",
+    chosen_p: 0.92, top: "s",
+    desc: "\"s\" (92%) — zgodnie z faworytem."
   },
   {
-    context: '%angioma␣cenine',
-    probs: [['u', 0.32], ['!', 0.22], ['s', 0.22], ['r', 0.07], ['t', 0.06], ['…', 0.11]],
-    chosen: '!', chosen_p: 0.22, top: 'u',
-    desc: '🎲 STOP (!) wylosowany z 22% (faworyt: „u", 32%). Wynik: „angioma cenine" — brzmi łacińsko, a nie istnieje. Halucynacja w miniaturze.'
+    context: "%pertus\u2423panalis",
+    probs: [["m", 0.82],
+      ["!", 0.17],
+      ["␣", 0.0],
+      ["i", 0.0],
+      ["t", 0.0],
+      ["…", 0.01]],
+    chosen: "m",
+    chosen_p: 0.82, top: "m",
+    desc: "\"m\" (82%) — zgodnie z faworytem."
+  },
+  {
+    context: "%pertus\u2423panalism",
+    probs: [["u", 1.0],
+      ["a", 0.0],
+      ["i", 0.0],
+      ["!", 0.0],
+      ["e", 0.0],
+      ["…", 0.0]],
+    chosen: "u",
+    chosen_p: 1.0, top: "u",
+    desc: "\"u\" (100%) — zgodnie z faworytem."
+  },
+  {
+    context: "%pertus\u2423panalismu",
+    probs: [["s", 1.0],
+      ["t", 0.0],
+      ["m", 0.0],
+      ["l", 0.0],
+      ["n", 0.0],
+      ["…", 0.0]],
+    chosen: "s",
+    chosen_p: 1.0, top: "s",
+    desc: "\"s\" (100%) — zgodnie z faworytem."
+  },
+  {
+    context: "%pertus\u2423panalismus",
+    probs: [["!", 0.95],
+      ["␣", 0.05],
+      ["t", 0.0],
+      ["c", 0.0],
+      ["s", 0.0],
+      ["…", 0.0]],
+    chosen: "!",
+    chosen_p: 0.95, top: "!",
+    desc: "Token STOP (!) — 95%. Wynik: \"pertus panalismus\"."
   }
 ];
 
@@ -3434,7 +3560,7 @@ deck-stage.builds-armed .build.show {
       isDone = true;
       if (btnStep) btnStep.disabled = true;
       if (modelThinkingEl) modelThinkingEl.textContent = 'gotowe! ✓';
-      if (descEl) descEl.textContent = 'Generowanie zakończone. Token STOP (!) sygnalizuje koniec nazwy. Wynik: „angioma cenine"';
+      if (descEl) descEl.textContent = 'Generowanie zakończone. Token STOP (!) sygnalizuje koniec nazwy. Wynik: „pertus panalismus"';
       if (autoTimer) { clearInterval(autoTimer); autoTimer = null; document.getElementById('btn-auto').textContent = '▶ Auto'; }
       return;
     }

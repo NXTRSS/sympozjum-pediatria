@@ -1,0 +1,47 @@
+{
+  "wybrany": {
+    "n": 553,
+    "prog": 10553,
+    "nazwa": "pertus panalismus",
+    "ok": true,
+    "powod": "p_min=0.11",
+    "ocena": 3.5,
+    "p_min": 0.11029448061525823,
+    "krokow": 18,
+    "uwaga": "Wybrane ręcznie (pediatria: pert- jak pertussis); skrypt domyślnie sortuje na pancer colioma."
+  },
+  "inni": [
+    {
+      "n": 2781,
+      "prog": 12781,
+      "nazwa": "pancer colioma",
+      "p_min": 0.14,
+      "krokow": 15,
+      "ocena": 3.95
+    },
+    {
+      "n": 1291,
+      "prog": 11291,
+      "nazwa": "polymorbus chronica",
+      "p_min": 0.1,
+      "krokow": 20,
+      "ocena": 3.7
+    },
+    {
+      "n": 1117,
+      "prog": 11117,
+      "nazwa": "cholerythiasis",
+      "p_min": 0.11,
+      "krokow": 15,
+      "ocena": 3.0
+    },
+    {
+      "n": 502,
+      "prog": 10502,
+      "nazwa": "poligropathia",
+      "p_min": 0.1,
+      "krokow": 14,
+      "ocena": 3.1
+    }
+  ]
+}
