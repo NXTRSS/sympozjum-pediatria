@@ -6,6 +6,14 @@ Kamil Jędryczek, Staff ML Engineer, airSlate.
 
 Prelekcja pokazuje **od środka, jak działa model autoregresyjny** — budujemy na żywo mały model językowy, który wymyśla nowe łacińskie nazwy chorób, a potem tym samym mechanizmem tłumaczymy halucynacje AI, model Delphi-2M (Nature 2025) i predykcję masy urodzeniowej z wideo USG.
 
+<a id="demo-na-zywo"></a>
+
+## Demo na żywo
+
+Link do demo (aktywny 28.11 od ok. 10:45): …
+
+Aplikacja z prelekcji: generowanie łacińskich nazw chorób, bez logowania. Rano 28.11 w miejsce wielokropka wpisujemy adres z tego dnia. Kod QR na slajdzie „Telefony w dłoń” prowadzi do tej sekcji.
+
 ## 🚀 Uruchom model w przeglądarce (także na telefonie)
 
 [![Otwórz w Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/notebook/model_jezyka_choroby.ipynb)

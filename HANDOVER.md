@@ -8,10 +8,9 @@ Plik opisuje stan gałęzi integracyjnej przeniesionej na drugi komputer. Nie je
 | | |
 |---|---|
 | Checkout | `~/Documents/sympozjum-pediatria` (świeży klon 8.11.2026, wcześniej na tym Macu nie było kopii) |
-| Gałąź robocza | `reconcile/public-final-20261108-1618`, śledzi `origin/…` |
-| HEAD | commit z 24.11.2026 (Hospital-bench; ten plik). Poprzedni: `4461c69` (9.11.2026, tytuł, afiliacja, zgoda autorów na model bazowy Sano). Wcześniej `6b983b4` (8.11.2026) i `43ef88f` (integracja) |
-| `origin/main` | `48072ba`, czyli merge-base. Gałąź jest o 4 commity przed `main` (ten commit włącznie) |
-| Scalenie do `main` | **nie wykonano**. Nie scalać do `main` |
+| Gałąź źródłowa | **`main`** (od 26.11.2026). `reconcile/public-final-20261108-1618` zostaje na `d303aa7` |
+| HEAD | ten commit (kody QR, 26.11.2026). Poprzedni na `main`: `d303aa7` (Hospital-bench, 24.11), wcześniej `4461c69`, `6b983b4`, `43ef88f` |
+| Scalenie do `main` | **wykonane** 26.11.2026, decyzja Kamila: fast-forward `48072ba` → `d303aa7`, bez konfliktów |
 
 Zawartość gałęzi: prezentacja (`slides/`, `assemble.py`, `public-template/`, `prezentacja.html`), notebook GRU (`notebook/`), Delphi (`delphi/`, w tym polska ICD-10 z atrybucją CeZ w `delphi/dane/icd10_pl.csv`), USG z aplikacją Gradio (`usg/`).
 Celowo **nie ma** w repo: prywatnej korespondencji, danych pacjentów, wag, danych ACOUSLIC-AI/UKB, kodu autorów (klonowany skryptami do `*/zewnetrzne/`, poza gitem). Nie odtwarzać tego i nie importować starych gałęzi USG.
@@ -124,7 +123,7 @@ Konsekwencje dla obecnego stanu:
   Wynik w `eksport/` (w `.gitignore`): `prezentacja.pdf` (43 strony-obrazy 1920×1080, 19 MB), `prezentacja.pptx` (43 slajdy 16:9 z notatkami prelegenta, 19 MB), `slajdy/*.png`. 29 slajdów decku daje 43 strony, bo animacja „Krok po kroku” jest rozpisana na 15 slajdów (notatka przy kroku 1). Elementy `.build` są w stanie końcowym (bez odsłaniania na klik). Pasek nawigacji, wskaźnik trybu i przyciski animacji są ukryte.
   - Sprawdzone: przegląd wizualny wszystkich 43 stron (poppler) i strony 1 w Quartz (gradient poprawny); PPTX ma 43 slajdy, każdy z jednym obrazem i niepustą notatką.
   - **Niesprawdzone**: otwarcie PPTX w PowerPoincie i PDF w Edge/Adobe na Windows.
-- Kody QR na slajdach 11 i 28 (`#qr-gradio`, `#qr-colab`, `#qr-materialy`) to **zaślepki** w źródle. Trzeba je zastąpić prawdziwymi kodami, gdy zapadnie decyzja, dokąd mają prowadzić.
+- Kody QR: od 26.11.2026 prawdziwe SVG w źródle slajdów (patrz niżej). Eksport w `eksport/` jest z wcześniejszego składu i **trzeba go wygenerować ponownie na Macu**.
 
 ### Zmiany treści i narzędzia (8.11.2026, w commicie `6b983b4`)
 
@@ -141,17 +140,28 @@ Konsekwencje dla obecnego stanu:
 - Model Sano (slajd `n13c`): w karcie z podziękowaniem „pokazywany za zgodą autorów”, w notatce zdanie, że autorzy potwierdzili brak wag pełnego TabAttention i BabyNet++ i zgodzili się na pokazanie modelu bazowego (październik 2026). Liczby bez zmian. Korespondencja z autorami nie trafia do repo.
 - Wątek osobisty (slajd „Ile waży dziecko…”): liczby czekają na zgodę Kamila, nie są wpisane.
 
-### Zmiany 24.11.2026 (ten commit)
+### Zmiany 24.11.2026 (w commicie `d303aa7`)
 
 - Slajd `n07c` (karta „BEZPIECZEŃSTWO ZALECEŃ”, drobny druk pod NOHARM) i notatka prelegenta w `assemble.py`: Hospital-bench (Zavo, Can Zehebi, 12.11.2026, https://zavo.ai/research/hospital-bench). Raport firmy, bez recenzji. Fikcyjny szpital w USA, dane syntetyczne, zadania administracyjne. Najwyższy średni wynik: GPT-6.2 Astra 62,4% (95% CI 53,0–71,3%), w całości 14/48. Najwięcej zadań zaliczonych w całości: Claude Opus 5.5, 17/48. Ujawnianie dokumentacji, której polityka każe nie wydawać, to jeden z sześciu powtarzających się typów błędów. Jako „harm” (zadanie zerowane) źródło opisuje destrukcyjne operacje finansowe.
 - To samo źródło dopisane w `README.md` (lista „Źródła omawiane w prelekcji”) i skrótem na slajdzie materiałów (`n15`).
 - `n10_maidxo.html` bez zmian: slajd jest w `POMINIETE` w `assemble.py`.
 
+### Scalenie i kody QR (26.11.2026, ten commit)
+
+Decyzja Kamila z 26.11: `reconcile/public-final-20261108-1618` (`d303aa7`) scalony do `main` fast-forwardem z `48072ba`. Konfliktów nie było. Gałąź reconcile zostaje bez zmian. Od tej chwili źródłem prawdy jest `main`.
+
+- Trzy kody to SVG w `slides/n05_qr.html` i `slides/n15_materialy.html` (korekcja Q, `#0A0A14` na białym, 4 moduły strefy ciszy). Generator: `uv run tools/make_qr.py` (`segno==1.6.6` w metadanych skryptu), potem `python3 assemble.py`.
+- `#qr-materialy` → https://github.com/NXTRSS/sympozjum-pediatria
+- `#qr-colab` → https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/notebook/model_jezyka_choroby.ipynb (`notebook/model_jezyka_choroby.ipynb` jest na `main`)
+- `#qr-gradio` → https://github.com/NXTRSS/sympozjum-pediatria#demo-na-zywo (sekcja README „Demo na żywo”). To nie jest adres gradio.live.
+- **Rano 28.11** Kamil wstawia w README, w linii `Link do demo (aktywny 28.11 od ok. 10:45): …`, adres aplikacji z tego dnia. Kodu QR nie generujemy ponownie: prowadzi do sekcji, nie do adresu aplikacji.
+- Eksport na pendrive jest nieaktualny. Na Macu, z zainstalowanym Chrome i internetem (fonty): `python3 assemble.py && uv run eksport_raster.py`. Wynik zostaje w `eksport/` (gitignore).
+
 ## 6. Pozostałe kontrole i drobne niespójności
 
-1. Otwarcie `eksport/prezentacja.pptx` i `.pdf` na Windows (PowerPoint, Edge, Adobe); prawdziwe kody QR.
+1. Otwarcie `eksport/prezentacja.pptx` i `.pdf` na Windows (PowerPoint, Edge, Adobe) — po ponownym eksporcie na Macu.
 2. `slides/README.md` jest nieaktualny: wspomina `ALK/Model_Jezyka.html`, a szablon to już `public-template/published-deck.html`.
 3. `HANDOFF_DELPHI.md` opisuje stan z 13.10 (worktree `sympozjum-pediatria-delphi`, plan USG `docs/superpowers/plans/2026-10-13-usg-masa-plodu.md`, którego nie ma w repo). To dokument historyczny.
 4. `delphi/README.md` podaje „91 PASS i 5 SKIP” dla zestawu szybkiego. To dotyczy sytuacji z klonem autorów. Bez niego jest 29/6/56/5.
-5. Badge Colab w `README.md` wskazuje notebook na `main`. Dopóki gałąź nie jest scalona, kod QR i badge prowadzą do starej wersji (warto porównać ten notebook między gałęziami).
+5. Badge Colab w `README.md` wskazuje `blob/main/notebook/model_jezyka_choroby.ipynb`. Po scaleniu 26.11 to jest aktualny notebook na `main`.
 6. Po decyzji o zgodzie na pobranie: `przygotuj_demo.py` (Delphi, USG), testy pełne, wykonanie notebooków, klik-test aplikacji, pomiar czasów na M4 Pro / 24 GB (szczyt RAM Delphi to ok. 10 GB).
