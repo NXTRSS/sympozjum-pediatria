@@ -14,7 +14,9 @@ Link do demo (aktywny 28.11 od ok. 10:45): …
 
 Aplikacja z prelekcji: generowanie łacińskich nazw chorób, bez logowania. Rano 28.11 w miejsce wielokropka wpisujemy adres z tego dnia. Kod QR na slajdzie „Telefony w dłoń” prowadzi do tej sekcji.
 
-Gdy laptop sali nie uruchomi notebooka, jest deck zapasowy ze zrzutami tego notatnika (dane, tokeny, model, trening, krzywa, generowanie, dziesięć nazw, aplikacja):
+Checklist na dzień wykładu: [`PRZEBIEG.md`](PRZEBIEG.md).
+
+Gdy laptop sali nie uruchomi notebooka, jest deck zapasowy ze zrzutami (LM z01–z08, Delphi zd01–zd06, USG zu01–zu07):
 
 ```bash
 python3 assemble.py --zapas
@@ -27,7 +29,15 @@ Wynik: `prezentacja_zapas.html` oraz `eksport/prezentacja_zapas.pdf` i `.pptx`. 
 
 [![Otwórz w Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/notebook/model_jezyka_choroby.ipynb)
 
-Nie trzeba nic instalować: kliknij przycisk *Open in Colab* (potrzebne konto Google), potem `Środowisko wykonawcze` → `Uruchom wszystko`. Dane pobiorą się same. Sam trening na CPU to kilkanaście sekund; pierwsze uruchomienie w Colabie, z instalacją pakietów, może potrwać kilka minut. Na końcu notatnik uruchamia aplikację Gradio (liczba nazw + „kreatywność"/temperatura) z publicznym linkiem.
+Rano 28.11, z katalogu repozytorium:
+
+```bash
+uv run python notebook/uruchom_demo.py
+```
+
+Skrypt robi to samo co notebook (CPU, ziarno 42) i wypisuje link `gradio.live`. Wklej go wyżej, w linii „Link do demo…”.
+
+Dla publiczności, bez instalacji: kliknij przycisk *Open in Colab* (potrzebne konto Google), potem `Środowisko wykonawcze` → `Uruchom wszystko`. Dane pobiorą się same. Sam trening na CPU to kilkanaście sekund; pierwsze uruchomienie w Colabie, z instalacją pakietów, może potrwać kilka minut. Na końcu notatnik uruchamia tę samą aplikację Gradio.
 
 W notatniku można zmienić `ZBIOR` na `"leki"` albo `"dinozaury"` i wytrenować model na innym zbiorze nazw.
 
@@ -36,6 +46,7 @@ W notatniku można zmienić `ZBIOR` na `"leki"` albo `"dinozaury"` i wytrenować
 | Ścieżka | Zawartość |
 |---|---|
 | [`notebook/model_jezyka_choroby.ipynb`](notebook/model_jezyka_choroby.ipynb) | Mini model językowy (GRU, poziom liter): dane → trening → generowanie z histogramami rozkładów → aplikacja Gradio |
+| [`notebook/uruchom_demo.py`](notebook/uruchom_demo.py) | To samo co notebook, jedną komendą (`uv run python notebook/uruchom_demo.py`) |
 | [`data/choroby.csv`](data/choroby.csv) | 1292 łacińskie nazwy chorób |
 | [`data/leki.csv`](data/leki.csv) | 9438 nazw handlowych leków dopuszczonych w Polsce |
 | [`assemble.py`](assemble.py), [`slides/`](slides) | Źródła slajdów. `assemble.py` składa `prezentacja.html` (`←`/`→` nawigacja, druk do PDF) z plików `slides/*.html` i szablonu [`public-template/published-deck.html`](public-template/published-deck.html) — wszystko jest w repozytorium, nic nie trzeba dokładać |

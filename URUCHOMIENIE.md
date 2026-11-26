@@ -1,6 +1,6 @@
 # Ściąga: jak uruchomić wszystko
 
-Wszystkie komendy w jednym miejscu. Szczegóły i zastrzeżenia są w `README.md`, `usg/README.md`, `delphi/README.md`, a stan projektu w `HANDOVER.md`.
+Wszystkie komendy w jednym miejscu. Szczegóły i zastrzeżenia są w `README.md`, `usg/README.md`, `delphi/README.md`, a stan projektu w `HANDOVER.md`. Checklist na 27–28.11: [`PRZEBIEG.md`](PRZEBIEG.md).
 Komendy zakładają repo w `~/Documents/sympozjum-pediatria` i zainstalowany [uv](https://docs.astral.sh/uv/).
 
 ## 1. Prezentacja
@@ -22,7 +22,7 @@ Po każdej zmianie w `slides/` uruchom obie komendy ponownie. Katalogu `eksport/
 
 ### Plan B (laptop DIL, bez notebooka na żywo)
 
-Gdy na sali nie da się odpalić treningu ani Gradio, deck zapasowy dokłada osiem slajdów ze zrzutów `notebook/model_jezyka_choroby.ipynb` zaraz po slajdzie z kodami QR. Zwykły `prezentacja.html` się nie zmienia.
+Gdy na sali nie da się odpalić demo, deck zapasowy dokłada zrzuty: **z01–z08** (nazwy chorób) po QR, **zd01–zd06** (Delphi) po `n09_delphi_b`, **zu01–zu07** (USG) po `n13b_demo_usg`. Zwykły `prezentacja.html` się nie zmienia. Organizatorom wysyłamy wyłącznie `eksport/prezentacja_zapas.pdf` i `.pptx` (nie wersję bez `_zapas`).
 
 ```bash
 python3 assemble.py --zapas
@@ -46,10 +46,18 @@ Notatek prelegenta nie da się tu edytować: są w `assemble.py` (lista `NOTES`)
 
 ## 2. Notebook „nazwy chorób” (GRU)
 
-Bez instalacji: przycisk *Open in Colab* w `README.md`. Lokalnie (instaluje TensorFlow):
+Rano 28.11, zamiast „Uruchom wszystko” w notebooku:
 
 ```bash
 cd ~/Documents/sympozjum-pediatria
+uv run python notebook/uruchom_demo.py
+```
+
+Skrypt trenuje ten sam model (CPU, ziarno 42) i wypisuje publiczny link `gradio.live`. Wklej go w README, w linii „Link do demo…”. Sprawdzenie, że skrypt i notebook dają te same liczby: `uv run python notebook/uruchom_demo.py --sprawdz`.
+
+Bez instalacji, dla publiczności: przycisk *Open in Colab* w `README.md`. Lokalnie w Jupyterze:
+
+```bash
 uv sync
 uv run jupyter notebook notebook/model_jezyka_choroby.ipynb
 ```
@@ -108,6 +116,6 @@ Bez przygotowania Delphi (brak `delphi/zewnetrzne/Delphi`) szybkie testy dają 6
 
 ## 6. Przed wyjazdem na sympozjum
 
-1. `python3 assemble.py && uv run eksport_raster.py`, potem przegląd `eksport/prezentacja.pptx` (najlepiej w PowerPoincie na Windows).
-2. Skopiuj na pendrive: `eksport/prezentacja.pptx`, `eksport/prezentacja.pdf`, `prezentacja.html` i nagrania demo (mp4).
-3. Wyślij organizatorowi PDF lub PPTX wcześniej (prośba DIL).
+1. **Organizatorom (DIL):** `python3 assemble.py --zapas && uv run eksport_raster.py --zapas` → wyślij `eksport/prezentacja_zapas.pptx` i `.pdf`.
+2. **Na Macu:** `python3 assemble.py && uv run eksport_raster.py` → `prezentacja.html` + `eksport/prezentacja.pptx` (bez slajdów ZAPAS).
+3. Pendrive exFAT i checklista: [`PRZEBIEG.md`](PRZEBIEG.md).
