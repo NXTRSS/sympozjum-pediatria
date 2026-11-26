@@ -99,6 +99,73 @@ def dopisz(historia: str, kod: str, wiek: float) -> str:
     return f"{historia.strip().rstrip(',')}, {wpis}" if historia.strip() else wpis
 
 
+def wybrany_kod(kody: list[str], index: int | None) -> str | None:
+    """Kod ICD dla zaznaczonego wiersza Select (pozycja `index`, nie trait `value`)."""
+    if index is None or not kody or index < 0 or index >= len(kody):
+        return None
+    return kody[index]
+
+
+def ustaw_liste_chorob(select, kody: list[str], etykiety: list[str], zachowaj_kod: str | None) -> None:
+    """Ustawia etykiety w Select i wybór przez `index` (niby Jupyter 7 + ipywidgets 8).
+
+    Tuple `(etykieta, kod)` w `options` + `value=kod` w przeglądarce często nie synchronizuje kliknięcia
+    z traitem `value` — użytkownik klika wiersz, a „Dodaj” nadal widzi poprzedni kod.
+    """
+    select.options = etykiety
+    if not kody:
+        select.index = None
+        return
+    if zachowaj_kod in kody:
+        select.index = kody.index(zachowaj_kod)
+    else:
+        select.index = 0
+
+
+@dataclass
+class WyborChoroby:
+    """Pole szukaj + Select; `kody[i]` odpowiada `lista.options[i]` (same etykiety tekstowe)."""
+
+    szukaj: object
+    lista: object
+    kody: list[str]
+
+    def wybrany_kod(self) -> str | None:
+        return wybrany_kod(self.kody, self.lista.index)
+
+
+def utworz_wybor_choroby(
+    sl: Slownik,
+    *,
+    rows: int = 8,
+    placeholder: str = "np. cukrzyca, zawal, astma, niewydol serc…",
+    szerokosc=None,
+) -> WyborChoroby:
+    import ipywidgets as W
+
+    if szerokosc is None:
+        szerokosc = W.Layout(width="100%")
+    pole_szukaj = W.Text(
+        placeholder=placeholder,
+        description="Szukaj:",
+        layout=szerokosc,
+        continuous_update=True,
+    )
+    lista = W.Select(options=[], rows=rows, description="Choroba:", layout=szerokosc)
+    kody: list[str] = []
+
+    def odswiez_liste(_change=None):
+        poprzedni = wybrany_kod(kody, lista.index)
+        wyniki = szukaj(pole_szukaj.value, sl)
+        kody.clear()
+        kody.extend(k for k, _ in wyniki)
+        etykiety = [f"{k} · {n}" for k, n in wyniki]
+        ustaw_liste_chorob(lista, kody, etykiety, poprzedni)
+
+    pole_szukaj.observe(odswiez_liste, names="value")
+    return WyborChoroby(pole_szukaj, lista, kody)
+
+
 def opis_historii(historia: str, sl: Slownik) -> str:
     """Historia rozpisana po polsku (HTML do widżetu); błąd parsera jako czytelna uwaga."""
     if not historia.strip():
@@ -117,6 +184,7 @@ def opis_historii(historia: str, sl: Slownik) -> str:
 class Panel:
     szukaj: object
     wyniki: object
+    kody_wynikow: list[str]
     wiek: object
     dodaj: object
     historia: object
@@ -136,9 +204,8 @@ def panel(sl: Slownik, pokaz_prognoze: Callable[[str, str, int], object], histor
     from IPython.display import display
 
     szerokosc = W.Layout(width="100%")
-    pole_szukaj = W.Text(placeholder="np. cukrzyca, zawal, astma, niewydol serc…",
-                         description="Szukaj:", layout=szerokosc, continuous_update=True)
-    lista = W.Select(options=[], rows=8, description="Choroba:", layout=szerokosc)
+    wybor = utworz_wybor_choroby(sl, rows=8, szerokosc=szerokosc)
+    pole_szukaj, lista, kody_wynikow = wybor.szukaj, wybor.lista, wybor.kody
     pole_wiek = W.BoundedFloatText(value=50, min=0, max=110, step=1, description="W wieku:",
                                    layout=W.Layout(width="200px"))
     przycisk_dodaj = W.Button(description="Dodaj do historii", button_style="primary", icon="plus")
@@ -152,17 +219,13 @@ def panel(sl: Slownik, pokaz_prognoze: Callable[[str, str, int], object], histor
     przycisk_pokaz = W.Button(description="Pokaż prognozę", button_style="success", icon="line-chart")
     wyjscie = W.Output()
 
-    def odswiez_liste(_=None):
-        wyniki = szukaj(pole_szukaj.value, sl)
-        lista.options = [(f"{kod} · {nazwa}", kod) for kod, nazwa in wyniki]
-        lista.value = wyniki[0][0] if wyniki else None
-
     def po_zmianie_historii(_=None):
         opis.value = opis_historii(pole_historia.value, sl)
 
     def po_dodaj(_):
-        if lista.value:
-            pole_historia.value = dopisz(pole_historia.value, lista.value, pole_wiek.value)
+        kod = wybor.wybrany_kod()
+        if kod:
+            pole_historia.value = dopisz(pole_historia.value, kod, pole_wiek.value)
 
     def po_wyczysc(_):
         pole_historia.value = ""
@@ -174,7 +237,6 @@ def panel(sl: Slownik, pokaz_prognoze: Callable[[str, str, int], object], histor
             if wynik is not None:
                 display(wynik)
 
-    pole_szukaj.observe(odswiez_liste, names="value")
     pole_historia.observe(po_zmianie_historii, names="value")
     przycisk_dodaj.on_click(po_dodaj)
     przycisk_wyczysc.on_click(po_wyczysc)
@@ -186,5 +248,5 @@ def panel(sl: Slownik, pokaz_prognoze: Callable[[str, str, int], object], histor
         W.HTML("<b>2. Historia pacjenta</b>"), W.HBox([pole_historia, przycisk_wyczysc]), opis,
         W.HTML("<b>3. Pacjent dziś</b>"), pole_plec, suwak_wiek, przycisk_pokaz, wyjscie,
     ], layout=W.Layout(max_width="900px"))
-    return Panel(pole_szukaj, lista, pole_wiek, przycisk_dodaj, pole_historia, przycisk_wyczysc, opis,
+    return Panel(pole_szukaj, lista, kody_wynikow, pole_wiek, przycisk_dodaj, pole_historia, przycisk_wyczysc, opis,
                  pole_plec, suwak_wiek, przycisk_pokaz, wyjscie, widok)

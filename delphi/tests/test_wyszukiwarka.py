@@ -2,7 +2,16 @@ import pytest
 
 from delphi_demo import icd10_pl
 from delphi_demo.slownik import parsuj_historie, wczytaj_slownik
-from delphi_demo.wyszukiwarka import bez_ogonkow, dopisz, opis_historii, panel, szukaj
+from delphi_demo.wyszukiwarka import (
+    bez_ogonkow,
+    dopisz,
+    opis_historii,
+    panel,
+    szukaj,
+    ustaw_liste_chorob,
+    utworz_wybor_choroby,
+    wybrany_kod,
+)
 
 
 @pytest.fixture(scope="module")
@@ -86,13 +95,42 @@ def test_dopisz_i_opis(sl):
     assert "pusta" in opis_historii("", sl)
 
 
+def test_wybor_choroby_index_to_kod(sl):
+    import ipywidgets as W
+
+    select = W.Select(options=[])
+    kody = ["E11", "J45", "I10"]
+    etykiety = [f"{k} · test" for k in kody]
+    ustaw_liste_chorob(select, kody, etykiety, None)
+    assert select.index == 0 and wybrany_kod(kody, select.index) == "E11"
+    select.index = 2
+    assert wybrany_kod(kody, select.index) == "I10"
+    ustaw_liste_chorob(select, kody, etykiety, "J45")
+    assert select.index == 1 and wybrany_kod(kody, select.index) == "J45"
+
+
+def test_utworz_wybor_choroby_klikniecie_i_dodaj(sl):
+    w = utworz_wybor_choroby(sl)
+    w.szukaj.value = "cukrzyca"
+    assert "E11" in w.kody and "E10" in w.kody
+    w.lista.index = w.kody.index("E10")
+    assert w.wybrany_kod() == "E10"
+    h = dopisz("", w.wybrany_kod(), 40)
+    assert h == "E10 40"
+    # dalsze filtrowanie nie zeruje wyboru, jeśli kod nadal na liście
+    w.lista.index = w.kody.index("E11")
+    assert w.wybrany_kod() == "E11"
+    w.szukaj.value = "cukrzyca typu"
+    assert w.wybrany_kod() in w.kody
+
+
 def test_panel_dodaje_wybrana_chorobe(sl):
     wywolania = []
     p = panel(sl, lambda h, plec, wiek: wywolania.append((h, plec, wiek)), historia="E11 50",
               plec="K", wiek_teraz=60)
     p.szukaj.value = "astma"
-    assert p.wyniki.options and p.wyniki.options[0][1] == "J45"
-    p.wyniki.value = "J45"
+    assert p.kody_wynikow and p.kody_wynikow[0] == "J45"
+    p.wyniki.index = p.kody_wynikow.index("J45")
     p.wiek.value = 6
     p.dodaj.click()
     assert p.historia.value == "E11 50, J45 6"
