@@ -1,7 +1,7 @@
 # Delphi-2M na pokaz: historia chorób → prognoza
 
 Podprojekt prelekcji „Nowoczesne technologie w pediatrii" (DIL, Wrocław, 28.11.2026).
-Notebook `notebook/delphi_2m.ipynb` pokazuje, jak **Delphi** (Shmatko i in., *Nature* 2025) z historii chorób przewiduje następne zdarzenia i generuje dalsze życie token po tokenie. Używa tego samego mechanizmu co demo z nazwami chorób, tylko tokenami są diagnozy ICD-10.
+Notebook `notebook/delphi_2m.ipynb` pokazuje, jak **Delphi** (Shmatko i in., *Nature* 2025) z historii chorób przewiduje następne zdarzenia i czas do nich, a potem generuje dalsze życie token po tokenie. Używa tego samego mechanizmu co demo z nazwami chorób: tokenami są diagnozy ICD-10, śmierć, płeć i styl życia (słownik 1270), a zamiast numeru pozycji jest wiek w chwili zdarzenia.
 
 > **Materiał edukacyjny. Nie jest wyrobem medycznym i nie służy do decyzji klinicznych.**
 > Model trenujemy sami na **danych syntetycznych** autorów, a nie na UK Biobank. Liczby ryzyka nie są prawdziwymi ryzykami.

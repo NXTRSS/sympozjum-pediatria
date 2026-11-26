@@ -13,7 +13,7 @@ KOMORKI = [
     ("md", """# Delphi-2M: model językowy, którego „słowami" są diagnozy
 ### Sympozjum „Nowoczesne technologie w pediatrii" · Kamil Jędryczek
 
-W pierwszym notebooku model uczył się, jaka **litera** będzie następna w nazwie choroby. Delphi-2M (Shmatko i in., *Nature* 2025) robi to samo, tylko jego tokenami są **diagnozy ICD-10**, a pozycją w zdaniu jest **wiek**.
+W pierwszym notebooku model uczył się, jaka **litera** będzie następna w nazwie choroby. Delphi-2M (Shmatko i in., *Nature* 2025) robi to samo, tylko jego tokenami są **diagnozy ICD-10, śmierć, płeć i styl życia** (słownik 1270), a zamiast numeru pozycji dostaje **wiek w chwili zdarzenia**. Przewiduje też, **za ile czasu** pojawi się następne zdarzenie.
 
 > **Materiał edukacyjny. Nie jest wyrobem medycznym i nie służy do decyzji klinicznych.**
 >
@@ -41,10 +41,11 @@ print(f"Delphi: {pl(trening.liczba_parametrow(MODEL) / 1e6, 2)} mln parametrów,
 
 | | nasz model z nazwami chorób | Delphi-2M |
 |---|---|---|
-| token | litera | kod ICD-10 (np. E11), płeć, BMI, palenie, alkohol |
+| token | litera | kod ICD-10 (np. E11), zgon, płeć, BMI, palenie, alkohol; słownik 1270 |
 | „zdanie" | nazwa choroby | historia zdrowia jednej osoby |
-| pozycja | numer litery | **wiek** (w dniach) |
-| koniec | znak „!" | token **zgonu** |
+| pozycja | numer litery | **wiek w chwili zdarzenia** (dni od urodzenia) |
+| przewiduje | następną literę | **następną chorobę i czas do niej** |
+| koniec | znak „!" | token **zgonu** (model go przewiduje, jak chorobę) |
 
 Poniżej jeden z ~7 tys. „pacjentów" z danych syntetycznych autorów. Nikt taki nie istnieje: wymyślił go wytrenowany Delphi-2M."""),
     ("code", """# ── PACJENT SYNTETYCZNY ───────────────────────────────────────
