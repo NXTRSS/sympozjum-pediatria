@@ -132,6 +132,36 @@ if ZAPAS:
         ("z08_gradio.html",
          "Plan B. Tak wygląda aplikacja dla sali: suwak „ile nazw” (tu 3) i „kreatywność” (tu 0,4). Po Submit: angioma — ta jest w zbiorze — oraz pertinia i coplasia, których w zbiorze nie ma. Na laptopie DIL aplikacji nie odpalamy; to zrzut z notebooka uruchomionego wcześniej. Koniec zapasu nazw chorób."),
     ])
+    _wstaw("n09_delphi_b.html", [
+        ("zd01_model.html",
+         "Plan B · Delphi — zaraz po slajdzie z wynikami Delphi. Wczytanie modelu 2,24 mln parametrów i słownika 1270 tokenów z pamięci (TRYB z_pamieci). Jeśli notebook delphi_2m działa na żywo po sesji, pomiń zd01–zd06."),
+        ("zd02_trajektoria.html",
+         "Plan B · Delphi. Przykładowy pacjent syntetyczny: oś życia z diagnozami w czasie. Podkreślić: nikt taki nie istnieje, dane autorów."),
+        ("zd03_krzywa.html",
+         "Plan B · Delphi. Krzywa uczenia z logu treningu na danych syntetycznych — ten sam mechanizm co przy nazwach chorób."),
+        ("zd04_ranking.html",
+         "Plan B · Delphi. Historia E11 50, I10 55 → ranking następnych diagnoz i ryzyka. Liczby edukacyjne, nie kliniczne."),
+        ("zd05_krzywe.html",
+         "Plan B · Delphi. Porównanie krzywych ryzyka z cukrzycą i bez — z pamięci, N=1000."),
+        ("zd06_slad.html",
+         "Plan B · Delphi · koniec bloku. Ślad generowania życia token po tokenie (astma od dzieciństwa). Potem wróć do zwykłych slajdów."),
+    ])
+    _wstaw("n13b_demo_usg.html", [
+        ("zu01_nagranie.html",
+         "Plan B · USG — zaraz po slajdzie demo USG. Klatka z nagrania ACOUSLIC-AI (TRYB z_pamieci). Jeśli aplikacja lub notebook działa, pomiń zu01–zu07."),
+        ("zu02_maska.html",
+         "Plan B · USG. nnU-Net przegląda nagranie i wskazuje klatkę z brzuchem — obrys i elipsa AC."),
+        ("zu03_pomiar.html",
+         "Plan B · USG. Obwód brzucha, tydzień ciąży z Campbell, masa „teraz” — porównanie z ekspertami z CSV."),
+        ("zu04_fuvai.html",
+         "Plan B · USG. Polski FUVAI na tym samym nagraniu — kiedy jest pewny, kiedy nie."),
+        ("zu05_sano.html",
+         "Plan B · USG. Model Sano (checkpoint bazowy): masa w dniu porodu z nagrania <24 h przed porodem — tu ekstrapolacja poza dane uczące."),
+        ("zu06_aplikacja.html",
+         "Plan B · USG. Zrzut aplikacji demo_usg.py: nagranie Nr 1, tryb „z pamięci”, po „Znajdź brzuch i zmierz”."),
+        ("zu07_nnunet.html",
+         "Plan B · USG · koniec bloku. Ta sama sesja — sama karta nnU-Net z obrysem na klatce. Wróć do slajdu o modelu Sano lub materiałach."),
+    ])
 if not ORIG.exists():
     sys.exit(
         f"Brak szablonu decku: {ORIG}\n"
