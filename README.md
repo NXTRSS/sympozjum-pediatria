@@ -1,0 +1,98 @@
+# Następne słowo, następna choroba
+### Jak działa sztuczna inteligencja, z którą pacjenci rozmawiają przed wizytą
+
+Materiały do prelekcji na sympozjum **„Nowoczesne technologie w pediatrii — od teorii do praktyki"** (Dolnośląska Izba Lekarska, Wrocław).
+Kamil Jędryczek, Staff ML Engineer, airSlate.
+
+Prelekcja pokazuje **od środka, jak działa model autoregresyjny** — budujemy na żywo mały model językowy, który wymyśla nowe łacińskie nazwy chorób, a potem tym samym mechanizmem tłumaczymy halucynacje AI, model Delphi-2M (Nature 2025) i predykcję masy urodzeniowej z wideo USG.
+
+<a id="demo-na-zywo"></a>
+
+## Demo na żywo
+
+Link do demo (aktywny 28.11 od ok. 10:45): https://8b4bb84f40a0217a55.gradio.live
+
+Aplikacja z prelekcji: generowanie łacińskich nazw chorób, bez logowania. Kod QR na slajdzie „Telefony w dłoń” prowadzi do tej sekcji.
+
+## 🚀 Uruchom model w przeglądarce (także na telefonie)
+
+[![Otwórz w Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/notebook/model_jezyka_choroby.ipynb)
+
+Rano 28.11, z katalogu repozytorium:
+
+```bash
+uv run python notebook/uruchom_demo.py
+```
+
+Skrypt robi to samo co notebook (CPU, ziarno 42) i wypisuje link `gradio.live`. Wklej go wyżej, w linii „Link do demo…”.
+
+Dla publiczności, bez instalacji: kliknij przycisk *Open in Colab* (konto Google), potem `Środowisko wykonawcze` → `Uruchom wszystko`. **To ten sam plik** co po `git pull` lokalnie — pierwsza komórka sama sklonuje repo w Colabie (`notebook/colab_sciezka.py`). Nie ma osobnego notebooka „tylko na Colab”; linki ze slajdów zostają aktualne. Dane pobiorą się same. Trening na CPU to kilkanaście sekund; pierwsze uruchomienie w Colabie może potrwać kilka minut (instalacja pakietów). Notatnik kończy się na **wygenerowanych nazwach** — aplikację dla sali uruchamia prelegent skryptem powyżej, nie z Colaba.
+
+W notatniku można zmienić `ZBIOR` na `"leki"` albo `"dinozaury"` i wytrenować model na innym zbiorze nazw.
+
+## 📂 Co tu jest
+
+| Ścieżka | Zawartość |
+|---|---|
+| [`notebook/model_jezyka_choroby.ipynb`](notebook/model_jezyka_choroby.ipynb) | Mini model (GRU, poziom liter) dla publiczności w Colabie: dane → trening → generowanie (+ test „czy nazwa jest nowa”) |
+| [`notebook/uruchom_demo.py`](notebook/uruchom_demo.py) | To samo co notebook, jedną komendą (`uv run python notebook/uruchom_demo.py`) |
+| [`data/choroby.csv`](data/choroby.csv) | 1292 łacińskie nazwy chorób |
+| [`data/leki.csv`](data/leki.csv) | 9438 nazw handlowych leków dopuszczonych w Polsce |
+| [`data/dinozaury.csv`](data/dinozaury.csv) | 1531 nazw gatunków (źródło: [junosuarez/dinosaurs](https://github.com/junosuarez/dinosaurs)) |
+| [`usg/notebook/usg_masa_plodu.ipynb`](usg/notebook/usg_masa_plodu.ipynb) | USG → masa płodu (nnU-Net, FUVAI, TabAttention) — lokalnie albo Colab ([![Otwórz w Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/usg/notebook/usg_masa_plodu.ipynb)); w Colab pierwsza komórka sama pobiera kod autorów, wagi i nagranie z Zenodo (pierwsze uruchomienie ok. 15–25 min); wag ani nagrań nie ma w repozytorium |
+| [`delphi/notebook/delphi_2m.ipynb`](delphi/notebook/delphi_2m.ipynb) | Delphi-2M na danych syntetycznych autorów — lokalnie albo Colab ([![Otwórz w Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/delphi/notebook/delphi_2m.ipynb)); w Colab pierwsza komórka pobiera gotowy model syntetyczny z [GitHub Release `colab-demo-2026-11-27`](https://github.com/NXTRSS/sympozjum-pediatria/releases/tag/colab-demo-2026-11-27) (~1–2 min) |
+
+## 💻 Uruchomienie lokalne
+
+```bash
+uv sync
+uv run jupyter notebook notebook/model_jezyka_choroby.ipynb
+```
+
+Wymaga [uv](https://docs.astral.sh/uv/). Na Macu z Apple Silicon trening idzie po GPU (`tensorflow-metal`).
+
+## 📚 Źródła omawiane w prelekcji
+
+- **Delphi-2M** — *Learning the natural history of human disease with generative transformers*, [Nature 2025](https://www.nature.com/articles/s41586-025-09529-3) · [kod](https://github.com/gerstung-lab/Delphi)
+- **BabyNet** — *Residual Transformer Module for Birth Weight Prediction on Fetal Ultrasound Video*, MICCAI 2022 ([arXiv](https://arxiv.org/abs/2205.09382)) · [kod](https://github.com/SanoScience/BabyNet) · [BabyNet++](https://github.com/SanoScience/BabyNetPlusPlus)
+- **TabAttention** — *Learning Attention Conditionally on Tabular Data*, MICCAI 2023 ([arXiv](https://arxiv.org/abs/2310.18129)) · [kod](https://github.com/SanoScience/Tab-Attention) — publiczny checkpoint zawiera model bazowy obrazowy (289 g / 8,5% błędu w pracy); wag pełnego modelu z pomiarami biometrycznymi (170 g / 5,0%) nie ma publicznie
+- **FUVAI** — Płotka i in., *Physics in Medicine & Biology* 2022 · [kod i wagi](https://github.com/SanoScience/FUVAI)
+- **ACOUSLIC-AI** — nagrania USG i rozwiązanie bazowe nnU-Net (Radboudumc), dane: [Zenodo 12697994](https://zenodo.org/records/12697994), **CC BY-NC-SA 4.0**, tylko niekomercyjnie
+- **ChatGPT w pediatrii** — [JAMA Pediatrics 2024](https://pmc.ncbi.nlm.nih.gov/articles/PMC10762631/) (83% błędnych diagnoz) vs [case tethered cord](https://www.today.com/health/mom-chatgpt-diagnosis-pain-rcna101843)
+- **Halucynacje w transkrypcji wizyt** — [AP/Whisper 2024](https://www.healthcare-brew.com/stories/2024/11/18/openai-transcription-tool-whisper-hallucinations)
+- **MAI-DxO** — [Microsoft 2025](https://microsoft.ai/news/the-path-to-medical-superintelligence/) · [arXiv](https://arxiv.org/pdf/2506.22405)
+- **Hospital-bench** — Can Zehebi (Zavo), *measuring how well AI agents run hospital operations*, 12.11.2026, [zavo.ai/research/hospital-bench](https://zavo.ai/research/hospital-bench). Raport firmy, bez recenzji: agenci AI przy pracy administracyjnej w fikcyjnym szpitalu w USA (dane syntetyczne). Najwyższy średni wynik: GPT-6.2 Astra 62,4% (95% CI 53,0–71,3%), w całości 14/48; najwięcej zadań w całości: Claude Opus 5.5, 17/48. Ujawnianie dokumentacji, której polityka każe nie wydawać, to jeden z powtarzających się typów błędów
+
+## ⚖️ Dane i licencje
+
+- `choroby.csv` — nazwy łacińskie z infoboksów polskiej Wikipedii oraz tytułów artykułów łacińskiej Wikipedii (kategoria *Morbi*), oczyszczone ręcznie z pozycji niebędących chorobami (osoby, leki, patogeny, dziedziny medycyny itp.). Treści Wikimedia, licencja **CC BY-SA 4.0**.
+- `leki.csv` — [Rejestr Produktów Leczniczych](https://dane.gov.pl/pl/dataset/397) (CeZ/URPL), otwarte dane publiczne. Wyłącznie produkty do stosowania u ludzi, bez członów dawkowych.
+- `dinozaury.csv` — kopia listy z [junosuarez/dinosaurs](https://github.com/junosuarez/dinosaurs) (bez osobnej licencji w źródle; użytek edukacyjny).
+
+Model generuje **nazwy nieistniejące**. Notebook sprawdza każdą wygenerowaną nazwę względem zbioru treningowego i oznacza, czy jest nowa. Nic tu nie jest narzędziem diagnostycznym ani poradą medyczną.
+
+## 🔬 Dobór hiperparametrów
+
+Pierwsza wersja modelu (256 jednostek, 120 epok) **odtwarzała nazwy ze zbioru** zamiast wymyślać nowe. Nastawy dobrano pomiarem dwóch przeciwstawnych rzeczy:
+
+- **świeżość** — odsetek nazw, których nie ma w zbiorze treningowym ani w odległości edycyjnej ≤ 0,2 od którejś z nich,
+- **wiarygodność** — średnie prawdopodobieństwo nazwy pod modelem 4-gramowym znaków; 100% = tak samo „łacińska" jak prawdziwe nazwy, więcej = bardziej bełkotliwa.
+
+| Nastawy | Świeże | Wiarygodność |
+|---|---|---|
+| 256 jedn., 80 epok, T=0.8 (przeuczony) | 10% | 100% |
+| 256 jedn., 50 epok, T=0.8 | 46% | 116% |
+| 128 jedn., dropout 0.3, 30 epok, T=0.5 (wersja pośrednia) | 93% | 115% |
+| 128 jedn., 10 epok, T=1.2 (niedouczony) | 99% | 215% |
+
+Tabela pochodzi z pomiaru na pierwotnej wersji zbioru (1465 nazw). Po oczyszczeniu zbioru do 1292 nazw wybrane nastawy sprawdzono ponownie na 3 ziarnach losowych (T=0.5): 98,7% nazw nowych, 91,3% świeżych, wiarygodność 121,5%, 71,5% z poprawną łacińską końcówką (wcześniej: 98,2% / 92,7% / 114,6% / 75%).
+
+### Auto-optymalizacja pod trening na żywo (październik 2026)
+
+Model uczy się **na sali**, więc drugim kryterium obok jakości nazw był **czas treningu** (mierzony na 2 rdzeniach CPU, jak w darmowym Colabie). Ponad 400 pomiarów (architektura, tempo uczenia, batch, dropout, epoki, temperatura; 3 ziarna losowe) plus **ślepa ocena** 175 nazw w skali 1–5, z prawdziwymi nazwami jako kontrolą.
+
+| Nastawy | Czas treningu | Wiarygodność | Nowe | Ocena ślepa (1–5) |
+|---|---|---|---|---|
+| 128 jedn., dropout 0.3, lr 0,001, 30 epok, T=0.5 (poprzednie) | 36 s | 121% | 98% | 2,60 |
+| **128 jedn., dropout 0.2, lr 0,003, 12 epok, T=0.4** ← wybrane | **15 s** | **101%** | **98%** | **2,68** |
+| prawdziwe nazwy (kontrola) | — | 100% | — | 4,96 |
