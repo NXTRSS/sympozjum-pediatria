@@ -26,6 +26,14 @@ def test_korzen_repo_w_workspace():
         ("usg/pyproject.toml", "usg/notebook"),
     ],
 )
+def test_lokalizuj_colab_bootstrap():
+    spec = __import__("importlib.util").util.spec_from_file_location("colab_sciezka", CS)
+    mod = __import__("importlib.util").util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    p = mod._lokalizuj_colab_bootstrap("delphi/notebook")
+    assert p.name == "colab_bootstrap.py" and p.is_file()
+
+
 def test_upewnij_lokalnie(marker, folder):
     spec = __import__("importlib.util").util.spec_from_file_location("colab_sciezka", CS)
     mod = __import__("importlib.util").util.module_from_spec(spec)

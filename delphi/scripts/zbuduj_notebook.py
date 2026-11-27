@@ -15,6 +15,7 @@ from colab_pierwsza_komorka import tekst as tekst_colab  # noqa: E402
 NB = Path(__file__).resolve().parents[1] / "notebook" / "delphi_2m.ipynb"
 
 KOMORKI = [
+    ("code", tekst_colab("delphi")),
     ("md", """# Delphi-2M: model językowy, którego „słowami" są diagnozy
 ### Sympozjum „Nowoczesne technologie w pediatrii" · Kamil Jędryczek
 
@@ -22,8 +23,9 @@ W pierwszym notebooku model uczył się, jaka **litera** będzie następna w naz
 
 > **Materiał edukacyjny. Nie jest wyrobem medycznym i nie służy do decyzji klinicznych.**
 >
-> **Uczciwie:** prawdziwe wagi Delphi-2M (UK Biobank) są dostępne tylko po wniosku do UK Biobank. Tutaj ten sam model (2,24 mln parametrów, kod autorów) trenowaliśmy na **danych syntetycznych**, które opublikowali autorzy. Pokazujemy **mechanizm**. Liczby ryzyka **nie są** prawdziwymi ryzykami dla pacjentów."""),
-    ("code", tekst_colab("delphi")),
+> **Uczciwie:** prawdziwe wagi Delphi-2M (UK Biobank) są dostępne tylko po wniosku do UK Biobank. Tutaj ten sam model (2,24 mln parametrów, kod autorów) trenowaliśmy na **danych syntetycznych**, które opublikowali autorzy. Pokazujemy **mechanizm**. Liczby ryzyka **nie są** prawdziwymi ryzykami dla pacjentów.
+
+> **Google Colab:** jeśli pierwsza komórka kodu zaczyna się od `from colab_bootstrap import` — masz **starą wersję** z cache. *Plik → Otwórz notatnik → GitHub* → `NXTRSS/sympozjum-pediatria` → `main` → `delphi/notebook/delphi_2m.ipynb`, potem *Uruchom wszystko*."""),
     ("code", """# ── KONFIGURACJA ──────────────────────────────────────────────
 TRYB = "z_pamieci"        # "z_pamieci" = krzywe policzone przed prelekcją; "na_zywo" = liczymy teraz
 N_PROBEK_NA_ZYWO = 100    # ile „żyć" losujemy na żywo (100 ≈ 6 s, 200 ≈ 6–11 s na pacjenta; komórka liczy 2 pacjentów)

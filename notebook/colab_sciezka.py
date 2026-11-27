@@ -103,19 +103,44 @@ def zaladuj_ten_modul():
     return mod
 
 
+def _lokalizuj_colab_bootstrap(folder_notebooka: str) -> Path:
+    for base in (korzen_repo_lokalnie(), COLAB_ROOT if w_colabie() else None):
+        if base is None:
+            continue
+        p = base / folder_notebooka / "colab_bootstrap.py"
+        if p.is_file():
+            return p
+    for entry in sys.path:
+        p = Path(entry) / "colab_bootstrap.py"
+        if p.is_file():
+            return p
+    raise FileNotFoundError(
+        f"Brak colab_bootstrap.py (szukano w {folder_notebooka}). "
+        "W Colabie: otwórz notebook ponownie z GitHub (branch main), nie trzymaj starej kopii z cache."
+    )
+
+
+def _importuj_i_uruchom_colab_bootstrap(folder_notebooka: str) -> None:
+    import importlib.util
+
+    plik = _lokalizuj_colab_bootstrap(folder_notebooka)
+    spec = importlib.util.spec_from_file_location("colab_bootstrap", plik)
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    mod.uruchom()
+
+
 def bootstrap(ktory: str) -> None:
     """ktory: 'lm' | 'delphi' | 'usg' — pierwsza komórka każdego notebooka."""
-    mod = zaladuj_ten_modul()
-    spec = {
-        "lm": ("notebook/lm_utils.py", "notebook", "colab_bootstrap"),
-        "delphi": ("delphi/pyproject.toml", "delphi/notebook", "colab_bootstrap"),
-        "usg": ("usg/pyproject.toml", "usg/notebook", "colab_bootstrap"),
+    konfig = {
+        "lm": ("notebook/lm_utils.py", "notebook"),
+        "delphi": ("delphi/pyproject.toml", "delphi/notebook"),
+        "usg": ("usg/pyproject.toml", "usg/notebook"),
     }[ktory]
-    marker, folder, _boot = spec
-    mod.upewnij_srodowisko(marker, folder)
-    from colab_bootstrap import uruchom  # noqa: WPS433 — katalog ustawiony wyżej
-
-    uruchom()
+    marker, folder = konfig
+    upewnij_srodowisko(marker, folder)
+    _importuj_i_uruchom_colab_bootstrap(folder)
 
 
 def uruchom_notebook_lm() -> None:
