@@ -28,7 +28,7 @@ REPO = "https://raw.githubusercontent.com/NXTRSS/sympozjum-pediatria/main/data"
 DANE = {
     "choroby": f"{REPO}/choroby.csv",
     "leki": f"{REPO}/leki.csv",
-    "dinozaury": "https://raw.githubusercontent.com/junosuarez/dinosaurs/master/dinosaurs.csv",
+    "dinozaury": f"{REPO}/dinozaury.csv",
 }
 LICZBA_EPOK = 12
 TEMPO_UCZENIA = 0.003
@@ -246,8 +246,9 @@ def _przebieg_trenuj(
     ziarno: int,
     epoki: int,
     temperatura: float,
+    zbior: str = "choroby",
 ) -> dict:
-    nazwy, zrodlo, _ = wczytaj_nazwy(ziarno=ziarno)
+    nazwy, zrodlo, _ = wczytaj_nazwy(zbior, ziarno=ziarno)
     ustaw_ziarna(ziarno)
     tokenizer, X, Y, vocab_size, _ = przygotuj_tokenizer_i_macierze(nazwy)
     model = zbuduj_model(vocab_size, ziarno=ziarno)
@@ -263,6 +264,7 @@ def przebieg(
     ziarno: int | None = None,
     epoki: int | None = None,
     temperatura: float | None = None,
+    zbior: str = "choroby",
     *,
     force_train: bool = False,
     use_cache: bool = True,
@@ -270,7 +272,7 @@ def przebieg(
     ziarno = ZIARNO if ziarno is None else ziarno
     epoki = LICZBA_EPOK if epoki is None else epoki
     temperatura = TEMPERATURA if temperatura is None else temperatura
-    _, zrodlo, _ = wczytaj_nazwy(ziarno=ziarno)
+    _, zrodlo, _ = wczytaj_nazwy(zbior, ziarno=ziarno)
     manifest = _manifest(ziarno, epoki, temperatura, zrodlo)
     if use_cache and not force_train:
         z_cache = wczytaj_cache(manifest, zbuduj_model, przywroc_tokenizer)
@@ -278,7 +280,7 @@ def przebieg(
             print("Wczytano zapisany model (bez treningu)", flush=True)
             return z_cache
     print("Trenuję…", flush=True)
-    return _przebieg_trenuj(ziarno, epoki, temperatura)
+    return _przebieg_trenuj(ziarno, epoki, temperatura, zbior)
 
 
 def _zapisz_stan_demo(glebokosc: int, odrzucone_kolejka: int) -> None:

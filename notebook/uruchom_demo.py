@@ -54,11 +54,17 @@ def main() -> None:
     parser.add_argument("--bez-linku", action="store_true", help="Gradio tylko lokalnie (share=False)")
     parser.add_argument("--bez-limitu", action="store_true", help="wyłącza limit 20 zapytań/min na klienta")
     parser.add_argument("--bez-monitora", action="store_true", help="nie otwiera okna Terminala z monitor.py")
+    parser.add_argument(
+        "--zbior",
+        choices=("choroby", "leki", "dinozaury"),
+        default="choroby",
+        help="zbiór nazw (jak ZBIOR w notebooku)",
+    )
     args = parser.parse_args()
     if args.sprawdz:
         sprawdz()
         return
-    wynik = przebieg(force_train=args.trenuj)
+    wynik = przebieg(force_train=args.trenuj, zbior=args.zbior)
     print(f"\nWczytano {wynik['nazw']} nazw z: {wynik['zrodlo']}")
     print(f"Loss po {len(wynik['loss'])} epokach: {wynik['loss'][-1]:.4f}")
     print(f"Przykładowa nazwa (ziarno {ZIARNO}, temperatura {TEMPERATURA}): {wynik['pierwsza']}")
@@ -67,6 +73,7 @@ def main() -> None:
         wynik["tokenizer"],
         wynik["znane"],
         temperatura=TEMPERATURA,
+        zbior=args.zbior,
         share=not args.bez_linku,
         limit_klienta=not args.bez_limitu,
         uruchom_monitor=not args.bez_monitora,

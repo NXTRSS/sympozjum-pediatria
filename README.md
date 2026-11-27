@@ -49,6 +49,7 @@ W notatniku można zmienić `ZBIOR` na `"leki"` albo `"dinozaury"` i wytrenować
 | [`notebook/uruchom_demo.py`](notebook/uruchom_demo.py) | To samo co notebook, jedną komendą (`uv run python notebook/uruchom_demo.py`) |
 | [`data/choroby.csv`](data/choroby.csv) | 1292 łacińskie nazwy chorób |
 | [`data/leki.csv`](data/leki.csv) | 9438 nazw handlowych leków dopuszczonych w Polsce |
+| [`data/dinozaury.csv`](data/dinozaury.csv) | 1531 nazw gatunków (źródło: [junosuarez/dinosaurs](https://github.com/junosuarez/dinosaurs)) |
 | [`assemble.py`](assemble.py), [`slides/`](slides) | Źródła slajdów. `assemble.py` składa `prezentacja.html` (`←`/`→` nawigacja, druk do PDF) z plików `slides/*.html` i szablonu [`public-template/published-deck.html`](public-template/published-deck.html) — wszystko jest w repozytorium, nic nie trzeba dokładać |
 | [`prezentacja.html`](prezentacja.html) | Złożona prezentacja (wynik `assemble.py`), gotowa do otwarcia w przeglądarce |
 | [`usg/notebook/usg_masa_plodu.ipynb`](usg/notebook/usg_masa_plodu.ipynb) | USG → masa płodu (nnU-Net, FUVAI, TabAttention) — lokalnie albo Colab ([![Otwórz w Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/usg/notebook/usg_masa_plodu.ipynb)); w Colab pierwsza komórka pobiera paczki z [GitHub Release `colab-demo-2026-11-27`](https://github.com/NXTRSS/sympozjum-pediatria/releases/tag/colab-demo-2026-11-27) (~1–2 min), bez wag w repozytorium |
@@ -88,7 +89,7 @@ Szablon decku jest w repozytorium (`public-template/published-deck.html`) — to
 
 - `choroby.csv` — nazwy łacińskie z infoboksów polskiej Wikipedii oraz tytułów artykułów łacińskiej Wikipedii (kategoria *Morbi*), oczyszczone ręcznie z pozycji niebędących chorobami (osoby, leki, patogeny, dziedziny medycyny itp.). Treści Wikimedia, licencja **CC BY-SA 4.0**.
 - `leki.csv` — [Rejestr Produktów Leczniczych](https://dane.gov.pl/pl/dataset/397) (CeZ/URPL), otwarte dane publiczne. Wyłącznie produkty do stosowania u ludzi, bez członów dawkowych.
-- `dinozaury` — zbiór [junosuarez/dinosaurs](https://github.com/junosuarez/dinosaurs).
+- `dinozaury.csv` — kopia listy z [junosuarez/dinosaurs](https://github.com/junosuarez/dinosaurs) (bez osobnej licencji w źródle; użytek edukacyjny).
 
 Model generuje **nazwy nieistniejące**. Notebook sprawdza każdą wygenerowaną nazwę względem zbioru treningowego i oznacza, czy jest nowa. Nic tu nie jest narzędziem diagnostycznym ani poradą medyczną.
 
