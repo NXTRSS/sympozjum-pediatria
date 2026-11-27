@@ -14,7 +14,7 @@ KAMIL_SCALENIA: dict[str, int] = {
     "N01 Title::4": 1,
     "N02 Zagadka Alex::3": 2,
     "N02 Zagadka Alex::5": 3,
-    "04 Section LM::2": 2,
+    "04 Section LM::2": 1,
     "N05 QR Interakcja::3": 1,
     "N05 QR Interakcja::4": 2,
     "12 Section Scale::2": 0,
