@@ -6,7 +6,7 @@ from typing import Callable
 
 from delphi_demo import pamiec
 from delphi_demo.slownik import Slownik
-from delphi_demo.wyszukiwarka import dopisz, opis_historii, szukaj
+from delphi_demo.wyszukiwarka import dopisz, opis_historii, styl_etykiet_widzetow, szukaj
 
 
 @dataclass
@@ -63,40 +63,68 @@ def panel_generowania(
     """Widżety + „Generuj". `pokaz(historia, plec, wiek_teraz, ziarno, temperatura, maks_krokow, ile_sladu)`."""
     import ipywidgets as W
 
+    etykieta = styl_etykiet_widzetow()
     szerokosc = W.Layout(width="100%")
+    suwak_szerokosc = W.Layout(width="100%", max_width="560px")
     zajete = {"tak": False}
 
     pole_szukaj = W.Text(
         placeholder="np. astma, cukrzyca, atopowe zapalenie skóry…",
         description="Szukaj:",
         layout=szerokosc,
+        style=etykieta,
         continuous_update=True,
     )
-    lista = W.Select(options=[], rows=6, description="Choroba:", layout=szerokosc)
+    lista = W.Select(options=[], rows=6, description="Choroba:", layout=szerokosc, style=etykieta)
     pole_wiek_ch = W.BoundedFloatText(
         value=10, min=0, max=110, step=1, description="W wieku:",
-        layout=W.Layout(width="200px"),
+        layout=W.Layout(width="220px"),
+        style=etykieta,
     )
     przycisk_dodaj = W.Button(description="Dodaj do historii", button_style="primary", icon="plus")
     pole_historia = W.Text(
         value=historia,
         description="Historia:",
         layout=szerokosc,
+        style=etykieta,
         placeholder="E11 50, I10 55 lub wybierz choroby powyżej",
     )
     przycisk_wyczysc = W.Button(description="Wyczyść historię", icon="trash")
     opis = W.HTML(opis_historii(historia, sl))
 
-    pole_plec = W.ToggleButtons(options=[("kobieta", "K"), ("mężczyzna", "M")], value=plec, description="Płeć:")
-    suwak_wiek = W.IntSlider(value=wiek_teraz, min=1, max=90, description="Wiek dziś:")
+    pole_plec = W.ToggleButtons(
+        options=[("kobieta", "K"), ("mężczyzna", "M")], value=plec, description="Płeć:", style=etykieta,
+    )
+    suwak_wiek = W.IntSlider(
+        value=wiek_teraz, min=1, max=90, description="Wiek dziś:",
+        layout=suwak_szerokosc, style=etykieta,
+    )
 
-    pole_ziarno = W.IntText(value=ziarno, description="Ziarno losowania:", layout=W.Layout(width="220px"))
+    pole_ziarno = W.IntText(
+        value=ziarno, description="Ziarno losowania:",
+        layout=W.Layout(width="280px"), style=etykieta,
+    )
     suwak_temp = W.FloatSlider(
         value=temperatura, min=0.5, max=2.0, step=0.1, description="Temperatura:",
         readout_format=".1f",
+        layout=suwak_szerokosc,
+        style=etykieta,
     )
-    suwak_krokow = W.IntSlider(value=maks_krokow, min=5, max=80, step=1, description="Maks. kroków:")
-    suwak_sladu = W.IntSlider(value=ile_sladu, min=5, max=20, step=1, description="Wierszy śladu:")
+    suwak_krokow = W.IntSlider(
+        value=maks_krokow, min=5, max=80, step=1, description="Maks. kroków:",
+        layout=suwak_szerokosc, style=etykieta,
+    )
+    suwak_sladu = W.IntSlider(
+        value=ile_sladu, min=5, max=20, step=1, description="Wierszy śladu:",
+        layout=suwak_szerokosc, style=etykieta,
+    )
+
+    podpowiedz_losowania = W.HTML(
+        "<p style='margin:6px 0 10px; font-size:15px; line-height:1.5'>"
+        "Domyślne ustawienia działają — wystarczy kliknąć <b>Generuj</b>; "
+        "ziarno = które życie losujemy, temperatura = jak śmiało model losuje."
+        "</p>"
+    )
 
     styl_info = W.HTML(
         "<i>Styl życia (BMI, palenie, alkohol): tokeny są w słowniku, "
@@ -197,8 +225,11 @@ def panel_generowania(
             pole_plec,
             suwak_wiek,
             styl_info,
-            W.HBox([pole_ziarno, suwak_temp]),
-            W.HBox([suwak_krokow, suwak_sladu]),
+            pole_ziarno,
+            suwak_temp,
+            suwak_krokow,
+            suwak_sladu,
+            podpowiedz_losowania,
             W.HBox([przycisk_generuj, status]),
             wyjscie,
         ],

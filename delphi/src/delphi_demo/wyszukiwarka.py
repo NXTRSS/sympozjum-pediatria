@@ -113,6 +113,11 @@ def opis_historii(historia: str, sl: Slownik) -> str:
     return f"<ol style='margin:4px 0'>{wiersze}</ol>"
 
 
+def styl_etykiet_widzetow() -> dict[str, str]:
+    """Etykiety widżetów bez obcinania („Temperatu…") — czytelne na rzutniku."""
+    return {"description_width": "initial"}
+
+
 @dataclass
 class Panel:
     szukaj: object
@@ -135,20 +140,36 @@ def panel(sl: Slownik, pokaz_prognoze: Callable[[str, str, int], object], histor
     import ipywidgets as W
     from IPython.display import display
 
+    etykieta = styl_etykiet_widzetow()
     szerokosc = W.Layout(width="100%")
-    pole_szukaj = W.Text(placeholder="np. cukrzyca, zawal, astma, niewydol serc…",
-                         description="Szukaj:", layout=szerokosc, continuous_update=True)
-    lista = W.Select(options=[], rows=8, description="Choroba:", layout=szerokosc)
-    pole_wiek = W.BoundedFloatText(value=50, min=0, max=110, step=1, description="W wieku:",
-                                   layout=W.Layout(width="200px"))
+    suwak_szerokosc = W.Layout(width="100%", max_width="560px")
+    pole_szukaj = W.Text(
+        placeholder="np. cukrzyca, zawal, astma, niewydol serc…",
+        description="Szukaj:",
+        layout=szerokosc,
+        style=etykieta,
+        continuous_update=True,
+    )
+    lista = W.Select(options=[], rows=8, description="Choroba:", layout=szerokosc, style=etykieta)
+    pole_wiek = W.BoundedFloatText(
+        value=50, min=0, max=110, step=1, description="W wieku:",
+        layout=W.Layout(width="220px"), style=etykieta,
+    )
     przycisk_dodaj = W.Button(description="Dodaj do historii", button_style="primary", icon="plus")
-    pole_historia = W.Text(value=historia, description="Historia:", layout=szerokosc,
-                           placeholder="możesz też wpisać kody: E11 50, I10 55")
+    pole_historia = W.Text(
+        value=historia, description="Historia:", layout=szerokosc, style=etykieta,
+        placeholder="możesz też wpisać kody: E11 50, I10 55",
+    )
     przycisk_wyczysc = W.Button(description="Wyczyść", icon="trash")
     opis = W.HTML(opis_historii(historia, sl))
-    pole_plec = W.ToggleButtons(options=[("kobieta", "K"), ("mężczyzna", "M")], value=plec,
-                                description="Płeć:")
-    suwak_wiek = W.IntSlider(value=wiek_teraz, min=1, max=90, description="Wiek dziś:")
+    pole_plec = W.ToggleButtons(
+        options=[("kobieta", "K"), ("mężczyzna", "M")], value=plec,
+        description="Płeć:", style=etykieta,
+    )
+    suwak_wiek = W.IntSlider(
+        value=wiek_teraz, min=1, max=90, description="Wiek dziś:",
+        layout=suwak_szerokosc, style=etykieta,
+    )
     przycisk_pokaz = W.Button(description="Pokaż prognozę", button_style="success", icon="line-chart")
     wyjscie = W.Output()
 
