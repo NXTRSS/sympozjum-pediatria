@@ -42,5 +42,8 @@ def uruchom() -> Path:
     src = delphi / "src"
     if str(src) not in sys.path:
         sys.path.insert(0, str(src))
+    from delphi_demo.colab_przygotowanie import uruchom_jesli_potrzeba
+
+    uruchom_jesli_potrzeba(delphi)
     print(f"Colab: Delphi — kod z {src} (Python {sys.version_info.major}.{sys.version_info.minor}).")
     return delphi

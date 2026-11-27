@@ -92,6 +92,9 @@ def _bootstrap_delphi_w_colabie() -> None:
         print("Colab Delphi: PyTorch i pandas są już w kernelu — pomijam pip.")
     os.chdir(delphi)
     _dopisz_sys_path(delphi / "src")
+    from delphi_demo.colab_przygotowanie import uruchom_jesli_potrzeba
+
+    uruchom_jesli_potrzeba(delphi)
 
 
 def upewnij_srodowisko(marker_wzgledem_root: str, folder_notebooka: str) -> Path:

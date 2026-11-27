@@ -25,7 +25,7 @@ W pierwszym notebooku model uczył się, jaka **litera** będzie następna w naz
 >
 > **Uczciwie:** prawdziwe wagi Delphi-2M (UK Biobank) są dostępne tylko po wniosku do UK Biobank. Tutaj ten sam model (2,24 mln parametrów, kod autorów) trenowaliśmy na **danych syntetycznych**, które opublikowali autorzy. Pokazujemy **mechanizm**. Liczby ryzyka **nie są** prawdziwymi ryzykami dla pacjentów.
 
-> **Google Colab:** pierwsza komórka odświeża klon w `/content/sympozjum-pediatria` z GitHub `main`. Po problemach: *Runtime → Odłącz i usuń środowisko wykonawcze*, potem *Uruchom wszystko*."""),
+> **Google Colab:** pierwsza komórka odświeża repo i **klonuje kod Delphi autorów** (poza gitem). Przy **pierwszym** uruchomieniu na nowym dysku dołoży trening modelu (~15–25 min na GPU T4). Upewnij się, że masz GPU (*Runtime → Zmień typ środowiska wykonawczego*). Po błędzie: *Odłącz i usuń środowisko wykonawcze*, potem *Uruchom wszystko*."""),
     ("code", """# ── KONFIGURACJA ──────────────────────────────────────────────
 TRYB = "z_pamieci"        # "z_pamieci" = krzywe policzone przed prelekcją; "na_zywo" = liczymy teraz
 N_PROBEK_NA_ZYWO = 100    # ile „żyć" losujemy na żywo (100 ≈ 6 s, 200 ≈ 6–11 s na pacjenta; komórka liczy 2 pacjentów)
