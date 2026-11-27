@@ -141,34 +141,51 @@ def generuj(
     temperatura: float = TEMPERATURA,
     maks_krokow: int = 30,
     prompt: str = "%",
+    *,
+    zbierz_kroki: bool = False,
 ):
     """Generowanie jak w notatniku (hidden state + temperatura)."""
     import tensorflow as tf
 
     prompt = prompt.lower()
+    kroki: list[dict] = []
     encoded = tf.convert_to_tensor(tokenizer.texts_to_sequences([prompt]))
     model_out, hidden_state = model(encoded, return_state=True)
     last_output = model_out[0, -1, :].numpy()
 
-    for _ in range(maks_krokow):
+    for krok_nr in range(maks_krokow):
         last_output = np.array(last_output, dtype=np.float64)
         last_output[0] = 0.0
         s = last_output.sum()
         if s > 0:
-            last_output /= s
+            last_output = last_output / s
+        rozklad_wiz = last_output.copy()
         log_p = np.log(last_output + 1e-9) / max(temperatura, 1e-6)
-        last_output = np.exp(log_p)
-        last_output[0] = 0.0
-        last_output /= last_output.sum()
-        next_char_idx = int(np.random.choice(np.arange(len(last_output)), p=last_output))
+        rozklad_wybor = np.exp(log_p)
+        rozklad_wybor[0] = 0.0
+        rozklad_wybor = rozklad_wybor / rozklad_wybor.sum()
+        next_char_idx = int(np.random.choice(np.arange(len(rozklad_wybor)), p=rozklad_wybor))
         next_char = tokenizer.index_word[next_char_idx]
+        if zbierz_kroki:
+            kroki.append(
+                {
+                    "krok": krok_nr,
+                    "prompt": prompt,
+                    "znak": next_char,
+                    "idx": next_char_idx,
+                    "rozklad": rozklad_wiz,
+                }
+            )
         prompt += next_char
         if next_char == "!":
             break
         encoded = tf.convert_to_tensor(tokenizer.texts_to_sequences([next_char]))
         model_out, hidden_state = model(encoded, hidden_state=hidden_state, return_state=True)
         last_output = model_out[0, -1, :].numpy()
-    return prompt[1:-1], prompt
+    nazwa = prompt[1:-1]
+    if zbierz_kroki:
+        return nazwa, prompt, kroki
+    return nazwa, prompt
 
 
 def _manifest(ziarno: int, epoki: int, temperatura: float, zrodlo: str) -> dict:
@@ -303,7 +320,6 @@ def uruchom_aplikacje(
     limit_klienta: bool = True,
     uruchom_monitor: bool = True,
 ):
-    import json
     import threading
     import time
 
@@ -320,6 +336,39 @@ def uruchom_aplikacje(
     limiter = LimitKlienta(limit=20) if limit_klienta else None
     w_trakcie = {"n": 0}
     blokada = threading.Lock()
+
+    from lm_utils import figura_prawdopodobienstw
+    import matplotlib.pyplot as plt
+
+    opis = (
+        "Mały model językowy (GRU) wytrenowany na żywo podczas prelekcji. "
+        "Ten sam mechanizm co w ChatGPT — tylko ok. 10 milionów razy mniejszy (ok. 80 tys. parametrów)."
+    )
+
+    def _kroki_do_json(kroki: list[dict]) -> list[dict]:
+        return [
+            {
+                "krok": int(k["krok"]),
+                "prompt": k["prompt"],
+                "znak": k["znak"],
+                "idx": int(k["idx"]),
+                "rozklad": np.asarray(k["rozklad"], dtype=np.float64).tolist(),
+            }
+            for k in kroki
+        ]
+
+    def _wykres_kroku(stan: list[dict], nr: float | int):
+        plt.close("all")
+        if not stan:
+            return None
+        i = int(nr)
+        i = max(0, min(i, len(stan) - 1))
+        k = stan[i]
+        probs = np.asarray(k["rozklad"], dtype=np.float64)
+        return figura_prawdopodobienstw(probs, k["krok"], tokenizer, k["prompt"])
+
+    def _pusta_odp(msg: str):
+        return msg, [], gr.update(maximum=0, value=0, interactive=False), None
 
     def app_generuj(ile, temp, request: gr.Request):
         start = time.perf_counter()
@@ -341,7 +390,7 @@ def uruchom_aplikacje(
                     odrzucone=True,
                     powod="kolejka",
                 )
-                return "Serwer jest przeciążony — spróbuj za chwilę."
+                return _pusta_odp("Serwer jest przeciążony — spróbuj za chwilę.")
             w_trakcie["n"] += 1
             _zapisz_stan_demo(w_trakcie["n"], licznik["odrzucone_kolejka"])
 
@@ -359,7 +408,7 @@ def uruchom_aplikacje(
                     powod="limit_klienta",
                 )
                 print(f"[demo] odrzut limit  ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
-                return msg
+                return _pusta_odp(msg)
             try:
                 ile_i = int(ile)
                 temp_f = float(temp)
@@ -375,7 +424,7 @@ def uruchom_aplikacje(
                     odrzucone=True,
                     powod="walidacja",
                 )
-                return msg
+                return _pusta_odp(msg)
             if not 1 <= ile_i <= maks_nazw or not temp_min <= temp_f <= temp_max:
                 licznik["odrzut"] += 1
                 msg = f"Dozwolone: 1–{maks_nazw} nazw, temperatura {temp_min}–{temp_max}."
@@ -389,10 +438,22 @@ def uruchom_aplikacje(
                     powod="walidacja",
                 )
                 print(f"[demo] odrzut  ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
-                return msg
+                return _pusta_odp(msg)
             wyniki = []
-            for _ in range(ile_i):
-                nazwa, _ = generuj(model, tokenizer, temperatura=temp_f, maks_krokow=maks_krokow)
+            kroki_json: list[dict] = []
+            for numer in range(ile_i):
+                if numer == 0:
+                    nazwa, pelny, kroki = generuj(
+                        model,
+                        tokenizer,
+                        temperatura=temp_f,
+                        maks_krokow=maks_krokow,
+                        zbierz_kroki=True,
+                    )
+                    kroki_json = _kroki_do_json(kroki)
+                    _ = pelny
+                else:
+                    nazwa, _ = generuj(model, tokenizer, temperatura=temp_f, maks_krokow=maks_krokow)
                 znacznik = "  (istnieje w zbiorze)" if nazwa in znane else ""
                 wyniki.append(f"• {nazwa}{znacznik}")
             wynik_txt = "\n".join(wyniki)
@@ -406,23 +467,43 @@ def uruchom_aplikacje(
                 odrzucone=False,
             )
             print(f"[demo] ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
-            return wynik_txt
+            max_k = max(0, len(kroki_json) - 1)
+            fig = _wykres_kroku(kroki_json, 0) if kroki_json else None
+            return (
+                wynik_txt,
+                kroki_json,
+                gr.update(maximum=max_k, value=0, interactive=bool(kroki_json)),
+                fig,
+            )
         finally:
             with blokada:
                 w_trakcie["n"] = max(0, w_trakcie["n"] - 1)
                 _zapisz_stan_demo(w_trakcie["n"], licznik["odrzucone_kolejka"])
 
-    demo = gr.Interface(
-        fn=app_generuj,
-        inputs=[
-            gr.Slider(1, maks_nazw, value=3, step=1, label="Ile nazw wygenerować?"),
-            gr.Slider(temp_min, temp_max, value=temperatura, step=0.1, label="Kreatywność (temperatura)"),
-        ],
-        outputs=gr.Textbox(label="Nowe nazwy — właśnie wymyślone przez model", lines=10),
-        title=f"🩺 Generator: {zbior}",
-        description="Mały model językowy (GRU) wytrenowany na żywo podczas prelekcji. "
-        "Ten sam mechanizm co w ChatGPT — tylko ok. 10 milionów razy mniejszy (ok. 80 tys. parametrów).",
-    )
+    with gr.Blocks(title=f"🩺 Generator: {zbior}") as demo:
+        gr.Markdown(f"## 🩺 Generator: {zbior}\n\n{opis}")
+        ile = gr.Slider(1, maks_nazw, value=3, step=1, label="Ile nazw wygenerować?")
+        temp_sl = gr.Slider(
+            temp_min, temp_max, value=temperatura, step=0.1, label="Kreatywność (temperatura)"
+        )
+        btn = gr.Button("Generuj", variant="primary")
+        out = gr.Textbox(label="Nowe nazwy — właśnie wymyślone przez model", lines=10)
+        stan_krokow = gr.State([])
+        with gr.Accordion("Pokaż prawdopodobieństwa liter", open=False):
+            gr.Markdown(
+                "Histogram jak w notatniku (`visualize_probabilities`) dla **pierwszej** wygenerowanej nazwy. "
+                f"Maksymalnie {maks_krokow} kroków."
+            )
+            krok_sl = gr.Slider(
+                0, 0, step=1, value=0, label="Krok generowania", interactive=False
+            )
+            plot = gr.Plot(label="P(raw)")
+        btn.click(
+            app_generuj,
+            inputs=[ile, temp_sl],
+            outputs=[out, stan_krokow, krok_sl, plot],
+        )
+        krok_sl.change(_wykres_kroku, inputs=[stan_krokow, krok_sl], outputs=plot)
     demo.queue(default_concurrency_limit=3, max_size=max_kolejki, api_open=False)
     if share:
         print("\nUruchamiam aplikację. Publiczny link gradio.live pojawi się poniżej.", flush=True)

@@ -76,24 +76,14 @@ def test_cache_uniewazniony_po_zmianie_ziarna():
 def test_cache_uniewazniony_po_zmianie_danych(monkeypatch):
     wyczysc_cache()
     przebieg(force_train=True)
-<<<<<<< HEAD
-    import model_cache as mc
-
-    real = mc.hash_danych
-=======
     import demo_model as dm
 
     real = dm.hash_danych
->>>>>>> b34140c (Notebook demo: cache modelu, Gradio bez tunelu, testy zgodności)
 
     def zmieniony(sciezka):
         return real(sciezka) + "x"
 
-<<<<<<< HEAD
-    monkeypatch.setattr(mc, "hash_danych", zmieniony)
-=======
     monkeypatch.setattr(dm, "hash_danych", zmieniony)
->>>>>>> b34140c (Notebook demo: cache modelu, Gradio bez tunelu, testy zgodności)
     inny = przebieg(force_train=False, use_cache=True)
     assert not inny.get("z_cache")
 
