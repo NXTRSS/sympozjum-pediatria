@@ -136,15 +136,16 @@ def panel_generowania(
 
     def _wykonaj():
         h, pl, wiek, zi, temp, maks, ile = _parametry()
+        klucz_slad = f"slad_{klucz_pamieci}" if klucz_pamieci else ""
         if (
             tryb == "z_pamieci"
             and klucz_pamieci
             and _domyslne_dopasowanie(domyslny, h, pl, wiek, zi, temp, maks)
-            and pamiec.jest(f"slad_{klucz_pamieci}")
+            and pamiec.jest(klucz_slad)
         ):
             return pokaz(
                 h, pl, wiek, zi, temp, maks, ile,
-                kroki_z_pamieci=pamiec.wczytaj_kroki(klucz_pamieci),
+                kroki_z_pamieci=pamiec.wczytaj_kroki(klucz_slad),
             )
         return pokaz(h, pl, wiek, zi, temp, maks, ile)
 

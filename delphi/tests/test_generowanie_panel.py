@@ -1,7 +1,8 @@
 import pytest
 
-from delphi_demo import prognoza
+from delphi_demo import pamiec, prognoza
 from delphi_demo.generowanie_panel import _domyslne_dopasowanie, panel_generowania
+from delphi_demo.prognoza import Krok
 from delphi_demo.tokeny import Zdarzenie
 
 E11, I10 = 215, 505
@@ -45,6 +46,50 @@ def test_panel_generuj_wywoluje_callback(sl):
     p.generuj.click()
     assert len(wywolania) == 2
     assert wywolania[1][3] == 3
+
+
+def test_panel_wczytuje_slad_z_tego_samego_klucza_co_jest(sl, tmp_path):
+    """Zgodność z przygotuj_demo: zapis slad_{nazwa}, odczyt bez magicznego obcięcia prefiksu."""
+    kroki = [Krok(45.0, 499, [(505, 0.3)], 0.01)]
+    pamiec.zapisz_kroki("slad_astma_od_dziecka", kroki, tmp_path)
+    odebrane = []
+
+    def pokaz(h, pl, wiek, zi, temp, maks, ile, kroki_z_pamieci=None):
+        odebrane.append(kroki_z_pamieci)
+        return None
+
+    domyslny = dict(historia="J45 6, J30 8", plec="M", wiek_teraz=45)
+    p = panel_generowania(
+        sl,
+        pokaz,
+        tryb="z_pamieci",
+        klucz_pamieci="astma_od_dziecka",
+        domyslny=domyslny,
+        historia=domyslny["historia"],
+        plec="M",
+        wiek_teraz=45,
+    )
+    # Monkeypatch katalog pamięci panelu nie jest — testujemy wczytaj przez ten sam klucz co jest():
+    import delphi_demo.generowanie_panel as gp
+
+    orig_jest = pamiec.jest
+    orig_wczytaj = pamiec.wczytaj_kroki
+
+    def jest(nazwa, katalog=None):
+        return orig_jest(nazwa, katalog or tmp_path)
+
+    def wczytaj(nazwa, katalog=None):
+        return orig_wczytaj(nazwa, katalog or tmp_path)
+
+    gp.pamiec.jest = jest
+    gp.pamiec.wczytaj_kroki = wczytaj
+    try:
+        p.uruchom_domyslnie()
+    finally:
+        gp.pamiec.jest = orig_jest
+        gp.pamiec.wczytaj_kroki = orig_wczytaj
+    assert len(odebrane) == 1
+    assert odebrane[0] == kroki
 
 
 def test_panel_blokuje_rownolegle(sl):
