@@ -3,6 +3,10 @@ from __future__ import annotations
 
 import pandas as pd
 
+from lm_sciezki import dopisz_pythonpath
+
+dopisz_pythonpath()
+
 from demo_model import (
     BATCH_SIZE,
     DROPOUT,

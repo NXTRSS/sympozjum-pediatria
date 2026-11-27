@@ -56,20 +56,15 @@ def ustaw_ziarna(ziarno: int = ZIARNO) -> None:
 
 
 def wczytaj_nazwy(zbior: str = "choroby", ziarno: int = ZIARNO, dane: dict | None = None):
+    from lm_sciezki import dopisz_pythonpath, sciezka_csv
+
+    dopisz_pythonpath()
     dane = DANE if dane is None else dane
     zrodlo = dane[zbior]
     plik = os.path.basename(zrodlo)
-    sciezka_lokalna: Path | None = None
-    for kandydat in (
-        Path(plik),
-        Path("data") / plik,
-        Path("..") / "data" / plik,
-        KORZEN / "data" / plik,
-    ):
-        if kandydat.exists():
-            zrodlo = str(kandydat)
-            sciezka_lokalna = kandydat.resolve()
-            break
+    sciezka_lokalna = sciezka_csv(plik)
+    if sciezka_lokalna is not None:
+        zrodlo = str(sciezka_lokalna)
     df = pd.read_csv(zrodlo, header=None, names=["nazwa"], sep="\t")
     nazwy = df["nazwa"].dropna().astype(str).str.strip().str.lower().drop_duplicates().tolist()
     rng = np.random.default_rng(ziarno)

@@ -211,6 +211,9 @@ def bootstrap(ktory: str) -> None:
     if ktory == "usg" and w_colabie():
         _bootstrap_usg_w_colabie()
         return
+    if ktory == "lm" and w_colabie():
+        _dopisz_sys_path(COLAB_ROOT / "notebook")
+        return
     _importuj_i_uruchom_colab_bootstrap(folder)
 
 
