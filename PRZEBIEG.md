@@ -45,7 +45,7 @@ Checklist na druk. **Strona PPTX** ≈ numer slajdu w decku + 14 (wyjątek: slaj
 
 - [ ] Chrome: `prezentacja.html`
 - [ ] Delphi: notebook, `TRYB = "z_pamieci"`
-- [ ] USG: `uv run python usg/app/demo_usg.py` → :7860, Nr 1, z pamięci
+- [ ] USG: `uv run python uruchom_demo_usg.py` (albo `cd usg && uv run python app/demo_usg.py`) → :7860, Nr 1, z pamięci
 - [ ] Jedno liczenie naraz (MPS/GPU)
 
 ## 5. Protokół awaryjny

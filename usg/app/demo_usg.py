@@ -1,8 +1,12 @@
 """Aplikacja pokazowa „Z nagrania USG do masy płodu” (Gradio, lokalnie, bez internetu).
 
-Uruchomienie (z katalogu usg/):
-    uv run python app/demo_usg.py                     # otwiera http://127.0.0.1:7860
-    uv run python app/demo_usg.py --bez-przegladarki  # sam serwer
+Uruchomienie (środowisko uv w katalogu usg/, Python 3.11 + PyTorch):
+    cd usg && uv sync && uv run python app/demo_usg.py
+    cd usg && uv run python app/demo_usg.py --bez-przegladarki
+
+Z katalogu głównego repozytorium (nie: uv run python usg/app/demo_usg.py — to bierze złe venv):
+    uv run python uruchom_demo_usg.py
+    uv run --directory usg python app/demo_usg.py
 
 Ten sam pipeline, liczby i zastrzeżenia co notebook (notebook/usg_masa_plodu.ipynb);
 cała logika jest w usg_masa.aplikacja, tu jest tylko wygląd.
@@ -20,13 +24,30 @@ os.environ.setdefault("HF_HUB_OFFLINE", "1")
 import argparse  # noqa: E402
 import html  # noqa: E402
 import logging  # noqa: E402
+import sys  # noqa: E402
 import threading  # noqa: E402
 from pathlib import Path  # noqa: E402
 
+_USG_KORZEN = Path(__file__).resolve().parents[1]
+_SRC = _USG_KORZEN / "src"
+if _SRC.is_dir() and str(_SRC) not in sys.path:
+    sys.path.insert(0, str(_SRC))
+
 import gradio as gr  # noqa: E402
 
-from usg_masa import aplikacja as A  # noqa: E402
-from usg_masa import dane, fuvai, model_sano  # noqa: E402
+try:
+    from usg_masa import aplikacja as A  # noqa: E402
+    from usg_masa import dane, fuvai, model_sano  # noqa: E402
+except ModuleNotFoundError:
+    raise SystemExit(
+        "Nie ma pakietu usg_masa w tym środowisku Pythona.\n"
+        "USG ma osobny projekt w usg/ (PyTorch, Python 3.11). Uruchom np.:\n"
+        "  cd usg && uv sync && uv run python app/demo_usg.py\n"
+        "albo z katalogu głównego:\n"
+        "  uv run python uruchom_demo_usg.py\n"
+        "  uv run --directory usg python app/demo_usg.py\n"
+        "Komenda „uv run python usg/app/demo_usg.py” z głównego katalogu używa złego venv (notebook/TF)."
+    ) from None
 
 KATALOG = Path(__file__).resolve().parent
 STYL = KATALOG / "styl.css"
