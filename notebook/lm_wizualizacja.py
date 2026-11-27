@@ -42,19 +42,34 @@ def pokaz_kroki(kroki, id2znak) -> None:
         )
 
 
+def _slupki_dla_histogramu(
+    rozklad, id2znak: dict, wielkosc_slownika: int
+) -> tuple[list[str], np.ndarray]:
+    """Litery i wysokości słupków (bez indeksu 0) — długości muszą się zgadzać."""
+    probs = np.asarray(rozklad, dtype=np.float64).ravel()
+    litery = [id2znak[i] for i in range(1, wielkosc_slownika)]
+    bar_heights = probs[1 : 1 + len(litery)]
+    if len(bar_heights) < len(litery):
+        bar_heights = probs[1:]
+    n = min(len(litery), len(bar_heights))
+    return litery[:n], bar_heights[:n]
+
+
 def histogramy_krokow(
     kroki, id2znak, wielkosc_slownika: int, kolumny: int = 4
 ) -> None:
-    litery = [id2znak[i] for i in range(1, wielkosc_slownika)]
     wiersze = int(np.ceil(len(kroki) / kolumny))
     fig, axes = plt.subplots(
         wiersze, kolumny, figsize=(4.6 * kolumny, 2.9 * wiersze), squeeze=False
     )
     for ax, krok in zip(axes.ravel(), kroki):
-        p, w = krok["rozklad"][1:], krok["wybor"]
+        w = int(krok["wybor"])
+        litery, p = _slupki_dla_histogramu(krok["rozklad"], id2znak, wielkosc_slownika)
         kolory = ["#3A1C7D"] * len(p)
         if w > 0:
-            kolory[w - 1] = "#FFAF7B"
+            wi = w - 1
+            if 0 <= wi < len(kolory):
+                kolory[wi] = "#FFAF7B"
         ax.bar(litery, p, color=kolory)
         ax.set_ylim(0, 1)
         ax.set_title(f"{krok['kontekst']}  →  {id2znak[w]!r}", fontsize=11)
@@ -76,7 +91,6 @@ def figura_histogramy_krokow(
     kolumny: int = 4,
 ):
     """Jedna plansza — wszystkie kroki (do Gradio). Wywołujący zamyka figurę po użyciu."""
-    litery = [id2znak[i] for i in range(1, wielkosc_slownika)]
     if not kroki:
         fig, ax = plt.subplots(figsize=(6, 2))
         ax.axis("off")
@@ -86,11 +100,13 @@ def figura_histogramy_krokow(
         wiersze, kolumny, figsize=(4.2 * kolumny, 2.6 * wiersze), squeeze=False
     )
     for ax, krok in zip(axes.ravel(), kroki):
-        p, w = np.asarray(krok["rozklad"], dtype=np.float64).ravel(), int(krok["wybor"])
-        bar_heights = p[1:]
-        kolory = ["#3A1C7D"] * len(p[1:])
-        if w > 0 and w - 1 < len(kolory):
-            kolory[w - 1] = "#FFAF7B"
+        w = int(krok["wybor"])
+        litery, bar_heights = _slupki_dla_histogramu(krok["rozklad"], id2znak, wielkosc_slownika)
+        kolory = ["#3A1C7D"] * len(bar_heights)
+        if w > 0:
+            wi = w - 1
+            if 0 <= wi < len(kolory):
+                kolory[wi] = "#FFAF7B"
         ax.bar(litery, bar_heights, color=kolory)
         ax.set_ylim(0, 1)
         kontekst = krok.get("kontekst", krok.get("prompt", ""))
