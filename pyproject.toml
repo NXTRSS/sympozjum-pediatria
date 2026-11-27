@@ -12,6 +12,7 @@ dependencies = [
     "notebook>=7.0",
     "gradio>=4.0",
     "rich>=13.0",
+    "segno>=1.6",
 ]
 
 [tool.uv]

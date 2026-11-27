@@ -545,6 +545,11 @@ def uruchom_aplikacje(
         print("LINK DLA SALI:", link)
     else:
         print(f"Aplikacja lokalna: {lokalny or '(adres w oknie Gradio)'}. Sala: QR do Colaba / ekran.")
+    url_qr = (link or lokalny or "").strip()
+    if url_qr and url_qr.startswith("http"):
+        from qr_terminal import wypisz_qr_terminal
+
+        wypisz_qr_terminal(url_qr)
     print("Ctrl+C = serwer się zatrzymuje.")
     print("=" * 64 + "\n", flush=True)
     if uruchom_monitor:
