@@ -543,18 +543,87 @@ def _maska_fuvai_klatki(sweep: dane.Sweep, klatki: fuvai.WynikKlatekFUVAI, i: in
     return None
 
 
-def obraz_fuvai_podglad(sweep: dane.Sweep, klatki: fuvai.WynikKlatekFUVAI, i: int,
-                        model: object | None = None, atrybucja_nagrania: bool = True) -> tuple[np.ndarray, str]:
+def prostokat_maski(maska: np.ndarray) -> tuple[int, int, int, int] | None:
+    """Ograniczający prostokąt maski segmentacji (x0, y0, x1, y1) włącznie."""
+    if maska is None or not maska.any():
+        return None
+    ys, xs = np.where(maska > 0)
+    return int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())
+
+
+def obraz_fuvai_podglad(
+    sweep: dane.Sweep,
+    klatki: fuvai.WynikKlatekFUVAI,
+    i: int,
+    model: object | None = None,
+    atrybucja_nagrania: bool = True,
+    *,
+    ramka: bool = False,
+    elipsa_ac: bool = False,
+) -> tuple[np.ndarray, str]:
     """Klatka z obrysem struktury wg FUVAI i opisem przewidzianej klasy."""
     i = int(np.clip(i, 0, len(sweep.klatki) - 1))
-    _, nazwa, p = fuvai.klasa_i_p(klatki, i)
+    kid, nazwa, p = fuvai.klasa_i_p(klatki, i)
     rgb = cv2.cvtColor(sweep.klatki[i], cv2.COLOR_GRAY2RGB)
     maska = _maska_fuvai_klatki(sweep, klatki, i, model)
     if maska is not None and maska.any():
         cv2.drawContours(rgb, _kontury(maska), -1, FIOLET, 2, cv2.LINE_AA)
+        if (rect := prostokat_maski(maska)) is not None:
+            x0, y0, x1, y1 = rect
+            cv2.rectangle(rgb, (x0, y0), (x1, y1), BURSZTYN, 2, cv2.LINE_AA)
+        if elipsa_ac:
+            _elipsa_przerywana(rgb, maska, BURSZTYN, 2)
     rozklad = " · ".join(f"{fuvai.KLASY[k]} {po_polsku(p[k], 2)}" for k in np.argsort(-p)[:4])
-    opis = f"przewidziana klasa: {nazwa} ({rozklad})"
+    opis = (
+        f"klasa: {nazwa} (p={po_polsku(p[kid], 2)}) · "
+        f"indeks klatki {i} · rozkład: {rozklad}"
+    )
     return _z_atrybucja(rgb, atrybucja_nagrania), opis
+
+
+def html_tabela_klas_fuvai(statystyki: list[dict]) -> str:
+    """Tabela podsumowania klas (do zakładki FUVAI)."""
+    wiersze = []
+    for w in statystyki:
+        wiersze.append(
+            f"<tr><td>{w['klasa']}</td>"
+            f"<td class=\"liczba\">{w['liczba']}</td>"
+            f"<td>{po_polsku(w['srednia_p'], 2) if w['liczba'] else '—'}</td>"
+            f"<td>{po_polsku(w['max_p'], 2) if w['liczba'] else '—'}</td></tr>"
+        )
+    return (
+        '<table class="tabela-fuvai"><thead><tr>'
+        "<th>Klasa (argmax)</th><th>Klatek</th><th>Śr. p</th><th>Maks p</th>"
+        "</tr></thead><tbody>" + "".join(wiersze) + "</tbody></table>"
+    )
+
+
+def nastepna_klatka_w_filtrze(
+    klatki: fuvai.WynikKlatekFUVAI,
+    n_klatek: int,
+    i: int,
+    filtr_klasy: int,
+    krok: int = 1,
+) -> int:
+    """Następna / poprzednia klatka w obrębie wybranej klasy (lub całego nagrania przy filtr=-1)."""
+    i = int(np.clip(i, 0, n_klatek - 1))
+    if filtr_klasy < 0:
+        return (i + krok) % n_klatek
+    idxs = fuvai.indeksy_klasy(klatki, n_klatek, filtr_klasy)
+    if idxs.size == 0:
+        return i
+    pos = int(np.searchsorted(idxs, i))
+    if pos >= len(idxs) or idxs[pos] != i:
+        pos = max(0, pos - 1)
+    pos = (pos + krok) % len(idxs)
+    return int(idxs[pos])
+
+
+def pierwsza_klatka_klasy(klatki: fuvai.WynikKlatekFUVAI, n_klatek: int, filtr_klasy: int) -> int:
+    if filtr_klasy < 0:
+        return min(n_klatek // 2, n_klatek - 1)
+    idxs = fuvai.indeksy_klasy(klatki, n_klatek, filtr_klasy)
+    return int(idxs[0]) if idxs.size else 0
 
 
 def wykres_prawdopodobienstw_fuvai(klatki: fuvai.WynikKlatekFUVAI, i: int) -> np.ndarray:

@@ -63,6 +63,8 @@ _NAZWA_MODULU = "fuvai_kod_autorow"
 KOLORY_KLAS_RGB = ((255, 200, 87), (201, 166, 255), (0, 188, 222), (72, 72, 96))  # głowa, brzuch, kość, tło
 
 KATALOG_PAMIECI = segmentacja.KATALOG_PAMIECI
+# Po zmianie formatu pamiec/*_fuvai_klatki.npz podnieś wersję i uruchom przygotuj_demo.py.
+WERSJA_PAMIECI_KLATEK = 2
 
 
 @dataclass
@@ -286,17 +288,70 @@ def sciezka_klatek_pamiec(nazwa: str) -> Path:
 
 def zapisz_klatki(wynik: WynikKlatekFUVAI, sciezka: Path) -> None:
     Path(sciezka).parent.mkdir(parents=True, exist_ok=True)
+    wspolne = dict(
+        indeksy=wynik.indeksy,
+        p_klas=wynik.p_klas,
+        czas_s=wynik.czas_s,
+        wersja_pamieci=WERSJA_PAMIECI_KLATEK,
+    )
     if wynik.mapy_prob is not None:
-        np.savez_compressed(sciezka, indeksy=wynik.indeksy, p_klas=wynik.p_klas,
-                            mapy_prob=wynik.mapy_prob, czas_s=wynik.czas_s)
+        np.savez_compressed(sciezka, **wspolne, mapy_prob=wynik.mapy_prob)
     else:
-        np.savez_compressed(sciezka, indeksy=wynik.indeksy, p_klas=wynik.p_klas, czas_s=wynik.czas_s)
+        np.savez_compressed(sciezka, **wspolne)
 
 
 def wczytaj_klatki(sciezka: Path) -> WynikKlatekFUVAI:
     d = np.load(sciezka)
+    wersja = int(d["wersja_pamieci"]) if "wersja_pamieci" in d.files else 1
+    if wersja < WERSJA_PAMIECI_KLATEK:
+        import warnings
+
+        warnings.warn(
+            f"{sciezka.name}: wersja pamięci {wersja} < {WERSJA_PAMIECI_KLATEK}. "
+            "Uruchom ponownie usg/scripts/przygotuj_demo.py.",
+            stacklevel=2,
+        )
     mapy = d["mapy_prob"] if "mapy_prob" in d.files else None
     return WynikKlatekFUVAI(d["indeksy"], d["p_klas"], mapy, float(d["czas_s"]))
+
+
+def p_klas_gestego(klatki: WynikKlatekFUVAI, n_klatek: int) -> np.ndarray:
+    """Macierz (n_klatek, 4) — gdy indeksy są rzadsze, uzupełniamy najbliższą klatką."""
+    if len(klatki.indeksy) == n_klatek and np.array_equal(klatki.indeksy, np.arange(n_klatek)):
+        return klatki.p_klas
+    out = np.zeros((n_klatek, len(KLASY)), dtype=np.float32)
+    for t in range(n_klatek):
+        out[t] = klatki.p_klas[pozycja_klatki(klatki, t)]
+    return out
+
+
+def argmax_po_klatkach(klatki: WynikKlatekFUVAI, n_klatek: int) -> np.ndarray:
+    return p_klas_gestego(klatki, n_klatek).argmax(axis=1).astype(np.int32)
+
+
+def statystyki_klas(klatki: WynikKlatekFUVAI, n_klatek: int) -> list[dict]:
+    """Dla każdej klasy: ile klatek ma ją jako argmax oraz średnia/maks p tej klasy."""
+    p = p_klas_gestego(klatki, n_klatek)
+    argmax = p.argmax(axis=1)
+    tab = []
+    for k, nazwa in enumerate(KLASY):
+        maska = argmax == k
+        liczba = int(maska.sum())
+        if liczba:
+            wybrane = p[maska, k]
+            srednia, maks = float(wybrane.mean()), float(wybrane.max())
+        else:
+            srednia = maks = 0.0
+        tab.append(
+            {"id": k, "klasa": nazwa, "liczba": liczba, "srednia_p": srednia, "max_p": maks}
+        )
+    return tab
+
+
+def indeksy_klasy(klatki: WynikKlatekFUVAI, n_klatek: int, klasa: int) -> np.ndarray:
+    """Numery klatek, w których argmax(p) == klasa."""
+    argmax = argmax_po_klatkach(klatki, n_klatek)
+    return np.flatnonzero(argmax == int(klasa)).astype(np.int32)
 
 
 def analizuj_sweep(model: torch.nn.Module, sweep: Sweep, co_ktora: int = 4, paczka: int = 16) -> WynikFUVAI:

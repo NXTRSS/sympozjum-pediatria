@@ -390,10 +390,26 @@ def html_status_fuvai(klatki: fuvai.WynikKlatekFUVAI | None, tryb: str, tekst: s
             f'{n} {A.odmiana(n, "klasę", "klatki", "klatek")} z p(klasy).</div>')
 
 
+WYBOR_KLAS_FUVAI = [("Wszystkie klatki", -1)] + [(n, i) for i, n in enumerate(fuvai.KLASY)]
+
+
 def _puste_fuvai_wyjscia(srodek: int = 420, max_i: int = 839):
-    return (None, html_status_fuvai(None, A.Z_PAMIECI), None,
-            html_podpis("Załaduj klasyfikację FUVAI."),
-            None, None, gr.Slider(minimum=0, maximum=max_i, value=srodek, step=1))
+    return (
+        None,
+        html_status_fuvai(None, A.Z_PAMIECI),
+        None,
+        html_podpis("Załaduj klasyfikację FUVAI."),
+        None,
+        None,
+        gr.Slider(minimum=0, maximum=max_i, value=srodek, step=1),
+        "<p class=\"maly\">Tabela pojawi się po załadowaniu.</p>",
+        -1,
+        gr.Radio(choices=WYBOR_KLAS_FUVAI, value=-1),
+    )
+
+
+def _model_fuvai_na_zywo(tryb: str):
+    return A._model("fuvai") if tryb == A.NA_ZYWO else None
 
 
 def zaladuj_fuvai_klatki(zrodlo: str | None, tryb: str, progress=gr.Progress()):
@@ -409,32 +425,130 @@ def zaladuj_fuvai_klatki(zrodlo: str | None, tryb: str, progress=gr.Progress()):
         raise gr.Error(BLAD_NA_ZYWO if tryb == A.NA_ZYWO else "Nie udało się wczytać danych FUVAI.",
                         title="Błąd", print_exception=False) from None
     sweep = A.wczytaj_sweep(zrodlo)
+    n = len(sweep.klatki)
+    stats = fuvai.statystyki_klas(klatki, n)
+    tabela = A.html_tabela_klas_fuvai(stats)
     i = len(sweep.klatki) // 2
-    obraz, opis = A.obraz_fuvai_podglad(sweep, klatki, i, atrybucja_nagrania=A.wbudowane(zrodlo))
-    return (klatki, html_status_fuvai(klatki, tryb),
-            obraz, html_podpis(f"Klatka {i}: {opis}", atrybucja=A.atrybucja(zrodlo)),
-            A.wykres_prawdopodobienstw_fuvai(klatki, i),
-            A.pasek_timeline_fuvai(klatki, len(sweep.klatki), i),
-            gr.Slider(minimum=0, maximum=len(sweep.klatki) - 1, value=i, step=1))
+    obraz, opis = A.obraz_fuvai_podglad(
+        sweep, klatki, i, model=_model_fuvai_na_zywo(tryb), atrybucja_nagrania=A.wbudowane(zrodlo),
+    )
+    return (
+        klatki,
+        html_status_fuvai(klatki, tryb),
+        obraz,
+        html_podpis(f"Klatka {i}: {opis}", atrybucja=A.atrybucja(zrodlo)),
+        A.wykres_prawdopodobienstw_fuvai(klatki, i),
+        A.pasek_timeline_fuvai(klatki, n, i),
+        gr.Slider(minimum=0, maximum=n - 1, value=i, step=1),
+        tabela,
+        -1,
+        gr.Radio(choices=WYBOR_KLAS_FUVAI, value=-1),
+    )
 
 
-def pokaz_fuvai_klatke(zrodlo: str | None, i: int, klatki: fuvai.WynikKlatekFUVAI | None, tryb: str):
+def pokaz_fuvai_klatke(
+    zrodlo: str | None,
+    i: int,
+    klatki: fuvai.WynikKlatekFUVAI | None,
+    tryb: str,
+    ramka: bool,
+    elipsa: bool,
+):
     if not zrodlo or klatki is None:
         return gr.skip(), gr.skip(), gr.skip(), gr.skip()
     sweep = A.wczytaj_sweep(zrodlo)
     i = int(i)
-    obraz, opis = A.obraz_fuvai_podglad(sweep, klatki, i, atrybucja_nagrania=A.wbudowane(zrodlo))
+    obraz, opis = A.obraz_fuvai_podglad(
+        sweep,
+        klatki,
+        i,
+        model=_model_fuvai_na_zywo(tryb),
+        atrybucja_nagrania=A.wbudowane(zrodlo),
+        ramka=ramka,
+        elipsa_ac=elipsa,
+    )
     podpis = f"<b>Klatka {i}</b> z {len(sweep.klatki)} · {opis}"
-    return (obraz, html_podpis(podpis, atrybucja=A.atrybucja(zrodlo)),
-            A.wykres_prawdopodobienstw_fuvai(klatki, i),
-            A.pasek_timeline_fuvai(klatki, len(sweep.klatki), i))
+    return (
+        obraz,
+        html_podpis(podpis, atrybucja=A.atrybucja(zrodlo)),
+        A.wykres_prawdopodobienstw_fuvai(klatki, i),
+        A.pasek_timeline_fuvai(klatki, len(sweep.klatki), i),
+    )
 
 
-def nastepna_klatka_fuvai(zrodlo: str | None, i: int):
-    if not zrodlo:
+def zmien_filtr_klasy_fuvai(
+    zrodlo: str | None,
+    filtr: int,
+    klatki: fuvai.WynikKlatekFUVAI | None,
+    tryb: str,
+    ramka: bool,
+    elipsa: bool,
+):
+    if not zrodlo or klatki is None:
+        return gr.skip(), gr.skip(), gr.skip(), gr.skip(), gr.skip(), gr.skip()
+    sweep = A.wczytaj_sweep(zrodlo)
+    n = len(sweep.klatki)
+    i = A.pierwsza_klatka_klasy(klatki, n, int(filtr))
+    obraz, opis = A.obraz_fuvai_podglad(
+        sweep, klatki, i, model=_model_fuvai_na_zywo(tryb), atrybucja_nagrania=A.wbudowane(zrodlo),
+        ramka=ramka, elipsa_ac=elipsa,
+    )
+    return (
+        int(filtr),
+        i,
+        obraz,
+        html_podpis(f"<b>Klatka {i}</b> · {opis}", atrybucja=A.atrybucja(zrodlo)),
+        A.wykres_prawdopodobienstw_fuvai(klatki, i),
+        A.pasek_timeline_fuvai(klatki, n, i),
+    )
+
+
+def krok_klatki_fuvai(
+    zrodlo: str | None,
+    i: int,
+    klatki: fuvai.WynikKlatekFUVAI | None,
+    filtr: int,
+    krok: int,
+    tryb: str,
+    ramka: bool,
+    elipsa: bool,
+):
+    if not zrodlo or klatki is None:
+        return gr.skip(), gr.skip(), gr.skip(), gr.skip(), gr.skip()
+    sweep = A.wczytaj_sweep(zrodlo)
+    n = len(sweep.klatki)
+    i2 = A.nastepna_klatka_w_filtrze(klatki, n, int(i), int(filtr), krok=krok)
+    obraz, opis = A.obraz_fuvai_podglad(
+        sweep, klatki, i2, model=_model_fuvai_na_zywo(tryb), atrybucja_nagrania=A.wbudowane(zrodlo),
+        ramka=ramka, elipsa_ac=elipsa,
+    )
+    return (
+        i2,
+        obraz,
+        html_podpis(f"<b>Klatka {i2}</b> · {opis}", atrybucja=A.atrybucja(zrodlo)),
+        A.wykres_prawdopodobienstw_fuvai(klatki, i2),
+        A.pasek_timeline_fuvai(klatki, n, i2),
+    )
+
+
+def krok_fuvai_poprzednia(
+    zrodlo, i, klatki, filtr, tryb, ramka, elipsa,
+):
+    return krok_klatki_fuvai(zrodlo, i, klatki, filtr, -1, tryb, ramka, elipsa)
+
+
+def krok_fuvai_nastepna(
+    zrodlo, i, klatki, filtr, tryb, ramka, elipsa,
+):
+    return krok_klatki_fuvai(zrodlo, i, klatki, filtr, 1, tryb, ramka, elipsa)
+
+
+def nastepna_klatka_fuvai(zrodlo: str | None, i: int, klatki: fuvai.WynikKlatekFUVAI | None, filtr: int):
+    if not zrodlo or klatki is None:
         return gr.skip()
     n = len(A.wczytaj_sweep(zrodlo).klatki)
-    return (int(i) + KROK_ODTWARZANIA) % n
+    krok = KROK_ODTWARZANIA if filtr is None or int(filtr) < 0 else 1
+    return A.nastepna_klatka_w_filtrze(klatki, n, int(i), int(filtr if filtr is not None else -1), krok=krok)
 
 
 # Wczytywanie modeli w tle (po przełączeniu na „na żywo”); zegar w interfejsie sprawdza, czy się skończyło.
@@ -550,6 +664,7 @@ def zbuduj_interfejs() -> gr.Blocks:
                              elem_id="wybor-nagrania")
             tryb = gr.Radio(TRYBY, value=A.Z_PAMIECI, label="Tryb", show_label=False, container=False, elem_id="tryb")
         fuvai_klatki = gr.State(None)
+        filtr_klasy_f = gr.State(-1)
         gra_f = gr.State(False)
         zegar_f = gr.Timer(TAKT_ODTWARZANIA_S, active=False)
         with gr.Tabs(elem_id="zakladki"):
@@ -599,7 +714,25 @@ def zbuduj_interfejs() -> gr.Blocks:
                             graj_f = gr.Button("▶ odtwórz", size="md", min_width=130, elem_id="graj-fuvai")
                         timeline_f = gr.Image(interactive=False, format="png", height=70, buttons=[],
                                               show_label=False, elem_id="timeline-fuvai")
-                    with gr.Column(scale=4, min_width=380):
+                    with gr.Column(scale=4, min_width=420):
+                        fuvai_tabela = gr.HTML(
+                            "<p class=\"maly\">Podsumowanie klas — po załadowaniu.</p>",
+                            elem_id="fuvai-tabela",
+                        )
+                        filtr_klasy_radio = gr.Radio(
+                            WYBOR_KLAS_FUVAI,
+                            value=-1,
+                            label="Przeglądaj klatki klasy",
+                            elem_id="fuvai-filtr-radio",
+                        )
+                        with gr.Row(elem_id="fuvai-filtr-rzad"):
+                            fuvai_poprzednia = gr.Button("◀ Poprzednia w klasie", size="sm")
+                            fuvai_nastepna = gr.Button("Następna w klasie ▶", size="sm")
+                        with gr.Row():
+                            pokaz_ramke_f = gr.Checkbox(label="Ramka wokół struktury (bbox maski)", value=False)
+                            pokaz_elipse_f = gr.Checkbox(
+                                label="Elipsa dopasowana do maski (jak AC)", value=False
+                            )
                         fuvai_wykres = gr.Image(interactive=False, format="png", height=220, buttons=[],
                                                 show_label=False, elem_id="fuvai-wykres-p")
         with gr.Row():
@@ -611,7 +744,18 @@ def zbuduj_interfejs() -> gr.Blocks:
         wyniki = [wybrana, wybrana_podpis, wykres, k_nnunet, k_fuvai, k_sano, obraz_f, podpis_f]
         poczatek = [zrodlo, analiza, suwak, podglad, podglad_podpis]
 
-        wyjscia_fuvai = [fuvai_klatki, status_f, fuvai_obraz, fuvai_podpis, fuvai_wykres, timeline_f, suwak_f]
+        wyjscia_fuvai = [
+            fuvai_klatki,
+            status_f,
+            fuvai_obraz,
+            fuvai_podpis,
+            fuvai_wykres,
+            timeline_f,
+            suwak_f,
+            fuvai_tabela,
+            filtr_klasy_f,
+            filtr_klasy_radio,
+        ]
 
         wybor.change(wybierz_nagranie, [wybor], poczatek + wyniki, queue=False).then(
             lambda: None, None, [fuvai_klatki], queue=False)
@@ -628,11 +772,50 @@ def zbuduj_interfejs() -> gr.Blocks:
          .then(zaladuj_fuvai_klatki, [zrodlo, tryb], wyjscia_fuvai, show_progress="full")
          .then(lambda: gr.Button(interactive=True, value="Załaduj klasyfikację klatek"), None, [przycisk_f],
                queue=False))
-        suwak_f.change(pokaz_fuvai_klatke, [zrodlo, suwak_f, fuvai_klatki, tryb],
-                       [fuvai_obraz, fuvai_podpis, fuvai_wykres, timeline_f],
-                       trigger_mode="always_last", show_progress="hidden")
+        suwak_f.change(
+            pokaz_fuvai_klatke,
+            [zrodlo, suwak_f, fuvai_klatki, tryb, pokaz_ramke_f, pokaz_elipse_f],
+            [fuvai_obraz, fuvai_podpis, fuvai_wykres, timeline_f],
+            trigger_mode="always_last",
+            show_progress="hidden",
+        )
+        pokaz_ramke_f.change(
+            pokaz_fuvai_klatke,
+            [zrodlo, suwak_f, fuvai_klatki, tryb, pokaz_ramke_f, pokaz_elipse_f],
+            [fuvai_obraz, fuvai_podpis, fuvai_wykres, timeline_f],
+            show_progress="hidden",
+        )
+        pokaz_elipse_f.change(
+            pokaz_fuvai_klatke,
+            [zrodlo, suwak_f, fuvai_klatki, tryb, pokaz_ramke_f, pokaz_elipse_f],
+            [fuvai_obraz, fuvai_podpis, fuvai_wykres, timeline_f],
+            show_progress="hidden",
+        )
+        filtr_klasy_radio.change(
+            zmien_filtr_klasy_fuvai,
+            [zrodlo, filtr_klasy_radio, fuvai_klatki, tryb, pokaz_ramke_f, pokaz_elipse_f],
+            [filtr_klasy_f, suwak_f, fuvai_obraz, fuvai_podpis, fuvai_wykres, timeline_f],
+            show_progress="hidden",
+        )
+        fuvai_poprzednia.click(
+            krok_fuvai_poprzednia,
+            [zrodlo, suwak_f, fuvai_klatki, filtr_klasy_f, tryb, pokaz_ramke_f, pokaz_elipse_f],
+            [suwak_f, fuvai_obraz, fuvai_podpis, fuvai_wykres, timeline_f],
+            show_progress="hidden",
+        )
+        fuvai_nastepna.click(
+            krok_fuvai_nastepna,
+            [zrodlo, suwak_f, fuvai_klatki, filtr_klasy_f, tryb, pokaz_ramke_f, pokaz_elipse_f],
+            [suwak_f, fuvai_obraz, fuvai_podpis, fuvai_wykres, timeline_f],
+            show_progress="hidden",
+        )
         graj_f.click(przelacz_odtwarzanie, [gra_f], [gra_f, zegar_f, graj_f], queue=False)
-        zegar_f.tick(nastepna_klatka_fuvai, [zrodlo, suwak_f], [suwak_f], show_progress="hidden")
+        zegar_f.tick(
+            nastepna_klatka_fuvai,
+            [zrodlo, suwak_f, fuvai_klatki, filtr_klasy_f],
+            [suwak_f],
+            show_progress="hidden",
+        )
         (przycisk.click(lambda: gr.Button(interactive=False, value="Liczę…"), None, [przycisk], queue=False)
          # Bez wspólnego limitu kolejki: „z pamięci” nie czeka za liczeniem „na żywo”;
          # dwa liczenia na żywo i tak idą po kolei (blokada MPS w usg_masa.aplikacja).

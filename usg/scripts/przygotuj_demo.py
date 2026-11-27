@@ -40,7 +40,11 @@ for sciezka in sciezki:
     fuvai.zapisz_wynik(wynik_f, seg.KATALOG_PAMIECI / f"{sweep.nazwa}_fuvai.npz")
     wynik_k = fuvai.analizuj_wszystkie_klatki(model_fuvai, sweep, co_ktora=1, mapy_prob=True)
     fuvai.zapisz_klatki(wynik_k, seg.KATALOG_PAMIECI / f"{sweep.nazwa}_fuvai_klatki.npz")
-    print(f"   FUVAI klatki: {len(wynik_k.indeksy)} z p(klasy), {wynik_k.czas_s:.0f} s", flush=True)
+    print(
+        f"   FUVAI klatki: {len(wynik_k.indeksy)} z p(klasy), wersja pamieci {fuvai.WERSJA_PAMIECI_KLATEK}, "
+        f"{wynik_k.czas_s:.0f} s",
+        flush=True,
+    )
     ac_nnunet = biometria.obwod_z_maski(wynik.maska, sweep.odstep_mm) if wynik.maska is not None else None
     print(f"   FUVAI: "
           + (f"klatka {wynik_f.najlepsza_klatka}, p(brzuch) {wynik_f.p_brzuch_najlepszej:.2f}, AC {wynik_f.ac_mm:.0f} mm"

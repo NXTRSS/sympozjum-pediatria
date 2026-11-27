@@ -275,6 +275,28 @@ def test_zapis_wczytaj_klatki(tmp_path):
     np.testing.assert_array_equal(w2.indeksy, w.indeksy)
     np.testing.assert_allclose(w2.p_klas, w.p_klas)
     assert w2.mapy_prob.shape == w.mapy_prob.shape
+    d = np.load(sciezka)
+    assert int(d["wersja_pamieci"]) == fuvai.WERSJA_PAMIECI_KLATEK
+
+
+def test_statystyki_i_indeksy_klas():
+    p = np.array(
+        [
+            [0.9, 0.05, 0.03, 0.02],
+            [0.1, 0.7, 0.1, 0.1],
+            [0.0, 0.0, 0.0, 1.0],
+            [0.8, 0.1, 0.05, 0.05],
+        ],
+        dtype=np.float32,
+    )
+    k = fuvai.WynikKlatekFUVAI(np.arange(4), p, None, 0.0)
+    stats = {s["id"]: s for s in fuvai.statystyki_klas(k, 4)}
+    assert stats[fuvai.BRZUCH]["liczba"] == 1
+    assert stats[fuvai.TLO]["liczba"] == 1
+    assert stats[0]["liczba"] == 2
+    brzuch = fuvai.indeksy_klasy(k, 4, fuvai.BRZUCH)
+    assert brzuch.tolist() == [1]
+    assert fuvai.indeksy_klasy(k, 4, fuvai.TLO).tolist() == [2]
 
 
 # ── poprawka init_hidden ─────────────────────────────────────────────────────

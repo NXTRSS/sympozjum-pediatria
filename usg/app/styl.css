@@ -60,6 +60,13 @@ footer { display: none !important; }
 /* ── obrazy USG ── */
 #podglad img, #wybrana img, #obraz-fuvai img { background: #000; border-radius: 12px; }
 #wykres img { border-radius: 12px; }
+#fuvai-obraz img { background: #000; border-radius: 12px; }
+.tabela-fuvai { width: 100%; border-collapse: collapse; font-size: 15px; margin: 8px 0 12px; }
+.tabela-fuvai th, .tabela-fuvai td { padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,.12); text-align: left; }
+.tabela-fuvai th { color: var(--tekst-3); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+.tabela-fuvai td.liczba { font-weight: 700; color: #fff; }
+#fuvai-filtr-rzad { align-items: center; gap: 8px; }
+#fuvai-filtr-rzad button { min-width: 120px; }
 .podpis { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; font-size: 16px; color: var(--tekst-2); padding: 4px 4px 0; }
 .podpis b { color: #fff; }
 .podpis .atrybucja { flex-basis: 100%; font-size: 15px; color: var(--tekst-3); }

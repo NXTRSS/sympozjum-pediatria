@@ -119,6 +119,26 @@ def test_wczytaj_fuvai_klatki_z_pamieci(app):
     assert A.pasek_timeline_fuvai(k, len(A.wczytaj_sweep("Nr 1").klatki), i).ndim == 3
 
 
+def test_fuvai_statystyki_nawigacja_i_ramka(app):
+    sweep = A.wczytaj_sweep("Nr 1")
+    k = A.wczytaj_fuvai_klatki("Nr 1", A.Z_PAMIECI)
+    n = len(sweep.klatki)
+    stats = fuvai.statystyki_klas(k, n)
+    assert len(stats) == 4 and all(s["liczba"] >= 0 for s in stats)
+    html = A.html_tabela_klas_fuvai(stats)
+    assert "brzuch" in html and "<table" in html
+    filtr = fuvai.BRZUCH
+    idxs = fuvai.indeksy_klasy(k, n, filtr)
+    if idxs.size:
+        i0 = int(idxs[0])
+        i1 = A.nastepna_klatka_w_filtrze(k, n, i0, filtr, krok=1)
+        assert int(i1) in idxs
+    maska = np.zeros((40, 50), np.uint8)
+    maska[10:30, 15:35] = 1
+    rect = A.prostokat_maski(maska)
+    assert rect == (15, 10, 34, 29)
+
+
 def test_z_pamieci_bez_wynikow(tmp_path):
     obraz = sitk.GetImageFromArray(np.zeros((3, 20, 20), np.uint8))
     obraz.SetSpacing((0.28, 0.28, 1.0))
