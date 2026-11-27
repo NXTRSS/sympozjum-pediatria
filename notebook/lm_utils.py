@@ -60,37 +60,26 @@ def display_generated_name(
 
 
 def visualize_probabilities(
-    last_output: np.ndarray,
-    krok: int,
+    probabilities,
+    step,
     tokenizer,
     prompt: str,
-    *,
-    chosen_idx: int | None = None,
-    top_n: int = 12,
-    show: bool = True,
 ) -> None:
-    """Histogram P(następna litera | kontekst) — jeden krok generacji."""
-    probs = np.asarray(last_output, dtype=np.float64)
-    if probs.ndim != 1:
-        probs = probs.ravel()
-    probs[0] = 0
-    if probs.sum() > 0:
-        probs /= probs.sum()
-    idx = np.argsort(probs)[-top_n:][::-1]
+    """Wykres słupkowy jak w notatniku dinozaurów (wszystkie znaki ze słownika)."""
     index_word = getattr(tokenizer, "index_word", None) or {}
-    labels = []
-    for i in idx:
-        ch = index_word.get(int(i), "?")
-        labels.append(repr(ch))
-    fig, ax = plt.subplots(figsize=(7, 2.4))
-    colors = ["#FFAF7B" if int(i) == chosen_idx else "#3A1C7D" for i in idx]
-    ax.bar(range(len(idx)), probs[idx], color=colors)
-    ax.set_xticks(range(len(idx)), labels, rotation=45, ha="right", fontsize=9)
-    ax.set_ylim(0, min(1.05, max(0.05, probs[idx].max() * 1.2)))
-    ax.set_title(f"krok {krok}: kontekst {prompt!r}", fontsize=10)
-    ax.grid(axis="y", alpha=0.25)
-    fig.tight_layout()
-    if show:
-        plt.show()
+    characters = [char for idx, char in sorted(index_word.items()) if idx > 0]
+    probs = np.asarray(probabilities, dtype=np.float64).ravel()
+    if len(characters) + 1 == len(probs):
+        bar_heights = probs[1:]
+    elif len(characters) == len(probs) - 1:
+        bar_heights = probs[1:]
     else:
-        plt.draw()
+        bar_heights = probs[1 : 1 + len(characters)]
+    plt.figure(figsize=(10, 6))
+    plt.bar(characters, bar_heights, color="skyblue")
+    plt.title(f"Rozkład prawdopodobieństwa po kroku {step}, obecny wynik: {prompt}")
+    plt.xlabel("Znaki")
+    plt.ylabel("Prawdopodobieństwo")
+    plt.ylim(0, 1)
+    plt.xticks(rotation=45)
+    plt.grid(axis="y")
