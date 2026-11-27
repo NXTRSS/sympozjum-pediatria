@@ -374,8 +374,15 @@ def uruchom_aplikacje(
         probs = np.asarray(k["rozklad"], dtype=np.float64)
         return figura_prawdopodobienstw(probs, k["krok"], tokenizer, k["prompt"])
 
+    def _suwak_krokow(liczba_krokow: int):
+        """Gradio Slider wymaga maximum > minimum (nie można 0/0)."""
+        if liczba_krokow <= 0:
+            return gr.update(minimum=0, maximum=1, value=0, interactive=False)
+        gora = max(liczba_krokow - 1, 1)
+        return gr.update(minimum=0, maximum=gora, value=0, interactive=True)
+
     def _pusta_odp(msg: str):
-        return msg, [], gr.update(maximum=0, value=0, interactive=False), None
+        return msg, [], _suwak_krokow(0), None
 
     def app_generuj(ile, temp, request: gr.Request):
         start = time.perf_counter()
@@ -474,14 +481,8 @@ def uruchom_aplikacje(
                 odrzucone=False,
             )
             print(f"[demo] ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
-            max_k = max(0, len(kroki_json) - 1)
             fig = _wykres_kroku(kroki_json, 0) if kroki_json else None
-            return (
-                wynik_txt,
-                kroki_json,
-                gr.update(maximum=max_k, value=0, interactive=bool(kroki_json)),
-                fig,
-            )
+            return wynik_txt, kroki_json, _suwak_krokow(len(kroki_json)), fig
         finally:
             with blokada:
                 w_trakcie["n"] = max(0, w_trakcie["n"] - 1)
@@ -502,7 +503,7 @@ def uruchom_aplikacje(
                 f"Maksymalnie {maks_krokow} kroków."
             )
             krok_sl = gr.Slider(
-                0, 0, step=1, value=0, label="Krok generowania", interactive=False
+                0, 1, step=1, value=0, label="Krok generowania", interactive=False
             )
             plot = gr.Plot(label="P(raw)")
         btn.click(
