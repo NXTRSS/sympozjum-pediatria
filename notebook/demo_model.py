@@ -344,7 +344,7 @@ def uruchom_aplikacje(
     w_trakcie = {"n": 0}
     blokada = threading.Lock()
 
-    from lm_utils import figura_prawdopodobienstw
+    from lm_wizualizacja import figura_histogramy_krokow, kroki_do_histogramu
     import matplotlib.pyplot as plt
 
     opis = (
@@ -364,25 +364,31 @@ def uruchom_aplikacje(
             for k in kroki
         ]
 
-    def _wykres_kroku(stan: list[dict], nr: float | int):
-        plt.close("all")
-        if not stan:
-            return None
-        i = int(nr)
-        i = max(0, min(i, len(stan) - 1))
-        k = stan[i]
-        probs = np.asarray(k["rozklad"], dtype=np.float64)
-        return figura_prawdopodobienstw(probs, k["krok"], tokenizer, k["prompt"])
+    vocab_size = len(tokenizer.index_word)
+    id2znak = tokenizer.index_word
 
-    def _suwak_krokow(liczba_krokow: int):
-        """Gradio Slider wymaga maximum > minimum (nie można 0/0)."""
-        if liczba_krokow <= 0:
-            return gr.update(minimum=0, maximum=1, value=0, interactive=False)
-        gora = max(liczba_krokow - 1, 1)
-        return gr.update(minimum=0, maximum=gora, value=0, interactive=True)
+    def _etykieta_nazwy(nr: int, nazwa: str, w_zbiorze: bool) -> str:
+        ikona = "⚠️" if w_zbiorze else "✨"
+        opis = "w zbiorze" if w_zbiorze else "nowa"
+        return f"{nr}. {ikona} {nazwa} ({opis})"
+
+    def _figura_wszystkich_krokow(kroki_json: list[dict]):
+        plt.close("all")
+        if not kroki_json:
+            return None
+        hist = kroki_do_histogramu(kroki_json)
+        return figura_histogramy_krokow(hist, id2znak, vocab_size, kolumny=4)
+
+    def _wybor_nazw_wykres(paczki: list[dict], wybor: str | None):
+        if not paczki or not wybor:
+            return None
+        for p in paczki:
+            if p.get("etykieta") == wybor:
+                return _figura_wszystkich_krokow(p["kroki"])
+        return _figura_wszystkich_krokow(paczki[0]["kroki"])
 
     def _pusta_odp(msg: str):
-        return msg, [], _suwak_krokow(0), None
+        return msg, [], gr.update(choices=[], value=None, interactive=False), None
 
     def app_generuj(ile, temp, request: gr.Request):
         start = time.perf_counter()
@@ -454,22 +460,27 @@ def uruchom_aplikacje(
                 print(f"[demo] odrzut  ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
                 return _pusta_odp(msg)
             wyniki = []
-            kroki_json: list[dict] = []
+            paczki: list[dict] = []
             for numer in range(ile_i):
-                if numer == 0:
-                    nazwa, pelny, kroki = generuj(
-                        model,
-                        tokenizer,
-                        temperatura=temp_f,
-                        maks_krokow=maks_krokow,
-                        zbierz_kroki=True,
-                    )
-                    kroki_json = _kroki_do_json(kroki)
-                    _ = pelny
-                else:
-                    nazwa, _ = generuj(model, tokenizer, temperatura=temp_f, maks_krokow=maks_krokow)
-                znacznik = "  (istnieje w zbiorze)" if nazwa in znane else ""
-                wyniki.append(f"• {nazwa}{znacznik}")
+                nazwa, _pelny, kroki = generuj(
+                    model,
+                    tokenizer,
+                    temperatura=temp_f,
+                    maks_krokow=maks_krokow,
+                    zbierz_kroki=True,
+                )
+                w_zbiorze = nazwa in znane
+                etykieta = _etykieta_nazwy(numer + 1, nazwa, w_zbiorze)
+                paczki.append(
+                    {
+                        "etykieta": etykieta,
+                        "nazwa": nazwa,
+                        "w_zbiorze": w_zbiorze,
+                        "kroki": _kroki_do_json(kroki),
+                    }
+                )
+                ikona = "⚠️" if w_zbiorze else "✨"
+                wyniki.append(f"• {ikona} {nazwa}")
             wynik_txt = "\n".join(wyniki)
             licznik["ok"] += 1
             zapisz_zdarzenie(
@@ -481,8 +492,14 @@ def uruchom_aplikacje(
                 odrzucone=False,
             )
             print(f"[demo] ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
-            fig = _wykres_kroku(kroki_json, 0) if kroki_json else None
-            return wynik_txt, kroki_json, _suwak_krokow(len(kroki_json)), fig
+            opcje = [p["etykieta"] for p in paczki]
+            fig = _figura_wszystkich_krokow(paczki[0]["kroki"]) if paczki else None
+            return (
+                wynik_txt,
+                paczki,
+                gr.update(choices=opcje, value=opcje[0] if opcje else None, interactive=bool(opcje)),
+                fig,
+            )
         finally:
             with blokada:
                 w_trakcie["n"] = max(0, w_trakcie["n"] - 1)
@@ -495,23 +512,28 @@ def uruchom_aplikacje(
             temp_min, temp_max, value=temperatura, step=0.1, label="Kreatywność (temperatura)"
         )
         btn = gr.Button("Generuj", variant="primary")
-        out = gr.Textbox(label="Nowe nazwy — właśnie wymyślone przez model", lines=10)
-        stan_krokow = gr.State([])
-        with gr.Accordion("Pokaż prawdopodobieństwa liter", open=False):
+        out = gr.Textbox(
+            label="Nowe nazwy — ✨ nowa · ⚠️ już w zbiorze treningowym",
+            lines=10,
+        )
+        stan_nazw = gr.State([])
+        with gr.Accordion("Pokaż prawdopodobieństwa liter (wszystkie kroki)", open=False):
             gr.Markdown(
-                "Histogram jak w notatniku (`visualize_probabilities`) dla **pierwszej** wygenerowanej nazwy. "
-                f"Maksymalnie {maks_krokow} kroków."
+                "Jedna plansza jak w notatniku (`histogramy_krokow`). "
+                f"Maks. {maks_krokow} kroków na nazwę. Wybierz nazwę z listy powyżej wykresu."
             )
-            krok_sl = gr.Slider(
-                0, 1, step=1, value=0, label="Krok generowania", interactive=False
+            wybor_nazwy = gr.Radio(
+                choices=[],
+                label="Której wygenerowanej nazwy dotyczą wykresy?",
+                interactive=False,
             )
-            plot = gr.Plot(label="P(raw)")
+            plot = gr.Plot(label="P(następna litera | kontekst)")
         btn.click(
             app_generuj,
             inputs=[ile, temp_sl],
-            outputs=[out, stan_krokow, krok_sl, plot],
+            outputs=[out, stan_nazw, wybor_nazwy, plot],
         )
-        krok_sl.change(_wykres_kroku, inputs=[stan_krokow, krok_sl], outputs=plot)
+        wybor_nazwy.change(_wybor_nazw_wykres, inputs=[stan_nazw, wybor_nazwy], outputs=plot)
     demo.queue(default_concurrency_limit=3, max_size=max_kolejki, api_open=False)
     if share:
         print("\nUruchamiam aplikację. Publiczny link gradio.live pojawi się poniżej.", flush=True)

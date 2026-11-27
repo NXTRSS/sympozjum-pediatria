@@ -67,3 +67,56 @@ def histogramy_krokow(
     )
     fig.tight_layout()
     plt.show()
+
+
+def figura_histogramy_krokow(
+    kroki,
+    id2znak: dict,
+    wielkosc_slownika: int,
+    kolumny: int = 4,
+):
+    """Jedna plansza — wszystkie kroki (do Gradio). Wywołujący zamyka figurę po użyciu."""
+    litery = [id2znak[i] for i in range(1, wielkosc_slownika)]
+    if not kroki:
+        fig, ax = plt.subplots(figsize=(6, 2))
+        ax.axis("off")
+        return fig
+    wiersze = int(np.ceil(len(kroki) / kolumny))
+    fig, axes = plt.subplots(
+        wiersze, kolumny, figsize=(4.2 * kolumny, 2.6 * wiersze), squeeze=False
+    )
+    for ax, krok in zip(axes.ravel(), kroki):
+        p, w = np.asarray(krok["rozklad"], dtype=np.float64).ravel(), int(krok["wybor"])
+        bar_heights = p[1:]
+        kolory = ["#3A1C7D"] * len(p[1:])
+        if w > 0 and w - 1 < len(kolory):
+            kolory[w - 1] = "#FFAF7B"
+        ax.bar(litery, bar_heights, color=kolory)
+        ax.set_ylim(0, 1)
+        kontekst = krok.get("kontekst", krok.get("prompt", ""))
+        ax.set_title(f"{kontekst}  →  {id2znak[w]!r}", fontsize=9)
+        ax.tick_params(axis="x", labelsize=6)
+        ax.grid(axis="y", alpha=0.25)
+    for ax in axes.ravel()[len(kroki) :]:
+        ax.axis("off")
+    fig.suptitle(
+        "P(następna litera | kontekst) — jak w notatniku (histogramy_krokow)",
+        y=1.01,
+        fontsize=12,
+    )
+    fig.tight_layout()
+    return fig
+
+
+def kroki_do_histogramu(kroki_demo: list[dict]) -> list[dict]:
+    """Konwersja kroków z generuj() do formatu histogramy_krokow."""
+    out = []
+    for k in kroki_demo:
+        out.append(
+            {
+                "kontekst": k["prompt"],
+                "rozklad": np.asarray(k["rozklad"], dtype=np.float64),
+                "wybor": int(k["idx"]),
+            }
+        )
+    return out
