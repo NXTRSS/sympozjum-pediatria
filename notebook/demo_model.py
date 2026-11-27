@@ -1,13 +1,9 @@
-"""Logika mini-modelu dla skryptu uruchom_demo.py i testów deterministyczności.
-
-Notatnik model_jezyka_choroby.ipynb ma ten sam przebieg napisany krok po kroku w komórkach
-(bez importu z tego modułu). Skrypt sali woła funkcje stąd — z walidacją 10% w trenuj()."""
+"""Logika mini-modelu dla skryptu uruchom_demo.py i testów (ten sam przebieg co notatnik sali)."""
 from __future__ import annotations
 
 import os
 import random
 
-# Zanim ktokolwiek zaimportuje TensorFlow: CPU i operacje deterministyczne.
 os.environ.setdefault("PYTHONHASHSEED", "42")
 os.environ.setdefault("TF_DETERMINISTIC_OPS", "1")
 os.environ.setdefault("TF_NUM_INTRAOP_THREADS", "1")
@@ -20,6 +16,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from model_cache import hash_danych, hash_kodu_demo, wczytaj as wczytaj_cache, zapisz as zapisz_cache
+
 REPO = "https://raw.githubusercontent.com/NXTRSS/sympozjum-pediatria/main/data"
 DANE = {
     "choroby": f"{REPO}/choroby.csv",
@@ -29,12 +27,15 @@ DANE = {
 LICZBA_EPOK = 12
 TEMPO_UCZENIA = 0.003
 TEMPERATURA = 0.4
+EMBEDDING_DIM = 64
+GRU_UNITS = 128
+DROPOUT = 0.2
+BATCH_SIZE = 64
 ZIARNO = 42
 KORZEN = Path(__file__).resolve().parents[1]
 
 
 def ustaw_ziarna(ziarno: int = ZIARNO) -> None:
-    """Python, NumPy, TensorFlow i — gdy jest zainstalowany — PyTorch. Tylko CPU."""
     random.seed(ziarno)
     np.random.seed(ziarno)
     import tensorflow as tf
@@ -46,21 +47,13 @@ def ustaw_ziarna(ziarno: int = ZIARNO) -> None:
     tf.random.set_seed(ziarno)
     tf.keras.utils.set_random_seed(ziarno)
     tf.config.experimental.enable_op_determinism()
-    try:
-        import torch
-
-        torch.manual_seed(ziarno)
-        torch.use_deterministic_algorithms(True)
-    except Exception:
-        # Ten model jest na TensorFlow. Torch ziarno ustawiamy tylko, gdy pakiet jest.
-        pass
 
 
 def wczytaj_nazwy(zbior: str = "choroby", ziarno: int = ZIARNO, dane: dict | None = None):
-    """Nazwy z lokalnego pliku (albo z adresu), bez duplikatów, przetasowane ziarnem."""
     dane = DANE if dane is None else dane
     zrodlo = dane[zbior]
     plik = os.path.basename(zrodlo)
+    sciezka_lokalna: Path | None = None
     for kandydat in (
         Path(plik),
         Path("data") / plik,
@@ -69,118 +62,217 @@ def wczytaj_nazwy(zbior: str = "choroby", ziarno: int = ZIARNO, dane: dict | Non
     ):
         if kandydat.exists():
             zrodlo = str(kandydat)
+            sciezka_lokalna = kandydat.resolve()
             break
     df = pd.read_csv(zrodlo, header=None, names=["nazwa"], sep="\t")
     nazwy = df["nazwa"].dropna().astype(str).str.strip().str.lower().drop_duplicates().tolist()
     rng = np.random.default_rng(ziarno)
     nazwy = [nazwy[i] for i in rng.permutation(len(nazwy))]
-    return nazwy, zrodlo
+    return nazwy, zrodlo, sciezka_lokalna
 
 
-def przygotuj_dane(nazwy: list[str]):
-    """% na początku, ! na końcu. X przewiduje Y przesunięte o jeden znak."""
-    sekwencje = ["%" + n + "!" for n in nazwy]
-    znaki = sorted(set("".join(sekwencje)))
-    znak2id = {z: i + 1 for i, z in enumerate(znaki)}
-    id2znak = {i: z for z, i in znak2id.items()}
-    maks_dl = max(len(s) for s in sekwencje)
-    X = np.zeros((len(sekwencje), maks_dl - 1), dtype="int32")
-    Y = np.zeros((len(sekwencje), maks_dl - 1), dtype="int32")
-    for i, s in enumerate(sekwencje):
-        ids = [znak2id[z] for z in s]
-        X[i, : len(ids) - 1] = ids[:-1]
-        Y[i, : len(ids) - 1] = ids[1:]
-    return X, Y, znak2id, id2znak, znaki
+def _zbuduj_klase_language_model():
+    from tensorflow.keras import Model
+    from tensorflow.keras.layers import Dense, Embedding, GRU
+
+    class LanguageModel(Model):
+        def __init__(self, vocab_size: int):
+            super().__init__()
+            self.embedding = Embedding(vocab_size, output_dim=EMBEDDING_DIM, mask_zero=True)
+            self.rnn = GRU(GRU_UNITS, return_sequences=True, return_state=True, dropout=DROPOUT)
+            self.fc = Dense(vocab_size, activation="softmax")
+
+        def call(self, inputs, training=False, hidden_state=None, return_state=False):
+            x = self.embedding(inputs, training=training)
+            seq_out, last_hidden_state = self.rnn(x, training=training, initial_state=hidden_state)
+            x = self.fc(seq_out)
+            if return_state:
+                return x, last_hidden_state
+            return x
+
+    return LanguageModel
 
 
-def zbuduj_model(wielkosc_slownika: int, tempo: float = TEMPO_UCZENIA, ziarno: int = ZIARNO):
-    """Embedding(64) → GRU(128, dropout 0.2) → softmax. Ziarna inicjalizacji są jawne."""
+def zbuduj_model(vocab_size: int, ziarno: int = ZIARNO):
     import tensorflow as tf
-    from tensorflow import keras
 
     ustaw_ziarna(ziarno)
-    model = keras.Sequential([
-        keras.layers.Embedding(
-            wielkosc_slownika, 64, mask_zero=True,
-            embeddings_initializer=keras.initializers.GlorotUniform(seed=ziarno),
-        ),
-        keras.layers.GRU(
-            128, return_sequences=True, dropout=0.2, seed=ziarno,
-            kernel_initializer=keras.initializers.GlorotUniform(seed=ziarno),
-            recurrent_initializer=keras.initializers.Orthogonal(seed=ziarno + 1),
-            bias_initializer=keras.initializers.Zeros(),
-        ),
-        keras.layers.Dense(
-            wielkosc_slownika, activation="softmax",
-            kernel_initializer=keras.initializers.GlorotUniform(seed=ziarno + 2),
-            bias_initializer=keras.initializers.Zeros(),
-        ),
-    ])
-    model.compile(
-        loss="sparse_categorical_crossentropy",
-        optimizer=keras.optimizers.Adam(learning_rate=tempo),
-    )
-    # tf jest użyty pośrednio przez keras; trzymamy import, żeby ziarno TF było ustawione.
-    del tf
-    return model
+    LanguageModel = _zbuduj_klase_language_model()
+    return LanguageModel(vocab_size)
+
+
+def przygotuj_tokenizer_i_macierze(nazwy: list[str]):
+    from tensorflow.keras.preprocessing.sequence import pad_sequences
+    from tensorflow.keras.preprocessing.text import Tokenizer
+
+    name_list = ["%" + n + "!" for n in nazwy]
+    tokenizer = Tokenizer(filters="", lower=True, char_level=True)
+    tokenizer.fit_on_texts(name_list)
+    x_teksty = [n[:-1] for n in name_list]
+    y_teksty = [n[1:] for n in name_list]
+    X = pad_sequences(tokenizer.texts_to_sequences(x_teksty), padding="post")
+    Y = pad_sequences(tokenizer.texts_to_sequences(y_teksty), padding="post")
+    vocab_size = len(tokenizer.word_index) + 1
+    return tokenizer, X, Y, vocab_size, name_list
+
+
+def przywroc_tokenizer(dane: dict):
+    from tensorflow.keras.preprocessing.text import Tokenizer
+
+    tokenizer = Tokenizer(filters="", lower=True, char_level=True)
+    tokenizer.word_index = {str(k) if not isinstance(k, str) else k: v for k, v in dane["word_index"].items()}
+    tokenizer.index_word = {int(k): v for k, v in dane["index_word"].items()}
+    return tokenizer
 
 
 def trenuj(model, X, Y, epoki: int = LICZBA_EPOK):
-    """Ostatnie 10% wierszy (po tasowaniu) to sprawdzian. Kolejność epok jest z ziarna TF."""
-    return model.fit(X, Y, epochs=epoki, validation_split=0.1, shuffle=True, verbose=2)
+    import tensorflow.keras as keras
+
+    model.compile(
+        loss=keras.losses.SparseCategoricalCrossentropy(),
+        optimizer=keras.optimizers.Adam(learning_rate=TEMPO_UCZENIA),
+    )
+    return model.fit(X, Y, epochs=epoki, batch_size=BATCH_SIZE, verbose=2)
 
 
-def generuj(model, znak2id, id2znak, temperatura: float = TEMPERATURA, maks_znakow: int = 40):
-    """Jedna nazwa. Losowanie idzie globalnym NumPy — po ustaw_ziarna jest powtarzalne."""
-    kontekst, kroki = "%", []
-    for _ in range(maks_znakow):
-        ids = np.array([[znak2id[z] for z in kontekst]])
-        rozklad = model(ids, training=False).numpy()[0, -1].astype("float64")
-        rozklad = np.log(rozklad + 1e-9) / temperatura
-        rozklad = np.exp(rozklad) / np.exp(rozklad).sum()
-        rozklad[0] = 0
-        rozklad /= rozklad.sum()
-        wybor = int(np.random.choice(len(rozklad), p=rozklad))
-        kroki.append({"kontekst": kontekst, "rozklad": rozklad, "wybor": wybor})
-        if id2znak[wybor] == "!":
+def generuj(
+    model,
+    tokenizer,
+    temperatura: float = TEMPERATURA,
+    maks_krokow: int = 30,
+    prompt: str = "%",
+):
+    """Generowanie jak w notatniku (hidden state + temperatura)."""
+    import tensorflow as tf
+
+    prompt = prompt.lower()
+    encoded = tf.convert_to_tensor(tokenizer.texts_to_sequences([prompt]))
+    model_out, hidden_state = model(encoded, return_state=True)
+    last_output = model_out[0, -1, :].numpy()
+
+    for _ in range(maks_krokow):
+        last_output = np.array(last_output, dtype=np.float64)
+        last_output[0] = 0.0
+        s = last_output.sum()
+        if s > 0:
+            last_output /= s
+        log_p = np.log(last_output + 1e-9) / max(temperatura, 1e-6)
+        last_output = np.exp(log_p)
+        last_output[0] = 0.0
+        last_output /= last_output.sum()
+        next_char_idx = int(np.random.choice(np.arange(len(last_output)), p=last_output))
+        next_char = tokenizer.index_word[next_char_idx]
+        prompt += next_char
+        if next_char == "!":
             break
-        kontekst += id2znak[wybor]
-    return kontekst[1:], kroki
+        encoded = tf.convert_to_tensor(tokenizer.texts_to_sequences([next_char]))
+        model_out, hidden_state = model(encoded, hidden_state=hidden_state, return_state=True)
+        last_output = model_out[0, -1, :].numpy()
+    return prompt[1:-1], prompt
 
 
-def przebieg(ziarno: int = ZIARNO, epoki: int = LICZBA_EPOK, temperatura: float = TEMPERATURA):
-    """Ta sama kolejność co notebook: dane → trening → jedna nazwa → dziesięć nazw."""
-    nazwy, zrodlo = wczytaj_nazwy(ziarno=ziarno)
-    X, Y, znak2id, id2znak, znaki = przygotuj_dane(nazwy)
-    model = zbuduj_model(len(znaki) + 1, tempo=TEMPO_UCZENIA, ziarno=ziarno)
-    historia = trenuj(model, X, Y, epoki=epoki)
-    pierwsza, _ = generuj(model, znak2id, id2znak, temperatura=temperatura)
-    dziesiec = [generuj(model, znak2id, id2znak, temperatura=temperatura)[0] for _ in range(10)]
+def _manifest(ziarno: int, epoki: int, temperatura: float, zrodlo: str) -> dict:
+    return {
+        "ziarno": ziarno,
+        "liczba_epok": epoki,
+        "learning_rate": TEMPO_UCZENIA,
+        "temperatura": temperatura,
+        "embedding_dim": EMBEDDING_DIM,
+        "gru_units": GRU_UNITS,
+        "dropout": DROPOUT,
+        "batch_size": BATCH_SIZE,
+        "hash_danych": hash_danych(zrodlo),
+        "hash_kodu": hash_kodu_demo(),
+    }
+
+
+def _wynik_z_modelu(
+    model,
+    tokenizer,
+    nazwy: list[str],
+    zrodlo: str,
+    historia,
+    temperatura: float,
+    ziarno: int,
+    *,
+    z_cache: bool = False,
+) -> dict:
+    ustaw_ziarna(ziarno)
+    pierwsza, _ = generuj(model, tokenizer, temperatura=temperatura)
+    ustaw_ziarna(ziarno)
+    dziesiec = [
+        generuj(model, tokenizer, temperatura=temperatura)[0]
+        for _ in range(10)
+    ]
     return {
         "zrodlo": zrodlo,
         "nazw": len(nazwy),
         "model": model,
-        "znak2id": znak2id,
-        "id2znak": id2znak,
+        "tokenizer": tokenizer,
         "znane": set(nazwy),
         "loss": [float(x) for x in historia.history["loss"]],
-        "val_loss": [float(x) for x in historia.history["val_loss"]],
+        "val_loss": [],
         "wagi": [w.numpy().copy() for w in model.weights],
         "pierwsza": pierwsza,
         "dziesiec": dziesiec,
+        "z_cache": z_cache,
     }
 
 
-def uruchom_aplikacje(model, znak2id, id2znak, znane: set, temperatura: float = TEMPERATURA,
-                      zbior: str = "choroby", share: bool = True):
-    """Aplikacja Gradio z limitem kolejki. Publiczny link nie otwiera dysku Maca."""
+def _przebieg_trenuj(
+    ziarno: int,
+    epoki: int,
+    temperatura: float,
+) -> dict:
+    nazwy, zrodlo, _ = wczytaj_nazwy(ziarno=ziarno)
+    ustaw_ziarna(ziarno)
+    tokenizer, X, Y, vocab_size, _ = przygotuj_tokenizer_i_macierze(nazwy)
+    model = zbuduj_model(vocab_size, ziarno=ziarno)
+    model(X[:1])
+    historia = trenuj(model, X, Y, epoki=epoki)
+    wynik = _wynik_z_modelu(model, tokenizer, nazwy, zrodlo, historia, temperatura, ziarno)
+    manifest = _manifest(ziarno, epoki, temperatura, zrodlo)
+    zapisz_cache(manifest, model, tokenizer, wynik["znane"], wynik)
+    return wynik
+
+
+def przebieg(
+    ziarno: int | None = None,
+    epoki: int | None = None,
+    temperatura: float | None = None,
+    *,
+    force_train: bool = False,
+    use_cache: bool = True,
+) -> dict:
+    ziarno = ZIARNO if ziarno is None else ziarno
+    epoki = LICZBA_EPOK if epoki is None else epoki
+    temperatura = TEMPERATURA if temperatura is None else temperatura
+    _, zrodlo, _ = wczytaj_nazwy(ziarno=ziarno)
+    manifest = _manifest(ziarno, epoki, temperatura, zrodlo)
+    if use_cache and not force_train:
+        z_cache = wczytaj_cache(manifest, zbuduj_model, przywroc_tokenizer)
+        if z_cache is not None:
+            print("Wczytano zapisany model (bez treningu)", flush=True)
+            return z_cache
+    print("Trenuję…", flush=True)
+    return _przebieg_trenuj(ziarno, epoki, temperatura)
+
+
+def uruchom_aplikacje(
+    model,
+    tokenizer,
+    znane: set,
+    temperatura: float = TEMPERATURA,
+    zbior: str = "choroby",
+    share: bool = True,
+):
     import time
     from collections import defaultdict, deque
 
     import gradio as gr
 
     maks_nazw = 6
-    maks_znakow = 32
+    maks_krokow = 30
     temp_min, temp_max = 0.2, 1.5
     okno_s = 60.0
     limit_sesji = 8
@@ -218,7 +310,7 @@ def uruchom_aplikacje(model, znak2id, id2znak, znane: set, temperatura: float = 
             return f"Dozwolone: 1–{maks_nazw} nazw, temperatura {temp_min}–{temp_max}."
         wyniki = []
         for _ in range(ile_i):
-            nazwa, _ = generuj(model, znak2id, id2znak, temperatura=temp_f, maks_znakow=maks_znakow)
+            nazwa, _ = generuj(model, tokenizer, temperatura=temp_f, maks_krokow=maks_krokow)
             znacznik = "  (istnieje w zbiorze)" if nazwa in znane else ""
             wyniki.append(f"• {nazwa}{znacznik}")
         licznik["ok"] += 1
@@ -234,22 +326,41 @@ def uruchom_aplikacje(model, znak2id, id2znak, znane: set, temperatura: float = 
         outputs=gr.Textbox(label="Nowe nazwy — właśnie wymyślone przez model", lines=10),
         title=f"🩺 Generator: {zbior}",
         description="Mały model językowy (GRU) wytrenowany na żywo podczas prelekcji. "
-                    "Ten sam mechanizm co w ChatGPT — tylko ok. 10 milionów razy mniejszy (ok. 80 tys. parametrów).",
+        "Ten sam mechanizm co w ChatGPT — tylko ok. 10 milionów razy mniejszy (ok. 80 tys. parametrów).",
     )
     demo.queue(default_concurrency_limit=3, max_size=50, api_open=False)
-    print("\nUruchamiam aplikację. Publiczny link gradio.live pojawi się poniżej.", flush=True)
-    print("Ctrl+C = link natychmiast przestaje działać.", flush=True)
-    print("Link otwiera tylko tę aplikację, nie dysk ani resztę Maca.\n", flush=True)
-    demo.launch(
+    if share:
+        print("\nUruchamiam aplikację. Publiczny link gradio.live pojawi się poniżej.", flush=True)
+    else:
+        print("\nUruchamiam aplikację lokalnie (--bez-linku).", flush=True)
+    print("Ctrl+C = serwer się zatrzymuje.\n", flush=True)
+    wynik_launch = demo.launch(
         share=share,
         prevent_thread_lock=True,
         footer_links=[],
         max_file_size="1kb",
         app_kwargs={"docs_url": None, "redoc_url": None, "openapi_url": None},
     )
+    lokalny = ""
+    if isinstance(wynik_launch, tuple) and len(wynik_launch) >= 2:
+        lokalny = wynik_launch[1] or ""
+    if not lokalny:
+        lokalny = getattr(demo, "local_url", None) or getattr(demo, "local_url", "") or ""
     link = getattr(demo, "share_url", None) or ""
+    if isinstance(wynik_launch, tuple) and len(wynik_launch) >= 3:
+        link = wynik_launch[2] or link
     print("\n" + "=" * 64)
-    print("LINK DLA SALI:", link or "(brak — uruchomiono bez share)")
-    print("Ctrl+C = link natychmiast przestaje działać.")
+    if share and not link:
+        print(
+            "Nie udało się utworzyć publicznego linku gradio.live "
+            "(tunel zablokowany, np. przez antywirusa firmowego). "
+            f"Aplikacja działa lokalnie: {lokalny or '(adres w oknie Gradio)'}. "
+            "Sala: użyj QR do Colaba."
+        )
+    elif share and link:
+        print("LINK DLA SALI:", link)
+    else:
+        print(f"Aplikacja lokalna: {lokalny or '(adres w oknie Gradio)'}. Sala: QR do Colaba / ekran.")
+    print("Ctrl+C = serwer się zatrzymuje.")
     print("=" * 64 + "\n", flush=True)
     demo.block_thread()

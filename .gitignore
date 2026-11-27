@@ -26,3 +26,5 @@ delphi/pamiec/wyniki/*
 !delphi/pamiec/wyniki/astma_od_dziecka.json
 delphi/dane/*
 !delphi/dane/icd10_pl.csv
+
+notebook/.model_cache/

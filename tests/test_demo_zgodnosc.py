@@ -1,4 +1,4 @@
-"""Skrypt uruchom_demo.py i notebook dają ten sam model przy ziarnie 42."""
+"""Skrypt uruchom_demo.py, cache i notebook dają ten sam model przy ziarnie 42."""
 import json
 import os
 import sys
@@ -15,6 +15,7 @@ NB = NOTEBOOK_DIR / "model_jezyka_choroby.ipynb"
 sys.path.insert(0, str(NOTEBOOK_DIR))
 
 from demo_model import przebieg  # noqa: E402
+from model_cache import wyczysc as wyczysc_cache  # noqa: E402
 
 
 def _z_notebooka(tmp: Path) -> dict:
@@ -36,23 +37,70 @@ def _z_notebooka(tmp: Path) -> dict:
     return json.loads((tmp / "wynik.json").read_text())
 
 
-def test_dwa_przebiegi_skryptu_sa_zgodne():
-    a = przebieg()
-    b = przebieg()
+def _porownaj_wyniki(a: dict, b: dict) -> None:
     assert a["loss"] == b["loss"]
-    assert a["val_loss"] == b["val_loss"]
     for x, y in zip(a["wagi"], b["wagi"]):
-        assert np.allclose(x, y)
+        assert np.allclose(np.asarray(x), np.asarray(y))
     assert a["pierwsza"] == b["pierwsza"]
     assert a["dziesiec"] == b["dziesiec"]
+
+
+def test_dwa_przebiegi_skryptu_sa_zgodne():
+    wyczysc_cache()
+    a = przebieg(force_train=True)
+    b = przebieg(force_train=True)
+    _porownaj_wyniki(a, b)
 
 
 def test_notebook_jest_deterministyczny(tmp_path):
-    """Notatnik jest samodzielny (bez demo_model); dwa uruchomienia dają ten sam wynik."""
     a = _z_notebooka(tmp_path)
     b = _z_notebooka(tmp_path)
-    assert a["loss"] == b["loss"]
-    for x, y in zip(a["wagi"], b["wagi"]):
-        assert np.allclose(np.array(x), np.array(y))
-    assert a["pierwsza"] == b["pierwsza"]
-    assert a["dziesiec"] == b["dziesiec"]
+    _porownaj_wyniki(a, b)
+
+
+def test_cache_identyczny_ze_swiezym_treningiem():
+    wyczysc_cache()
+    swiezy = przebieg(force_train=True)
+    z_cache = przebieg()
+    assert z_cache.get("z_cache") is True
+    _porownaj_wyniki(swiezy, z_cache)
+
+
+def test_cache_uniewazniony_po_zmianie_ziarna():
+    wyczysc_cache()
+    przebieg(force_train=True, ziarno=42)
+    inny = przebieg(force_train=False, ziarno=99, use_cache=True)
+    assert not inny.get("z_cache")
+
+
+def test_cache_uniewazniony_po_zmianie_danych(monkeypatch):
+    wyczysc_cache()
+    przebieg(force_train=True)
+    import model_cache as mc
+
+    real = mc.hash_danych
+
+    def zmieniony(sciezka):
+        return real(sciezka) + "x"
+
+    monkeypatch.setattr(mc, "hash_danych", zmieniony)
+    inny = przebieg(force_train=False, use_cache=True)
+    assert not inny.get("z_cache")
+
+
+def test_cache_uniewazniony_po_zmianie_epok(monkeypatch):
+    wyczysc_cache()
+    przebieg(force_train=True)
+    import demo_model as dm
+
+    monkeypatch.setattr(dm, "LICZBA_EPOK", 11)
+    inny = przebieg(force_train=False, use_cache=True)
+    assert not inny.get("z_cache")
+
+
+def test_skrypt_zgodny_z_notebookiem(tmp_path):
+    """Te same hiperparametry i ziarno → te same nazwy i wagi co notatnik sali."""
+    wyczysc_cache()
+    skrypt = przebieg(force_train=True)
+    notatnik = _z_notebooka(tmp_path)
+    _porownaj_wyniki(skrypt, notatnik)

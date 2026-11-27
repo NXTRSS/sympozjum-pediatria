@@ -14,8 +14,9 @@ Checklist na druk. **Strona PPTX** ≈ numer slajdu w decku + 14 (wyjątek: slaj
 ## 2. Rano 28.11
 
 - [ ] `caffeinate -dis`, zasilanie, Wi‑Fi
-- [ ] `uv run python notebook/uruchom_demo.py` — **tylko skrypt**, nie Gradio z notebooka
-- [ ] Link `gradio.live` → README („Link do demo…”)
+- [ ] `uv run python notebook/uruchom_demo.py` — **tylko skrypt**, nie Gradio z notebooka (drugi start: trening z cache, szybciej)
+- [ ] `uv run python notebook/uruchom_demo.py --bez-linku` gdy antywirus blokuje tunel Gradio (CrowdStrike / frpc)
+- [ ] Link `gradio.live` **albo** plan B: QR Colab (**str. 26**) + laptop DIL / podgląd lokalny na ekranie
 - [ ] Test QR (**str. 26**) + laptop DIL
 
 ## 3. Slajdy i czas (~52 min + ~8 min Q&A)
@@ -48,7 +49,7 @@ Checklist na druk. **Strona PPTX** ≈ numer slajdu w decku + 14 (wyjątek: slaj
 ## 5. Protokół awaryjny
 
 - [ ] Demo zalane → **Ctrl+C** → link martwy → slajdy ZAPAS LM
-- [ ] Link = tylko Gradio
+- [ ] Brak `gradio.live` (tunel zablokowany) → **QR do Colaba** (`model_jezyka_choroby.ipynb`) lub `--bez-linku` i pokaz lokalny na rzutniku
 - [ ] Fallback: `prezentacja_zapas.pptx` / `.pdf` na DIL
 
 → [`URUCHOMIENIE.md`](URUCHOMIENIE.md)
