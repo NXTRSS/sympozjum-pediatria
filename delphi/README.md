@@ -10,9 +10,12 @@ Notebook `notebook/delphi_2m.ipynb` pokazuje, jak **Delphi** (Shmatko i in., *Na
 
 Wymagany jest zainstalowany `uv`; Python 3.11 uv dociągnie sam.
 
+Notebook Delphi **musi** używać Pythona z `delphi/.venv` (Python 3.11), **nie** głównego `uv` z katalogu repo (3.12, bez `delphi_demo`).
+
 ```bash
 cd delphi
 uv sync
+uv run python scripts/diagnoza_delphi.py     # musi wypisać „OK" i „wbudowane kroki astma: 12"
 uv run python scripts/przygotuj_demo.py      # z internetem; ok. 20 min na M1 Pro (trening 2500 kroków na MPS ~18 min + ok. 2 min krzywe ryzyka)
 # albo --kroki 5000: trening ok. 36 min, z wykresem przeuczenia
 uv run jupyter notebook notebook/delphi_2m.ipynb

@@ -9,8 +9,14 @@ from pathlib import Path
 
 import pandas as pd
 
+from functools import lru_cache
+from importlib import resources
+
 from delphi_demo import zasoby
 from delphi_demo.prognoza import Krok
+
+WERSJA_PAMIECI = 3
+_WBUDOWANE_SLADY = {"astma_od_dziecka": "slad_astma_od_dziecka.json"}
 
 KATALOG_WYNIKOW = zasoby.KATALOG_PAMIECI / "wyniki"
 _PKG = Path(__file__).resolve().parent
@@ -109,3 +115,41 @@ def zapisz_json(nazwa: str, obiekt, katalog: Path | None = None) -> Path:
 
 def wczytaj_json(nazwa: str, katalog: Path | None = None):
     return json.loads(_plik_odczyt(nazwa, katalog).read_text())
+
+
+def _kroki_z_json(surowe: list[dict]) -> list[Krok]:
+    return [
+        Krok(k["wiek_lat"], k["token"], [tuple(x) for x in k["kandydaci"]], k.get("p"))
+        for k in surowe
+    ]
+
+
+@lru_cache(maxsize=8)
+def kroki_wbudowane(klucz: str) -> list[Krok] | None:
+    """Domyślny ślad astmy w paczce — panel działa bez plików w delphi/pamiec/."""
+    nazwa = _WBUDOWANE_SLADY.get(klucz)
+    if not nazwa:
+        return None
+    # pakiet (wheel / editable) → plik w delphi_demo/wzorce_wyniki/
+    for baza in (
+        lambda: resources.files("delphi_demo.wzorce_wyniki").joinpath(nazwa),
+        lambda: _PKG / "wzorce_wyniki" / nazwa,
+        lambda: KATALOG_WZORCOW / nazwa,
+    ):
+        try:
+            sciezka = baza()
+            tekst = sciezka.read_text(encoding="utf-8") if hasattr(sciezka, "read_text") else Path(sciezka).read_text()
+            return _kroki_z_json(json.loads(tekst))
+        except (FileNotFoundError, OSError, json.JSONDecodeError, TypeError, AttributeError):
+            continue
+    return None
+
+
+def wczytaj_kroki_lub_wbudowane(klucz: str) -> list[Krok] | None:
+    """Dysk (przygotuj_demo) albo ślad w paczce."""
+    try:
+        if jest(klucz):
+            return wczytaj_kroki(klucz)
+    except FileNotFoundError:
+        pass
+    return kroki_wbudowane(klucz)

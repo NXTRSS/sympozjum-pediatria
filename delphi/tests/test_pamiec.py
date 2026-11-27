@@ -28,6 +28,12 @@ def test_wczytaj_kroki_z_prefiksem_slad_lub_bez(tmp_path):
     assert pamiec.wczytaj_kroki("astma_od_dziecka", tmp_path) == kroki
 
 
+def test_kroki_wbudowane_astma():
+    kroki = pamiec.kroki_wbudowane("astma_od_dziecka")
+    assert kroki and len(kroki) >= 8
+    assert pamiec.wczytaj_kroki_lub_wbudowane("astma_od_dziecka") == kroki
+
+
 def test_zsynchronizuj_wzorce(tmp_path, monkeypatch):
     zrodlo = tmp_path / "wzorce"
     zrodlo.mkdir()
