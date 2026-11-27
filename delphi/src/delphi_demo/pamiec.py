@@ -13,7 +13,12 @@ from delphi_demo import zasoby
 from delphi_demo.prognoza import Krok
 
 KATALOG_WYNIKOW = zasoby.KATALOG_PAMIECI / "wyniki"
-KATALOG_WZORCOW = zasoby.KATALOG_DELPHI / "wzorce_wyniki"
+_PKG = Path(__file__).resolve().parent
+KATALOG_WZORCOW = (
+    _PKG / "wzorce_wyniki"
+    if (_PKG / "wzorce_wyniki").is_dir()
+    else zasoby.KATALOG_DELPHI / "wzorce_wyniki"
+)
 
 
 def _plik_zapis(nazwa: str, katalog: Path | None) -> Path:
@@ -43,6 +48,13 @@ def zsynchronizuj_wzorce(katalog: Path | None = None) -> list[Path]:
     kat.mkdir(parents=True, exist_ok=True)
     skopiowane: list[Path] = []
     if not KATALOG_WZORCOW.is_dir():
+        import warnings
+
+        warnings.warn(
+            f"Brak katalogu wzorców pamięci: {KATALOG_WZORCOW}. "
+            f"Oczekiwany plik śladu: {kat / 'slad_astma_od_dziecka.json'}",
+            stacklevel=2,
+        )
         return skopiowane
     for zrodlo in sorted(KATALOG_WZORCOW.glob("*.json")):
         cel = kat / zrodlo.name

@@ -1,5 +1,8 @@
 zewnetrzne/
-pamiec/
+pamiec/*
+!pamiec/wyniki/
+pamiec/wyniki/*
+!pamiec/wyniki/slad_astma_od_dziecka.json
 dane/*
 !dane/icd10_pl.csv
 .venv/

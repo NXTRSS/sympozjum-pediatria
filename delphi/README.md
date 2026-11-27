@@ -18,7 +18,10 @@ uv run python scripts/przygotuj_demo.py      # z internetem; ok. 20 min na M1 Pr
 uv run jupyter notebook notebook/delphi_2m.ipynb
 ```
 
-Po **`git pull`**: w katalogu `delphi` uruchom `uv sync`, **zrestartuj kernel** Jupytera (stary kod zostaje w pamięci), potem **Run All** od komórki konfiguracji. Lekki ślad astmy (`wzorce_wyniki/`) kopiuje się automatycznie do `pamiec/wyniki/` — pełne krzywe i model nadal wymagają `przygotuj_demo.py`.
+Po **`git pull`**: w repozytorium jest gotowy plik  
+`delphi/pamiec/wyniki/slad_astma_od_dziecka.json` (nie szukaj `astma_od_dziecka.json` bez prefiksu `slad_`).  
+Potem `cd delphi && uv sync`, **restart kernela**, Run All od konfiguracji. Awaryjnie:  
+`uv run python scripts/ustaw_pamiec_wzorce.py`.
 
 Po przygotowaniu notebook działa **bez internetu**. Tryb `TRYB = "z_pamieci"` (domyślny) czyta krzywe ryzyka policzone wcześniej. `"na_zywo"` losuje je na sali (N=100: 3,6 s na pacjenta, a komórka notebooka licząca dwóch pacjentów 7,7 s; N=200: 6–11 s zależnie od obciążenia). Przed prelekcją wyłącz Wi-Fi i uruchom notebook od początku do końca, żeby upewnić się, że niczego nie brakuje.
 

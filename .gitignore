@@ -19,6 +19,9 @@ usg/zewnetrzne/
 usg/dane/
 usg/pamiec/
 delphi/zewnetrzne/
-delphi/pamiec/
+delphi/pamiec/*
+!delphi/pamiec/wyniki/
+delphi/pamiec/wyniki/*
+!delphi/pamiec/wyniki/slad_astma_od_dziecka.json
 delphi/dane/*
 !delphi/dane/icd10_pl.csv
