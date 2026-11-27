@@ -62,6 +62,11 @@ def zsynchronizuj_wzorce(katalog: Path | None = None) -> list[Path]:
             continue
         shutil.copy2(zrodlo, cel)
         skopiowane.append(cel)
+        if zrodlo.name.startswith("slad_") and zrodlo.suffix == ".json":
+            legacy = kat / f"{zrodlo.stem.removeprefix('slad_')}.json"
+            if not legacy.exists():
+                shutil.copy2(zrodlo, legacy)
+                skopiowane.append(legacy)
     return skopiowane
 
 

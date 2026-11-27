@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable
 
-from delphi_demo import pamiec
+from delphi_demo import pamiec, wzorce_sladu
 from delphi_demo.slownik import Slownik
 from delphi_demo.wyszukiwarka import dopisz, opis_historii, szukaj
 
@@ -136,18 +136,23 @@ def panel_generowania(
 
     pamiec.zsynchronizuj_wzorce()
 
+    def _kroki_zapisane(klucz: str):
+        """Ślad z przygotuj_demo na dysku, albo wbudowany w paczkę (bez pliku pod pamiec/)."""
+        try:
+            if pamiec.jest(klucz):
+                return pamiec.wczytaj_kroki(klucz)
+        except FileNotFoundError:
+            pass
+        return wzorce_sladu.dla_klucza(klucz)
+
     def _wykonaj():
         h, pl, wiek, zi, temp, maks, ile = _parametry()
         if (
             tryb == "z_pamieci"
             and klucz_pamieci
             and _domyslne_dopasowanie(domyslny, h, pl, wiek, zi, temp, maks)
-            and pamiec.jest(klucz_pamieci)
         ):
-            try:
-                kroki = pamiec.wczytaj_kroki(klucz_pamieci)
-            except FileNotFoundError:
-                kroki = None
+            kroki = _kroki_zapisane(klucz_pamieci)
             if kroki is not None:
                 return pokaz(
                     h, pl, wiek, zi, temp, maks, ile,

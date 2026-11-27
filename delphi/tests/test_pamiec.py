@@ -36,7 +36,7 @@ def test_zsynchronizuj_wzorce(tmp_path, monkeypatch):
     monkeypatch.setattr(pamiec, "KATALOG_WZORCOW", zrodlo)
     monkeypatch.setattr(pamiec, "KATALOG_WYNIKOW", cel)
     skopiowane = pamiec.zsynchronizuj_wzorce()
-    assert len(skopiowane) == 1
+    assert len(skopiowane) == 2  # slad_* + legacy astma_od_dziecka.json
     assert pamiec.jest("astma_od_dziecka")
 
 
