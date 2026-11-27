@@ -1,0 +1,9 @@
+{
+  "tag": "colab-demo-2026-11-27",
+  "base_url": "https://github.com/NXTRSS/sympozjum-pediatria/releases/download/colab-demo-2026-11-27/",
+  "delphi_pamiec": {
+    "plik": "delphi-pamiec-colab.tar.gz",
+    "url": "https://github.com/NXTRSS/sympozjum-pediatria/releases/download/colab-demo-2026-11-27/delphi-pamiec-colab.tar.gz",
+    "sha256": "86cd6b76a2579c2b9ffd2699d343ea7976b9b8cf46299edcb523b2fa387efedb"
+  }
+}
