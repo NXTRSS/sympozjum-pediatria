@@ -621,7 +621,8 @@ def opis_sekcji_fuvai(klatki: fuvai.WynikKlatekFUVAI, n_klatek: int, i: int) -> 
     dl = sekcja.dlugosc
     return (
         f"<b>Sekcja: {nazwa}</b> · klatki {sekcja.start}–{sekcja.koniec} "
-        f"({dl} {odmiana(dl, 'klatka', 'klatki', 'klatek')}) · podgląd klatka {i}"
+        f"({dl} {odmiana(dl, 'klatka', 'klatki', 'klatek')}) · "
+        f"podgląd: klatka {i} (max p({nazwa}) w sekcji)"
     )
 
 

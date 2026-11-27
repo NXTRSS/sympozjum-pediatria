@@ -371,6 +371,17 @@ class SekcjaFUVAI:
         return self.koniec - self.start + 1
 
 
+def reprezentant_sekcji(klatki: WynikKlatekFUVAI, n_klatek: int, sekcja: SekcjaFUVAI) -> int:
+    """Klatka w sekcji z najwyższym p(dominująca klasa) — nie środek zakresu."""
+    p = p_klas_gestego(klatki, n_klatek)
+    a, b = int(sekcja.start), int(sekcja.koniec)
+    klasa = int(sekcja.klasa)
+    wycinek = p[a : b + 1, klasa]
+    if wycinek.size == 0:
+        return sekcja.srodek
+    return a + int(wycinek.argmax())
+
+
 def sekcje_argmax(klatki: WynikKlatekFUVAI, n_klatek: int) -> list[SekcjaFUVAI]:
     n_klatek = int(n_klatek)
     if n_klatek <= 0:
@@ -416,19 +427,19 @@ def nastepna_sekcja(
     filtr_klasy: int,
     krok: int = 1,
 ) -> int:
-    """Przeskok do środka poprzedniej / następnej sekcji (zamiast klatka po klatce)."""
+    """Przeskok do klatki z max p w poprzedniej / następnej sekcji."""
     sekcje = sekcje_filtrowane(klatki, n_klatek, filtr_klasy)
     if not sekcje:
         return int(np.clip(i, 0, max(n_klatek - 1, 0)))
     pos = indeks_sekcji(sekcje, i)
     pos = (pos + int(krok)) % len(sekcje)
-    return sekcje[pos].srodek
+    return reprezentant_sekcji(klatki, n_klatek, sekcje[pos])
 
 
 def pierwsza_sekcja(klatki: WynikKlatekFUVAI, n_klatek: int, filtr_klasy: int) -> int:
     sekcje = sekcje_filtrowane(klatki, n_klatek, filtr_klasy)
     if sekcje:
-        return sekcje[0].srodek
+        return reprezentant_sekcji(klatki, n_klatek, sekcje[0])
     return min(n_klatek // 2, max(n_klatek - 1, 0))
 
 

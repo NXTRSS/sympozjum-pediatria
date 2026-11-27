@@ -20,9 +20,9 @@ def test_sekcje_argmax_i_nawigacja():
         [
             [1, 0, 0, 0],
             [1, 0, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
+            [0, 0.3, 0, 0],
+            [0, 0.9, 0, 0],
+            [0, 0.5, 0, 0],
             [0, 0, 0, 1],
         ],
         dtype=np.float32,
@@ -30,6 +30,13 @@ def test_sekcje_argmax_i_nawigacja():
     k = fuvai.WynikKlatekFUVAI(np.arange(6), p, None, 0.0)
     sekcje = fuvai.sekcje_argmax(k, 6)
     assert [(s.start, s.koniec, s.klasa) for s in sekcje] == [(0, 1, 0), (2, 4, 1), (5, 5, 3)]
+    assert fuvai.reprezentant_sekcji(k, 6, sekcje[1]) == 3
+    p2 = np.zeros((5, 4), np.float32)
+    p2[:, 3] = 0.2
+    p2[0:5, 1] = [0.9, 0.2, 0.3, 0.2, 0.1]
+    k2 = fuvai.WynikKlatekFUVAI(np.arange(5), p2, None, 0.0)
+    s = fuvai.SekcjaFUVAI(0, 4, 1)
+    assert s.srodek == 2 and fuvai.reprezentant_sekcji(k2, 5, s) == 0
     assert fuvai.nastepna_sekcja(k, 6, 0, -1, krok=1) == 3
     assert fuvai.nastepna_sekcja(k, 6, 3, 1, krok=1) == 3  # jedna sekcja „brzuch” — zawija
     assert fuvai.nastepna_sekcja(k, 6, 3, -1, krok=1) == 5

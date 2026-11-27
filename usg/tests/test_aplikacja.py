@@ -131,9 +131,9 @@ def test_fuvai_statystyki_nawigacja_i_ramka(app):
     idxs = fuvai.indeksy_klasy(k, n, filtr)
     sekcje_brzuch = fuvai.sekcje_filtrowane(k, n, filtr)
     if len(sekcje_brzuch) > 1:
-        i0 = sekcje_brzuch[0].srodek
+        i0 = fuvai.reprezentant_sekcji(k, n, sekcje_brzuch[0])
         i1 = A.nastepna_klatka_w_filtrze(k, n, i0, filtr, krok=1)
-        assert i1 == sekcje_brzuch[1].srodek
+        assert i1 == fuvai.reprezentant_sekcji(k, n, sekcje_brzuch[1])
     maska = np.zeros((40, 50), np.uint8)
     maska[10:30, 15:35] = 1
     rect = A.prostokat_maski(maska)
