@@ -1,7 +1,7 @@
-"""Google Colab: zależności bez `pip install -e` (Python 3.12/3.13) + pierwsze przygotowanie demo.
+"""Google Colab: zależności bez `pip install -e` + pobranie wycinka z GitHub Release.
 
-Wagi, klonowane repozytoria i wyniki w `pamiec/` nie są w GitHubie — skrypt `przygotuj_demo.py`
-pobiera je z publicznych źródeł. Domyślnie tylko 128-klatkowy wycinek (bez pełnego Zenodo).
+Domyślnie **nie** uruchamiamy `przygotuj_demo.py` (wagi ~700 MB, liczenie na GPU).
+Wymuszenie lokalnego przygotowania: `USG_COLAB_FORCE_PREP=1`.
 """
 from __future__ import annotations
 
@@ -12,6 +12,25 @@ import sys
 import types
 import urllib.request
 from pathlib import Path
+
+# Ten sam case co w dane.pobierz_przypadek_startowy / paczka usg-startowy-colab.tar.gz
+WYCINEK_NAZWA = "04a04f2e-840b-47f8-a907-abe7aeab3f41_1_0000"
+
+PARY_LEKKIE = (
+    ("pandas", "pandas>=2.0"),
+    ("matplotlib", "matplotlib>=3.8"),
+    ("ipywidgets", "ipywidgets>=8"),
+    ("SimpleITK", "SimpleITK>=2.3"),
+    ("numpy", "numpy<2"),
+)
+
+PARY_CIEZKIE = (
+    ("torch", "torch>=2.2"),
+    ("cv2", "opencv-python-headless>=4.8"),
+    ("remotezip", "remotezip>=0.12"),
+    ("einops", "einops>=0.7"),
+    ("nnunetv2", "nnunetv2==2.2.1"),
+)
 
 
 def _pobierz_z_release(katalog_usg: Path) -> bool:
@@ -29,7 +48,7 @@ def _pobierz_z_release(katalog_usg: Path) -> bool:
             exec(kod, mod.__dict__)  # noqa: S102
             return bool(mod.pobierz_usg_startowy(katalog_usg))
         except OSError as exc:
-            print(f"Colab USG: Release niedostępny ({exc}) — fallback do pełnego przygotowania.")
+            print(f"Colab USG: nie udało się pobrać Release ({exc}).")
             return False
     spec = importlib.util.spec_from_file_location("colab_pobierz_release", plik)
     mod = importlib.util.module_from_spec(spec)
@@ -37,28 +56,13 @@ def _pobierz_z_release(katalog_usg: Path) -> bool:
     spec.loader.exec_module(mod)
     return bool(mod.pobierz_usg_startowy(katalog_usg))
 
-PARY = (
-    ("torch", "torch>=2.2"),
-    ("cv2", "opencv-python-headless>=4.8"),
-    ("SimpleITK", "SimpleITK>=2.3"),
-    ("remotezip", "remotezip>=0.12"),
-    ("einops", "einops>=0.7"),
-    ("pandas", "pandas>=2.0"),
-    ("matplotlib", "matplotlib>=3.8"),
-    ("ipywidgets", "ipywidgets>=8"),
-    ("nnunetv2", "nnunetv2==2.2.1"),
-)
 
-
-def _zainstaluj_zaleznosci() -> None:
-    brakuje = [pip for mod, pip in PARY if importlib.util.find_spec(mod) is None]
+def _zainstaluj(pipy: tuple[tuple[str, str], ...]) -> None:
+    brakuje = [pip for mod, pip in pipy if importlib.util.find_spec(mod) is None]
     if not brakuje:
-        print("Colab USG: PyTorch, nnU-Net i SimpleITK są już w kernelu — pomijam pip.")
         return
     print(f"Colab USG: doinstalowuję {', '.join(brakuje)}…")
-    subprocess.check_call(
-        [sys.executable, "-m", "pip", "install", "-q", *brakuje],
-    )
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", *brakuje])
 
 
 def _ustaw_nnunet(pamiec: Path) -> None:
@@ -67,23 +71,29 @@ def _ustaw_nnunet(pamiec: Path) -> None:
     os.environ.setdefault("nnUNet_n_proc_DA", "12")
 
 
-def _ma_wyniki_wycinka(katalog_usg: Path) -> bool:
-    from usg_masa import dane, segmentacja as seg
-
+def _gotowy_wycinek(katalog_usg: Path) -> bool:
+    """Pamiec + .mha z Release — bez klonowania baseline."""
     pamiec = katalog_usg / "pamiec"
-    try:
-        start = dane.pobierz_przypadek_startowy()
-    except Exception:
-        return False
-    if not start.is_file():
-        return False
-    nazwa = start.name.removesuffix(".mha")
-    pliki = (
-        pamiec / f"{nazwa}.npz",
-        pamiec / f"{nazwa}_fuvai.npz",
-        pamiec / f"{nazwa}_sano.json",
+    mha_colab = katalog_usg / "dane" / "colab" / f"{WYCINEK_NAZWA}.mha"
+    if mha_colab.is_file():
+        os.environ.setdefault("USG_COLAB_STARTOWY", str(mha_colab.resolve()))
+    wymagane = (
+        pamiec / f"{WYCINEK_NAZWA}.npz",
+        pamiec / f"{WYCINEK_NAZWA}_fuvai.npz",
+        pamiec / f"{WYCINEK_NAZWA}_sano.json",
     )
-    return all(p.is_file() for p in pliki)
+    if not all(p.is_file() for p in wymagane):
+        return False
+    if not os.environ.get("USG_COLAB_STARTOWY"):
+        try:
+            from usg_masa import dane
+
+            start = dane.pobierz_przypadek_startowy()
+            if start.is_file():
+                os.environ.setdefault("USG_COLAB_STARTOWY", str(start.resolve()))
+        except Exception:
+            return False
+    return Path(os.environ["USG_COLAB_STARTOWY"]).is_file()
 
 
 def uruchom_jesli_potrzeba(katalog_usg: Path) -> None:
@@ -93,24 +103,34 @@ def uruchom_jesli_potrzeba(katalog_usg: Path) -> None:
         sys.path.insert(0, str(src))
     os.environ.setdefault("USG_COLAB", "1")
     _ustaw_nnunet(katalog_usg / "pamiec")
-    _zainstaluj_zaleznosci()
 
-    if _ma_wyniki_wycinka(katalog_usg):
-        print("Colab USG: wyniki dla wycinka startowego są w pamiec/ — pomijam przygotowanie.")
+    if _gotowy_wycinek(katalog_usg):
+        _zainstaluj(PARY_LEKKIE)
+        print("Colab USG: wycinek i wyniki gotowe (tryb z_pamieci, NR_NAGRANIA=0).")
         return
 
     if os.environ.get("USG_COLAB_SKIP_RELEASE", "").lower() not in ("1", "true"):
-        try:
-            if _pobierz_z_release(katalog_usg) and _ma_wyniki_wycinka(katalog_usg):
-                return
-        except Exception as exc:  # noqa: BLE001
-            print(f"Colab USG: Release nieudane ({exc}) — fallback do przygotuj_demo.")
+        _pobierz_z_release(katalog_usg)
 
+    if _gotowy_wycinek(katalog_usg):
+        _zainstaluj(PARY_LEKKIE)
+        print("Colab USG: wycinek i wyniki gotowe (tryb z_pamieci, NR_NAGRANIA=0).")
+        return
+
+    if os.environ.get("USG_COLAB_FORCE_PREP", "").lower() not in ("1", "true"):
+        raise RuntimeError(
+            "Colab USG: brak paczki z GitHub Release "
+            "(https://github.com/NXTRSS/sympozjum-pediatria/releases/tag/colab-demo-2026-11-27). "
+            "Sprawdź internet i uruchom pierwszą komórkę ponownie. "
+            "Pełne przygotowanie lokalnie: USG_COLAB_FORCE_PREP=1 (wolne, ~700 MB wag)."
+        )
+
+    _zainstaluj(PARY_LEKKIE + PARY_CIEZKIE)
     ile = int(os.environ.get("USG_COLAB_ILE_ZENODO", "0"))
     co_ktora = int(os.environ.get("USG_COLAB_CO_KTORA", "2"))
     print(
-        f"Colab USG: pobieram wagi i liczę wyniki "
-        f"(nagrania z Zenodo: {ile}; pierwszy raz ok. 15–25 min z GPU, głównie pobieranie ~700 MB)."
+        f"Colab USG (FORCE_PREP): przygotowanie z wagami "
+        f"(Zenodo: {ile}; może potrwać długo)."
     )
     skrypt = katalog_usg / "scripts" / "przygotuj_demo.py"
     env = {**os.environ, "PYTHONPATH": str(src)}
@@ -126,4 +146,4 @@ def uruchom_jesli_potrzeba(katalog_usg: Path) -> None:
         cwd=str(katalog_usg),
         env=env,
     )
-    print("Colab USG: gotowe — ustaw NR_NAGRANIA=0 dla wycinka albo 1+ po pobraniu z Zenodo.")
+    print("Colab USG: gotowe — NR_NAGRANIA=0 dla wycinka.")
