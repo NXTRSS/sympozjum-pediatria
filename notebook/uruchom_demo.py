@@ -52,6 +52,8 @@ def main() -> None:
     parser.add_argument("--sprawdz", action="store_true", help="trening, cache i zgodność wag/nazw")
     parser.add_argument("--trenuj", action="store_true", help="wymuś trening od zera (nadpisuje cache)")
     parser.add_argument("--bez-linku", action="store_true", help="Gradio tylko lokalnie (share=False)")
+    parser.add_argument("--bez-limitu", action="store_true", help="wyłącza limit 20 zapytań/min na klienta")
+    parser.add_argument("--bez-monitora", action="store_true", help="nie otwiera okna Terminala z monitor.py")
     args = parser.parse_args()
     if args.sprawdz:
         sprawdz()
@@ -66,6 +68,8 @@ def main() -> None:
         wynik["znane"],
         temperatura=TEMPERATURA,
         share=not args.bez_linku,
+        limit_klienta=not args.bez_limitu,
+        uruchom_monitor=not args.bez_monitora,
     )
 
 

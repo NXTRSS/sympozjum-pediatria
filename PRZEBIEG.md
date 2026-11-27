@@ -15,6 +15,8 @@ Checklist na druk. **Strona PPTX** ≈ numer slajdu w decku + 14 (wyjątek: slaj
 
 - [ ] `caffeinate -dis`, zasilanie, Wi‑Fi
 - [ ] `uv run python notebook/uruchom_demo.py` — **tylko skrypt**, nie Gradio z notebooka (drugi start: trening z cache, szybciej)
+- [ ] Na Macu po starcie otwiera się **monitor** (`notebook/monitor.py`); ręcznie: `uv run python notebook/monitor.py` (flaga `--bez-monitora`)
+- [ ] Zapytania w `notebook/logi/zapytania_*.jsonl` (gitignore); alarm DDOS w monitorze przy >60/min lub >20/min/klient
 - [ ] `uv run python notebook/uruchom_demo.py --bez-linku` gdy antywirus blokuje tunel Gradio (CrowdStrike / frpc)
 - [ ] Link `gradio.live` **albo** plan B: QR Colab (**str. 26**) + laptop DIL / podgląd lokalny na ekranie
 - [ ] Test QR (**str. 26**) + laptop DIL

@@ -258,6 +258,40 @@ def przebieg(
     return _przebieg_trenuj(ziarno, epoki, temperatura)
 
 
+def _zapisz_stan_demo(glebokosc: int, odrzucone_kolejka: int) -> None:
+    import json
+
+    from zapytania_log import KATALOG_LOGI
+
+    KATALOG_LOGI.mkdir(parents=True, exist_ok=True)
+    path = KATALOG_LOGI / "stan_demo.json"
+    path.write_text(
+        json.dumps({"glebokosc_kolejki": glebokosc, "odrzucone_kolejka": odrzucone_kolejka}),
+        encoding="utf-8",
+    )
+
+
+def _otworz_monitor_w_terminalu() -> None:
+    import platform
+    import subprocess
+
+    repo = KORZEN.resolve()
+    polecenie = f"cd {repo} && uv run python notebook/monitor.py"
+    if platform.system() != "Darwin":
+        print(f"Monitor (ręcznie): {polecenie}", flush=True)
+        return
+    skrypt = f'tell application "Terminal" to do script "{polecenie}"'
+    try:
+        subprocess.run(["osascript", "-e", skrypt], check=True, timeout=15)
+        print("Uruchomiono monitor w nowym oknie Terminala.", flush=True)
+    except Exception:
+        print(
+            "Nie udało się otworzyć Terminala (osascript). Uruchom monitor ręcznie:\n"
+            f"  {polecenie}",
+            flush=True,
+        )
+
+
 def uruchom_aplikacje(
     model,
     tokenizer,
@@ -265,57 +299,118 @@ def uruchom_aplikacje(
     temperatura: float = TEMPERATURA,
     zbior: str = "choroby",
     share: bool = True,
+    *,
+    limit_klienta: bool = True,
+    uruchom_monitor: bool = True,
 ):
+    import json
+    import threading
     import time
-    from collections import defaultdict, deque
 
     import gradio as gr
+
+    from ochrona_klienta import LimitKlienta
+    from zapytania_log import skrot_klienta, zapisz_zdarzenie
 
     maks_nazw = 6
     maks_krokow = 30
     temp_min, temp_max = 0.2, 1.5
-    okno_s = 60.0
-    limit_sesji = 8
-    limit_ip = 20
-    licznik = {"ok": 0, "odrzut": 0}
-    okna: dict[str, deque] = defaultdict(deque)
-
-    def wpusc(klucz: str, limit: int) -> bool:
-        teraz = time.monotonic()
-        kolejka = okna[klucz]
-        while kolejka and teraz - kolejka[0] > okno_s:
-            kolejka.popleft()
-        if len(kolejka) >= limit:
-            return False
-        kolejka.append(teraz)
-        return True
+    max_kolejki = 50
+    licznik = {"ok": 0, "odrzut": 0, "odrzucone_kolejka": 0}
+    limiter = LimitKlienta(limit=20) if limit_klienta else None
+    w_trakcie = {"n": 0}
+    blokada = threading.Lock()
 
     def app_generuj(ile, temp, request: gr.Request):
-        klient = getattr(request, "client", None)
-        ip = getattr(klient, "host", None) or "brak-ip"
+        start = time.perf_counter()
+        klient_obj = getattr(request, "client", None)
+        ip = getattr(klient_obj, "host", None) or "brak-ip"
         sesja = getattr(request, "session_hash", None) or ip
-        if not wpusc("s:" + str(sesja), limit_sesji) or not wpusc("i:" + str(ip), limit_ip):
-            licznik["odrzut"] += 1
-            print(f"[demo] odrzut  ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
-            return "Za dużo próśb z tej przeglądarki. Odczekaj minutę i spróbuj jeszcze raz."
+        skrot = skrot_klienta(str(ip), str(sesja))
+
+        with blokada:
+            if w_trakcie["n"] >= max_kolejki:
+                licznik["odrzucone_kolejka"] += 1
+                _zapisz_stan_demo(w_trakcie["n"], licznik["odrzucone_kolejka"])
+                zapisz_zdarzenie(
+                    klient=skrot,
+                    ile_nazw=None,
+                    temperatura=None,
+                    czas_odp_ms=(time.perf_counter() - start) * 1000,
+                    wynik=None,
+                    odrzucone=True,
+                    powod="kolejka",
+                )
+                return "Serwer jest przeciążony — spróbuj za chwilę."
+            w_trakcie["n"] += 1
+            _zapisz_stan_demo(w_trakcie["n"], licznik["odrzucone_kolejka"])
+
         try:
-            ile_i = int(ile)
-            temp_f = float(temp)
-        except (TypeError, ValueError):
-            licznik["odrzut"] += 1
-            return "Nieprawidłowe ustawienia."
-        if not 1 <= ile_i <= maks_nazw or not temp_min <= temp_f <= temp_max:
-            licznik["odrzut"] += 1
-            print(f"[demo] odrzut  ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
-            return f"Dozwolone: 1–{maks_nazw} nazw, temperatura {temp_min}–{temp_max}."
-        wyniki = []
-        for _ in range(ile_i):
-            nazwa, _ = generuj(model, tokenizer, temperatura=temp_f, maks_krokow=maks_krokow)
-            znacznik = "  (istnieje w zbiorze)" if nazwa in znane else ""
-            wyniki.append(f"• {nazwa}{znacznik}")
-        licznik["ok"] += 1
-        print(f"[demo] ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
-        return "\n".join(wyniki)
+            if limiter is not None and not limiter.wpusc(skrot, time.monotonic()):
+                licznik["odrzut"] += 1
+                msg = "Za dużo próśb (max 20/min) — odczekaj minutę."
+                zapisz_zdarzenie(
+                    klient=skrot,
+                    ile_nazw=int(ile) if str(ile).isdigit() else None,
+                    temperatura=float(temp) if str(temp).replace(".", "", 1).isdigit() else None,
+                    czas_odp_ms=(time.perf_counter() - start) * 1000,
+                    wynik=msg,
+                    odrzucone=True,
+                    powod="limit_klienta",
+                )
+                print(f"[demo] odrzut limit  ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
+                return msg
+            try:
+                ile_i = int(ile)
+                temp_f = float(temp)
+            except (TypeError, ValueError):
+                licznik["odrzut"] += 1
+                msg = "Nieprawidłowe ustawienia."
+                zapisz_zdarzenie(
+                    klient=skrot,
+                    ile_nazw=None,
+                    temperatura=None,
+                    czas_odp_ms=(time.perf_counter() - start) * 1000,
+                    wynik=msg,
+                    odrzucone=True,
+                    powod="walidacja",
+                )
+                return msg
+            if not 1 <= ile_i <= maks_nazw or not temp_min <= temp_f <= temp_max:
+                licznik["odrzut"] += 1
+                msg = f"Dozwolone: 1–{maks_nazw} nazw, temperatura {temp_min}–{temp_max}."
+                zapisz_zdarzenie(
+                    klient=skrot,
+                    ile_nazw=ile_i,
+                    temperatura=temp_f,
+                    czas_odp_ms=(time.perf_counter() - start) * 1000,
+                    wynik=msg,
+                    odrzucone=True,
+                    powod="walidacja",
+                )
+                print(f"[demo] odrzut  ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
+                return msg
+            wyniki = []
+            for _ in range(ile_i):
+                nazwa, _ = generuj(model, tokenizer, temperatura=temp_f, maks_krokow=maks_krokow)
+                znacznik = "  (istnieje w zbiorze)" if nazwa in znane else ""
+                wyniki.append(f"• {nazwa}{znacznik}")
+            wynik_txt = "\n".join(wyniki)
+            licznik["ok"] += 1
+            zapisz_zdarzenie(
+                klient=skrot,
+                ile_nazw=ile_i,
+                temperatura=temp_f,
+                czas_odp_ms=(time.perf_counter() - start) * 1000,
+                wynik=wynik_txt,
+                odrzucone=False,
+            )
+            print(f"[demo] ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
+            return wynik_txt
+        finally:
+            with blokada:
+                w_trakcie["n"] = max(0, w_trakcie["n"] - 1)
+                _zapisz_stan_demo(w_trakcie["n"], licznik["odrzucone_kolejka"])
 
     demo = gr.Interface(
         fn=app_generuj,
@@ -328,7 +423,7 @@ def uruchom_aplikacje(
         description="Mały model językowy (GRU) wytrenowany na żywo podczas prelekcji. "
         "Ten sam mechanizm co w ChatGPT — tylko ok. 10 milionów razy mniejszy (ok. 80 tys. parametrów).",
     )
-    demo.queue(default_concurrency_limit=3, max_size=50, api_open=False)
+    demo.queue(default_concurrency_limit=3, max_size=max_kolejki, api_open=False)
     if share:
         print("\nUruchamiam aplikację. Publiczny link gradio.live pojawi się poniżej.", flush=True)
     else:
@@ -363,4 +458,6 @@ def uruchom_aplikacje(
         print(f"Aplikacja lokalna: {lokalny or '(adres w oknie Gradio)'}. Sala: QR do Colaba / ekran.")
     print("Ctrl+C = serwer się zatrzymuje.")
     print("=" * 64 + "\n", flush=True)
+    if uruchom_monitor:
+        _otworz_monitor_w_terminalu()
     demo.block_thread()
