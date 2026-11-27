@@ -30,3 +30,4 @@ delphi/dane/*
 notebook/.model_cache/
 notebook/logi/
 **/.gradio/
+dist/

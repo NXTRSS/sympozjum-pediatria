@@ -9,7 +9,33 @@ import importlib.util
 import os
 import subprocess
 import sys
+import types
+import urllib.request
 from pathlib import Path
+
+
+def _pobierz_z_release(katalog_usg: Path) -> bool:
+    korzen = katalog_usg.parent
+    plik = korzen / "notebook" / "colab_pobierz_release.py"
+    if not plik.is_file():
+        try:
+            with urllib.request.urlopen(
+                "https://raw.githubusercontent.com/NXTRSS/sympozjum-pediatria/main/"
+                "notebook/colab_pobierz_release.py",
+                timeout=60,
+            ) as resp:
+                kod = resp.read().decode()
+            mod = types.ModuleType("colab_pobierz_release")
+            exec(kod, mod.__dict__)  # noqa: S102
+            return bool(mod.pobierz_usg_startowy(katalog_usg))
+        except OSError as exc:
+            print(f"Colab USG: Release niedostępny ({exc}) — fallback do pełnego przygotowania.")
+            return False
+    spec = importlib.util.spec_from_file_location("colab_pobierz_release", plik)
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    return bool(mod.pobierz_usg_startowy(katalog_usg))
 
 PARY = (
     ("torch", "torch>=2.2"),
@@ -72,6 +98,13 @@ def uruchom_jesli_potrzeba(katalog_usg: Path) -> None:
     if _ma_wyniki_wycinka(katalog_usg):
         print("Colab USG: wyniki dla wycinka startowego są w pamiec/ — pomijam przygotowanie.")
         return
+
+    if os.environ.get("USG_COLAB_SKIP_RELEASE", "").lower() not in ("1", "true"):
+        try:
+            if _pobierz_z_release(katalog_usg) and _ma_wyniki_wycinka(katalog_usg):
+                return
+        except Exception as exc:  # noqa: BLE001
+            print(f"Colab USG: Release nieudane ({exc}) — fallback do przygotuj_demo.")
 
     ile = int(os.environ.get("USG_COLAB_ILE_ZENODO", "0"))
     co_ktora = int(os.environ.get("USG_COLAB_CO_KTORA", "2"))

@@ -5,12 +5,39 @@ Lokalnie robi to scripts/przygotuj_demo.py; w Colabie woła bootstrap przez cola
 """
 from __future__ import annotations
 
+import importlib.util
 import os
 import subprocess
 import sys
+import types
+import urllib.request
 from pathlib import Path
 
 from delphi_demo import pamiec, trening, zasoby
+
+
+def _pobierz_z_release(katalog_delphi: Path) -> bool:
+    korzen = katalog_delphi.parent
+    plik = korzen / "notebook" / "colab_pobierz_release.py"
+    if not plik.is_file():
+        try:
+            with urllib.request.urlopen(
+                "https://raw.githubusercontent.com/NXTRSS/sympozjum-pediatria/main/"
+                "notebook/colab_pobierz_release.py",
+                timeout=60,
+            ) as resp:
+                kod = resp.read().decode()
+            mod = types.ModuleType("colab_pobierz_release")
+            exec(kod, mod.__dict__)  # noqa: S102
+            return bool(mod.pobierz_delphi_pamiec(katalog_delphi))
+        except OSError as exc:
+            print(f"Colab Delphi: Release niedostępny ({exc}) — fallback do treningu.")
+            return False
+    spec = importlib.util.spec_from_file_location("colab_pobierz_release", plik)
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    return bool(mod.pobierz_delphi_pamiec(katalog_delphi))
 
 
 def uruchom_jesli_potrzeba(katalog_delphi: Path) -> None:
@@ -32,6 +59,13 @@ def uruchom_jesli_potrzeba(katalog_delphi: Path) -> None:
     if trening.SCIEZKA_MODELU.exists():
         print(f"Colab Delphi: model {trening.SCIEZKA_MODELU.name} jest — pomijam trening.")
         return
+
+    if os.environ.get("DELPHI_COLAB_SKIP_RELEASE", "").lower() not in ("1", "true"):
+        try:
+            if _pobierz_z_release(katalog_delphi):
+                return
+        except Exception as exc:  # noqa: BLE001
+            print(f"Colab Delphi: Release nieudane ({exc}) — fallback do treningu.")
 
     import torch
 

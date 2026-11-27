@@ -52,6 +52,13 @@ def pobierz_przypadek_startowy() -> Path:
 
     Uwaga: to DANE ACOUSLIC-AI (CC BY-NC-SA 4.0), mimo że leżą w repo z kodem na Apache-2.0.
     """
+    import os
+
+    colab = os.environ.get("USG_COLAB_STARTOWY")
+    if colab:
+        p = Path(colab)
+        if p.is_file():
+            return p
     return zasoby.sklonuj("ACOUSLIC-AI-baseline") / _STARTOWY
 
 
