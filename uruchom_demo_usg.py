@@ -3,6 +3,7 @@
 
     uv run python uruchom_demo_usg.py
     uv run python uruchom_demo_usg.py --bez-przegladarki
+    uv run python uruchom_demo_usg.py --bez-linku
 
 To samo co:
     cd usg && uv run python app/demo_usg.py

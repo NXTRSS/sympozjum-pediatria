@@ -18,6 +18,7 @@ dependencies = [
     "remotezip>=0.12",
     "requests>=2.31",
     "gradio==6.31.0",
+    "segno>=1.6",
 ]
 
 [dependency-groups]

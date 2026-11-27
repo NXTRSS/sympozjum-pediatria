@@ -3,6 +3,7 @@
 Uruchomienie (środowisko uv w katalogu usg/, Python 3.11 + PyTorch):
     cd usg && uv sync && uv run python app/demo_usg.py
     cd usg && uv run python app/demo_usg.py --bez-przegladarki
+    cd usg && uv run python app/demo_usg.py --bez-linku
 
 Z katalogu głównego repozytorium (nie: uv run python usg/app/demo_usg.py — to bierze złe venv):
     uv run python uruchom_demo_usg.py
@@ -849,18 +850,91 @@ def zbuduj_interfejs() -> gr.Blocks:
     return demo
 
 
+def _adresy_z_launch(wynik_launch, demo) -> tuple[str, str]:
+    lokalny, link = "", ""
+    if isinstance(wynik_launch, tuple):
+        if len(wynik_launch) >= 2:
+            lokalny = (wynik_launch[1] or "").strip()
+        if len(wynik_launch) >= 3:
+            link = (wynik_launch[2] or "").strip()
+    if not lokalny:
+        lokalny = (getattr(demo, "local_url", None) or "").strip()
+    if not link:
+        link = (getattr(demo, "share_url", None) or "").strip()
+    return lokalny, link
+
+
+def _otworz_zakladke(url: str) -> None:
+    """Nowa zakładka — niezawodniejsze niż samo inbrowser Gradio."""
+    import webbrowser
+
+    def _go() -> None:
+        try:
+            webbrowser.open(url, new=2)
+        except OSError:
+            pass
+
+    threading.Timer(1.0, _go).start()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=TYTUL)
     parser.add_argument("--port", type=int, default=7860)
     parser.add_argument("--bez-przegladarki", action="store_true", help="nie otwieraj przeglądarki")
+    parser.add_argument(
+        "--bez-linku",
+        action="store_true",
+        help="tylko lokalnie (share=False); domyślnie tworzy publiczny link gradio.live",
+    )
     args = parser.parse_args()
+    share = not args.bez_linku
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s: %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)   # bez wpisu o każdym zapytaniu do 127.0.0.1
     demo = zbuduj_interfejs()
     demo.queue(default_concurrency_limit=4)   # liczenie na żywo i tak idzie po jednym (blokada MPS)
-    demo.launch(server_name="127.0.0.1", server_port=args.port, inbrowser=not args.bez_przegladarki,
-                theme=motyw(), css_paths=[STYL], js=JS_CIEMNY, footer_links=[], ssr_mode=False,
-                max_file_size="1gb", show_error=True)
+    if share:
+        print("\nUruchamiam aplikację USG. Publiczny link gradio.live pojawi się poniżej.", flush=True)
+    else:
+        print("\nUruchamiam aplikację USG lokalnie (--bez-linku).", flush=True)
+    print("Ctrl+C = serwer się zatrzymuje.\n", flush=True)
+    wynik_launch = demo.launch(
+        server_name="127.0.0.1",
+        server_port=args.port,
+        share=share,
+        inbrowser=False,
+        prevent_thread_lock=True,
+        theme=motyw(),
+        css_paths=[STYL],
+        js=JS_CIEMNY,
+        footer_links=[],
+        ssr_mode=False,
+        max_file_size="1gb",
+        show_error=True,
+    )
+    lokalny, link = _adresy_z_launch(wynik_launch, demo)
+    if not lokalny and args.port:
+        lokalny = f"http://127.0.0.1:{args.port}"
+    print("\n" + "=" * 64)
+    if share and not link:
+        print(
+            "Nie udało się utworzyć publicznego linku gradio.live "
+            "(tunel zablokowany, np. przez antywirusa firmowego). "
+            f"Aplikacja działa lokalnie: {lokalny or '(adres w oknie Gradio)'}."
+        )
+    elif share and link:
+        print("LINK DLA SALI:", link)
+    else:
+        print(f"Aplikacja lokalna: {lokalny or '(adres w oknie Gradio)'}")
+    url_qr = (link or lokalny or "").strip()
+    if url_qr.startswith("http"):
+        from qr_terminal import wypisz_qr_terminal
+
+        wypisz_qr_terminal(url_qr)
+    if not args.bez_przegladarki and lokalny.startswith("http"):
+        _otworz_zakladke(lokalny)
+    print("Ctrl+C = serwer się zatrzymuje.")
+    print("=" * 64 + "\n", flush=True)
+    demo.block_thread()
 
 
 if __name__ == "__main__":
