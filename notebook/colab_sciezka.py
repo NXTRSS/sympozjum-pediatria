@@ -97,6 +97,16 @@ def _bootstrap_delphi_w_colabie() -> None:
     uruchom_jesli_potrzeba(delphi)
 
 
+def _bootstrap_usg_w_colabie() -> None:
+    """Bez `pip install -e` (wymaga Python 3.11) i bez starego colab_bootstrap z dysku."""
+    usg = COLAB_ROOT / "usg"
+    os.chdir(usg)
+    _dopisz_sys_path(usg / "src")
+    from usg_masa.colab_przygotowanie import uruchom_jesli_potrzeba
+
+    uruchom_jesli_potrzeba(usg)
+
+
 def upewnij_srodowisko(marker_wzgledem_root: str, folder_notebooka: str) -> Path:
     """marker np. notebook/lm_utils.py; folder_notebooka np. notebook lub delphi/notebook."""
     if w_colabie():
@@ -197,6 +207,9 @@ def bootstrap(ktory: str) -> None:
     upewnij_srodowisko(marker, folder)
     if ktory == "delphi" and w_colabie():
         _bootstrap_delphi_w_colabie()
+        return
+    if ktory == "usg" and w_colabie():
+        _bootstrap_usg_w_colabie()
         return
     _importuj_i_uruchom_colab_bootstrap(folder)
 

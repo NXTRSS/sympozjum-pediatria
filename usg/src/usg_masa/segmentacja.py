@@ -20,16 +20,24 @@ import copy
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable
+from typing import TYPE_CHECKING, Callable
 
 import numpy as np
 import torch
-from nnunetv2.inference.predict_from_raw_data import nnUNetPredictor
-from nnunetv2.postprocessing.remove_connected_components import (
-    remove_all_but_largest_component_from_segmentation,
-)
 
 from usg_masa.dane import Sweep
+
+if TYPE_CHECKING:
+    from nnunetv2.inference.predict_from_raw_data import nnUNetPredictor
+
+
+def _nnunet_moduly():
+    from nnunetv2.inference.predict_from_raw_data import nnUNetPredictor
+    from nnunetv2.postprocessing.remove_connected_components import (
+        remove_all_but_largest_component_from_segmentation,
+    )
+
+    return nnUNetPredictor, remove_all_but_largest_component_from_segmentation
 
 KATALOG_PAMIECI = Path(__file__).resolve().parents[2] / "pamiec"
 
@@ -60,7 +68,8 @@ def urzadzenie() -> torch.device:
 
 
 def zaladuj_predyktor(katalog_modelu: Path, urz: torch.device | None = None,
-                      lustrzane: bool = False) -> nnUNetPredictor:
+                      lustrzane: bool = False) -> "nnUNetPredictor":
+    nnUNetPredictor, _ = _nnunet_moduly()
     urz = urz or urzadzenie()
     predyktor = nnUNetPredictor(tile_step_size=0.5, use_gaussian=True, use_mirroring=lustrzane,
                                 device=urz, verbose=False, verbose_preprocessing=False,
@@ -72,6 +81,7 @@ def zaladuj_predyktor(katalog_modelu: Path, urz: torch.device | None = None,
 
 def _maski_z_prawdopodobienstw(prob: np.ndarray) -> np.ndarray:
     """prob: (3, n, H, W) → maski (n, H, W) uint8, największa składowa osobno w każdej klatce."""
+    _, remove_all_but_largest_component_from_segmentation = _nnunet_moduly()
     prob = prob.copy()
     prob[prob < 0.5] = 0
     maski = np.argmax(prob, axis=0).astype(np.uint8)
@@ -79,7 +89,7 @@ def _maski_z_prawdopodobienstw(prob: np.ndarray) -> np.ndarray:
                      for m in maski])
 
 
-def _prawdopodobienstwa_pelne(predyktor: nnUNetPredictor, klatki: np.ndarray,
+def _prawdopodobienstwa_pelne(predyktor: "nnUNetPredictor", klatki: np.ndarray,
                               odstep_mm: float) -> np.ndarray:
     """Pełny nnU-Net (kafle + gauss). klatki (n, H, W) → prob (3, n, H, W)."""
     obraz = klatki[np.newaxis].astype(np.float32)                    # (1, n, H, W)
@@ -88,7 +98,7 @@ def _prawdopodobienstwa_pelne(predyktor: nnUNetPredictor, klatki: np.ndarray,
     return prob
 
 
-def _prawdopodobienstwa_bezposrednio(predyktor: nnUNetPredictor, klatki: np.ndarray,
+def _prawdopodobienstwa_bezposrednio(predyktor: "nnUNetPredictor", klatki: np.ndarray,
                                      odstep_mm: float) -> np.ndarray:
     """Sieć wprost, bez kafli (≈6× szybciej). klatki (n, H, W) → prob (3, n, H, W)."""
     urz = predyktor.device
@@ -145,13 +155,13 @@ def _segmentuj(licz_prob, predyktor, sweep: Sweep, co_ktora: int, paczka: int,
                        najlepsza_maska if najlepsza >= 0 else None, time.perf_counter() - start)
 
 
-def segmentuj_sweep(predyktor: nnUNetPredictor, sweep: Sweep, co_ktora: int = 4,
+def segmentuj_sweep(predyktor: "nnUNetPredictor", sweep: Sweep, co_ktora: int = 4,
                     paczka: int = 64, po_paczce: PoPaczce | None = None) -> WynikSweepu:
     """Referencja: pełny nnU-Net (zmierzone na M1 Pro: ≈ 0,25 s/klatkę). Do przygotowania offline."""
     return _segmentuj(_prawdopodobienstwa_pelne, predyktor, sweep, co_ktora, paczka, po_paczce)
 
 
-def segmentuj_sweep_szybko(predyktor: nnUNetPredictor, sweep: Sweep, co_ktora: int = 4,
+def segmentuj_sweep_szybko(predyktor: "nnUNetPredictor", sweep: Sweep, co_ktora: int = 4,
                            paczka: int = 8, po_paczce: PoPaczce | None = None) -> WynikSweepu:
     """Na żywo: sieć bezpośrednio (zmierzone na M1 Pro: ≈ 0,16–0,21 s/klatkę; Dice ≈ 0,9 względem pełnej)."""
     return _segmentuj(_prawdopodobienstwa_bezposrednio, predyktor, sweep, co_ktora, paczka, po_paczce)
