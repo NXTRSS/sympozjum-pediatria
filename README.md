@@ -37,7 +37,7 @@ uv run python notebook/uruchom_demo.py
 
 Skrypt robi to samo co notebook (CPU, ziarno 42) i wypisuje link `gradio.live`. Wklej go wyżej, w linii „Link do demo…”.
 
-Dla publiczności, bez instalacji: kliknij przycisk *Open in Colab* (konto Google), potem `Środowisko wykonawcze` → `Uruchom wszystko`. Dane pobiorą się same. Trening na CPU to kilkanaście sekund; pierwsze uruchomienie w Colabie może potrwać kilka minut (instalacja pakietów). Notatnik kończy się na **wygenerowanych nazwach** — aplikację dla sali uruchamia prelegent skryptem powyżej, nie z Colaba.
+Dla publiczności, bez instalacji: kliknij przycisk *Open in Colab* (konto Google), potem `Środowisko wykonawcze` → `Uruchom wszystko`. **To ten sam plik** co po `git pull` lokalnie — pierwsza komórka sama sklonuje repo w Colabie (`notebook/colab_sciezka.py`). Nie ma osobnego notebooka „tylko na Colab”; linki ze slajdów zostają aktualne. Dane pobiorą się same. Trening na CPU to kilkanaście sekund; pierwsze uruchomienie w Colabie może potrwać kilka minut (instalacja pakietów). Notatnik kończy się na **wygenerowanych nazwach** — aplikację dla sali uruchamia prelegent skryptem powyżej, nie z Colaba.
 
 W notatniku można zmienić `ZBIOR` na `"leki"` albo `"dinozaury"` i wytrenować model na innym zbiorze nazw.
 
