@@ -605,25 +605,24 @@ def nastepna_klatka_w_filtrze(
     filtr_klasy: int,
     krok: int = 1,
 ) -> int:
-    """Następna / poprzednia klatka w obrębie wybranej klasy (lub całego nagrania przy filtr=-1)."""
-    i = int(np.clip(i, 0, n_klatek - 1))
-    if filtr_klasy < 0:
-        return (i + krok) % n_klatek
-    idxs = fuvai.indeksy_klasy(klatki, n_klatek, filtr_klasy)
-    if idxs.size == 0:
-        return i
-    pos = int(np.searchsorted(idxs, i))
-    if pos >= len(idxs) or idxs[pos] != i:
-        pos = max(0, pos - 1)
-    pos = (pos + krok) % len(idxs)
-    return int(idxs[pos])
+    """Następna / poprzednia sekcja (ciąg klatek z tą samą częścią ciała)."""
+    return fuvai.nastepna_sekcja(klatki, n_klatek, i, filtr_klasy, krok=krok)
 
 
 def pierwsza_klatka_klasy(klatki: fuvai.WynikKlatekFUVAI, n_klatek: int, filtr_klasy: int) -> int:
-    if filtr_klasy < 0:
-        return min(n_klatek // 2, n_klatek - 1)
-    idxs = fuvai.indeksy_klasy(klatki, n_klatek, filtr_klasy)
-    return int(idxs[0]) if idxs.size else 0
+    return fuvai.pierwsza_sekcja(klatki, n_klatek, filtr_klasy)
+
+
+def opis_sekcji_fuvai(klatki: fuvai.WynikKlatekFUVAI, n_klatek: int, i: int) -> str:
+    sekcja = fuvai.sekcja_dla_klatki(klatki, n_klatek, i)
+    if sekcja is None:
+        return f"Klatka {i}"
+    nazwa = fuvai.KLASY[sekcja.klasa]
+    dl = sekcja.dlugosc
+    return (
+        f"<b>Sekcja: {nazwa}</b> · klatki {sekcja.start}–{sekcja.koniec} "
+        f"({dl} {odmiana(dl, 'klatka', 'klatki', 'klatek')}) · podgląd klatka {i}"
+    )
 
 
 def wykres_prawdopodobienstw_fuvai(klatki: fuvai.WynikKlatekFUVAI, i: int) -> np.ndarray:

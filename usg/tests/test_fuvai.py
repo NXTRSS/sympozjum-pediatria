@@ -15,6 +15,27 @@ def _elipsa(ksztalt=(120, 160), srodek=(80, 60), osie=(40, 30)):
 
 # ── stałe i przygotowanie klatki ─────────────────────────────────────────────
 
+def test_sekcje_argmax_i_nawigacja():
+    p = np.array(
+        [
+            [1, 0, 0, 0],
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 0, 1],
+        ],
+        dtype=np.float32,
+    )
+    k = fuvai.WynikKlatekFUVAI(np.arange(6), p, None, 0.0)
+    sekcje = fuvai.sekcje_argmax(k, 6)
+    assert [(s.start, s.koniec, s.klasa) for s in sekcje] == [(0, 1, 0), (2, 4, 1), (5, 5, 3)]
+    assert fuvai.nastepna_sekcja(k, 6, 0, -1, krok=1) == 3
+    assert fuvai.nastepna_sekcja(k, 6, 3, 1, krok=1) == 3  # jedna sekcja „brzuch” — zawija
+    assert fuvai.nastepna_sekcja(k, 6, 3, -1, krok=1) == 5
+    assert fuvai.pierwsza_sekcja(k, 6, 1) == 3
+
+
 def test_stale():
     assert fuvai.KLASY == ("głowa", "brzuch", "kość udowa", "tło")
     assert fuvai.KLASY[fuvai.BRZUCH] == "brzuch"

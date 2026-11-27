@@ -397,22 +397,32 @@ CAVEAT_FUVAI = (
 )
 
 
-def html_status_fuvai(klatki: fuvai.WynikKlatekFUVAI | None, tryb: str, tekst: str | None = None) -> str:
+def html_status_fuvai(
+    klatki: fuvai.WynikKlatekFUVAI | None,
+    tryb: str,
+    tekst: str | None = None,
+    *,
+    n_klatek: int | None = None,
+) -> str:
     if tekst:
         return f'<div class="status">{tekst}</div>'
     if klatki is None:
         return ('<div class="status">Zakładka FUVAI: wybierz nagranie u góry i kliknij '
                 '<b>„Załaduj klasyfikację klatek”</b>.</div>')
-    n = len(klatki.indeksy)
+    n = n_klatek if n_klatek is not None else len(klatki.indeksy)
     if tryb == A.Z_PAMIECI:
         zrodlo = "z pamięci (plik _fuvai_klatki.npz albo wynik rozszerzony z _fuvai.npz)"
     else:
         zrodlo = f"na żywo ({A.po_polsku(klatki.czas_s, 1)} s)"
-    return (f'<div class="status"><b>FUVAI klatka po klatce</b> · {zrodlo} · '
-            f'{n} {A.odmiana(n, "klasę", "klatki", "klatek")} z p(klasy).</div>')
+    liczba_sekcji = len(fuvai.sekcje_argmax(klatki, n))
+    return (
+        f'<div class="status"><b>FUVAI sekcja po sekcji</b> · {zrodlo} · '
+        f'{liczba_sekcji} {A.odmiana(liczba_sekcji, "sekcja", "sekcje", "sekcji")} '
+        f"(ciągłe fragmenty z tą samą częścią ciała).</div>"
+    )
 
 
-WYBOR_KLAS_FUVAI = [("Wszystkie klatki", -1)] + [(n, i) for i, n in enumerate(fuvai.KLASY)]
+WYBOR_KLAS_FUVAI = [("Wszystkie sekcje", -1)] + [(f"Sekcje: {n}", i) for i, n in enumerate(fuvai.KLASY)]
 
 
 def _puste_fuvai_wyjscia(srodek: int = 420, max_i: int = 839):
@@ -456,9 +466,9 @@ def zaladuj_fuvai_klatki(zrodlo: str | None, tryb: str, progress=gr.Progress()):
     )
     return (
         klatki,
-        html_status_fuvai(klatki, tryb),
+        html_status_fuvai(klatki, tryb, n_klatek=n),
         obraz,
-        html_podpis(f"Klatka {i}: {opis}", atrybucja=A.atrybucja(zrodlo)),
+        html_podpis(f"{A.opis_sekcji_fuvai(klatki, n, i)} · {opis}", atrybucja=A.atrybucja(zrodlo)),
         A.wykres_prawdopodobienstw_fuvai(klatki, i),
         A.pasek_timeline_fuvai(klatki, n, i),
         gr.Slider(minimum=0, maximum=n - 1, value=i, step=1),
@@ -489,7 +499,7 @@ def pokaz_fuvai_klatke(
         ramka=ramka,
         elipsa_ac=elipsa,
     )
-    podpis = f"<b>Klatka {i}</b> z {len(sweep.klatki)} · {opis}"
+    podpis = f"{A.opis_sekcji_fuvai(klatki, len(sweep.klatki), i)} · {opis}"
     return (
         obraz,
         html_podpis(podpis, atrybucja=A.atrybucja(zrodlo)),
@@ -519,7 +529,7 @@ def zmien_filtr_klasy_fuvai(
         int(filtr),
         i,
         obraz,
-        html_podpis(f"<b>Klatka {i}</b> · {opis}", atrybucja=A.atrybucja(zrodlo)),
+        html_podpis(f"{A.opis_sekcji_fuvai(klatki, n, i)} · {opis}", atrybucja=A.atrybucja(zrodlo)),
         A.wykres_prawdopodobienstw_fuvai(klatki, i),
         A.pasek_timeline_fuvai(klatki, n, i),
     )
@@ -547,7 +557,7 @@ def krok_klatki_fuvai(
     return (
         i2,
         obraz,
-        html_podpis(f"<b>Klatka {i2}</b> · {opis}", atrybucja=A.atrybucja(zrodlo)),
+        html_podpis(f"{A.opis_sekcji_fuvai(klatki, n, i2)} · {opis}", atrybucja=A.atrybucja(zrodlo)),
         A.wykres_prawdopodobienstw_fuvai(klatki, i2),
         A.pasek_timeline_fuvai(klatki, n, i2),
     )
@@ -569,8 +579,9 @@ def nastepna_klatka_fuvai(zrodlo: str | None, i: int, klatki: fuvai.WynikKlatekF
     if not zrodlo or klatki is None:
         return gr.skip()
     n = len(A.wczytaj_sweep(zrodlo).klatki)
-    krok = KROK_ODTWARZANIA if filtr is None or int(filtr) < 0 else 1
-    return A.nastepna_klatka_w_filtrze(klatki, n, int(i), int(filtr if filtr is not None else -1), krok=krok)
+    return A.nastepna_klatka_w_filtrze(
+        klatki, n, int(i), int(filtr if filtr is not None else -1), krok=1
+    )
 
 
 # Wczytywanie modeli w tle (po przełączeniu na „na żywo”); zegar w interfejsie sprawdza, czy się skończyło.
@@ -720,7 +731,7 @@ def zbuduj_interfejs() -> gr.Blocks:
                                 podpis_f = gr.HTML(html_podpis("Klatka FUVAI z fioletowym obrysem."))
                                 k_fuvai = gr.HTML(karta_fuvai(None))
                         k_sano = gr.HTML(karta_sano(None))
-            with gr.TabItem("FUVAI — klatka po klatce", elem_id="tab-fuvai"):
+            with gr.TabItem("FUVAI — sekcja po sekcji", elem_id="tab-fuvai"):
                 gr.HTML(CAVEAT_FUVAI)
                 with gr.Row(elem_id="fuvai-gora"):
                     przycisk_f = gr.Button("Załaduj klasyfikację klatek", variant="secondary", size="lg",
@@ -744,12 +755,12 @@ def zbuduj_interfejs() -> gr.Blocks:
                         filtr_klasy_radio = gr.Radio(
                             WYBOR_KLAS_FUVAI,
                             value=-1,
-                            label="Przeglądaj klatki klasy",
+                            label="Przeglądaj sekcje (filtrem klasy)",
                             elem_id="fuvai-filtr-radio",
                         )
                         with gr.Row(elem_id="fuvai-filtr-rzad"):
-                            fuvai_poprzednia = gr.Button("◀ Poprzednia w klasie", size="sm")
-                            fuvai_nastepna = gr.Button("Następna w klasie ▶", size="sm")
+                            fuvai_poprzednia = gr.Button("◀ Poprzednia sekcja", size="sm")
+                            fuvai_nastepna = gr.Button("Następna sekcja ▶", size="sm")
                         with gr.Row():
                             pokaz_ramke_f = gr.Checkbox(label="Ramka wokół struktury (bbox maski)", value=False)
                             pokaz_elipse_f = gr.Checkbox(

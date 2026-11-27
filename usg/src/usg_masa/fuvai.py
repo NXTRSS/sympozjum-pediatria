@@ -354,6 +354,92 @@ def indeksy_klasy(klatki: WynikKlatekFUVAI, n_klatek: int, klasa: int) -> np.nda
     return np.flatnonzero(argmax == int(klasa)).astype(np.int32)
 
 
+@dataclass(frozen=True)
+class SekcjaFUVAI:
+    """Ciąg sąsiednich klatek z tą samą klasą argmax (ta sama część ciała w kadrze)."""
+
+    start: int
+    koniec: int
+    klasa: int
+
+    @property
+    def srodek(self) -> int:
+        return (self.start + self.koniec) // 2
+
+    @property
+    def dlugosc(self) -> int:
+        return self.koniec - self.start + 1
+
+
+def sekcje_argmax(klatki: WynikKlatekFUVAI, n_klatek: int) -> list[SekcjaFUVAI]:
+    n_klatek = int(n_klatek)
+    if n_klatek <= 0:
+        return []
+    ax = argmax_po_klatkach(klatki, n_klatek)
+    sekcje: list[SekcjaFUVAI] = []
+    start = 0
+    klasa = int(ax[0])
+    for t in range(1, n_klatek):
+        k = int(ax[t])
+        if k != klasa:
+            sekcje.append(SekcjaFUVAI(start, t - 1, klasa))
+            start = t
+            klasa = k
+    sekcje.append(SekcjaFUVAI(start, n_klatek - 1, klasa))
+    return sekcje
+
+
+def sekcje_filtrowane(klatki: WynikKlatekFUVAI, n_klatek: int, filtr_klasy: int) -> list[SekcjaFUVAI]:
+    wszystkie = sekcje_argmax(klatki, n_klatek)
+    if int(filtr_klasy) < 0:
+        return wszystkie
+    return [s for s in wszystkie if s.klasa == int(filtr_klasy)]
+
+
+def indeks_sekcji(sekcje: list[SekcjaFUVAI], i: int) -> int:
+    """Numer sekcji zawierającej klatkę i (albo najbliższej)."""
+    i = int(i)
+    if not sekcje:
+        return 0
+    for j, s in enumerate(sekcje):
+        if i < s.start:
+            return max(0, j - 1)
+        if s.start <= i <= s.koniec:
+            return j
+    return len(sekcje) - 1
+
+
+def nastepna_sekcja(
+    klatki: WynikKlatekFUVAI,
+    n_klatek: int,
+    i: int,
+    filtr_klasy: int,
+    krok: int = 1,
+) -> int:
+    """Przeskok do środka poprzedniej / następnej sekcji (zamiast klatka po klatce)."""
+    sekcje = sekcje_filtrowane(klatki, n_klatek, filtr_klasy)
+    if not sekcje:
+        return int(np.clip(i, 0, max(n_klatek - 1, 0)))
+    pos = indeks_sekcji(sekcje, i)
+    pos = (pos + int(krok)) % len(sekcje)
+    return sekcje[pos].srodek
+
+
+def pierwsza_sekcja(klatki: WynikKlatekFUVAI, n_klatek: int, filtr_klasy: int) -> int:
+    sekcje = sekcje_filtrowane(klatki, n_klatek, filtr_klasy)
+    if sekcje:
+        return sekcje[0].srodek
+    return min(n_klatek // 2, max(n_klatek - 1, 0))
+
+
+def sekcja_dla_klatki(klatki: WynikKlatekFUVAI, n_klatek: int, i: int) -> SekcjaFUVAI | None:
+    i = int(i)
+    for s in sekcje_argmax(klatki, n_klatek):
+        if s.start <= i <= s.koniec:
+            return s
+    return None
+
+
 def analizuj_sweep(model: torch.nn.Module, sweep: Sweep, co_ktora: int = 4, paczka: int = 16) -> WynikFUVAI:
     """Co co_ktora-ta klatka → p(klasy) i mapa struktury; potem wybór klatki i AC.
 
