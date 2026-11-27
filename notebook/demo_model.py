@@ -1,8 +1,7 @@
-"""Wspólna ścieżka mini-modelu z notebooka i ze skryptu uruchom_demo.py.
+"""Logika mini-modelu dla skryptu uruchom_demo.py i testów deterministyczności.
 
-Oba wejścia wołają te same funkcje, w tej samej kolejności, z tym samym ziarnem.
-Dzięki temu rano 28.11 skrypt daje ten sam model co „Uruchom wszystko” w notebooku.
-"""
+Notatnik model_jezyka_choroby.ipynb ma ten sam przebieg napisany krok po kroku w komórkach
+(bez importu z tego modułu). Skrypt sali woła funkcje stąd — z walidacją 10% w trenuj()."""
 from __future__ import annotations
 
 import os

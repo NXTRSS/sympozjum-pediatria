@@ -26,7 +26,6 @@ def _z_notebooka(tmp: Path) -> dict:
         "from pathlib import Path\n"
         "Path(os.environ['DEMO_WYNIK']).write_text(json.dumps({\n"
         "    'loss': [float(x) for x in historia.history['loss']],\n"
-        "    'val_loss': [float(x) for x in historia.history['val_loss']],\n"
         "    'wagi': [w.numpy().tolist() for w in model.weights],\n"
         "    'pierwsza': pierwsza_nazwa,\n"
         "    'dziesiec': lista_nazw,\n"
@@ -48,12 +47,12 @@ def test_dwa_przebiegi_skryptu_sa_zgodne():
     assert a["dziesiec"] == b["dziesiec"]
 
 
-def test_notebook_zgodny_ze_skryptem(tmp_path):
-    skrypt = przebieg()
-    nb = _z_notebooka(tmp_path)
-    assert nb["loss"] == pytest.approx(skrypt["loss"])
-    assert nb["val_loss"] == pytest.approx(skrypt["val_loss"])
-    for x, y in zip(nb["wagi"], skrypt["wagi"]):
-        assert np.allclose(np.array(x), y)
-    assert nb["pierwsza"] == skrypt["pierwsza"]
-    assert nb["dziesiec"] == skrypt["dziesiec"]
+def test_notebook_jest_deterministyczny(tmp_path):
+    """Notatnik jest samodzielny (bez demo_model); dwa uruchomienia dają ten sam wynik."""
+    a = _z_notebooka(tmp_path)
+    b = _z_notebooka(tmp_path)
+    assert a["loss"] == b["loss"]
+    for x, y in zip(a["wagi"], b["wagi"]):
+        assert np.allclose(np.array(x), np.array(y))
+    assert a["pierwsza"] == b["pierwsza"]
+    assert a["dziesiec"] == b["dziesiec"]

@@ -116,15 +116,15 @@ if ZAPAS:
     OUT = ROOT / "prezentacja_zapas.html"
     _wstaw("n05_qr.html", [
         ("z01_dane.html",
-         "Plan B, zaraz po slajdzie z kodami QR — gdy notebooka nie da się odpalić na laptopie sali. Zapis komórki z danymi: 1292 łacińskie nazwy z pliku w repo, ziarno 42, więc kolejność jest stała. Ostatnie 10% po tasowaniu to sprawdzian, nie koniec alfabetu. Odczytać dwa, trzy przykłady z listy. Jeśli demo nazw działa na żywo, pomiń z01–z08."),
+         "Plan B, zaraz po slajdzie z kodami QR — gdy notebooka nie da się odpalić na laptopie sali. Zapis komórki z danymi: 1292 łacińskie nazwy z pliku w repo, ziarno 42, więc kolejność jest stała. Odczytać dwa, trzy przykłady z listy. Jeśli demo nazw działa na żywo, pomiń z01–z08."),
         ("z02_tokeny.html",
          "Plan B. Tokenizacja: każda nazwa dostaje % na początku i ! na końcu. Słownik ma 32 tokeny — litery, spacja, myślnik, apostrof i te dwa znaki. Macierz treningowa: 1292 wiersze na 60 pozycji. To jest ten sam mechanizm, co na slajdach o X i Y, tylko z prawdziwego uruchomienia."),
         ("z03_model.html",
          "Plan B. Definicja modelu z notebooka: embedding, GRU ze 128 jednostkami i dropout 0,2, na końcu softmax. Kompilacja: entropia krzyżowa i Adam. Nie wchodzić w warstwy głębiej — pokazać, że cały model to kilkanaście linii."),
         ("z04_epoki.html",
-         "Plan B. Dwanaście epok na CPU, około sekundy na epokę. Błąd treningu spada z około 2,88 do 1,56, walidacja z 2,54 do 1,80. Obie liczby spadają: model uczy się reguł, nie tylko wierszy, które widział. 10% nazw było odłożonych na bok."),
+         "Plan B. Dwanaście epok na CPU, około sekundy na epokę. Błąd treningu spada z epoki do epoki — model uczy się reguł składania nazw, nie tylko zapamiętywania wierszy. W notatniku widać sam wiersz loss (bez osobnego sprawdzianu)."),
         ("z05_krzywa.html",
-         "Plan B. Wykres z tej samej sesji. Niebieska linia: nazwy widziane w treningu. Pomarańczowa: nazwy odłożone. Obie schodzą. Gdyby pomarańczowa zaczęła rosnąć, model zapamiętywałby zbiór zamiast składać nowe nazwy."),
+         "Plan B. Wykres krzywej błędu z tej samej sesji. Jedna linia — cały zbiór idzie do treningu. Im niżej, tym trafniej następna litera."),
         ("z06_generowanie.html",
          "Plan B. Jedna nazwa, krok po kroku, z tego samego uruchomienia. Na starcie model waha się między c, p, s i a, a wypada d (2%). Im dłuższy kontekst, tym rozkład ostrzejszy — pod koniec dysplasia cordis znak stop ma 99%. Tej nazwy nie ma w zbiorze. Zaznaczyć moment, w którym jedna litera ma prawie 100%."),
         ("z07_nazwy.html",
