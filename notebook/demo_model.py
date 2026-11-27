@@ -11,6 +11,12 @@ os.environ.setdefault("TF_NUM_INTEROP_THREADS", "1")
 os.environ.setdefault("CUDA_VISIBLE_DEVICES", "-1")
 os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 
+
+def ustaw_gradio_bez_flagowania() -> None:
+    """Jak ``flagging_mode=\"never\"`` w ``gr.Interface`` — bez przycisku Flag i katalogu flagged."""
+    os.environ["GRADIO_FLAGGING_MODE"] = "never"
+
+
 from pathlib import Path
 
 import numpy as np
@@ -323,6 +329,7 @@ def uruchom_aplikacje(
     import threading
     import time
 
+    ustaw_gradio_bez_flagowania()
     import gradio as gr
 
     from ochrona_klienta import LimitKlienta
