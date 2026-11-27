@@ -33,6 +33,7 @@ from delphi_demo.tokeny import KOBIETA, MEZCZYZNA, Zdarzenie
 def pl(x, cyfry=1):   # liczba z przecinkiem dziesiętnym (po polsku)
     return f"{x:.{cyfry}f}".replace(".", ",")
 
+pamiec.zsynchronizuj_wzorce()              # po git pull: lekkie ślady z delphi/wzorce_wyniki/
 SL = wczytaj_slownik()
 MODEL = trening.zaladuj_model()          # wytrenowany przed prelekcją na danych syntetycznych
 print(f"Delphi: {pl(trening.liczba_parametrow(MODEL) / 1e6, 2)} mln parametrów, "

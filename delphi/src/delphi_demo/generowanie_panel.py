@@ -134,19 +134,25 @@ def panel_generowania(
             int(suwak_sladu.value),
         )
 
+    pamiec.zsynchronizuj_wzorce()
+
     def _wykonaj():
         h, pl, wiek, zi, temp, maks, ile = _parametry()
-        klucz_slad = f"slad_{klucz_pamieci}" if klucz_pamieci else ""
         if (
             tryb == "z_pamieci"
             and klucz_pamieci
             and _domyslne_dopasowanie(domyslny, h, pl, wiek, zi, temp, maks)
-            and pamiec.jest(klucz_slad)
+            and pamiec.jest(klucz_pamieci)
         ):
-            return pokaz(
-                h, pl, wiek, zi, temp, maks, ile,
-                kroki_z_pamieci=pamiec.wczytaj_kroki(klucz_slad),
-            )
+            try:
+                kroki = pamiec.wczytaj_kroki(klucz_pamieci)
+            except FileNotFoundError:
+                kroki = None
+            if kroki is not None:
+                return pokaz(
+                    h, pl, wiek, zi, temp, maks, ile,
+                    kroki_z_pamieci=kroki,
+                )
         return pokaz(h, pl, wiek, zi, temp, maks, ile)
 
     def po_generuj(_):
