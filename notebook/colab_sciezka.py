@@ -44,12 +44,64 @@ def _dopisz_sys_path(*sciezki: Path) -> None:
             sys.path.insert(0, s)
 
 
+def _repo_colab_aktualny() -> None:
+    """Stały katalog /content/sympozjum-pediatria bez pull zostaje na starej wersji po pushu na GitHub."""
+    if (COLAB_ROOT / ".git").is_dir():
+        subprocess.run(
+            ["git", "-C", str(COLAB_ROOT), "fetch", "origin", "main", "--depth", "1"],
+            check=True,
+        )
+        subprocess.run(
+            ["git", "-C", str(COLAB_ROOT), "reset", "--hard", "FETCH_HEAD"],
+            check=True,
+        )
+        print("Colab: odświeżono repozytorium na GitHub main.")
+        return
+    if not COLAB_ROOT.is_dir() or not any(COLAB_ROOT.iterdir()):
+        COLAB_ROOT.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["git", "clone", "--depth", "1", "--branch", "main", REPO_GIT, str(COLAB_ROOT)], check=True)
+
+
+def _bootstrap_delphi_w_colabie() -> None:
+    """Bez importu colab_bootstrap z dysku — ten sam schemat co delphi/notebook/colab_bootstrap.py."""
+    import importlib.util
+
+    delphi = COLAB_ROOT / "delphi"
+    brakuje = [
+        p
+        for p in ("torch", "pandas", "matplotlib", "numpy")
+        if importlib.util.find_spec(p) is None
+    ]
+    if brakuje:
+        print(f"Colab Delphi: doinstalowuję {', '.join(brakuje)}…")
+        subprocess.check_call(
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "install",
+                "-q",
+                "torch>=2.3",
+                "numpy<2",
+                "pandas>=2.2",
+                "matplotlib>=3.8",
+                "ipywidgets>=8",
+            ],
+        )
+    else:
+        print("Colab Delphi: PyTorch i pandas są już w kernelu — pomijam pip.")
+    os.chdir(delphi)
+    _dopisz_sys_path(delphi / "src")
+
+
 def upewnij_srodowisko(marker_wzgledem_root: str, folder_notebooka: str) -> Path:
     """marker np. notebook/lm_utils.py; folder_notebooka np. notebook lub delphi/notebook."""
     if w_colabie():
         mark = COLAB_ROOT / marker_wzgledem_root
-        if not mark.is_file():
-            subprocess.run(["git", "clone", "--depth", "1", REPO_GIT, str(COLAB_ROOT)], check=True)
+        if (COLAB_ROOT / ".git").is_dir():
+            _repo_colab_aktualny()
+        elif not mark.is_file():
+            _repo_colab_aktualny()
         nb = COLAB_ROOT / folder_notebooka
         os.chdir(nb)
         _dopisz_sys_path(nb)
@@ -140,6 +192,9 @@ def bootstrap(ktory: str) -> None:
     }[ktory]
     marker, folder = konfig
     upewnij_srodowisko(marker, folder)
+    if ktory == "delphi" and w_colabie():
+        _bootstrap_delphi_w_colabie()
+        return
     _importuj_i_uruchom_colab_bootstrap(folder)
 
 

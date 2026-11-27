@@ -18,14 +18,6 @@ def test_korzen_repo_w_workspace():
     assert mod.korzen_repo_lokalnie() == ROOT
 
 
-@pytest.mark.parametrize(
-    "marker,folder",
-    [
-        ("notebook/lm_utils.py", "notebook"),
-        ("delphi/pyproject.toml", "delphi/notebook"),
-        ("usg/pyproject.toml", "usg/notebook"),
-    ],
-)
 def test_lokalizuj_colab_bootstrap():
     spec = __import__("importlib.util").util.spec_from_file_location("colab_sciezka", CS)
     mod = __import__("importlib.util").util.module_from_spec(spec)
@@ -34,6 +26,14 @@ def test_lokalizuj_colab_bootstrap():
     assert p.name == "colab_bootstrap.py" and p.is_file()
 
 
+@pytest.mark.parametrize(
+    "marker,folder",
+    [
+        ("notebook/lm_utils.py", "notebook"),
+        ("delphi/pyproject.toml", "delphi/notebook"),
+        ("usg/pyproject.toml", "usg/notebook"),
+    ],
+)
 def test_upewnij_lokalnie(marker, folder):
     spec = __import__("importlib.util").util.spec_from_file_location("colab_sciezka", CS)
     mod = __import__("importlib.util").util.module_from_spec(spec)
