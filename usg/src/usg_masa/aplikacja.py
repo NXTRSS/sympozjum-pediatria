@@ -386,6 +386,15 @@ def _z_atrybucja(rgb: np.ndarray, atrybucja: bool = True) -> np.ndarray:
     return np.vstack([rgb, pasek])
 
 
+def _naklad_maseki(rgb: np.ndarray, maska: np.ndarray, kolor_bgr, alpha: float = 0.38) -> None:
+    """Półprzezroczyste wypełnienie maski (shade) na obrazie RGB."""
+    if maska is None or not maska.any():
+        return
+    warstwa = rgb.copy()
+    warstwa[maska > 0] = kolor_bgr
+    cv2.addWeighted(warstwa, alpha, rgb, 1 - alpha, 0, dst=rgb)
+
+
 def _elipsa_przerywana(rgb: np.ndarray, maska: np.ndarray, kolor, grubosc: int = 2) -> None:
     kontury = _kontury(maska)
     if not kontury:
@@ -507,16 +516,50 @@ def wykres(analiza: Analiza, biezaca: int | None = None) -> np.ndarray:
 
 # ── podgląd FUVAI klatka po klatce ────────────────────────────────────────────
 
-def wczytaj_fuvai_klatki(zrodlo: str | Path, tryb: str,
-                         postep: Callable[[float, str], None] | None = None) -> fuvai.WynikKlatekFUVAI:
-    """Gęste p(klasy) do zakładki FUVAI: z pamiec/_fuvai_klatki.npz, z kurtego _fuvai.npz albo na żywo."""
+def _fuvai_klatki_z_mapami(
+    sweep: dane.Sweep,
+    sciezka: Path,
+    postep: Callable[[float, str], None],
+) -> fuvai.WynikKlatekFUVAI:
+    """Pełna klasyfikacja co klatkę z mapami 224×224; zapis do pamiec/_fuvai_klatki.npz."""
+    with _BLOKADA_MPS:
+        postep(0.05, "Wczytuję model FUVAI…")
+        model = _model("fuvai")
+        postep(0.1, "FUVAI: klasyfikacja klatek + mapy segmentacji…")
+        w = fuvai.analizuj_wszystkie_klatki(model, sweep, co_ktora=1, mapy_prob=True)
+        fuvai.zapisz_klatki(w, sciezka)
+        postep(1.0, "Gotowe")
+        return w
+
+
+def wczytaj_fuvai_klatki(
+    zrodlo: str | Path,
+    tryb: str,
+    postep: Callable[[float, str], None] | None = None,
+    *,
+    doladuj_mapy: bool = False,
+) -> fuvai.WynikKlatekFUVAI:
+    """Gęste p(klasy) do zakładki FUVAI: z pamiec/_fuvai_klatki.npz, z kurtego _fuvai.npz albo na żywo.
+
+    doladuj_mapy: gdy w pamieci brak map 224×224 (_fuvai_klatki.npz), przelicz FUVAI i zapisz (wolne, jednorazowo).
+    """
     postep = postep or (lambda *_: None)
     sweep = wczytaj_sweep(zrodlo)
     sciezka = fuvai.sciezka_klatek_pamiec(sweep.nazwa)
     if tryb == Z_PAMIECI:
         if sciezka.exists():
-            return fuvai.wczytaj_klatki(sciezka)
+            w = fuvai.wczytaj_klatki(sciezka)
+            if w.mapy_prob is not None or not doladuj_mapy:
+                return w
+            postep(0.02, "Stary plik FUVAI bez map — przeliczam (jednorazowo)…")
+            return _fuvai_klatki_z_mapami(sweep, sciezka, postep)
         if ma_wyniki_w_pamieci(sweep.nazwa):
+            if doladuj_mapy:
+                try:
+                    postep(0.02, "Brak _fuvai_klatki.npz — liczę mapy segmentacji…")
+                    return _fuvai_klatki_z_mapami(sweep, sciezka, postep)
+                except Exception:
+                    log.exception("FUVAI: nie udało się policzyć gęstych klatek, używam _fuvai.npz")
             F = fuvai.wczytaj_wynik(seg.KATALOG_PAMIECI / f"{sweep.nazwa}_fuvai.npz")
             return fuvai.rozszerz_na_nagranie(F, len(sweep.klatki))
         raise BrakWynikowWPamieci(sweep.nazwa)
@@ -534,7 +577,7 @@ def wczytaj_fuvai_klatki(zrodlo: str | Path, tryb: str,
 def _maska_fuvai_klatki(sweep: dane.Sweep, klatki: fuvai.WynikKlatekFUVAI, i: int,
                         model: object | None = None) -> np.ndarray | None:
     j = fuvai.pozycja_klatki(klatki, i)
-    if klatki.mapy_prob is not None and int(klatki.indeksy[j]) == i:
+    if klatki.mapy_prob is not None:
         return fuvai.maska_z_prawdopodobienstwa(klatki.mapy_prob[j].astype(np.float32), sweep.klatki.shape[1:])
     if model is not None:
         _, prob = fuvai.przewidz_klatke(model, sweep, i)
@@ -567,8 +610,9 @@ def obraz_fuvai_podglad(
     rgb = cv2.cvtColor(sweep.klatki[i], cv2.COLOR_GRAY2RGB)
     maska = _maska_fuvai_klatki(sweep, klatki, i, model)
     if maska is not None and maska.any():
+        _naklad_maseki(rgb, maska, FIOLET)
         cv2.drawContours(rgb, _kontury(maska), -1, FIOLET, 2, cv2.LINE_AA)
-        if (rect := prostokat_maski(maska)) is not None:
+        if ramka and (rect := prostokat_maski(maska)) is not None:
             x0, y0, x1, y1 = rect
             cv2.rectangle(rgb, (x0, y0), (x1, y1), BURSZTYN, 2, cv2.LINE_AA)
         if elipsa_ac:

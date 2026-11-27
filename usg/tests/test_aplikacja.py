@@ -10,7 +10,7 @@ import pytest
 import SimpleITK as sitk
 
 from usg_masa import aplikacja as A
-from usg_masa import fuvai, model_sano, segmentacja as seg, zasoby
+from usg_masa import dane, fuvai, model_sano, segmentacja as seg, zasoby
 
 APP = Path(__file__).resolve().parents[1] / "app" / "demo_usg.py"
 NR1 = A.NAGRANIA["Nr 1"]
@@ -138,6 +138,25 @@ def test_fuvai_statystyki_nawigacja_i_ramka(app):
     maska[10:30, 15:35] = 1
     rect = A.prostokat_maski(maska)
     assert rect == (15, 10, 34, 29)
+
+
+def test_obraz_fuvai_podglad_ramka_i_nakladka():
+    klatka = np.full((80, 100), 180, np.uint8)
+    klatka[20:60, 30:70] = 90
+    sweep = dane.Sweep(klatka[None, ...], 0.5, "x")
+    prob = np.zeros((224, 224), np.float32)
+    prob[50:170, 50:170] = 0.85
+    mapy = prob.astype(np.float16)[None, ...]
+    k = fuvai.WynikKlatekFUVAI(np.array([0]), np.array([[0, 0.9, 0, 0.1]]), mapy, 0.0)
+    bez, _ = A.obraz_fuvai_podglad(sweep, k, 0, ramka=False, atrybucja_nagrania=False)
+    z_ramka, _ = A.obraz_fuvai_podglad(sweep, k, 0, ramka=True, atrybucja_nagrania=False)
+
+    def _piksele_kolor(img, bgr):
+        return int(np.sum(np.all(img == np.array(bgr, np.uint8), axis=-1)))
+
+    # shade: wewnątrz maski inne RGB niż szare tło klatki
+    assert not np.array_equal(bez[35, 45], np.stack([klatka[35, 45]] * 3, axis=-1))
+    assert _piksele_kolor(z_ramka, A.BURSZTYN) > _piksele_kolor(bez, A.BURSZTYN)
 
 
 def test_z_pamieci_bez_wynikow(tmp_path):

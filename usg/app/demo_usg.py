@@ -414,11 +414,17 @@ def html_status_fuvai(
         zrodlo = "z pamięci (plik _fuvai_klatki.npz albo wynik rozszerzony z _fuvai.npz)"
     else:
         zrodlo = f"na żywo ({A.po_polsku(klatki.czas_s, 1)} s)"
+    bez_masek = ""
+    if klatki.mapy_prob is None:
+        bez_masek = (
+            ' <span class="maly">Bez map segmentacji — obrys i ramka nie będą widoczne '
+            "(uruchom przygotuj_demo.py albo tryb na żywo).</span>"
+        )
     liczba_sekcji = len(fuvai.sekcje_argmax(klatki, n))
     return (
         f'<div class="status"><b>FUVAI sekcja po sekcji</b> · {zrodlo} · '
         f'{liczba_sekcji} {A.odmiana(liczba_sekcji, "sekcja", "sekcje", "sekcji")} '
-        f"(ciągłe fragmenty z tą samą częścią ciała).</div>"
+        f"(ciągłe fragmenty z tą samą częścią ciała).{bez_masek}</div>"
     )
 
 
@@ -448,7 +454,9 @@ def zaladuj_fuvai_klatki(zrodlo: str | None, tryb: str, progress=gr.Progress()):
     if not zrodlo:
         raise gr.Error("Najpierw wybierz nagranie.", title="Uwaga", print_exception=False)
     try:
-        klatki = A.wczytaj_fuvai_klatki(zrodlo, tryb, postep=lambda u, opis: progress(u, desc=opis))
+        klatki = A.wczytaj_fuvai_klatki(
+            zrodlo, tryb, postep=lambda u, opis: progress(u, desc=opis), doladuj_mapy=True,
+        )
     except A.BrakWynikowWPamieci:
         raise gr.Error("Brak wyników w pamięci. Uruchom scripts/przygotuj_demo.py albo przełącz na „na żywo”.",
                         title="Uwaga", print_exception=False) from None
@@ -462,7 +470,12 @@ def zaladuj_fuvai_klatki(zrodlo: str | None, tryb: str, progress=gr.Progress()):
     tabela = A.html_tabela_klas_fuvai(stats)
     i = len(sweep.klatki) // 2
     obraz, opis = A.obraz_fuvai_podglad(
-        sweep, klatki, i, model=_model_fuvai_na_zywo(tryb), atrybucja_nagrania=A.wbudowane(zrodlo),
+        sweep,
+        klatki,
+        i,
+        model=_model_fuvai_na_zywo(tryb),
+        atrybucja_nagrania=A.wbudowane(zrodlo),
+        ramka=True,
     )
     return (
         klatki,
@@ -762,7 +775,7 @@ def zbuduj_interfejs() -> gr.Blocks:
                             fuvai_poprzednia = gr.Button("◀ Poprzednia sekcja", size="sm")
                             fuvai_nastepna = gr.Button("Następna sekcja ▶", size="sm")
                         with gr.Row():
-                            pokaz_ramke_f = gr.Checkbox(label="Ramka wokół struktury (bbox maski)", value=False)
+                            pokaz_ramke_f = gr.Checkbox(label="Ramka wokół struktury (bbox maski)", value=True)
                             pokaz_elipse_f = gr.Checkbox(
                                 label="Elipsa dopasowana do maski (jak AC)", value=False
                             )
