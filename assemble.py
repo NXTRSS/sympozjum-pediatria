@@ -130,11 +130,13 @@ if ZAPAS:
         ("z07_nazwy.html",
          "Plan B. Dziesięć losowań z temperatury 0,4. Wszystkie dziesięć nazw jest nowych: morbus dufandei, tystiopathia pertus, syndroma poli i kolejne. Gdyby któraś była w zbiorze, przy niej byłby znacznik „istnieje”. Odczytać dwie na głos."),
         ("z08_gradio.html",
-         "Plan B. Tak wygląda aplikacja dla sali: suwak „ile nazw” (tu 3) i „kreatywność” (tu 0,4). Po Submit: angioma — ta jest w zbiorze — oraz pertinia i coplasia, których w zbiorze nie ma. Na laptopie DIL aplikacji nie odpalamy; to zrzut z notebooka uruchomionego wcześniej. Koniec zapasu nazw chorób."),
+         "Plan B. Aplikacja Gradio dla sali — ekran główny (ile nazw, kreatywność, generowanie). Na laptopie DIL aplikacji nie odpalamy; to zrzut uruchomionego wcześniej demo."),
+    ])
+    _wstaw("z08_gradio.html", [
+        ("z08b_gradio_2.html",
+         "Plan B. Ten sam demo — histogramy P(następna litera | kontekst) dla wygenerowanych nazw. Koniec zapasu nazw chorób."),
     ])
     _wstaw("n09_delphi_b.html", [
-        ("zd01_model.html",
-         "Plan B · Delphi — zaraz po slajdzie z wynikami Delphi. Wczytanie modelu 2,24 mln parametrów i słownika 1270 tokenów z pamięci (TRYB z_pamieci). Jeśli notebook delphi_2m działa na żywo po sesji, pomiń zd01–zd06."),
         ("zd02_trajektoria.html",
          "Plan B · Delphi. Przykładowy pacjent syntetyczny: oś życia z diagnozami w czasie. Podkreślić: nikt taki nie istnieje, dane autorów."),
         ("zd03_krzywa.html",
@@ -147,22 +149,12 @@ if ZAPAS:
          "Plan B · Delphi · koniec bloku. Ślad generowania życia token po tokenie (astma od dzieciństwa). Potem wróć do zwykłych slajdów."),
     ])
     _wstaw("n13b_demo_usg.html", [
-        ("zu01_nagranie.html",
-         "Plan B · USG — zaraz po slajdzie demo USG. Klatka z nagrania ACOUSLIC-AI (TRYB z_pamieci). Jeśli aplikacja lub notebook działa, pomiń zu01–zu07."),
-        ("zu02_maska.html",
-         "Plan B · USG. nnU-Net przegląda nagranie i wskazuje klatkę z brzuchem — obrys i elipsa AC."),
-        ("zu03_pomiar.html",
-         "Plan B · USG. Obwód brzucha, tydzień ciąży z Campbell, masa „teraz” — porównanie z ekspertami z CSV."),
-        ("zu04_fuvai.html",
-         "Plan B · USG. Polski FUVAI na tym samym nagraniu — kiedy jest pewny, kiedy nie."),
-        ("zu05_sano.html",
-         "Plan B · USG. Model Sano (checkpoint bazowy): masa w dniu porodu z nagrania <24 h przed porodem — tu ekstrapolacja poza dane uczące."),
         ("zu06_aplikacja.html",
-         "Plan B · USG. Zrzut aplikacji demo_usg.py: nagranie Nr 1, tryb „z pamięci”, po „Znajdź brzuch i zmierz” (zakładka masa)."),
-        ("zu08_fuvai_klatki.html",
-         "Plan B · USG. Druga zakładka aplikacji: FUVAI klatka po klatce — paski klas, obrys struktury, oś czasu kolorów argmax."),
+         "Plan B · USG — zrzut aplikacji: nagranie Nr 1, tryb „z pamięci”, wynik nnU-Net (masa). Pomiń, jeśli demo działa na żywo."),
         ("zu07_nnunet.html",
-         "Plan B · USG · koniec bloku. Ta sama sesja — dwa panele nnU-Net i FUVAI. Wróć do slajdu o modelu Sano lub materiałach."),
+         "Plan B · USG · nagranie Nr 3 — ten sam pipeline w aplikacji (najmniejszy AC, a model Sano i tak podaje ~3,9 kg)."),
+        ("zu08_fuvai_klatki.html",
+         "Plan B · USG · zakładka FUVAI sekcja po sekcji w aplikacji — koniec bloku zapasu USG."),
     ])
 if not ORIG.exists():
     sys.exit(

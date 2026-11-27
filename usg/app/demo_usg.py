@@ -231,13 +231,13 @@ def karta_sano(a: A.Analiza | None) -> str:
     <li>Polski model (Sano Kraków + WUM): <b>3D ResNet-18</b> z pracy TabAttention (MICCAI 2023), <b>publiczny checkpoint</b>.</li>
     <li>Szacuje masę <b>w dniu porodu</b> z samego wideo — uczył się na badaniach <b>&lt; 24 h przed porodem</b>
     (ciąże donoszone, 38,3 ± 1,5 tc., masa ur. {A.gramy(A.MASA_UR_UCZACA).replace(" ", "&nbsp;")} ± {A.SD_UCZACA} g).</li>
-    <li>Na nagraniach ok. <b>28–34 tc.</b> model podaje szacunek typowy dla urodzenia (ok. 3,6–4,0 kg), nie bieżącej masy płodu (wg AC ok. 1,4–2,6 kg).</li>
+    <li><b>Poza domeną:</b> uczył się na <b>&lt; 24 h przed porodem</b> (~{A.gramy(A.MASA_UR_UCZACA)} g średnio); na nagraniach <b>28–34 tc.</b> zwraca ~3,6–4,0 kg prawie niezależnie od płodu (np. Nr 3 z najmniejszym AC → najwyższy wynik). To ilustracja, <b>nie prognoza</b>.</li>
     <li>W pracy: wariant <b>obraz + 6 pomiarów lekarza</b> — błąd <b>170 g</b> (lepiej niż klinicyści <b>205 g</b>);
     pokazany tu model obrazowy: <b>289 g</b> — kierunek jest jasny: AI <b>wzmacnia</b> pomiary lekarza.</li>
     <li><b>Uwaga:</b> mas urodzeniowych tych dzieci nie znamy — nie ma tu walidacji na naszym materiale.</li>
   </ul>
   {przypis}{zywo}
-  <div class="maly">Ogląda {model_sano.KLATKI} klatek brzucha naraz (wg nnU-Netu: {S.n_klatek_brzucha} → {n_s} {A.odmiana(n_s, 'segment', 'segmenty', 'segmentów')}).</div>"""
+  <div class="maly">Sano ogląda {model_sano.KLATKI} klatek z brzuchem, które wybrał nnU-Net ({n_s} {A.odmiana(n_s, 'segment', 'segmenty', 'segmentów')}).</div>"""
     return f"""
 <div class="karta k-roz">
   <div class="karta-eyebrow">3 · {tytul}</div>

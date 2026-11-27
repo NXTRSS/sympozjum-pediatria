@@ -1691,7 +1691,8 @@ deck-stage.builds-armed .build.show {
  "Plan B. Wykres krzywej błędu z tej samej sesji. Jedna linia — cały zbiór idzie do treningu. Im niżej, tym trafniej następna litera.",
  "Plan B. Jedna nazwa, krok po kroku, z tego samego uruchomienia. Na starcie model waha się między c, p, s i a, a wypada d (2%). Im dłuższy kontekst, tym rozkład ostrzejszy — pod koniec dysplasia cordis znak stop ma 99%. Tej nazwy nie ma w zbiorze. Zaznaczyć moment, w którym jedna litera ma prawie 100%.",
  "Plan B. Dziesięć losowań z temperatury 0,4. Wszystkie dziesięć nazw jest nowych: morbus dufandei, tystiopathia pertus, syndroma poli i kolejne. Gdyby któraś była w zbiorze, przy niej byłby znacznik „istnieje”. Odczytać dwie na głos.",
- "Plan B. Tak wygląda aplikacja dla sali: suwak „ile nazw” (tu 3) i „kreatywność” (tu 0,4). Po Submit: angioma — ta jest w zbiorze — oraz pertinia i coplasia, których w zbiorze nie ma. Na laptopie DIL aplikacji nie odpalamy; to zrzut z notebooka uruchomionego wcześniej. Koniec zapasu nazw chorób.",
+ "Plan B. Aplikacja Gradio dla sali — ekran główny (ile nazw, kreatywność, generowanie). Na laptopie DIL aplikacji nie odpalamy; to zrzut uruchomionego wcześniej demo.",
+ "Plan B. Ten sam demo — histogramy P(następna litera | kontekst) dla wygenerowanych nazw. Koniec zapasu nazw chorób.",
  "Przejście: od naszego modelu do prawdziwych LLM. Co się zmienia? Tylko skala.",
  "Ten sam cel — P(następny token | kontekst) — ok. 7 rzędów wielkości różnicy w liczbie parametrów. Nasz model: ok. 80 tys. parametrów (80 672), 32 tokeny, 1292 nazwy chorób. GPT-4: słownik publicznego tokenizera ok. 100 tys. kawałków słów; liczba parametrów szacunkowo ~10^12 (nieoficjalnie) — ok. 10 milionów razy więcej; uczony na bilionach tokenów z internetu.",
  "Ok. 1 min. Uczciwość wobec sali: to, co pokazałem (nasz model i 'skala'), to dopiero etap 1, czyli model bazowy. On tylko 'śni internet': na pytanie z quizu dopisuje kolejne pytania z quizu, bo tak wyglądają takie strony. Żeby powstał asystent typu ChatGPT, dochodzą jeszcze dwa etapy. SFT: dostrajanie na rozmowach pisanych przez ludzi (pytanie → wzorowa odpowiedź); model uczy się roli i formy, czyli naśladuje. RL / RLHF: model generuje wiele odpowiedzi, ludzie (RLHF) albo automatyczny sprawdzian (np. w matematyce i kodzie) je oceniają, a model wzmacnia lepiej ocenione. Analogie dla sali (biblioteka → staż → superwizja) są tylko ilustracją. Najważniejsza jest dolna karta, bo to pomost do rozwiązania zagadki na następnym slajdzie (puentę „nie wie, kiedy nie wie” zostawić tam): SFT i RL zmieniają, JAKI tekst jest najbardziej prawdopodobny, ale nie zmieniają mechanizmu. Odpowiedź to nadal losowanie następnego tokenu. RL może nagradzać 'nie wiem' i zmniejszać halucynacje, ale ich nie usuwa. Gdy ktoś zapyta: w raporcie technicznym GPT-4 (OpenAI 2023) kalibracja pewności modelu po dostrajaniu była gorsza niż modelu bazowego. Asystent bywa więc PEWNIEJSZY w tonie, a nie lepiej świadomy swojej niewiedzy. Nazwy modeli z dopiskiem -Instruct/-Chat to właśnie wersje po etapach 2–3.",
@@ -1701,7 +1702,6 @@ deck-stage.builds-armed .build.show {
  "Odpowiedź na pytanie, które zostaje po poprzednim slajdzie (czy to koniec modeli medycznych?) — i JEDYNE miejsce puenty: do rozmowy skala, do pomiaru i predykcji z Państwa danych model dedykowany. NOHARM (1100 zadań z konsultacji, 10 specjalności) — ogólne modele miały ryzyko poważnej szkody do 24,6% przypadków; ponad 80% poważnych błędów to pominięcia; narzędzia kliniczne były bezpieczniejsze. Lang1 (NYU): po dotrenowaniu na zadaniach szpitala model ok. 1 mld parametrów bije do 70× większe ogólne; wstępnie widział 80 mld tokenów z dokumentacji (i tekst z internetu). Mistral Large 4 tylko wspomnieć: 6.10.2026, nieformalny test Maziyara Panahiego, 617/669, triage 238/240, zero poważnych pomyłek, statystyczny remis na szczycie; autor sam mówi, że test jest już nasycony — ważny jest wątek otwartych wag, nie liczba. Puenta prowadzi do Delphi-2M i BabyNet: to są właśnie modele dedykowane, uczone na danych, których ogólny chatbot nigdy nie widział. SLAJD DO CIĘCIA przy obsuwie — ale wtedy puentę powiedzieć ustnie na poprzednim slajdzie (Nature Medicine). Hospital-bench (Zavo, Can Zehebi, 12.11.2026): gdy model ma samodzielnie wykonywać pracę w systemach szpitala, najwięcej zadań zaliczonych w całości to 17 z 48 (Claude Opus 5.5); najwyższy średni wynik to 62,4% (95% CI 53,0–71,3%, GPT-6.2 Astra), w całości 14 z 48. Jednym z powtarzających się błędów było udostępnianie dokumentacji pacjenta, której polityka zabraniała wydać. Uczciwie: fikcyjny szpital w USA, dane syntetyczne, zadania administracyjne, nie medyczne, raport firmy bez recenzji.",
  "Delphi-2M (Nature 2025, Shmatko i in.): ten sam mechanizm autoregresji. Słownik ma 1270 tokenów: choroby ICD-10 (poziom 3), śmierć, płeć, styl życia (BMI, palenie, alkohol po trzy poziomy), token „brak zdarzenia” i techniczny padding. W tekście głównym 1258 „stanów” to diagnozy, śmierć i brak zdarzenia; płeć i styl życia są dodatkowym wejściem, którego model nie przewiduje. Zamiast numeru pozycji każdy token dostaje wiek w dniach od urodzenia (sinus i cosinus). Drugi wynik to czas do następnego zdarzenia: konkurujące rozkłady wykładnicze. Śmierć jest tokenem, który model przewiduje (jak chorobę). Token „brak zdarzenia” wstawiają średnio raz na 5 lat, żeby nie modelować wieloletnich pustych przerw. GPT-2 o 2,2 mln parametrów — ok. 30× więcej niż nasz model z sali (ok. 80 tys.), a wciąż maleńki przy ChatGPT.",
  "Delphi-2M wyniki: trening ok. 400 tys. osób UK Biobank, walidacja 1,93 mln Duńczyków, ponad 1000 chorób. Średnie AUC następnej diagnozy ok. 0,76 to walidacja wewnętrzna w UK. Wynik duński 0,67 to inny test, podłużny; ten sam test w UK dał 0,69. Najpewniej model przewiduje zgon (AUC 0,97) — nie mówić, że „najlepiej nowotwory i zawał”. Uczciwie: zaproszenia 40–69 lat (37–73 w chwili rekrutacji) — dzieci w danych nie ma; choroby dziecięce tylko z wywiadu dorosłych (w danych syntetycznych autorów 1,2% diagnoz przypada przed 18. r.ż.). Pediatria czeka na swój model. Po sesji: notebook delphi/ — wpisać historię kogoś z sali (np. E11 w 50 r.ż., I10 w 55) i pokazać ranking oraz krzywe ryzyka (model na danych syntetycznych — poziomy nierealne, kierunki sensowne).",
- "Plan B · Delphi — zaraz po slajdzie z wynikami Delphi. Wczytanie modelu 2,24 mln parametrów i słownika 1270 tokenów z pamięci (TRYB z_pamieci). Jeśli notebook delphi_2m działa na żywo po sesji, pomiń zd01–zd06.",
  "Plan B · Delphi. Przykładowy pacjent syntetyczny: oś życia z diagnozami w czasie. Podkreślić: nikt taki nie istnieje, dane autorów.",
  "Plan B · Delphi. Krzywa uczenia z logu treningu na danych syntetycznych — ten sam mechanizm co przy nazwach chorób.",
  "Plan B · Delphi. Historia E11 50, I10 55 → ranking następnych diagnoz i ryzyka. Liczby edukacyjne, nie kliniczne.",
@@ -1711,14 +1711,9 @@ deck-stage.builds-armed .build.show {
  "Hadlock: 4 ręczne pomiary, wzór z 1985, rozrzut: 1 SD ≈ 7,5%, czyli ok. ±15% (Hadlock 1985). ±15% to ±2 SD: w tym zakresie mieści się ok. 95% szacunków, czyli prawie każdy, a nie średni błąd. Przykład: dziecko 3500 g może dostać szacunek od ok. 2975 do 4025 g i to wciąż mieści się w normie metody; tylko ok. 62% oszacowań w ±10% (Chauhan 2005: 54 z 175 prac, łącznie 8895/14384). W badaniu Dittkrist 2022 (11 049 porodów, Hadlock IV, USG do 14 dni przed porodem) w ±10% mieści się ok. 70–72%; w najwyższym przedziale masy średnie niedoszacowanie ok. 12% ± 8% (to nie jest średnia dla każdej makrosomii powyżej 4000 g). A od tej liczby zależy indukcja i cesarka.",
  "BabyNet (Sano Kraków, MICCAI 2022; BabyNet++ 2023): model ogląda całe wideo USG z 3 płaszczyzn <24h przed porodem (wtedy znamy ground truth). BabyNet++ (194 ciąże, 582 nagrania, 4 ośrodki): średni błąd 5,1% vs 5,4% klinicystów — „porównywalny z ekspertami”. UWAGA: wersja z 2022 (BabyNet) przegrała z klinicystami 7,5% vs 6,3%, dopiero średnia model + lekarz dała 5,2% — nie mieszać tych liczb. BabyNet++ bierze też ręczne pomiary biometryczne, więc nie „eliminuje” operatora; jest mniej wrażliwy na drobne błędy pomiarów. Przy niskiej masie i makrosomii jego błąd też rośnie. Kod publiczny (bez licencji); wytrenowane wagi BabyNet++ nie są publicznie dostępne — mówić życzliwie, bez spekulacji dlaczego. Finansowanie: Horizon 2020 (857533), FNP, część NIH. Osobna praca 2023 (AJOG MFM): brzuch + wiek ciąży. W teście 16–38 tc. średnia różnica wobec 4 ekspertów ok. 2,6% (wobec ich szacunku Hadlockiem, nie wobec masy urodzeniowej); z rezydentami ok. 3,8%. Teraz: demo — z prawdziwego nagrania USG.",
  "PLAN CZASU: slajdy 25–26 razem ok. 3 min (+ opcjonalnie 30 s aplikacji). ZACZĄĆ OD ZDANIA: „Nie pokażę Państwu systemu lepszego od Hadlocka — takiego dziś publicznie nie ma. Pokażę, co da się zrobić z otwartych narzędzi, gdzie to się psuje i dlaczego polski model, który był lepszy od klinicystów, jest dziś niedostępny.” Napis przy tytule mówi to samo — mówimy to pierwsi. Schemat (ok. 30 s): nagranie z konkursu ACOUSLIC-AI — 840 klatek, 6 przeciągnięć tanią głowicą podłączoną do smartfona, robione „na ślepo” przez osoby bez doświadczenia w USG (Sierra Leone). Nikt nie zaznaczył brzucha — model sam go znajduje, mierzy obwód i z tej jednej miary liczy masę „teraz” (wzór Campbella). Uczciwie: masa z samego AC to przybliżenie — błąd AC o 10% to błąd masy ok. 30%; Hadlock z 4 pomiarów ma ok. ±15% i ok. 62% oszacowań w ±10%, ale wymaga doświadczonego sonografisty. Mocny punkt tego demo to AUTOMATYZACJA NA TRUDNYCH DANYCH, nie dokładność. Trzy modele (ok. 40 s): holenderski nnU-Net (baseline konkursu, Radboudumc) — działa od początku do końca, ok. 25–35 s na nagranie; polski FUVAI (Sano + WUM, Physics in Medicine & Biology 2022) — ma publiczne wagi, ale uczono go na nagraniach szpitalnych w płaszczyznach standardowych, więc na nagraniach „na ślepo” rzadko jest pewny (próg autorów 0,9) i brzuch wiarygodnie znalazł tylko na nagraniu nr 3 (209 mm vs 217 u ekspertów); „niepewne” = wybrał klatkę, w której nnU-Net brzucha nie widzi. Model Sano: masa w dniu porodu — następny slajd. Tabela (ok. 20 s): nnU-Net na 3 z 4 nagrań kilka–kilkanaście mm od ekspertów, na nr 3 ok. 25 mm za dużo (skośny przekrój). Cztery nagrania to nie walidacja. OPCJONALNIE 30 s APLIKACJI (tylko przy zapasie czasu): aplikacja usg/app/demo_usg.py w przeglądarce (port 7860), tryb „z pamięci” (bez sieci, natychmiast) — nagranie Nr 1, „Znajdź brzuch i zmierz”, pokazać tylko kartę nnU-Net i obrys brzucha na klatce; FUVAI i Sano pominąć. Dane: ACOUSLIC-AI, CC BY-NC-SA 4.0, tylko niekomercyjnie.",
- "Plan B · USG — zaraz po slajdzie demo USG. Klatka z nagrania ACOUSLIC-AI (TRYB z_pamieci). Jeśli aplikacja lub notebook działa, pomiń zu01–zu07.",
- "Plan B · USG. nnU-Net przegląda nagranie i wskazuje klatkę z brzuchem — obrys i elipsa AC.",
- "Plan B · USG. Obwód brzucha, tydzień ciąży z Campbell, masa „teraz” — porównanie z ekspertami z CSV.",
- "Plan B · USG. Polski FUVAI na tym samym nagraniu — kiedy jest pewny, kiedy nie.",
- "Plan B · USG. Model Sano (checkpoint bazowy): masa w dniu porodu z nagrania <24 h przed porodem — tu ekstrapolacja poza dane uczące.",
- "Plan B · USG. Zrzut aplikacji demo_usg.py: nagranie Nr 1, tryb „z pamięci”, po „Znajdź brzuch i zmierz” (zakładka masa).",
- "Plan B · USG. Druga zakładka aplikacji: FUVAI klatka po klatce — paski klas, obrys struktury, oś czasu kolorów argmax.",
- "Plan B · USG · koniec bloku. Ta sama sesja — dwa panele nnU-Net i FUVAI. Wróć do slajdu o modelu Sano lub materiałach.",
+ "Plan B · USG — zrzut aplikacji: nagranie Nr 1, tryb „z pamięci”, wynik nnU-Net (masa). Pomiń, jeśli demo działa na żywo.",
+ "Plan B · USG · nagranie Nr 3 — ten sam pipeline w aplikacji (najmniejszy AC, a model Sano i tak podaje ~3,9 kg).",
+ "Plan B · USG · zakładka FUVAI sekcja po sekcji w aplikacji — koniec bloku zapasu USG.",
  "Ok. 1,5 min. Polski model bazowy (obrazowy 3D ResNet-18) z pracy TabAttention (Grzeszczyk, Płotka i in., MICCAI 2023), Sano + WUM — publiczny checkpoint. NIE prognozuje masy na tygodnie do przodu: szacuje masę w dniu porodu z badania < 24 h przed porodem (92 nagrania WUM, ciąże donoszone 38,3 ± 1,5 tc., masa ur. 3 495 ± 507 g). Tabela: AC rośnie 242→304 mm, masa „teraz” wg Campbella ok. 1,4–2,6 kg przy 28–34 tc., a model Sano zwraca wartości typowe dla urodzenia (3,6–4,0 kg) — bo tego się uczył. To nie ocena metody jako złej; w swoich danych działa. Wycinek (4 000 g*): segment dopełniony, orientacyjnie. Karta prawa górna: tylko model obrazowy (289 g w pracy) — jedyny publiczny; pełny TabAttention obraz + 6 pomiarów: 170 g, lepiej niż klinicyści 205 g, wag nie ma publicznie. AI wzmacnia pomiary lekarza. Karta prawa dolna: na naszych nagraniach 28–34 tc. czytamy wynik jako szacunek masy urodzeniowej, nie „teraz”; mas urodzeniowych nie znamy. Dla dociekliwych: skalowanie 0,2 mm/px to nasza interpretacja (±350–800 g). Dane ACOUSLIC-AI CC BY-NC-SA, materiał edukacyjny. Pytanie: „na jakich danych to uczono?”. Podziękowania Sano + WUM za publiczne prace. Opcjonalnie jedno zdanie przed QR: archiwizujmy wagi polskich modeli (Zenodo), pilotaże DIL.",
  "Materiały: jeden QR do repo — notebook, slajdy, źródła, zbiory danych. Wspomnieć dwa notebooki: USG → masa płodu (pokazany dziś) i Delphi-2M (po sesji mogę pokazać na laptopie) — oba chodzą lokalnie, nie w Colabie. Zachęcić do puszczenia notebooka w domu.",
  "Dziękuję. Pytania."
@@ -2331,7 +2326,7 @@ deck-stage.builds-armed .build.show {
       Demo <span class="grad-text-warm">(zapis z notebooka)</span>
     </h2>
     <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/03-model.png" alt="" style="max-width: 100%; max-height: 640px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+      <img src="slides/zapas/s14_lm_model_summary.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
   <div class="page-num">14</div>
@@ -2359,7 +2354,7 @@ deck-stage.builds-armed .build.show {
       Demo <span class="grad-text-warm">(zapis z notebooka)</span>
     </h2>
     <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/04-krzywa.png" alt="" style="max-width: 100%; max-height: 760px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+      <img src="slides/zapas/s16_lm_krzywa_bledu.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
   <div class="page-num">16</div>
@@ -2373,7 +2368,7 @@ deck-stage.builds-armed .build.show {
       Demo <span class="grad-text-warm">(zapis z notebooka)</span>
     </h2>
     <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/05-generowanie.png" alt="" style="max-width: 100%; max-height: 760px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+      <img src="slides/zapas/s17_lm_histogramy.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
   <div class="page-num">17</div>
@@ -2401,12 +2396,25 @@ deck-stage.builds-armed .build.show {
       Demo <span class="grad-text-warm">(zapis z notebooka)</span>
     </h2>
     <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/07-gradio.png" alt="" style="max-width: 100%; max-height: 720px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+      <img src="slides/Grdaio_app.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
   <div class="page-num">19</div>
 </section>
 
+
+<section data-label="Z08b Gradio histogramy" class="bg-ink">
+  <div class="slide-frame" style="padding: 52px 72px 36px;">
+    <div class="eyebrow">Plan B · aplikacja dla sali</div>
+    <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
+      Demo <span class="grad-text-warm">(histogramy liter)</span>
+    </h2>
+    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+      <img src="slides/Gradio_2.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+    </div>
+  </div>
+  <div class="page-num">20</div>
+</section>
 
 <section data-label="12 Section Scale" class="bg-section">
   <div class="slide-frame" style="justify-content: center; align-items: center; text-align: center;">
@@ -2418,7 +2426,7 @@ deck-stage.builds-armed .build.show {
       Ten sam cel — P(następny token | kontekst) — ale ok. 10 milionów razy więcej parametrów i nowa architektura.
     </div>
   </div>
-  <div class="page-num">20</div>
+  <div class="page-num">21</div>
 </section>
 
 
@@ -2494,7 +2502,7 @@ deck-stage.builds-armed .build.show {
       </div>
     </div>
   </div>
-  <div class="page-num">21</div>
+  <div class="page-num">22</div>
 </section>
 
 
@@ -2561,7 +2569,7 @@ deck-stage.builds-armed .build.show {
       </div>
     </div>
   </div>
-  <div class="page-num">22</div>
+  <div class="page-num">23</div>
 </section>
 
 
@@ -2594,7 +2602,7 @@ deck-stage.builds-armed .build.show {
       <div class="body-sm" style="color: rgba(255,255,255,0.6); margin-top: 20px;">Dokładnie ten sam proces, który przed chwilą wymyślał nazwy chorób, wymyśla też diagnozy. Halucynacja to nie usterka — to tryb pracy.</div>
     </div>
   </div>
-  <div class="page-num">23</div>
+  <div class="page-num">24</div>
 </section>
 
 
@@ -2638,7 +2646,7 @@ deck-stage.builds-armed .build.show {
       </div>
     </div>
   </div>
-  <div class="page-num">24</div>
+  <div class="page-num">25</div>
 </section>
 
 
@@ -2687,7 +2695,7 @@ deck-stage.builds-armed .build.show {
       <div class="body-sm" style="color: rgba(255,255,255,0.75); font-size: 25px;"><strong style="color: var(--accent-3);">Uczciwie:</strong> pytania egzaminacyjne mogły trafić do danych treningowych, a HealthBench to test autorstwa OpenAI — dlatego najmocniejszym dowodem jest ślepa ocena lekarzy. Halucynacje i treści szkodliwe: <strong style="color: var(--paper);">bez różnic</strong> między systemami.</div>
     </div>
   </div>
-  <div class="page-num">25</div>
+  <div class="page-num">26</div>
 </section>
 
 
@@ -2731,7 +2739,7 @@ deck-stage.builds-armed .build.show {
       <div style="font-size: 40px; font-weight: 700;" class="grad-text">Do rozmowy — skala. Do pomiaru i predykcji z Państwa danych — model dedykowany.</div>
     </div>
   </div>
-  <div class="page-num">26</div>
+  <div class="page-num">27</div>
 </section>
 
 
@@ -2770,7 +2778,7 @@ deck-stage.builds-armed .build.show {
       </div>
     </div>
   </div>
-  <div class="page-num">27</div>
+  <div class="page-num">28</div>
 </section>
 
 
@@ -2820,22 +2828,9 @@ deck-stage.builds-armed .build.show {
       </div>
     </div>
   </div>
-  <div class="page-num">28</div>
-</section>
-
-
-<section data-label="ZD01 Model" class="bg-ink">
-  <div class="slide-frame" style="padding: 52px 72px 36px;">
-    <div class="eyebrow">Plan B · Delphi · zapas — pomiń, jeśli demo działa</div>
-    <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
-      Demo <span class="grad-text-warm">(zapis z notebooka)</span>
-    </h2>
-    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/delphi-01.png" alt="" style="max-width: 100%; max-height: 760px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
-    </div>
-  </div>
   <div class="page-num">29</div>
 </section>
+
 
 <section data-label="ZD02 Trajektoria" class="bg-ink">
   <div class="slide-frame" style="padding: 52px 72px 36px;">
@@ -2844,7 +2839,7 @@ deck-stage.builds-armed .build.show {
       Demo <span class="grad-text-warm">(zapis z notebooka)</span>
     </h2>
     <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/delphi-02-trajektoria.png" alt="" style="max-width: 100%; max-height: 760px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+      <img src="slides/zapas/s30_delphi_pacjent.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
   <div class="page-num">30</div>
@@ -2857,7 +2852,7 @@ deck-stage.builds-armed .build.show {
       Demo <span class="grad-text-warm">(zapis z notebooka)</span>
     </h2>
     <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/delphi-03-trening.png" alt="" style="max-width: 100%; max-height: 760px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+      <img src="slides/zapas/s31_delphi_trening.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
   <div class="page-num">31</div>
@@ -2870,7 +2865,7 @@ deck-stage.builds-armed .build.show {
       Demo <span class="grad-text-warm">(zapis z notebooka)</span>
     </h2>
     <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/delphi-04-ranking.png" alt="" style="max-width: 100%; max-height: 720px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+      <img src="slides/zapas/s32_delphi_app_prognoza.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
   <div class="page-num">32</div>
@@ -2883,7 +2878,7 @@ deck-stage.builds-armed .build.show {
       Demo <span class="grad-text-warm">(zapis z notebooka)</span>
     </h2>
     <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/delphi-05-krzywe.png" alt="" style="max-width: 100%; max-height: 760px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+      <img src="slides/zapas/s33_delphi_krzywe.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
   <div class="page-num">33</div>
@@ -2896,7 +2891,7 @@ deck-stage.builds-armed .build.show {
       Demo <span class="grad-text-warm">(zapis z notebooka)</span>
     </h2>
     <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/delphi-06-slad.png" alt="" style="max-width: 100%; max-height: 720px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+      <img src="slides/zapas/s34_delphi_generuj.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
   <div class="page-num">34</div>
@@ -3054,7 +3049,7 @@ deck-stage.builds-armed .build.show {
           <div class="body-sm" style="font-size: 26px; line-height: 1.4; color: rgba(255,255,255,0.85);"><strong style="color: var(--accent);">≈ FUVAI</strong> 🇵🇱 — Sano + WUM, 2022, publiczne wagi. Działa <strong>częściowo</strong>: uczony na innych nagraniach, brzuch pewnie znalazł w 1 z 4</div>
         </div>
         <div class="card build" data-step="2" style="padding: 20px 28px; border-color: rgba(215,109,119,0.4);">
-          <div class="body-sm" style="font-size: 26px; line-height: 1.4; color: rgba(255,255,255,0.85);"><strong style="color: var(--accent-3);">? Model Sano</strong> 🇵🇱 — <strong>masa w dniu porodu</strong>, uczony na badaniach &lt;&nbsp;24&nbsp;h przed porodem. A&nbsp;w&nbsp;30.&nbsp;tc.? → następny slajd</div>
+          <div class="body-sm" style="font-size: 26px; line-height: 1.4; color: rgba(255,255,255,0.85);"><strong style="color: var(--accent-3);">? Model Sano</strong> 🇵🇱 — uczył się na &lt;&nbsp;24&nbsp;h przed porodem (~3,5&nbsp;kg); na 28–34&nbsp;tc. zwraca ~3,6–4&nbsp;kg <em>niezależnie</em> od płodu — przykład „nie wie, kiedy nie wie”, nie prognoza. → następny slajd</div>
         </div>
       </div>
 
@@ -3097,71 +3092,6 @@ deck-stage.builds-armed .build.show {
 </section>
 
 
-<section data-label="ZU01 Nagranie" class="bg-ink">
-  <div class="slide-frame" style="padding: 52px 72px 36px;">
-    <div class="eyebrow">Plan B · USG · zapas — pomiń, jeśli demo działa</div>
-    <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
-      Demo <span class="grad-text-warm">(zapis z notebooka)</span>
-    </h2>
-    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/usg-01-nagranie.png" alt="" style="max-width: 100%; max-height: 760px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
-    </div>
-  </div>
-  <div class="page-num">39</div>
-</section>
-
-<section data-label="ZU02 Maska" class="bg-ink">
-  <div class="slide-frame" style="padding: 52px 72px 36px;">
-    <div class="eyebrow">Plan B · USG</div>
-    <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
-      Demo <span class="grad-text-warm">(zapis z notebooka)</span>
-    </h2>
-    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/usg-02-brzuch.png" alt="" style="max-width: 100%; max-height: 760px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
-    </div>
-  </div>
-  <div class="page-num">40</div>
-</section>
-
-<section data-label="ZU03 Pomiar" class="bg-ink">
-  <div class="slide-frame" style="padding: 52px 72px 36px;">
-    <div class="eyebrow">Plan B · USG</div>
-    <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
-      Demo <span class="grad-text-warm">(zapis z notebooka)</span>
-    </h2>
-    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/usg-03-pomiar.png" alt="" style="max-width: 100%; max-height: 760px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
-    </div>
-  </div>
-  <div class="page-num">41</div>
-</section>
-
-<section data-label="ZU04 FUVAI" class="bg-ink">
-  <div class="slide-frame" style="padding: 52px 72px 36px;">
-    <div class="eyebrow">Plan B · USG</div>
-    <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
-      Demo <span class="grad-text-warm">(zapis z notebooka)</span>
-    </h2>
-    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/usg-04-fuvai.png" alt="" style="max-width: 100%; max-height: 760px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
-    </div>
-  </div>
-  <div class="page-num">42</div>
-</section>
-
-<section data-label="ZU05 Sano" class="bg-ink">
-  <div class="slide-frame" style="padding: 52px 72px 36px;">
-    <div class="eyebrow">Plan B · USG</div>
-    <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
-      Demo <span class="grad-text-warm">(zapis z notebooka)</span>
-    </h2>
-    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/usg-05-sano.png" alt="" style="max-width: 100%; max-height: 720px; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
-    </div>
-  </div>
-  <div class="page-num">43</div>
-</section>
-
 <section data-label="ZU06 Aplikacja" class="bg-ink">
   <div class="slide-frame" style="padding: 52px 72px 36px;">
     <div class="eyebrow">Plan B · USG · aplikacja</div>
@@ -3169,46 +3099,46 @@ deck-stage.builds-armed .build.show {
       Demo <span class="grad-text-warm">(zapis z aplikacji)</span>
     </h2>
     <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/usg-06-aplikacja.png" alt="" style="max-width: 100%; max-height: 720px; height: auto; border-radius: 16px; background: #111; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+      <img src="slides/zapas/s44_usg_nr1.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #111; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
-  <div class="page-num">44</div>
+  <div class="page-num">39</div>
+</section>
+
+<section data-label="ZU07 nnU-Net" class="bg-ink">
+  <div class="slide-frame" style="padding: 52px 72px 36px;">
+    <div class="eyebrow">Plan B · USG · nagranie Nr 3</div>
+    <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
+      Demo <span class="grad-text-warm">(zapis z aplikacji)</span>
+    </h2>
+    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+      <img src="slides/zapas/s45_usg_nr3.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #111; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+    </div>
+  </div>
+  <div class="page-num">40</div>
 </section>
 
 <section data-label="ZU08 FUVAI klatki" class="bg-ink">
   <div class="slide-frame" style="padding: 52px 72px 36px;">
     <div class="eyebrow">Plan B · USG · FUVAI</div>
     <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
-      Zakładka <span class="grad-text-warm">klatka po klatce</span>
+      Zakładka FUVAI <span class="grad-text-warm">sekcja po sekcji</span>
     </h2>
-    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/usg-08-fuvai-klatki.png" alt="" style="max-width: 100%; max-height: 720px; height: auto; border-radius: 16px; background: #111; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
+    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+      <img src="slides/zapas/s46_usg_fuvai_klatki.png" alt="" style="max-width: 100%; max-height: 820px; width: auto; height: auto; object-fit: contain; border-radius: 16px; background: #111; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
     </div>
   </div>
-  <div class="page-num">45</div>
-</section>
-
-<section data-label="ZU07 nnU-Net" class="bg-ink">
-  <div class="slide-frame" style="padding: 52px 72px 36px;">
-    <div class="eyebrow">Plan B · USG · koniec bloku</div>
-    <h2 class="section-title" style="margin-top: 14px; font-size: 46px;">
-      Demo <span class="grad-text-warm">(karta nnU-Net)</span>
-    </h2>
-    <div style="margin-top: 16px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;">
-      <img src="slides/zrzuty/usg-07-nnunet.png" alt="" style="max-width: 100%; max-height: 720px; height: auto; border-radius: 16px; background: #111; box-shadow: 0 10px 40px rgba(0,0,0,.28);">
-    </div>
-  </div>
-  <div class="page-num">46</div>
+  <div class="page-num">41</div>
 </section>
 
 <section data-label="N13c Model Sano" class="bg-ink">
-  <div class="slide-frame" style="padding-top: 84px;">
+  <div class="slide-frame" style="padding: 72px 80px 44px; overflow: hidden; box-sizing: border-box;">
     <div class="eyebrow build" data-step="0">Model Sano · Grzeszczyk, Płotka i in. · MICCAI 2023</div>
     <h2 class="section-title build" data-step="0" style="margin-top: 24px;">
       Masa w dniu porodu <span class="grad-text-warm">z samego wideo</span>
     </h2>
 
-    <div style="margin-top: 36px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: stretch;">
+    <div style="margin-top: 28px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: stretch;">
       <!-- wyniki na 4 nagraniach -->
       <div class="card build" data-step="1" style="padding: 28px 34px;">
         <div style="display: grid; grid-template-columns: auto auto 1fr 1fr; gap: 0 26px; align-items: baseline; white-space: nowrap;">
@@ -3248,19 +3178,19 @@ deck-stage.builds-armed .build.show {
           <div class="body-sm" style="font-size: 24px; line-height: 1.4; color: rgba(255,255,255,0.85); margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.12);">W pracy autorów, w kolejności błędu: <strong style="color: var(--accent);">obraz + 6&nbsp;pomiarów lekarza</strong> <strong>170&nbsp;g</strong> · klinicyści z Hadlockiem <strong>205&nbsp;g</strong> · <strong style="color: var(--accent-3);">sam obraz</strong> <strong>289&nbsp;g</strong>. Pokazujemy dziś <strong>tylko ten ostatni</strong> — model bazowy obrazowy, bo tylko jego checkpoint jest publiczny; wag modelu pełnego (170&nbsp;g) nie ma.</div>
           <div class="tiny" style="color: rgba(255,255,255,0.4); margin-top: 8px; text-transform: none; letter-spacing: 0.02em; font-size: 17px;">Grzeszczyk, Płotka i in., MICCAI 2023 (TabAttention)</div>
         </div>
-        <div class="card build" data-step="3" style="padding: 24px 32px; border-color: rgba(0,188,222,0.35); background: rgba(0,188,222,0.06);">
-          <div class="tiny" style="color: rgba(255,255,255,0.55); letter-spacing: 0.12em; margin-bottom: 10px;">NA NASZYCH NAGRANIACH (28–34 TC.)</div>
-          <div class="body-sm" style="font-size: 24px; line-height: 1.45; color: rgba(255,255,255,0.85);">Model szacuje to, na czym był uczone: <strong>masę w dniu porodu</strong> z badania tuż przed terminem — na naszych nagraniach (wg AC ok. 1,4–2,6&nbsp;kg) zwraca wartości typowe dla urodzenia (<strong style="color: var(--accent-3);">3,6–4,0&nbsp;kg</strong>). <strong style="color: var(--accent);">Kierunek z pracy</strong>: AI najlepiej wzmacnia pomiary lekarza (170&nbsp;g), nie zastępuje ich. <strong>Uwaga:</strong> mas urodzeniowych tych dzieci nie znamy.</div>
+        <div class="card build" data-step="3" style="padding: 22px 28px; border-color: rgba(215,109,119,0.45); background: rgba(215,109,119,0.08);">
+          <div class="tiny" style="color: rgba(255,255,255,0.55); letter-spacing: 0.12em; margin-bottom: 10px;">POZA DOMENĄ — „MODEL NIE WIE, KIEDY NIE WIE”</div>
+          <div class="body-sm" style="font-size: 23px; line-height: 1.42; color: rgba(255,255,255,0.88);">Uczył się na badaniach <strong>&lt; 24&nbsp;h przed porodem</strong> (ok. <strong>3,5&nbsp;kg</strong>); nasze nagrania są z <strong>28–34&nbsp;tc.</strong> — model zwraca ~<strong>3,6–4,0&nbsp;kg</strong> prawie niezależnie od wielkości płodu (np. <strong>Nr&nbsp;3</strong> z najmniejszym AC → najwyższy wynik Sano). To <strong>nie prognoza</strong>, tylko ilustracja ekstrapolacji. Mas urodzeniowych tych dzieci nie znamy.</div>
         </div>
       </div>
     </div>
 
-    <div class="card build" data-step="4" style="margin-top: 28px; padding: 20px 32px; background: rgba(255,175,123,0.06); border-color: rgba(255,175,123,0.35);">
-      <div class="body-sm" style="font-size: 23px; line-height: 1.45; color: rgba(255,255,255,0.8);">Kod i źródła: Grzeszczyk, Płotka i in., MICCAI 2023 (TabAttention), Sano + WUM. Publiczny checkpoint to model bazowy obrazowy, pokazywany za zgodą autorów; nie redystrybuujemy kodu autorów ani wag. Podziękowania dla zespołów Sano i WUM za publicznie udostępnione prace i kod.</div>
-      <div class="tiny" style="margin-top: 10px; color: rgba(255,255,255,0.38); font-size: 17px; letter-spacing: 0.03em; text-transform: none;">Nagrania: ACOUSLIC-AI (Radboudumc, Zenodo 12697994), CC BY-NC-SA 4.0, tylko niekomercyjnie · Materiał edukacyjny, nie wyrób medyczny — nie służy do decyzji klinicznych.</div>
+    <div class="card build" data-step="4" style="margin-top: 20px; padding: 16px 28px; background: rgba(255,175,123,0.06); border-color: rgba(255,175,123,0.35);">
+      <div class="body-sm" style="font-size: 21px; line-height: 1.4; color: rgba(255,255,255,0.8);">Kod i źródła: Grzeszczyk, Płotka i in., MICCAI 2023 (TabAttention), Sano + WUM. Publiczny checkpoint to model bazowy obrazowy. Podziękowania Sano + WUM za publiczne prace.</div>
+      <div class="tiny" style="margin-top: 8px; color: rgba(255,255,255,0.38); font-size: 16px; letter-spacing: 0.03em; text-transform: none;">Nagrania: ACOUSLIC-AI, CC BY-NC-SA 4.0 · Materiał edukacyjny, nie wyrób medyczny.</div>
     </div>
   </div>
-  <div class="page-num">47</div>
+  <div class="page-num">42</div>
 </section>
 
 
@@ -3302,7 +3232,7 @@ deck-stage.builds-armed .build.show {
       </div>
     </div>
   </div>
-  <div class="page-num">48</div>
+  <div class="page-num">43</div>
 </section>
 
 
