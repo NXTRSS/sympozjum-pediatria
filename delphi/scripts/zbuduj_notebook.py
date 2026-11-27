@@ -18,6 +18,11 @@ W pierwszym notebooku model uczył się, jaka **litera** będzie następna w naz
 > **Materiał edukacyjny. Nie jest wyrobem medycznym i nie służy do decyzji klinicznych.**
 >
 > **Uczciwie:** prawdziwe wagi Delphi-2M (UK Biobank) są dostępne tylko po wniosku do UK Biobank. Tutaj ten sam model (2,24 mln parametrów, kod autorów) trenowaliśmy na **danych syntetycznych**, które opublikowali autorzy. Pokazujemy **mechanizm**. Liczby ryzyka **nie są** prawdziwymi ryzykami dla pacjentów."""),
+    ("code", """# Google Colab — klon repo i pip (lokalnie bez efektu)
+from colab_bootstrap import uruchom
+
+uruchom()
+"""),
     ("code", """# ── KONFIGURACJA ──────────────────────────────────────────────
 TRYB = "z_pamieci"        # "z_pamieci" = krzywe policzone przed prelekcją; "na_zywo" = liczymy teraz
 N_PROBEK_NA_ZYWO = 100    # ile „żyć" losujemy na żywo (100 ≈ 6 s, 200 ≈ 6–11 s na pacjenta; komórka liczy 2 pacjentów)

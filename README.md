@@ -51,8 +51,8 @@ W notatniku można zmienić `ZBIOR` na `"leki"` albo `"dinozaury"` i wytrenować
 | [`data/leki.csv`](data/leki.csv) | 9438 nazw handlowych leków dopuszczonych w Polsce |
 | [`assemble.py`](assemble.py), [`slides/`](slides) | Źródła slajdów. `assemble.py` składa `prezentacja.html` (`←`/`→` nawigacja, druk do PDF) z plików `slides/*.html` i szablonu [`public-template/published-deck.html`](public-template/published-deck.html) — wszystko jest w repozytorium, nic nie trzeba dokładać |
 | [`prezentacja.html`](prezentacja.html) | Złożona prezentacja (wynik `assemble.py`), gotowa do otwarcia w przeglądarce |
-| [`usg/`](usg) | Notebook „USG → masa płodu" (nnU-Net z ACOUSLIC-AI, FUVAI, model bazowy z pracy TabAttention) — uruchamiany lokalnie, nie w Colabie |
-| [`delphi/`](delphi) | Notebook Delphi-2M na danych syntetycznych autorów — uruchamiany lokalnie |
+| [`usg/notebook/usg_masa_plodu.ipynb`](usg/notebook/usg_masa_plodu.ipynb) | USG → masa płodu (nnU-Net, FUVAI, TabAttention) — lokalnie albo Colab ([![Otwórz w Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/usg/notebook/usg_masa_plodu.ipynb)); w Colab bez plików `pamiec/` część komórek się nie uda |
+| [`delphi/notebook/delphi_2m.ipynb`](delphi/notebook/delphi_2m.ipynb) | Delphi-2M na danych syntetycznych autorów — lokalnie albo Colab ([![Otwórz w Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NXTRSS/sympozjum-pediatria/blob/main/delphi/notebook/delphi_2m.ipynb)) |
 | [`docs/specs/`](docs/specs) | Projekt prelekcji: struktura, źródła, plan awaryjny |
 
 ## 💻 Uruchomienie lokalne

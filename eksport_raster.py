@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["playwright>=1.44", "python-pptx>=0.6.23", "img2pdf>=0.5", "pillow>=10"]
+# dependencies = ["playwright>=1.44", "python-pptx>=0.6.23", "img2pdf>=0.5", "pillow>=10", "pikepdf>=9"]
 # ///
 """Eksport prezentacja.html do formatów dla laptopa DIL (Windows, tylko PDF/PPTX).
 
@@ -35,6 +35,7 @@ from pathlib import Path
 import img2pdf
 from playwright.sync_api import sync_playwright
 from pptx import Presentation
+from pptx.enum.shapes import MSO_SHAPE
 from pptx.util import Emu
 
 ROOT = Path(__file__).parent
@@ -44,6 +45,7 @@ DECK = ROOT / f"{NAZWA}.html"
 OUT = ROOT / "eksport"
 PNG = OUT / ("slajdy_zapas" if ZAPAS else "slajdy")
 W, H = 1920, 1080
+PDF_W, PDF_H = 1440.0, 810.0  # jak layout_fun img2pdf przy 96 dpi
 
 # Na zrzutach chowamy elementy interfejsu, które na obrazie nie działają:
 # wskaźnik trybu (.no-print), banery step-editora, przyciski animacji.
@@ -52,6 +54,20 @@ UKRYJ_CSS = """
 #inference-anim button { visibility: hidden !important; }
 *, *::before, *::after { transition: none !important; animation-play-state: paused !important; caret-color: transparent !important; }
 """
+
+
+def linki_aktywnego_slajdu(strona) -> list[dict]:
+    """Pozycje elementów <a data-export-link> na aktywnym slajdzie (współrz. viewportu)."""
+    return strona.evaluate(
+        """() => {
+        const sec = document.querySelector('deck-stage > section[data-deck-active]');
+        if (!sec) return [];
+        return [...sec.querySelectorAll('a[data-export-link]')].map(a => {
+            const r = a.getBoundingClientRect();
+            return {href: a.href, x: r.left, y: r.top, w: r.width, h: r.height};
+        });
+    }"""
+    )
 
 
 def notatki(html: str) -> list[str]:
@@ -66,8 +82,8 @@ def notatki(html: str) -> list[str]:
     sys.exit(f"Nie znalazłem notatek prelegenta (speaker-notes) w {DECK.name}")
 
 
-def zrob_zrzuty() -> list[tuple[Path, int, str | None]]:
-    """Zwraca listę (plik, indeks slajdu w decku, podpis kroku albo None)."""
+def zrob_zrzuty() -> list[tuple[Path, int, str | None, list[dict]]]:
+    """Zwraca listę (plik, indeks slajdu, podpis kroku albo None, hiperlinki do eksportu)."""
     if PNG.exists():
         shutil.rmtree(PNG)
     PNG.mkdir(parents=True)
@@ -95,8 +111,9 @@ def zrob_zrzuty() -> list[tuple[Path, int, str | None]]:
             if not ma_animacje:
                 plik = PNG / f"{i + 1:02d}.png"
                 strona.wait_for_timeout(900)  # nakładka z numerem slajdu znika
+                linki = linki_aktywnego_slajdu(strona)
                 strona.screenshot(path=str(plik))
-                wynik.append((plik, i, None))
+                wynik.append((plik, i, None, linki))
                 continue
             # GENERATION_STEPS jest w domknięciu skryptu decku, więc idziemy krokami,
             # aż animacja sama wyłączy przycisk „Następny krok” (ostatni krok).
@@ -106,32 +123,83 @@ def zrob_zrzuty() -> list[tuple[Path, int, str | None]]:
                 strona.evaluate("inferenceStep()")
                 strona.wait_for_timeout(900 if k == 0 else 150)
                 plik = PNG / f"{i + 1:02d}_krok{k + 1:02d}.png"
+                linki = linki_aktywnego_slajdu(strona)
                 strona.screenshot(path=str(plik))
-                klatki.append(plik)
+                klatki.append((plik, linki))
                 if strona.evaluate("document.getElementById('btn-step').disabled"):
                     break
             else:
                 sys.exit("Animacja „Krok po kroku” nie skończyła się po 100 krokach")
-            for k, plik in enumerate(klatki):
-                wynik.append((plik, i, f"Krok {k + 1}/{len(klatki)}"))
+            for k, (plik, linki) in enumerate(klatki):
+                wynik.append((plik, i, f"Krok {k + 1}/{len(klatki)}", linki))
             strona.evaluate("inferenceRestart()")
         przegl.close()
     return wynik
 
 
+def _dodaj_linki_pdf(pdf_path: Path, linki_po_stronach: list[list[dict]]) -> None:
+    import pikepdf
+
+    with pikepdf.open(pdf_path, allow_overwriting_input=True) as pdf:
+        for idx, linki in enumerate(linki_po_stronach):
+            if idx >= len(pdf.pages) or not linki:
+                continue
+            page = pdf.pages[idx]
+            annots = page.get("/Annots")
+            if annots is None:
+                annots = pikepdf.Array()
+            elif not isinstance(annots, pikepdf.Array):
+                annots = pikepdf.Array([annots])
+            for L in linki:
+                if L["w"] < 1 or L["h"] < 1:
+                    continue
+                x1 = L["x"] / W * PDF_W
+                x2 = (L["x"] + L["w"]) / W * PDF_W
+                y1 = PDF_H - (L["y"] + L["h"]) / H * PDF_H
+                y2 = PDF_H - L["y"] / H * PDF_H
+                annot = pikepdf.Dictionary(
+                    Type=pikepdf.Name.Annot,
+                    Subtype=pikepdf.Name.Link,
+                    Rect=pikepdf.Array([x1, y1, x2, y2]),
+                    Border=pikepdf.Array([0, 0, 0]),
+                )
+                annot["/A"] = pikepdf.Dictionary(
+                    Type=pikepdf.Name.Action,
+                    S=pikepdf.Name.URI,
+                    URI=L["href"],
+                )
+                annots.append(annot)
+            page["/Annots"] = annots
+        pdf.save(pdf_path)
+
+
 def zbuduj_pdf(zrzuty):
     # 1920×1080 px przy 96 dpi = 1440×810 pt, tyle samo co druk z Chrome
     uklad = img2pdf.get_fixed_dpi_layout_fun((96, 96))
-    (OUT / f"{NAZWA}.pdf").write_bytes(img2pdf.convert([str(z[0]) for z in zrzuty], layout_fun=uklad))
+    pdf_path = OUT / f"{NAZWA}.pdf"
+    pdf_path.write_bytes(img2pdf.convert([str(z[0]) for z in zrzuty], layout_fun=uklad))
+    _dodaj_linki_pdf(pdf_path, [z[3] for z in zrzuty])
 
 
 def zbuduj_pptx(zrzuty, notes):
     prez = Presentation()
     prez.slide_width, prez.slide_height = Emu(12192000), Emu(6858000)  # 16:9, 13,333 × 7,5 cala
     pusty = prez.slide_layouts[6]
-    for plik, i, krok in zrzuty:
+    for plik, i, krok, linki in zrzuty:
         s = prez.slides.add_slide(pusty)
         s.shapes.add_picture(str(plik), 0, 0, width=prez.slide_width, height=prez.slide_height)
+        sw, sh = prez.slide_width, prez.slide_height
+        for L in linki:
+            if L["w"] < 1 or L["h"] < 1:
+                continue
+            left = int(sw * L["x"] / W)
+            top = int(sh * L["y"] / H)
+            width = max(int(sw * L["w"] / W), 1)
+            height = max(int(sh * L["h"] / H), 1)
+            shape = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, height)
+            shape.fill.background()
+            shape.line.fill.background()
+            shape.click_action.hyperlink.address = L["href"]
         tekst = notes[i] if i < len(notes) else ""
         if krok and not krok.startswith("Krok 1/"):
             tekst = f"{krok} — animacja „Krok po kroku”, ciąg dalszy (pełna notatka przy kroku 1)."
