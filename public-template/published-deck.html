@@ -943,6 +943,8 @@ deck-stage.builds-armed .build.show {
  *   Shift+S          — ZAPISZ: próbuje nadpisać plik HTML (File System Access API),
  *                     jak nie da rady — pobiera plik z dialogiem "Zapisz jako",
  *                     albo pokazuje patch do skopiowania. Zawsze zapisuje też do localStorage.
+ *   Shift+C          — skopiuj mapę JSON (localStorage) do schowka
+ *   Shift+D          — jak Shift+C + pobierz mały step-overrides.json (działa też na file://)
  *   Shift+O          — "Podepnij plik HTML" (raz na sesję — kolejne Shift+S są bezdialogowe)
  *   Shift+R          — wyczyść zmiany z localStorage
  *   Esc              — wyjdź z trybu edycji
@@ -1085,8 +1087,9 @@ deck-stage.builds-armed .build.show {
         <span><kbd>+</kbd>/<kbd>−</kbd> ±1</span>
         <span><kbd>M</kbd> merge</span>
         <span><kbd>Shift+S</kbd> zapisz</span>
+        <span><kbd>Shift+C</kbd> kopiuj mapę</span>
         <span><kbd>Shift+O</kbd> podepnij</span>
-        <span><kbd>Shift+D</kbd> pobierz</span>
+        <span><kbd>Shift+D</kbd> mapa→schowek+JSON</span>
         <span><kbd>Shift+B</kbd> build offline</span>
         <span><kbd>Esc</kbd> wyjście</span>`;
       document.body.appendChild(b);
@@ -1209,8 +1212,9 @@ deck-stage.builds-armed .build.show {
 
     if (e.key === 'Escape') { e.preventDefault(); disable(); return; }
     if (e.shiftKey && (e.key === 'S' || e.key === 's')) { e.preventDefault(); saveToFile(); return; }
+    if (e.shiftKey && (e.key === 'C' || e.key === 'c')) { e.preventDefault(); copyOverridesMap(); return; }
     if (e.shiftKey && (e.key === 'O' || e.key === 'o')) { e.preventDefault(); pickHandle(); return; }
-    if (e.shiftKey && (e.key === 'D' || e.key === 'd')) { e.preventDefault(); downloadPatched(); return; }
+    if (e.shiftKey && (e.key === 'D' || e.key === 'd')) { e.preventDefault(); exportOverrides(); return; }
     if (e.shiftKey && (e.key === 'B' || e.key === 'b')) { e.preventDefault(); buildStandalone(); return; }
     if (e.shiftKey && (e.key === 'R' || e.key === 'r')) {
       e.preventDefault();
@@ -1353,6 +1357,93 @@ deck-stage.builds-armed .build.show {
     document.body.appendChild(overlay);
   }
 
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0;';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand('copy');
+      ta.remove();
+      return ok;
+    }
+  }
+
+  async function copyOverridesMap() {
+    const map = loadOverrides();
+    const n = Object.keys(map).length;
+    if (n === 0) {
+      toast('Brak wpisów w mapie (localStorage puste).', 2000);
+      return false;
+    }
+    const ok = await copyText(JSON.stringify(map));
+    toast(
+      ok ? `Skopiowano mapę (${n} wpisów) do schowka.` : 'Schowek zablokowany — użyj Shift+D (pobierze JSON).',
+      2800,
+    );
+    return ok;
+  }
+
+  function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function downloadJsonMap() {
+    const overrides = loadOverrides();
+    const n = Object.keys(overrides).length;
+    const blob = new Blob([JSON.stringify(overrides, null, 2) + '\n'], {
+      type: 'application/json;charset=utf-8',
+    });
+    downloadBlob(blob, 'step-overrides.json');
+    toast(n ? `Pobieram step-overrides.json (${n} wpisów).` : 'Pobieram pustą mapę step-overrides.json.', 2200);
+  }
+
+  async function getSourceHTML() {
+    try {
+      const resp = await fetch(location.href);
+      if (resp.ok) return await resp.text();
+    } catch (e) {
+      /* file:// — fetch często niedostępny */
+    }
+    const dt = document.doctype;
+    const prelude = dt
+      ? `<!DOCTYPE ${dt.name}${dt.publicId ? ` PUBLIC "${dt.publicId}"` : ''}${dt.systemId ? ` "${dt.systemId}"` : ''}>\n`
+      : '<!DOCTYPE html>\n';
+    return prelude + document.documentElement.outerHTML;
+  }
+
+  async function exportOverrides() {
+    await copyOverridesMap();
+    downloadJsonMap();
+    const overrides = loadOverrides();
+    if (Object.keys(overrides).length === 0) return;
+    if (location.protocol === 'file:') {
+      toast('file:// — pełny HTML nie jest pobierany (mapa: schowek + JSON).', 3200);
+      return;
+    }
+    try {
+      const original = await getSourceHTML();
+      const { html, patched } = applyOverridesToHTML(original, overrides);
+      downloadBlob(new Blob([html], { type: 'text/html;charset=utf-8' }), location.pathname.split('/').pop() || 'prezentacja.html');
+      toast(`Dodatkowo pobrano HTML (${patched} zmian).`, 2200);
+    } catch (e) {
+      toast('HTML: ' + e.message + ' (mapa już w schowku i JSON).', 2800);
+    }
+  }
+
   async function saveToFile() {
     const overrides = loadOverrides();
     if (Object.keys(overrides).length === 0) { toast('Brak zmian do zapisu.', 1500); return; }
@@ -1376,8 +1467,7 @@ deck-stage.builds-armed .build.show {
     // Próba 2: showSaveFilePicker — pobierz current HTML, zapatchuj, otwórz "Zapisz jako"
     if (window.showSaveFilePicker) {
       try {
-        const resp = await fetch(location.href);
-        const original = await resp.text();
+        const original = await getSourceHTML();
         const { html, patched } = applyOverridesToHTML(original, overrides);
         const fname = location.pathname.split('/').pop() || 'prezentacja.html';
         const handle = await window.showSaveFilePicker({
@@ -1401,31 +1491,8 @@ deck-stage.builds-armed .build.show {
       }
     }
 
-    // Fallback 3: pobranie zapatchowanego pliku
-    await downloadPatched();
-  }
-
-  // ── Pobierz zapatchowany HTML jako standalone plik ─────────────────────
-  async function downloadPatched() {
-    const overrides = loadOverrides();
-    if (Object.keys(overrides).length === 0) { toast('Brak zmian — pobiorę oryginał.', 1800); }
-    try {
-      const resp = await fetch(location.href);
-      const original = await resp.text();
-      const { html, patched } = applyOverridesToHTML(original, overrides);
-      const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = location.pathname.split('/').pop() || 'prezentacja.html';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      toast(`Pobieram ${a.download} (${patched} zmian).`, 2200);
-    } catch (e) {
-      toast('Błąd pobierania: ' + e.message, 2500);
-    }
+    // Fallback 3: schowek + JSON (działa na file://)
+    await exportOverrides();
   }
 
   // ── Build offline standalone ─────────────────────────────────────────────
