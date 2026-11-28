@@ -9,6 +9,10 @@ Z katalogu głównego repozytorium (nie: uv run python usg/app/demo_usg.py — t
     uv run python uruchom_demo_usg.py
     uv run --directory usg python app/demo_usg.py
 
+Port (domyślnie 7861 — generator chorób zwykle zajmuje 7860):
+    GRADIO_SERVER_PORT=7862 uv run python uruchom_demo_usg.py
+    uv run python uruchom_demo_usg.py --port 7862
+
 Ten sam pipeline, liczby i zastrzeżenia co notebook (notebook/usg_masa_plodu.ipynb);
 cała logika jest w usg_masa.aplikacja, tu jest tylko wygląd.
 Materiał edukacyjny. Nie jest wyrobem medycznym i nie służy do decyzji klinicznych.
@@ -25,6 +29,7 @@ os.environ.setdefault("HF_HUB_OFFLINE", "1")
 import argparse  # noqa: E402
 import html  # noqa: E402
 import logging  # noqa: E402
+import socket  # noqa: E402
 import sys  # noqa: E402
 import threading  # noqa: E402
 from pathlib import Path  # noqa: E402
@@ -874,6 +879,34 @@ def zbuduj_interfejs() -> gr.Blocks:
     return demo
 
 
+# Generator chorób (notebook/demo_model.py) domyślnie startuje na 7860 — USG niech bierze 7861.
+DOMYSLNY_PORT_HTTP = 7861
+
+
+def _port_domyslny_z_env() -> int:
+    raw = os.environ.get("GRADIO_SERVER_PORT", "").strip()
+    return int(raw) if raw else DOMYSLNY_PORT_HTTP
+
+
+def _wolny_port_od(pierwszy: int, prob: int = 32) -> int:
+    """Pierwszy wolny port TCP na 127.0.0.1 od ``pierwszy`` (włącznie)."""
+    for p in range(pierwszy, pierwszy + prob):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            try:
+                sock.bind(("127.0.0.1", p))
+            except OSError:
+                continue
+            return p
+    raise OSError(f"Brak wolnego portu w zakresie {pierwszy}–{pierwszy + prob - 1}")
+
+
+def _port_serwera(z_cli: int | None, *, sztywny: bool) -> int:
+    start = z_cli if z_cli is not None else _port_domyslny_z_env()
+    if sztywny:
+        return start
+    return _wolny_port_od(start)
+
+
 def _adresy_z_launch(wynik_launch, demo) -> tuple[str, str]:
     lokalny, link = "", ""
     if isinstance(wynik_launch, tuple):
@@ -903,7 +936,18 @@ def _otworz_zakladke(url: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=TYTUL)
-    parser.add_argument("--port", type=int, default=7860)
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=None,
+        metavar="N",
+        help="port HTTP (domyślnie: zmienna GRADIO_SERVER_PORT albo 7861; szukaj wolnego od N)",
+    )
+    parser.add_argument(
+        "--port-sztywny",
+        action="store_true",
+        help="nie przechodź na kolejny port, gdy N jest zajęty (wtedy błąd startu)",
+    )
     parser.add_argument("--bez-przegladarki", action="store_true", help="nie otwieraj przeglądarki")
     parser.add_argument(
         "--bez-linku",
@@ -911,19 +955,23 @@ def main() -> None:
         help="tylko lokalnie (share=False); domyślnie tworzy publiczny link gradio.live",
     )
     args = parser.parse_args()
+    żądany = args.port if args.port is not None else _port_domyslny_z_env()
+    port = _port_serwera(args.port, sztywny=args.port_sztywny)
     share = not args.bez_linku
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s: %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)   # bez wpisu o każdym zapytaniu do 127.0.0.1
     demo = zbuduj_interfejs()
     demo.queue(default_concurrency_limit=4)   # liczenie na żywo i tak idzie po jednym (blokada MPS)
+    if not args.port_sztywny and port != żądany:
+        print(f"Port {żądany} jest zajęty — uruchamiam USG na http://127.0.0.1:{port}", flush=True)
     if share:
         print("\nUruchamiam aplikację USG. Publiczny link gradio.live pojawi się poniżej.", flush=True)
     else:
-        print("\nUruchamiam aplikację USG lokalnie (--bez-linku).", flush=True)
+        print(f"\nUruchamiam aplikację USG lokalnie (--bez-linku) na porcie {port}.", flush=True)
     print("Ctrl+C = serwer się zatrzymuje.\n", flush=True)
     wynik_launch = demo.launch(
         server_name="127.0.0.1",
-        server_port=args.port,
+        server_port=port,
         share=share,
         inbrowser=False,
         prevent_thread_lock=True,
@@ -936,8 +984,8 @@ def main() -> None:
         show_error=True,
     )
     lokalny, link = _adresy_z_launch(wynik_launch, demo)
-    if not lokalny and args.port:
-        lokalny = f"http://127.0.0.1:{args.port}"
+    if not lokalny and port:
+        lokalny = f"http://127.0.0.1:{port}"
     print("\n" + "=" * 64)
     if share and not link:
         print(

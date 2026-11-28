@@ -58,7 +58,7 @@ Odrzucanie masek „dotykających krawędzi” (oba modele) sprawdza tylko kraw�
 Ładniejsza alternatywa dla notebooka na scenę: ten sam pipeline, te same liczby i zastrzeżenia, jeden ekran.
 
 ```bash
-cd usg && uv run python app/demo_usg.py            # otwiera http://127.0.0.1:7860
+cd usg && uv run python app/demo_usg.py            # http://127.0.0.1:7861 (generator chorób: 7860)
 uv run python app/demo_usg.py --bez-przegladarki   # sam serwer (Ctrl+C kończy)
 ```
 

@@ -4,6 +4,7 @@
     uv run python uruchom_demo_usg.py
     uv run python uruchom_demo_usg.py --bez-przegladarki
     uv run python uruchom_demo_usg.py --bez-linku
+    uv run python uruchom_demo_usg.py --port 7862   # gdy 7860/7861 zajęte (np. generator chorób)
 
 To samo co:
     cd usg && uv run python app/demo_usg.py
