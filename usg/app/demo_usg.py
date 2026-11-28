@@ -25,6 +25,9 @@ import os
 os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
 os.environ.setdefault("HF_HUB_DISABLE_TELEMETRY", "1")
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
+# Zanim załaduje się Gradio: USG na 7861, żeby nie walczyć z modelem chorób (7860).
+if os.environ.get("GRADIO_SERVER_PORT", "").strip() in ("", "7860"):
+    os.environ["GRADIO_SERVER_PORT"] = "7861"
 
 import argparse  # noqa: E402
 import html  # noqa: E402
@@ -963,6 +966,7 @@ def main() -> None:
     args = parser.parse_args()
     żądany = args.port if args.port is not None else _port_domyslny_z_env()
     port = _port_serwera(args.port, sztywny=args.port_sztywny)
+    print(f"USG demo · port HTTP: {port} (żądany: {żądany})", flush=True)
     share = not args.bez_linku
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s: %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)   # bez wpisu o każdym zapytaniu do 127.0.0.1
