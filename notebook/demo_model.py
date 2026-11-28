@@ -215,9 +215,8 @@ def _wynik_z_modelu(
     *,
     z_cache: bool = False,
 ) -> dict:
-    ustaw_ziarna(ziarno)
+    # Bez resetu ziarna — przykładowe nazwy po treningu różnią się między uruchomieniami (trening nadal ziarno 42).
     pierwsza, _ = generuj(model, tokenizer, temperatura=temperatura)
-    ustaw_ziarna(ziarno)
     dziesiec = [
         generuj(model, tokenizer, temperatura=temperatura)[0]
         for _ in range(10)
@@ -456,6 +455,11 @@ def uruchom_aplikacje(
                 )
                 print(f"[demo] odrzut  ok={licznik['ok']} odrzut={licznik['odrzut']}", flush=True)
                 return _pusta_odp(msg)
+            import secrets
+
+            s = secrets.randbelow(2**31)
+            random.seed(s)
+            np.random.seed(s)
             wyniki = []
             paczki: list[dict] = []
             for numer in range(ile_i):

@@ -19,6 +19,15 @@ def ensure_package(nazwa: str, *, pip_name: str | None = None) -> None:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", pip_name])
 
 
+def reset_seed_losowy() -> None:
+    """Losowe ziarno tylko pod generowanie (numpy/random); trening zostaje przy SEED=42 w notatniku."""
+    import secrets
+
+    s = secrets.randbelow(2**31)
+    random.seed(s)
+    np.random.seed(s)
+
+
 def reset_seed(seed: int) -> None:
     os.environ.setdefault("PYTHONHASHSEED", str(seed))
     os.environ.setdefault("TF_DETERMINISTIC_OPS", "1")
