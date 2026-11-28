@@ -14,23 +14,15 @@ Link do demo (aktywny 28.11 od ok. 10:45): [https://8b4bb84f40a0217a55.gradio.li
 
 Aplikacja z prelekcji: generowanie łacińskich nazw chorób, bez logowania. Kod QR na slajdzie „Telefony w dłoń” prowadzi do tej sekcji.
 
-### Demo USG (masa z nagrania — **nie** dawać tego linku publiczności w sali)
+### Demo USG (masa z nagrania)
 
-| | Generator chorób (powyżej) | Aplikacja USG (`usg/app/demo_usg.py`) |
-|---|---|---|
-| **Publiczność w sali** | Tak — lekki UI, działa w przeglądarce na telefonie | **Nie** — pokaz tylko z laptopa prelegenta na projektorze |
-| **Link `gradio.live`** | Wklej poniżej, QR na slajdzie | Zapas dla Ciebie / organizatorów; **bez QR w sali** |
-
-Link opcjonalny (tylko zapas / test, **nie** do skanowania przez salę): `https://TUTAJ-WKLEJ-Link-gradio-live-USG.gradio.live`
-
-Na scenie uruchamiaj **lokalnie** (bez tunelu):
+Bez linku publicznego i bez QR w sali — tylko laptop prelegenta na projektorze ([`usg/README.md`](usg/README.md)):
 
 ```bash
 uv run python uruchom_demo_usg.py --bez-linku
-# albo: cd usg && uv run python app/demo_usg.py --bez-linku  →  http://127.0.0.1:7861
 ```
 
-Tryb **„z pamięci”**, nagranie **Nr 1** — liczby jak na slajdzie; bez internetu. Publiczny link USG nie ma sensu dla uczestników: nie mają wag ani `pamiec/`, a „na żywo” to ok. 25 s i wymaga Twojego komputera. Szczegóły: [`usg/README.md`](usg/README.md).
+Tryb **„z pamięci”**, nagranie **Nr 1** → `http://127.0.0.1:7861`
 
 ## 🚀 Uruchom model w przeglądarce (także na telefonie)
 

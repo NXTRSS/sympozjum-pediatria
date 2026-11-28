@@ -63,22 +63,7 @@ uv run python app/demo_usg.py --bez-linku          # **zalecane na scenie** — 
 uv run python app/demo_usg.py --bez-przegladarki   # sam serwer (Ctrl+C kończy)
 ```
 
-Z katalogu głównego repo: `uv run python uruchom_demo_usg.py` (to samo venv co `cd usg`).
-
-### Link `gradio.live` — czy wstawiać do README / QR na salę?
-
-**Na salę — raczej nie.** Generator nazw chorób jest pod telefon publiczności; **USG** to pokaz z **Twojego laptopa** na ekran (projektor), tryb **„z pamięci”**, bez udostępniania nagrania ACOUSLIC-AI przez tunel.
-
-| Pytanie | Odpowiedź |
-|---|---|
-| QR dla 200 osób? | **Nie** — uczestnicy nie mają wag (~700 MB) ani `pamiec/`; „na żywo” liczy tylko u Ciebie i trwa dłużko. |
-| Link w README (placeholder)? | **Tak, opcjonalnie** — na wypadek testu z organizatorem albo pojutrze; nie traktuj jak drugi QR obok modelu chorób. |
-| Jak wziąć link, jeśli chcesz? | `cd usg && uv run python app/demo_usg.py` (domyślnie `share=True`) — w terminalu: `LINK DLA SALI: https://….gradio.live`. Wklej np. w główny [`README.md`](../README.md) w linii `TUTAJ-WKLEJ-Link-gradio-live-USG`. |
-| Co na prelekcji? | `uv run python app/demo_usg.py --bez-linku` albo `uruchom_demo_usg.py --bez-linku` przed wejściem na scenę; **Nr 1**, **z pamięci**, pełny ekran (patrz „Na scenie” niżej). |
-
-Placeholder (wklej po uruchomieniu, jeśli potrzebujesz):
-
-`https://TUTAJ-WKLEJ-Link-gradio-live-USG.gradio.live`
+Z katalogu głównego repo: `uv run python uruchom_demo_usg.py --bez-linku` (to samo venv co `cd usg`). **Bez** publicznego linku `gradio.live` i **bez** QR dla sali — tylko lokalnie na projektorze.
 
 - **Nagranie**: Nr 1 (`0199616b`), Nr 2 (`02d3a9bc`), Nr 3 (`02ee26a5`), Wycinek (`04a04f2e`, 128 klatek), jak na slajdach. Pod spodem można wgrać własny plik `.mha` w formacie ACOUSLIC-AI (dla niego działa tylko „na żywo”, chyba że jego wyniki są w `pamiec/`).
 - **Tryb „z pamięci”** (domyślny): wyniki z `pamiec/`, od razu, bez modeli. Liczby jak na slajdzie (AC 304 mm, Sano 3 551 g dla Nr 1 itd.).
