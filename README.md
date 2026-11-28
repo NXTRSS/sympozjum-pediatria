@@ -10,7 +10,7 @@ Prelekcja pokazuje **od środka, jak działa model autoregresyjny** — budujemy
 
 ## Demo na żywo
 
-Link do demo (aktywny 28.11 od ok. 10:45): [https://8b4bb84f40a0217a55.gradio.live](https://cd6f3b48ca8d168690.gradio.live)
+Link do demo (aktywny 28.11 od ok. 10:45): NIEAKTYWNY
 
 Aplikacja z prelekcji: generowanie łacińskich nazw chorób, bez logowania. Kod QR na slajdzie „Telefony w dłoń” prowadzi do tej sekcji.
 
