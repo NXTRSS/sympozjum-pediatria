@@ -24,6 +24,9 @@ def main() -> None:
     if not SKRYPT.is_file():
         raise SystemExit(f"Brak {SKRYPT}")
     env = os.environ.copy()
+    # USG ≠ generator chorób: bez jawnego portu nie dziedzicz 7860 z GRADIO_SERVER_PORT.
+    if "GRADIO_SERVER_PORT" not in env and "--port" not in sys.argv[1:]:
+        env.setdefault("GRADIO_SERVER_PORT", "7861")
     cmd = ["uv", "run", "python", "app/demo_usg.py", *sys.argv[1:]]
     raise SystemExit(subprocess.call(cmd, cwd=USG, env=env))
 

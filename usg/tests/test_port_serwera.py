@@ -26,6 +26,11 @@ def test_port_z_env(demo_usg_mod, monkeypatch):
     assert demo_usg_mod._port_domyslny_z_env() == 7877
 
 
+def test_gr_z_7860_mapuje_na_7861(demo_usg_mod, monkeypatch):
+    monkeypatch.setenv("GRADIO_SERVER_PORT", "7860")
+    assert demo_usg_mod._port_domyslny_z_env() == 7861
+
+
 def test_wolny_port_od_zajety_pierwszy(demo_usg_mod):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as blok:
         blok.bind(("127.0.0.1", 0))
