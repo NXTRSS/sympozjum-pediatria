@@ -79,7 +79,7 @@ Pokaz (działa bez internetu):
 ```bash
 cd ~/Documents/sympozjum-pediatria/usg
 uv run jupyter notebook notebook/usg_masa_plodu.ipynb     # TRYB = "z_pamieci", potem Kernel → Restart & Run All
-uv run python app/demo_usg.py                             # aplikacja: http://127.0.0.1:7860
+uv run python app/demo_usg.py                             # aplikacja: http://127.0.0.1:7861 (--port / GRADIO_SERVER_PORT)
 ```
 
 ## 4. Delphi-2M
