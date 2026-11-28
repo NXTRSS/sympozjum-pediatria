@@ -872,7 +872,13 @@ DOMYSLNY_PORT_HTTP = 7861
 
 def _port_domyslny_z_env() -> int:
     raw = os.environ.get("GRADIO_SERVER_PORT", "").strip()
-    return int(raw) if raw else DOMYSLNY_PORT_HTTP
+    if not raw:
+        return DOMYSLNY_PORT_HTTP
+    p = int(raw)
+    # Wspólna zmienna Gradio (często 7860) — USG niech nie wchodzi w kolizję z modelem chorób.
+    if p == 7860:
+        return DOMYSLNY_PORT_HTTP
+    return p
 
 
 def _wolny_port_od(pierwszy: int, prob: int = 32) -> int:
@@ -956,6 +962,8 @@ def main() -> None:
     else:
         print(f"\nUruchamiam aplikację USG lokalnie (--bez-linku) na porcie {port}.", flush=True)
     print("Ctrl+C = serwer się zatrzymuje.\n", flush=True)
+    # Gradio (http_server / Node) czyta GRADIO_SERVER_PORT — musi być zgodny z server_port.
+    os.environ["GRADIO_SERVER_PORT"] = str(port)
     wynik_launch = demo.launch(
         server_name="127.0.0.1",
         server_port=port,
